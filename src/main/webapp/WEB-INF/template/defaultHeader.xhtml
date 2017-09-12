@@ -6,26 +6,27 @@
     <h:form>
         <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
 
-            <h:commandLink styleClass="navbar-brand" action="#" value="Navbar"/>
-            <h:commandButton styleClass="navbar-toggler"/>
+            <h:link styleClass="navbar-brand" outcome="/index_templated" value="Info Support"/>
+            <h:button styleClass="navbar-toggler"/>
 
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        <h:link styleClass="nav-link"  outcome="/index_templated" value="Home"/>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <h:link styleClass="nav-link" value="Link 2"/>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Dit is de navigatiebalk van de template</a>
+                        <h:link styleClass="nav-link" value="Link 3"/>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Paginakiezer</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
-                            <h:commandLink styleClass="dropdown-item" action="#" value="Een optie"/>
-                            <h:commandLink styleClass="dropdown-item" action="#" value="Nog een optie"/>
-                            <h:commandLink styleClass="dropdown-item" action="#" value="Hier staats iets anders"/>
+                            <h:link styleClass="dropdown-item" outcome="/appmanagement/courses" value="Trainingsbeheer"/>
+                            <h:link styleClass="dropdown-item" outcome="/appmanagement/planner" value="Trainingsplanner"/>
+                            <h:link styleClass="dropdown-item" outcome="/external/schedule" value="Trainingsrooster"/>
+                            <h:link styleClass="dropdown-item" outcome="/external/signup" value="Inschrijfformulier"/>
                         </div>
                     </li>
                 </ul>
