@@ -3,38 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package objects;
+package Objects;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 /**
  *
- * @author Jorian
+ * @author Jorian, Antonio
  */
 @ManagedBean(name="obj")
 @SessionScoped
 public class User {
     
-    private String name;
+    private int userID;
     private String username;
     private String password;
     
-    public User(String name, String username){
-        this.name = name;
+    public User(int userID ,String username, String password){
+        this.userID = userID;
         this.username = username;
+        this.password = password;
     }
     
     public User(){
         
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getUsername() {
