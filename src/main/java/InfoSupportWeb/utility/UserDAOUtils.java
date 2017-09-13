@@ -19,7 +19,7 @@ import javax.faces.bean.SessionScoped;
  *
  * @author Jeroen Roovers, Jorian, Antonio
  */
-@ManagedBean(name="DB")
+@ManagedBean(name="db")
 @SessionScoped
 public class UserDAOUtils implements IUserDAO {
 
@@ -29,6 +29,12 @@ public class UserDAOUtils implements IUserDAO {
     static final String QUERY_GET_USER = "SELECT u.* FROM User u";
     static final String QUERY_UPDATE_USERTYPE = "UPDATE User SET UserType = ? WHERE ID_User = ?";
 
+    public UserDAOUtils() {
+        
+    }
+
+    
+    
 //    private List<User> executeCommonQuery(String query) {
 //        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
 //        ArrayListHandler alh = new ArrayListHandler();
@@ -115,5 +121,9 @@ public class UserDAOUtils implements IUserDAO {
             System.out.println(ex_sql.getMessage());
         }
         return users;
+    }
+    
+    public String test(){
+        return "test";
     }
 }
