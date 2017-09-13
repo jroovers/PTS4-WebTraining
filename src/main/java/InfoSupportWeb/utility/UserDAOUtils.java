@@ -8,7 +8,7 @@ package InfoSupportWeb.utility;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import Objects.User;
+import objects.User;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
 import Interfaces.IUserDAO;
@@ -109,11 +109,14 @@ public class UserDAOUtils implements IUserDAO {
         try {
             List<Object[]> result = run.query(QUERY_GET_USER, alh);
             for (Object[] o : result) {
-                User user = new User(
-                        o[0] == null ? -1 : Integer.parseInt(o[0].toString()),
-                        o[1] == null ? null : o[1].toString(),
-                        o[2] == null ? null : o[2].toString()
-                );
+                User user = new User();
+                user.setUsername(o[1] == null ? null : o[1].toString());
+                user.setPassword(o[2] == null ? null : o[2].toString());
+//                User user = new User(
+//                        o[0] == null ? -1 : Integer.parseInt(o[0].toString()),
+//                        o[1] == null ? null : o[1].toString(),
+//                        o[2] == null ? null : o[2].toString()
+//                );
                 users.add(user);
             }
         } catch (SQLException ex_sql) {
