@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import InfoSupportWeb.utility.CourseDAOUtils;
 import Model.Course;
 import javax.ejb.Stateless;
 
@@ -15,7 +16,10 @@ import javax.ejb.Stateless;
 @Stateless
 public class CourseService {
 
+    private CourseDAOUtils courseDAOUtils;
+    
     public CourseService() {
+        this.courseDAOUtils = new CourseDAOUtils();
     }
 
     /**
@@ -25,8 +29,8 @@ public class CourseService {
      * @return course with ID given by database.
      */
     public Course addCourse(String code, String name) {
-        Course c = new Course(name, code);
-        throw new UnsupportedOperationException("Not yet implemented.");
+        Course c = new Course(name, code);        
+        return courseDAOUtils.addCourse(c);        
     }
     
         /**

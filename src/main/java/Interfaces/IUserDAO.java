@@ -5,7 +5,7 @@
  */
 package Interfaces;
 
-import objects.User;
+import Model.User;
 import java.util.List;
 
 /**
@@ -15,9 +15,9 @@ import java.util.List;
 public interface IUserDAO {
 
     /**
-     * Gets a single user from database.
+     * Gets a list of users from database.
      *
-     * @return User object
+     * @return User List
      */
     public List<User> getUsers();
 
