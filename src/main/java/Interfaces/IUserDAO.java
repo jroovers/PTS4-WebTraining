@@ -5,7 +5,7 @@
  */
 package Interfaces;
 
-import Objects.User;
+import objects.User;
 import java.util.List;
 
 /**

@@ -22,7 +22,7 @@ public class Database {
     private BasicDataSource ds;
 
     private static String driver = "com.mysql.cj.jdbc.Driver";
-    private static String url = "jdbc:mysql://77.174.23.144:306/db_dev_infosupport";
+    private static String url = "jdbc:mysql://77.174.23.144:3306/db_dev_infosupport";
     private static String username = "infosupport";
     private static String password = "q!p^Fxyg6l3N'@n'a!f&#Jn3Y.Kwh.3!:gy&EU/cE&$JWoa+Z#L7sGyGKG//|yiv";
 
