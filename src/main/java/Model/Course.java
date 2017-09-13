@@ -20,9 +20,35 @@ public class Course {
     private int durationInDays;
     private double cost;
 
+    /**
+     * A blank course
+     */
     public Course() {
     }
 
+    /**
+     * Used to create a new course with the bare minimal input.
+     *
+     * @param code
+     * @param name
+     */
+    public Course(String code, String name) {
+        this.code = code;
+        this.name = name;
+    }
+
+    /**
+     * Used to create a instance of an existing course in the database.
+     *
+     * @param id
+     * @param code
+     * @param name
+     * @param description
+     * @param priorKnowledge
+     * @param courseMaterials
+     * @param durationInDays
+     * @param cost
+     */
     public Course(long id, String code, String name, String description, String[] priorKnowledge, String courseMaterials, int durationInDays, double cost) {
         this.id = id;
         this.code = code;
