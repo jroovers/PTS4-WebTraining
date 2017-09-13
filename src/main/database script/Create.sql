@@ -26,7 +26,7 @@ CREATE TABLE `db_dev_infosupport`.`Course`(
   `Code` VARCHAR(10) NOT NULL,
   `Name` VARCHAR(255) NOT NULL,
   `Description` TEXT,
-  `CourseMaterials` TEXT NOT NULL,
+  `CourseMaterials` TEXT,
   `KeyWords` TEXT,
   `Duration` INT DEFAULT '1',
   `Cost` DECIMAL,
