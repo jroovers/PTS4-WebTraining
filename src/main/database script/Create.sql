@@ -2,6 +2,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Course_PriorKnowledge`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Course_TargetUsers`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Course_Category`;
+DROP TABLE IF EXISTS `db_dev_infosupport`.`Lesson`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Course`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Category`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`UserType`;
@@ -68,6 +69,21 @@ CREATE TABLE `db_dev_infosupport`.`Course_PriorKnowledge`(
   ON DELETE CASCADE,
 CONSTRAINT `fk_PriorKnowledge_PreCourse`
   FOREIGN KEY (`PriorCourse`)
+  REFERENCES `db_dev_infosupport`.`Course` (`ID_Course`)
+  ON DELETE CASCADE
+);
+
+
+CREATE TABLE `db_dev_infosupport`.`Lesson`(
+  `ID_Lesson` INT NOT NULL AUTO_INCREMENT,
+  `StartTime` DATE NOT NULL,
+  `EndTime` DATE NOT NULL,
+  `Location` VARCHAR(30) NOT NULL,
+  `ID_Course` INT NOT NULL,
+  
+  PRIMARY KEY (`ID_Lesson`),
+  CONSTRAINT `fk_Lesson_ID_Course`
+  FOREIGN KEY (`ID_Course`)
   REFERENCES `db_dev_infosupport`.`Course` (`ID_Course`)
   ON DELETE CASCADE
 );
