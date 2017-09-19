@@ -21,7 +21,7 @@ import org.apache.commons.dbutils.handlers.ArrayListHandler;
  */
 public class CourseDAOUtils implements ICourseDAO {
 
-    static final String QUERY_GET_COURSES = "";
+    static final String QUERY_GET_COURSES = "SELECT * FROM Course";
     static final String QUERY_INSERT_COURSE = "INSERT INTO Course"
 		+ "(Code, Name) VALUES"
 		+ "(?,?)";
@@ -38,12 +38,18 @@ public class CourseDAOUtils implements ICourseDAO {
         try {
             List<Object[]> result = run.query(QUERY_GET_COURSES, alh);
             for (Object[] o : result) {
-//                Course course = new Course(
-//                        o[0] == null ? -1 : Long.parseLong(o[0].toString()),
-//                        o[1] == null ? null : o[1].toString(),
-//                        o[2] == null ? null : o[2].toString()
-//                );
-//                courses.add(course);
+                Course course = new Course(
+                        o[0] == null ? -1 : Long.parseLong(o[0].toString()),
+                        o[1] == null ? null : o[1].toString(),
+                        o[2] == null ? null : o[2].toString(),
+                        o[3] == null ? null : o[3].toString(),
+                        null,
+                        o[4] == null ? null : o[4].toString(),
+                        o[6] == null ? null : Integer.parseInt(o[6].toString()),
+                        o[7] == null ? null : Double.parseDouble(o[7].toString())
+                );
+                
+                courses.add(course);
             }
         } catch (SQLException ex_sql) {
             System.out.println("SQL Exception code " + ex_sql.getErrorCode());

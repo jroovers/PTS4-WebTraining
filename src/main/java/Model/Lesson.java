@@ -5,10 +5,68 @@
  */
 package Model;
 
+import java.util.Calendar;
+
 /**
  *
  * @author Jeroen Roovers
  */
 public class Lesson {
+    
+    private long id;
+    private Calendar startTime;
+    private Calendar endTime;
+    private String location;
+    private Course course;
+    //private Teacher teacher ?
+    //private list cursists ?
+    //SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    
+    public Lesson(Course course){
+        this.course = course;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Calendar getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Calendar startTime) {
+        this.startTime = startTime;
+    }
+
+    public Calendar getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Calendar endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+    
+    
+    
     
 }

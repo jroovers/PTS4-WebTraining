@@ -93,6 +93,12 @@ public class Course {
     }
 
     public String[] getPriorKnowledge() {
+        
+        if(this.priorKnowledge == null){
+        String[] myStringArray = new String[]{"Niet geladen"};
+            return myStringArray;
+        }
+        
         return priorKnowledge;
     }
 
