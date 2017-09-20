@@ -17,7 +17,7 @@ import javax.ejb.Stateless;
 @Stateless
 public class CourseService {
 
-    private CourseDAOUtils courseDAOUtils;
+    private final CourseDAOUtils courseDAOUtils;
 
     public CourseService() {
         this.courseDAOUtils = new CourseDAOUtils();
@@ -43,7 +43,7 @@ public class CourseService {
      * @return course with ID given by database.
      */
     public Course addCourse(Course course) {
-        throw new UnsupportedOperationException("Not yet implemented.");
+        return courseDAOUtils.addCourse(course);
     }
 
     /**
