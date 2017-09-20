@@ -2,11 +2,14 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
     <!-- Tabblad naam -->
     <ui:define name="title">Cursusplanner</ui:define>
     <!-- Content -->
     <ui:define name="content">
+        <p:growl id="growl"/>  
         <div class="container">
             <div class="mt-3">
                 <h1>Dit is de planningspagina</h1>
@@ -14,6 +17,31 @@
                 <ul><li>Het inroosteren van trainingen</li>
                     <li>Toewijzen, aanpassen en verwijderen van Locaties</li>
                 </ul>
+                <div class="row">
+                    <div class="col"/>
+                    <div class="col-6">
+                        <h:form>
+                            <div class="form-group">
+                                <h:outputLabel for="lbox_trainingselect" value="Kies een training die je wil plannen"/>
+                                <h:selectOneListbox id="lbox_trainingselect" styleClass="form-control">
+                                    <f:selectItems />
+                                </h:selectOneListbox>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel for="inline" value="Kies een datum:" />
+                                <p:calendar id="inline" mode="inline"/>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel for="location" value="Waar vindt deze training plaats?"/>
+                                <h:inputText id="location" styleClass="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <h:commandButton styleClass="btn btn-primary" value="Verzenden"/>
+                            </div>
+                        </h:form>
+                    </div>
+                    <div class="col"/>
+                </div>
             </div>
         </div>
     </ui:define>
