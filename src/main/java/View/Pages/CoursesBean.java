@@ -9,6 +9,7 @@ import Controller.CourseService;
 import Model.Course;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 
 /**
  *
@@ -17,48 +18,59 @@ import javax.enterprise.context.RequestScoped;
 @Named(value = "coursesBean")
 @RequestScoped
 public class CoursesBean {
-    
+
+    @Inject
+    CourseService cService;
+
     private String code;
     private String name;
     private String description;
-    private String requiredKnowledge;
+    private String requiredKnowledge; //Naar []
     private String cursusMaterial;
-    private int timeInDays;
-    private int cost;
+    private String timeInDays; //Naar int
+    private String cost;        //Naar double
     private String location;
-    
-    private CourseService cService;
-    
 
     /**
      * Creates a new instance of coursesBean
      */
     public CoursesBean() {
-        cService = new CourseService();
     }
-    
-    
+
     // Adds a course to the database.
-    public void addCourse() {
+    public boolean addCourse() {
 
         if (!name.equals("") && !code.equals("")) {
 
-            if (description.equals("") || requiredKnowledge.equals("") || cursusMaterial.equals("") || timeInDays != 0 || cost != -1 || location.equals("")) {
-                
-                
+            if (description.equals("") || requiredKnowledge.equals("") || cursusMaterial.equals("") || timeInDays.equals("") || cost.equals("") || location.equals("") || requiredKnowledge != null) {
+
+                double nCost = 0;
+                int nTimeIndDays = 0;
+                String[] NrequiredKnowledge = new String[] {requiredKnowledge};
+                try {
+                    nTimeIndDays = Integer.parseInt(timeInDays);
+                    nCost = Double.parseDouble(cost);
+                } catch (NumberFormatException ex) {
+                    return false;
+
+                }
+
                 Course cource = new Course(this.code, this.name);
-                cource.setCost(cost);
+                cource.setCost(nCost);
                 cource.setCourseMaterials(cursusMaterial);
                 cource.setDescription(description);
-                cource.setDurationInDays(0);
-                //cource.setPriorKnowledge(priorKnowledge);
-                //cService.addCourse(course);
+                cource.setDurationInDays(nTimeIndDays);
+                cource.setPriorKnowledge(NrequiredKnowledge);
+                cource.setLocation(location);
+                cService.addCourse(cource);
+                return true;
             } else {
                 cService.addCourse(code, name);
+                return true;
             }
 
         }
-
+        return false;
     }
 
     public String getCode() {
@@ -76,7 +88,7 @@ public class CoursesBean {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public String getDescription() {
         return description;
     }
@@ -101,20 +113,20 @@ public class CoursesBean {
         this.cursusMaterial = cursusMaterial;
     }
 
-//    public String getTimeInDays() {
-//       // return timeInDays;
-//    }
-
-    public void setTimeInDays(String timeInDays) {
-        //this.timeInDays = timeInDays;
+    public String getTimeInDays() {
+        return timeInDays;
     }
 
-    public int getCost() {
+    public void setTimeInDays(String timeInDays) {
+        this.timeInDays = timeInDays;
+    }
+
+    public String getCost() {
         return cost;
     }
 
     public void setCost(String amount) {
-        cost = Integer.parseInt(amount);
+        this.cost = amount;
     }
 
     public String getLocation() {
@@ -124,5 +136,5 @@ public class CoursesBean {
     public void setLocation(String location) {
         this.location = location;
     }
-    
+
 }
