@@ -17,6 +17,7 @@ public class Course {
     private String description;
     private String[] priorKnowledge;
     private String courseMaterials;
+    private String[] keyWords;
     private int durationInDays;
     private double cost;
 
@@ -56,6 +57,18 @@ public class Course {
         this.description = description;
         this.priorKnowledge = priorKnowledge;
         this.courseMaterials = courseMaterials;
+        this.durationInDays = durationInDays;
+        this.cost = cost;
+    }
+    
+        public Course(long id, String code, String name, String description, String[] priorKnowledge, String courseMaterials, String[] keyWords, int durationInDays, double cost) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.description = description;
+        this.priorKnowledge = priorKnowledge;
+        this.courseMaterials = courseMaterials;
+        this.keyWords = keyWords;
         this.durationInDays = durationInDays;
         this.cost = cost;
     }
@@ -112,6 +125,14 @@ public class Course {
 
     public void setCourseMaterials(String courseMaterials) {
         this.courseMaterials = courseMaterials;
+    }
+    
+    public String[] getKeyWords() {
+        return keyWords;
+    }
+
+    public void setKeyWords(String[] keyWords) {
+        this.keyWords = keyWords;
     }
 
     public int getDurationInDays() {
