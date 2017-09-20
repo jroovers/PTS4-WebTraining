@@ -7,6 +7,8 @@ package View.Pages;
 
 import Controller.CourseService;
 import Model.Course;
+import java.util.HashSet;
+import java.util.Set;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -25,11 +27,12 @@ public class CoursesBean {
     private String code;
     private String name;
     private String description;
-    private String requiredKnowledge; //Naar []
+    private String requiredKnowledge;
     private String cursusMaterial;
-    private String timeInDays; //Naar int
-    private String cost;        //Naar double
+    private String timeInDays;
+    private String cost;
     private String location;
+    private String keywords;
 
     /**
      * Creates a new instance of coursesBean
@@ -42,17 +45,18 @@ public class CoursesBean {
 
         if (!name.equals("") && !code.equals("")) {
 
-            if (description.equals("") || requiredKnowledge.equals("") || cursusMaterial.equals("") || timeInDays.equals("") || cost.equals("") || location.equals("") || requiredKnowledge != null) {
+            if (!description.isEmpty() && !keywords.isEmpty() && !requiredKnowledge.isEmpty() && !cursusMaterial.isEmpty() && !timeInDays.isEmpty() && !cost.isEmpty() && !location.isEmpty() && !requiredKnowledge.isEmpty()) {
 
                 double nCost = 0;
                 int nTimeIndDays = 0;
-                String[] NrequiredKnowledge = new String[] {requiredKnowledge};
+                String[] nRequiredKnowledge = this.splitText(requiredKnowledge);
+                String[] nKeywords = this.splitText(keywords);
+                
                 try {
                     nTimeIndDays = Integer.parseInt(timeInDays);
                     nCost = Double.parseDouble(cost);
                 } catch (NumberFormatException ex) {
                     return false;
-
                 }
 
                 Course cource = new Course(this.code, this.name);
@@ -60,8 +64,9 @@ public class CoursesBean {
                 cource.setCourseMaterials(cursusMaterial);
                 cource.setDescription(description);
                 cource.setDurationInDays(nTimeIndDays);
-                cource.setPriorKnowledge(NrequiredKnowledge);
+                cource.setPriorKnowledge(nRequiredKnowledge);
                 cource.setLocation(location);
+                cource.setKeyWords(nKeywords);
                 cService.addCourse(cource);
                 return true;
             } else {
@@ -72,6 +77,13 @@ public class CoursesBean {
         }
         return false;
     }
+    
+    // Splits the given text and puts it in a list. the text is split by comma's
+    public String[] splitText(String text) {
+        text = text.toLowerCase();
+        String[] splittedText = text.split("\\,");
+        return splittedText;
+    } 
 
     public String getCode() {
         return code;
@@ -87,6 +99,14 @@ public class CoursesBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 
     public String getDescription() {
