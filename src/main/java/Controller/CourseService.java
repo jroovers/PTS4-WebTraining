@@ -52,7 +52,9 @@ public class CourseService {
      * @return list of courses
      */
     public List<Course> getAllCourses() {
-        throw new UnsupportedOperationException("Not yet implemented.");
+        CourseDAOUtils cdu = new CourseDAOUtils();
+        List<Course> courses = cdu.getCourses();
+        return courses;
     }
 
     /**
