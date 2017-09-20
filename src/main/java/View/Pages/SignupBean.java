@@ -11,6 +11,7 @@ import Model.Course;
 import Model.Lesson;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -26,8 +27,8 @@ public class SignupBean {
     CourseService cs;
     @Inject
     LessonService ls;
-    
-    private Course course;
+
+    private Course selectedCourse;
     private String name;
     private String lastname;
     private List<Course> courses;
@@ -56,25 +57,31 @@ public class SignupBean {
         this.lastname = lastname;
     }
 
-    public Course getCourse() {
-        return course;
+    public Course getSelectedCourse() {
+        return selectedCourse;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setSelectedCourse(Course course) {
+        this.selectedCourse = course;
     }
 
     public void signUp() {
         System.out.println(name + lastname);
     }
 
+    public void valueChanged(ValueChangeEvent e) {
+        String code = "";
+        code = e.getNewValue().toString();
+        System.out.println(code);
+    }
+
     public List<Course> getAllCourses() {
         courses = cs.getAllCourses();
         return courses;
     }
-    
-    public List<Lesson> getAllLessons() {
-        lessons = ls.getLessons();
+
+    public List<Lesson> getAllLessonsFromCourse() {
+        lessons = ls.getLessonsFromCourse(selectedCourse.getId());
         return lessons;
     }
 
