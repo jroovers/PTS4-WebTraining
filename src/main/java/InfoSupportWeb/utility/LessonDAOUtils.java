@@ -20,8 +20,8 @@ import org.apache.commons.dbutils.QueryRunner;
  */
 public class LessonDAOUtils implements ILessonDAO {
 
-    static final String QUERY_INSERT_LESSON = "INSERT INTO Course"
-		+ "(Code, Name) VALUES"
+    static final String QUERY_INSERT_LESSON = "INSERT INTO Lesson"
+		+ "(StartTime, EndTime, Location) VALUES"
 		+ "(?,?,?)";
     
     public LessonDAOUtils() {

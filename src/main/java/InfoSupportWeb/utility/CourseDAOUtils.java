@@ -47,6 +47,7 @@ public class CourseDAOUtils implements ICourseDAO {
                         o[4] == null ? null : o[4].toString(),
                         o[6] == null ? null : Integer.parseInt(o[6].toString()),
                         o[7] == null ? null : Double.parseDouble(o[7].toString())
+                        
                 );
                 
                 courses.add(course);
