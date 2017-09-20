@@ -20,6 +20,9 @@ public class Course {
     private String[] keyWords;
     private int durationInDays;
     private double cost;
+    private String location;
+
+ 
 
     /**
      * A blank course
@@ -79,6 +82,14 @@ public class Course {
 
     public void setId(long id) {
         this.id = id;
+    }
+    
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getCode() {
