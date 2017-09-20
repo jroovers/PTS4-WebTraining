@@ -17,10 +17,7 @@ import javax.ejb.Stateless;
 @Stateless
 public class CourseService {
 
-    private CourseDAOUtils courseDAOUtils;
-
     public CourseService() {
-        this.courseDAOUtils = new CourseDAOUtils();
     }
 
     /**
@@ -31,6 +28,8 @@ public class CourseService {
      * @return course with ID given by database.
      */
     public Course addCourse(String code, String name) {
+        CourseDAOUtils courseDAOUtils = new CourseDAOUtils();
+        
         Course c = new Course(name, code);
         return courseDAOUtils.addCourse(c);
     }
@@ -43,7 +42,8 @@ public class CourseService {
      * @return course with ID given by database.
      */
     public Course addCourse(Course course) {
-        throw new UnsupportedOperationException("Not yet implemented.");
+        CourseDAOUtils courseDAOUtils = new CourseDAOUtils();
+        return courseDAOUtils.addCourse(course);
     }
 
     /**
@@ -52,6 +52,7 @@ public class CourseService {
      * @return list of courses
      */
     public List<Course> getAllCourses() {
+        CourseDAOUtils courseDAOUtils = new CourseDAOUtils();
         CourseDAOUtils cdu = new CourseDAOUtils();
         List<Course> courses = cdu.getCourses();
         return courses;
@@ -64,6 +65,7 @@ public class CourseService {
      * @return
      */
     public boolean editCourse(Course course) {
+        CourseDAOUtils courseDAOUtils = new CourseDAOUtils();
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
@@ -74,6 +76,7 @@ public class CourseService {
      * @return
      */
     public boolean removeCourse(Course course) {
+        CourseDAOUtils courseDAOUtils = new CourseDAOUtils();
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 }
