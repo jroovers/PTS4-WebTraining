@@ -27,9 +27,8 @@ import org.apache.commons.dbutils.handlers.ArrayListHandler;
 public class LessonDAOUtils implements ILessonDAO {
 
     static final String QUERY_GET_LESSONS = "SELECT l.*, c.* FROM Lesson l, Course c WHERE l.ID_Course=c.ID_Course";
-    static final String QUERY_INSERT_LESSON = "INSERT INTO Lesson"
-            + "(StartTime, EndTime, Location, ID_Course) VALUES"
-            + "(?,?,?,?)";
+    static final String QUERY_INSERT_LESSON = "INSERT INTO Lesson(StartTime, EndTime, Location, ID_Course) VALUES(?,?,?,?)";
+    static final String QUERY_GET_LESSONS_FROM_COURSE = "SELECT l.*, c.* FROM Lesson l, Course c WHERE l.ID_Course=c.ID_Course AND l.ID_Course = ?";
 
     public LessonDAOUtils() {
 
@@ -104,6 +103,47 @@ public class LessonDAOUtils implements ILessonDAO {
     @Override
     public boolean removeLesson(Lesson lesson) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Lesson> getLessonsFromCourse(int course_ID) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        ArrayListHandler alh = new ArrayListHandler();
+        List<Lesson> lessons = new ArrayList<>();
+        //Object[] params = new Object[]{lesson.getStartTime().getTime(), lesson.getEndTime().getTime(), lesson.getLocation(), lesson.getCourse().getId()};
+        Object[] params = new Object[]{course_ID};
+        try {
+            List<Object[]> result = run.query(QUERY_GET_LESSONS_FROM_COURSE, alh, params);
+            for (Object[] o : result) {
+
+                Calendar beginTime = new GregorianCalendar();
+                beginTime.setTime(o[1] == null ? null : Date.valueOf(o[1].toString()));
+                Calendar endTime = new GregorianCalendar();
+                endTime.setTime(o[2] == null ? null : Date.valueOf(o[2].toString()));
+
+                Lesson lesson = new Lesson(
+                        o[0] == null ? -1 : Long.parseLong(o[0].toString()),
+                        beginTime,
+                        endTime,
+                        o[3] == null ? null : o[3].toString(),
+                        new Course(
+                                o[5] == null ? -1 : Long.parseLong(o[5].toString()),
+                                o[6] == null ? null : o[6].toString(),
+                                o[7] == null ? null : o[7].toString(),
+                                o[8] == null ? null : o[8].toString(),
+                                null,
+                                o[9] == null ? null : o[9].toString(),
+                                o[11] == null ? null : Integer.parseInt(o[11].toString()),
+                                o[12] == null ? null : Double.parseDouble(o[12].toString())
+                        )
+                );
+                lessons.add(lesson);
+            }
+        } catch (SQLException ex_sql) {
+            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.out.println(ex_sql.getMessage());
+        }
+        return lessons;
     }
 
 }
