@@ -25,6 +25,14 @@ public class Lesson {
     public Lesson(Course course){
         this.course = course;
     }
+    
+    public Lesson(long id, Calendar startTime, Calendar endTime, String location, Course course){
+        this.id = id;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.location = location;
+        this.course = course;
+    }
 
     public long getId() {
         return id;

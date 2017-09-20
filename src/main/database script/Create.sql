@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS `db_dev_infosupport`.`Course_TargetUsers`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Course_Category`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Lesson`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Course`;
+DROP TABLE IF EXISTS `db_dev_infosupport`.`Registration`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Category`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`UserType`;
 SET FOREIGN_KEY_CHECKS = 1;
@@ -47,6 +48,30 @@ CREATE TABLE `db_dev_infosupport`.`Course_Category`(
    ON DELETE CASCADE
 );
 
+CREATE TABLE `db_dev_infosupport`.`Lesson`(
+  `ID_Lesson` INT NOT NULL AUTO_INCREMENT,
+  `StartTime` DATE NOT NULL,
+  `EndTime` DATE NOT NULL,
+  `Location` VARCHAR(30) NOT NULL,
+  `ID_Course` INT NOT NULL,
+  
+  PRIMARY KEY (`ID_Lesson`),
+  CONSTRAINT `fk_Lesson_ID_Course`
+  FOREIGN KEY (`ID_Course`)
+  REFERENCES `db_dev_infosupport`.`Course` (`ID_Course`)
+  ON DELETE CASCADE
+);
+
+CREATE TABLE `db_dev_infosupport`.`Registration`(
+  `ID_User` INT NOT NULL AUTO_INCREMENT,
+  `FirstName` DATE NOT NULL,
+  `LastName` DATE NOT NULL,
+  `Email` VARCHAR(30) NOT NULL,
+  `PhoneNumber` INT NOT NULL,
+  
+  PRIMARY KEY (`ID_User`)
+);
+
 CREATE TABLE `db_dev_infosupport`.`Course_TargetUsers`(
   `ID_Course` INT NOT NULL,
   `ID_UserType` INT NOT NULL,
@@ -73,17 +98,15 @@ CONSTRAINT `fk_PriorKnowledge_PreCourse`
   ON DELETE CASCADE
 );
 
-
-CREATE TABLE `db_dev_infosupport`.`Lesson`(
-  `ID_Lesson` INT NOT NULL AUTO_INCREMENT,
-  `StartTime` DATE NOT NULL,
-  `EndTime` DATE NOT NULL,
-  `Location` VARCHAR(30) NOT NULL,
+CREATE TABLE `db_dev_infosupport`.`Course_Registration`(
   `ID_Course` INT NOT NULL,
-  
-  PRIMARY KEY (`ID_Lesson`),
-  CONSTRAINT `fk_Lesson_ID_Course`
-  FOREIGN KEY (`ID_Course`)
-  REFERENCES `db_dev_infosupport`.`Course` (`ID_Course`)
-  ON DELETE CASCADE
+  `ID_User` INT NOT NULL,
+  CONSTRAINT `fk_Registration_Course`
+   FOREIGN KEY (`ID_Course`)
+   REFERENCES `db_dev_infosupport`.`Course` (`ID_Course`)
+   ON DELETE CASCADE,
+  CONSTRAINT `fk_Registration_User`
+   FOREIGN KEY (`ID_User`)
+   REFERENCES `db_dev_infosupport`.`User` (`ID_User`)
+   ON DELETE CASCADE
 );

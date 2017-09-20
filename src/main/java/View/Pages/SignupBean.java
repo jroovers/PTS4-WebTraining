@@ -6,24 +6,32 @@
 package View.Pages;
 
 import Controller.CourseService;
+import Controller.LessonService;
 import Model.Course;
+import Model.Lesson;
 import java.util.List;
-import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
- * @author jeroe
+ * @author jeroen, antonio
  */
 @Named(value = "signupBean")
 @RequestScoped
 public class SignupBean {
 
+    @Inject
+    CourseService cs;
+    @Inject
+    LessonService ls;
+    
     private Course course;
     private String name;
     private String lastname;
-    CourseService cs;
-    List<Course> courses;
+    private List<Course> courses;
+    private List<Lesson> lessons;
 
     /**
      * Creates a new instance of signupBean
@@ -60,8 +68,14 @@ public class SignupBean {
         System.out.println(name + lastname);
     }
 
-    public void getAllCourses() {
+    public List<Course> getAllCourses() {
         courses = cs.getAllCourses();
+        return courses;
+    }
+    
+    public List<Lesson> getAllLessons() {
+        lessons = ls.getLessons();
+        return lessons;
     }
 
 }
