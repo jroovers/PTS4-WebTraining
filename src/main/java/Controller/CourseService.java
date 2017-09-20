@@ -43,7 +43,7 @@ public class CourseService {
      * @return course with ID given by database.
      */
     public Course addCourse(Course course) {
-        throw new UnsupportedOperationException("Not yet implemented.");
+        return courseDAOUtils.addCourse(course);
     }
 
     /**
@@ -52,7 +52,7 @@ public class CourseService {
      * @return list of courses
      */
     public List<Course> getAllCourses() {
-        throw new UnsupportedOperationException("Not yet implemented.");
+        return courseDAOUtils.getCourses();
     }
 
     /**
