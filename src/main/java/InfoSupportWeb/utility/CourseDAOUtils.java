@@ -9,6 +9,7 @@ import Interfaces.ICourseDAO;
 import Model.Course;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,8 +24,8 @@ public class CourseDAOUtils implements ICourseDAO {
 
     static final String QUERY_GET_COURSES = "SELECT * FROM Course";
     static final String QUERY_INSERT_COURSE = "INSERT INTO Course"
-		+ "(Code, Name) VALUES"
-		+ "(?,?)";
+		+ "(Code, Name, Description, CourseMaterials, KeyWords, Duration, Cost) VALUES"
+		+ "(?,?,?,?,?,?,?)";
     
     public CourseDAOUtils() {
         
@@ -58,12 +59,12 @@ public class CourseDAOUtils implements ICourseDAO {
         }
         return courses;
     }
-
+    
     @Override
     public Course addCourse(Course course) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
-        Object[] params = new Object[]{course.getCode(), course.getName()};
+        Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), Arrays.toString(course.getKeyWords()), course.getDurationInDays(), course.getCost()};
         try {
             Object[] result = run.insert(QUERY_INSERT_COURSE, rsh, params);
             
