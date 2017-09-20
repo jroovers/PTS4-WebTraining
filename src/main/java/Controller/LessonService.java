@@ -76,5 +76,15 @@ public class LessonService {
     public boolean deleteLesson(Lesson l) {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
+    
+    /**
+     * Gets an lesson from the ID of a course
+     * 
+     * @param course_ID id of the Course
+     * @return List of lessons which are connected to the course ID
+     */
+    public List<Lesson> getLessonsFromCourse(long course_ID) {
+        return lessonDAOUtils.getLessonsFromCourse(course_ID);
+    }
 
 }

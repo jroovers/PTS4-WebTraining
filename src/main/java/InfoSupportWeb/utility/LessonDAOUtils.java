@@ -106,7 +106,7 @@ public class LessonDAOUtils implements ILessonDAO {
     }
 
     @Override
-    public List<Lesson> getLessonsFromCourse(int course_ID) {
+    public List<Lesson> getLessonsFromCourse(long course_ID) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ArrayListHandler alh = new ArrayListHandler();
         List<Lesson> lessons = new ArrayList<>();

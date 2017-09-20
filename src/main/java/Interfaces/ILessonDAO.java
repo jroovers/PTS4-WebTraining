@@ -48,5 +48,5 @@ public interface ILessonDAO {
      * @param course_ID the id of the course
      * @return List of lessons who are connected to the given id of the course
      */
-    public List<Lesson> getLessonsFromCourse(int course_ID);
+    public List<Lesson> getLessonsFromCourse(long course_ID);
 }

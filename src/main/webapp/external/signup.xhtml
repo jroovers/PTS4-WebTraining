@@ -24,7 +24,8 @@
                             </h:selectOneMenu>
                         </div>
                         <div class ="form-group">
-                            <h:selectOneListbox value="#{signupBean.allCourses}" styleClass="form-control">
+                            <h:selectOneListbox value="#{signupBean.allCourses}" <!--onchange="submit()" 
+                                                valueChangeListener="#{signupBean.valueChanged}"-->styleClass="form-control">
                                 <f:selectItems value="#{signupBean.allCourses}" var="y"
                                                itemLabel="#{y.name}" itemValue="#{y.id}" />
                             </h:selectOneListbox>
