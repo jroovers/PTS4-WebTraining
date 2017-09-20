@@ -22,12 +22,12 @@
                     <table>
                         <tr>
                             <th style="width: 190px"><p>Trainingscode</p></th>
-                            <th><h:inputText a:placeholder="Code invullen" ></h:inputText></th>
+                            <th><h:inputText id="code" value="#{coursesBean.code}" a:placeholder="Code invullen" ></h:inputText></th>
                             <th></th>
                         </tr>
                         <tr>
                             <th><p>Trainingsnaam</p></th>
-                            <th><h:inputText a:placeholder="Naam invullen"></h:inputText></th>
+                            <th><h:inputText id="naam" value="#{coursesBean.name}" a:placeholder="Naam invullen"></h:inputText></th>
                         </tr>
                         <tr>
                             <th><p>Beschrijving</p></th>
@@ -56,7 +56,7 @@
                         <tr>
                             <th><p>Training toevoegen</p></th>
 
-                            <th><h:button value="Toevoegen/Aanpassen" style="width: 100%"></h:button></th>
+                            <th><h:commandButton  action="#{coursesBean.addCourse()}" value="Toevoegen/Aanpassen" style="width: 100%"></h:commandButton ></th>
                         </tr>
                         <tr>
                             <th><br></br></th>
