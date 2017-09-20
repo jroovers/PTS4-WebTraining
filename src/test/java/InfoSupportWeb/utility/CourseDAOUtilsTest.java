@@ -13,6 +13,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
+import static sun.invoke.util.ValueConversions.ignore;
 
 /**
  *
@@ -45,6 +47,7 @@ public class CourseDAOUtilsTest {
     /**
      * Test of getCourses method, of class CourseDAOUtils.
      */
+    @Ignore
     @org.junit.Test
     public void testGetCourses() {
     }
@@ -52,6 +55,7 @@ public class CourseDAOUtilsTest {
     /**
      * Test of addCourse method, of class CourseDAOUtils.
      */
+    @Ignore
     @org.junit.Test
     public void testAddCourse() {
         System.out.println("addCourse");
@@ -65,6 +69,7 @@ public class CourseDAOUtilsTest {
     /**
      * Test of editCourse method, of class CourseDAOUtils.
      */
+    @Ignore
     @org.junit.Test
     public void testEditCourse() {
         System.out.println("editCourse");
@@ -80,6 +85,7 @@ public class CourseDAOUtilsTest {
     /**
      * Test of removeCourse method, of class CourseDAOUtils.
      */
+    @Ignore
     @org.junit.Test
     public void testRemoveCourse() {
         System.out.println("removeCourse");
