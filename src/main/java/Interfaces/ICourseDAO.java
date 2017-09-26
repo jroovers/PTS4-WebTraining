@@ -40,5 +40,5 @@ public interface ICourseDAO {
      *
      * @return Success or failure
      */
-    public boolean removeCourse(Course course);
+    public boolean removeCourse(long course_ID);
 }
