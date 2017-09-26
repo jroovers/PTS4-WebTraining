@@ -31,6 +31,7 @@ public class SignupBean {
     private Course selectedCourse;
     private String name;
     private String lastname;
+    private String courseCode;
     private List<Course> courses;
     private List<Lesson> lessons;
 
@@ -65,14 +66,18 @@ public class SignupBean {
         this.selectedCourse = course;
     }
 
-    public void signUp() {
-        System.out.println(name + lastname);
+    public String getCourseCode() {
+        return courseCode;
     }
 
-    public void valueChanged(ValueChangeEvent e) {
-        String code = "";
-        code = e.getNewValue().toString();
-        System.out.println(code);
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
+    
+    
+
+    public void signUp() {
+        System.out.println(name + lastname);
     }
 
     public List<Course> getAllCourses() {
@@ -83,6 +88,12 @@ public class SignupBean {
     public List<Lesson> getAllLessonsFromCourse() {
         lessons = ls.getLessonsFromCourse(selectedCourse.getId());
         return lessons;
+    }
+    
+    public void valueChanged(ValueChangeEvent e) {
+        String code;
+        code = e.getNewValue().toString();
+        System.out.println(code);
     }
 
 }

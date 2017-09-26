@@ -81,9 +81,9 @@ public class PlannerBean {
         newLesson.setLocation(location);
         newLesson.setStartTime(time);
         
-        service.addLesson(newLesson);
+        //service.addLesson(newLesson);
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Successful", "Your message: " + feedbackMessage));
+        context.addMessage(null, new FacesMessage("Training opgeslagen"));
         return "planner";
     }
 }
