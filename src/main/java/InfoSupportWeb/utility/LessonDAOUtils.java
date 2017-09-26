@@ -117,7 +117,7 @@ public class LessonDAOUtils implements ILessonDAO {
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
         Object[] params = new Object[]{lesson_ID};
         try {
-            run.query(QUERY_REMOVE_LESSON, rsh, params);
+            run.execute(QUERY_REMOVE_LESSON, rsh, params);
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
