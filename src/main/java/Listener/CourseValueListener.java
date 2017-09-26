@@ -24,8 +24,7 @@ public class CourseValueListener implements ValueChangeListener {
         //access country bean directly
         FacesContext facesContext = FacesContext.getCurrentInstance();
         SignupBean signupBean = (SignupBean) facesContext.getApplication().createValueBinding("#{signupBean}").getValue(facesContext);
-
-//SignupBean course = (SignupBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("course");
+        
         signupBean.setCourseID(Long.valueOf(signupBean.getCourseID()));
     }
 
