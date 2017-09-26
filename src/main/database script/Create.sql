@@ -99,11 +99,11 @@ CONSTRAINT `fk_PriorKnowledge_PreCourse`
 );
 
 CREATE TABLE `db_dev_infosupport`.`Course_Registration`(
-  `ID_Course` INT NOT NULL,
+  `ID_Lesson` INT NOT NULL,
   `ID_User` INT NOT NULL,
-  CONSTRAINT `fk_Registration_Course`
-   FOREIGN KEY (`ID_Course`)
-   REFERENCES `db_dev_infosupport`.`Course` (`ID_Course`)
+  CONSTRAINT `fk_Registration_Lesson`
+   FOREIGN KEY (`ID_Lesson`)
+   REFERENCES `db_dev_infosupport`.`Lesson` (`ID_Lesson`)
    ON DELETE CASCADE,
   CONSTRAINT `fk_Registration_User`
    FOREIGN KEY (`ID_User`)
