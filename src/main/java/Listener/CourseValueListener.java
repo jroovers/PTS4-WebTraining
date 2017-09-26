@@ -22,10 +22,11 @@ public class CourseValueListener implements ValueChangeListener {
             throws AbortProcessingException {
 
         //access country bean directly
-        SignupBean course = (SignupBean) FacesContext.getCurrentInstance().
-                getExternalContext().getSessionMap().get("course");
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        SignupBean signupBean = (SignupBean) facesContext.getApplication().createValueBinding("#{signupBean}").getValue(facesContext);
 
-        course.setCourseID(Long.valueOf(event.getNewValue().toString()));
+//SignupBean course = (SignupBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("course");
+        signupBean.setCourseID(Long.valueOf(signupBean.getCourseID()));
     }
 
 }

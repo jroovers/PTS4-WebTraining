@@ -16,14 +16,7 @@
                     <h1>Inschrijven</h1>
                     <p class="lead">Selecteer een training en schrijf je in!<br/></p>           
                     <h:form>
-                        <!--                        <div class ="form-group">
-                                                    <h:selectOneListbox value="#{signupBean.allCourses}" onchange="submit()" styleClass="form-control">
-                                                        <f:valueChangeListener type="Listener.CourseValueListener"/>
-                                                        <f:selectItems value="#{signupBean.allCourses}" var="y"
-                                                                       itemLabel="#{y.code}" itemValue="#{y.name}"/>
-                                                    </h:selectOneListbox>
-                                                </div>-->
-                        <h:selectOneListbox id="lbox_courseSelect" styleClass="form-control" value="#{signupBean.allCourses}" onchange="submit()">
+                        <h:selectOneListbox id="lbox_courseSelect" styleClass="form-control" value="#{signupBean.courseID}" onchange="submit()">
                             <f:valueChangeListener type="Listener.CourseValueListener" />
                             <f:selectItems value="#{signupBean.allCourses}" var="c"
                                            itemLabel="#{c.shortString}" itemValue="#{c.id}"/>
