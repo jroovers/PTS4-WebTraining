@@ -75,9 +75,9 @@ public class LessonService {
      * @param l lessen to be deleted
      * @return true if succesful
      */
-    public boolean deleteLesson(Lesson l) {
+    public boolean deleteLesson(long lesson_ID) {
         LessonDAOUtils lessonDAOUtils = new LessonDAOUtils();
-        return lessonDAOUtils.removeLesson(l);
+        return lessonDAOUtils.removeLesson(lesson_ID);
     }
     
     /**

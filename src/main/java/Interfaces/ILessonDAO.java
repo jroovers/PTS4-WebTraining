@@ -40,7 +40,7 @@ public interface ILessonDAO {
      *
      * @return Success or failure
      */
-    public boolean removeLesson(Lesson lesson);
+    public boolean removeLesson(long lesson_ID);
     
     /**
      * Gets lessons from one course
