@@ -106,7 +106,7 @@ public class LessonDAOUtils implements ILessonDAO {
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Failed to add lesson to db");
+            System.err.println("Failed to edit lesson in db");
             return false;
         }    }
 

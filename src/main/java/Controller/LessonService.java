@@ -65,7 +65,7 @@ public class LessonService {
      */
     public boolean editLesson(Lesson l) {
         LessonDAOUtils lessonDAOUtils = new LessonDAOUtils();
-        throw new UnsupportedOperationException("Not yet implemented.");
+        return lessonDAOUtils.editLesson(l);
     }
 
     /**
@@ -77,7 +77,7 @@ public class LessonService {
      */
     public boolean deleteLesson(Lesson l) {
         LessonDAOUtils lessonDAOUtils = new LessonDAOUtils();
-        throw new UnsupportedOperationException("Not yet implemented.");
+        return lessonDAOUtils.removeLesson(l);
     }
     
     /**
