@@ -53,8 +53,7 @@ public class CourseService {
      */
     public List<Course> getAllCourses() {
         CourseDAOUtils courseDAOUtils = new CourseDAOUtils();
-        CourseDAOUtils cdu = new CourseDAOUtils();
-        List<Course> courses = cdu.getCourses();
+        List<Course> courses = courseDAOUtils.getCourses();
         return courses;
     }
 

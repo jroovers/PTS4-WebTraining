@@ -18,16 +18,16 @@
                     <h:form>
                         <div class="form-group">
                             <h:outputLabel for="somTraining" value="Training: "/>
-                            <h:selectOneMenu id="somTraining" styleClass="form-control" value = "#{userData.data}">
-                                <f:selectItem itemValue = "1" itemLabel = "Course 1" /> 
-                                <f:selectItem itemValue = "2" itemLabel = "Training 1" /> 
+                            <h:selectOneMenu id="somTraining" styleClass="form-control">
+                                <f:selectItem itemValue = "1" itemLabel = "Hardcoded Test Course 1" /> 
+                                <f:selectItem itemValue = "2" itemLabel = "Hardcoded Test Training 1" /> 
                             </h:selectOneMenu>
                         </div>
                         <div class ="form-group">
-                            <h:selectOneListbox value="#{signupBean.allCourses}" <!--onchange="submit()" 
-                                                valueChangeListener="#{signupBean.valueChanged}"-->styleClass="form-control">
+                            <h:selectOneListbox value="#{signupBean.allCourses}" onchange="submit()" styleClass="form-control">
+                                <f:valueChangeListener type="com.mkyong.CountryValueListener"/>
                                 <f:selectItems value="#{signupBean.allCourses}" var="y"
-                                               itemLabel="#{y.name}" itemValue="#{y.id}" />
+                                               itemLabel="#{y.code}" itemValue="#{y.name}"/>
                             </h:selectOneListbox>
                         </div>
                         <h:commandButton styleClass="btn btn-outline-success my-2 my-sm-0" action="#{signupBean.signUp()}" value="Accepteren"/>
