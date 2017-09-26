@@ -5,7 +5,9 @@
  */
 package Model;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -73,9 +75,16 @@ public class Lesson {
     public void setCourse(Course course) {
         this.course = course;
     }
+    
+    public static String format(Calendar calendar){
+    SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
+    fmt.setCalendar(calendar);
+    String dateFormatted = fmt.format(calendar.getTime());
+    return dateFormatted;
+}
 
     public String getLessonString() {
-        return startTime.toString() + " - " + location;
+        return format(startTime) + " - " + location;
     }
 
 }

@@ -21,8 +21,8 @@ import javax.inject.Named;
  *
  * @author jeroen, antonio
  */
-@Named(value = "signupBean")
-@RequestScoped
+@ManagedBean(name = "signupBean")
+@SessionScoped
 public class SignupBean {
 
     @Inject
@@ -114,4 +114,7 @@ public class SignupBean {
         return lessons;
     }
 
+    public void submitSignUp(){
+        
+    }
 }
