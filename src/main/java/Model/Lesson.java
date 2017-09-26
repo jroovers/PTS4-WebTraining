@@ -12,7 +12,7 @@ import java.util.Calendar;
  * @author Jeroen Roovers
  */
 public class Lesson {
-    
+
     private long id;
     private Calendar startTime;
     private Calendar endTime;
@@ -21,12 +21,12 @@ public class Lesson {
     //private Teacher teacher ?
     //private list cursists ?
     //SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    
-    public Lesson(Course course){
+
+    public Lesson(Course course) {
         this.course = course;
     }
-    
-    public Lesson(long id, Calendar startTime, Calendar endTime, String location, Course course){
+
+    public Lesson(long id, Calendar startTime, Calendar endTime, String location, Course course) {
         this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -73,8 +73,9 @@ public class Lesson {
     public void setCourse(Course course) {
         this.course = course;
     }
-    
-    
-    
-    
+
+    public String getLessonString() {
+        return startTime.toString() + " - " + location;
+    }
+
 }

@@ -28,6 +28,8 @@ public class SignupBean {
     @Inject
     LessonService ls;
 
+    private long courseID;
+    private long lessonID;
     private Course selectedCourse;
     private String name;
     private String lastname;
@@ -58,6 +60,22 @@ public class SignupBean {
         this.lastname = lastname;
     }
 
+    public long getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(long courseID) {
+        this.courseID = courseID;
+    }
+
+    public long getLessonID() {
+        return lessonID;
+    }
+
+    public void setLessonID(long lessonID) {
+        this.lessonID = lessonID;
+    }
+
     public Course getSelectedCourse() {
         return selectedCourse;
     }
@@ -73,8 +91,6 @@ public class SignupBean {
     public void setCourseCode(String courseCode) {
         this.courseCode = courseCode;
     }
-    
-    
 
     public void signUp() {
         System.out.println(name + lastname);
@@ -85,15 +101,15 @@ public class SignupBean {
         return courses;
     }
 
-    public List<Lesson> getAllLessonsFromCourse() {
-        lessons = ls.getLessonsFromCourse(selectedCourse.getId());
-        return lessons;
-    }
-    
     public void valueChanged(ValueChangeEvent e) {
         String code;
         code = e.getNewValue().toString();
         System.out.println(code);
+    }
+
+    public List<Lesson> getAllLessonsFromCourse() {
+        lessons = ls.getLessonsFromCourse(courseID);
+        return lessons;
     }
 
 }
