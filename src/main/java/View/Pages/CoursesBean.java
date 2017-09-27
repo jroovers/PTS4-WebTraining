@@ -7,10 +7,13 @@ package View.Pages;
 
 import Controller.CourseService;
 import Model.Course;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 
 /**
@@ -33,12 +36,66 @@ public class CoursesBean {
     private String cost;
     private String location;
     private String keywords;
+    private List<Course> courses;
+    private Course course;
+    private int selectedID;
+    private String selectedName;
 
     /**
      * Creates a new instance of coursesBean
      */
     public CoursesBean() {
+
+        
     }
+
+    public String getSelectedName() {
+        return selectedName;
+    }
+
+    public void setSelectedName(String selectedName) {
+        this.selectedName = selectedName;
+    }
+    
+    
+
+    public int getSelectedID() {
+        return selectedID;
+    }
+
+    public void setSelectedID(int selectedID) {
+        this.selectedID = selectedID;
+    }
+    
+    
+    
+    public List<SelectItem> getCoursesCmb() {
+        
+        List<SelectItem> listCmb = new ArrayList<SelectItem>();
+        courses = this.cService.getAllCourses();
+        for(Course c : courses) {
+            listCmb.add(new SelectItem(c.getCode(), c.getName()));
+        }
+        return listCmb;
+    }
+    
+    public void setCourseData(){
+        int number = 1;
+        for(Course c : courses) {
+            
+        }
+        
+        try{ this.code = course.getCode(); } catch(NullPointerException ex) { this.code = ""; }
+        try{ this.name = course.getName(); } catch(NullPointerException ex) { this.name = ""; }
+        try{ this.description = course.getDescription(); } catch(NullPointerException ex) { this.description = ""; }
+        try{ this.requiredKnowledge = course.getPriorKnowledge().toString(); } catch(NullPointerException ex) { this.requiredKnowledge = ""; }
+        try{ this.cursusMaterial = course.getCourseMaterials(); } catch(NullPointerException ex) { this.cursusMaterial = ""; }
+        try{ this.timeInDays = Integer.toString(course.getDurationInDays()); } catch(NullPointerException ex) { this.timeInDays = ""; }
+        try{ this.cost = Double.toString(course.getCost()); } catch(NullPointerException ex) { this.cost = ""; }
+        try{ this.location = course.getLocation(); } catch(NullPointerException ex) { this.location = ""; }
+               
+    } 
+    
 
     // Adds a course to the database.
     public boolean addCourse() {
@@ -84,6 +141,7 @@ public class CoursesBean {
         String[] splittedText = text.split("\\,");
         return splittedText;
     } 
+    
 
     public String getCode() {
         return code;
