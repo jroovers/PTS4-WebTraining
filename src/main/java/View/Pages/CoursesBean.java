@@ -38,8 +38,7 @@ public class CoursesBean {
     private String keywords;
     private List<Course> courses;
     private Course course;
-    private int selectedID;
-    private String selectedName;
+    private String selectedCode;
 
     /**
      * Creates a new instance of coursesBean
@@ -49,23 +48,16 @@ public class CoursesBean {
         
     }
 
-    public String getSelectedName() {
-        return selectedName;
+    public String getSelectedCode() {
+        return selectedCode;
     }
 
-    public void setSelectedName(String selectedName) {
-        this.selectedName = selectedName;
+    public void setSelectedCode(String _selectedCode) {
+        this.selectedCode = _selectedCode;
     }
     
     
 
-    public int getSelectedID() {
-        return selectedID;
-    }
-
-    public void setSelectedID(int selectedID) {
-        this.selectedID = selectedID;
-    }
     
     
     
@@ -79,16 +71,22 @@ public class CoursesBean {
         return listCmb;
     }
     
+    
+    
     public void setCourseData(){
         int number = 1;
         for(Course c : courses) {
-            
+            if(selectedCode.equals(c.getCode()))
+            {
+                course = c;
+                break;
+            }
         }
         
         try{ this.code = course.getCode(); } catch(NullPointerException ex) { this.code = ""; }
         try{ this.name = course.getName(); } catch(NullPointerException ex) { this.name = ""; }
         try{ this.description = course.getDescription(); } catch(NullPointerException ex) { this.description = ""; }
-        try{ this.requiredKnowledge = course.getPriorKnowledge().toString(); } catch(NullPointerException ex) { this.requiredKnowledge = ""; }
+        try{ this.requiredKnowledge = this.splitStringList(course.getPriorKnowledge()); } catch(NullPointerException ex) { this.requiredKnowledge = ""; }
         try{ this.cursusMaterial = course.getCourseMaterials(); } catch(NullPointerException ex) { this.cursusMaterial = ""; }
         try{ this.timeInDays = Integer.toString(course.getDurationInDays()); } catch(NullPointerException ex) { this.timeInDays = ""; }
         try{ this.cost = Double.toString(course.getCost()); } catch(NullPointerException ex) { this.cost = ""; }
@@ -141,6 +139,19 @@ public class CoursesBean {
         String[] splittedText = text.split("\\,");
         return splittedText;
     } 
+    
+    public String splitStringList(String[] list) {
+        String value = "";
+        boolean first = true;
+        for(String s : list) {
+            if(first == false) {
+                value = value + ", " + s;
+            } else {
+                value = s;
+            }
+        }
+        return value;
+    }
     
 
     public String getCode() {

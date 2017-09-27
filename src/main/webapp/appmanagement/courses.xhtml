@@ -72,12 +72,12 @@
                         <tr>
                             <th><p>Training beheren</p></th>
                             <th></th>
-                            <th><h:selectOneMenu value="#{coursesBean.selectedName}">
+                            <th><h:selectOneMenu value="#{coursesBean.selectedCode}">
                                     <f:selectItem itemLabel="Choose"/>
                                     <f:selectItems value="#{coursesBean.coursesCmb}"/>
                                 </h:selectOneMenu></th>
-                            <th><h:commandButton value="Training verwijderen" style="width: 100%" action="#{coursesBean.setCourseData()}" ></h:commandButton></th>
-                            <th><h:commandButton value="Training beheren" style="width: 100%"></h:commandButton></th>
+                            <th><h:commandButton value="Training verwijderen" style="width: 100%"  ></h:commandButton></th>
+                            <th><h:commandButton value="Training beheren" style="width: 100%" action="#{coursesBean.setCourseData()}" ></h:commandButton></th>
 
                         </tr>
 
