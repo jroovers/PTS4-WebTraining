@@ -33,6 +33,7 @@ public class PlannerBean {
     CourseService cService;
 
     private long courseID;
+    private long lessonID;
     private List<Course> courses;
     private List<Lesson> lessons;
     private Date startDate;
@@ -60,6 +61,14 @@ public class PlannerBean {
 
     public void setCourseID(long courseID) {
         this.courseID = courseID;
+    }
+
+    public long getLessonID() {
+        return lessonID;
+    }
+
+    public void setLessonID(long lessonID) {
+        this.lessonID = lessonID;
     }
 
     public Date getStartDate() {
@@ -118,5 +127,9 @@ public class PlannerBean {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training opgeslagen", "whoopizz"));
         return "planner";
+    }
+    
+    public void deleteLesson(){
+        
     }
 }

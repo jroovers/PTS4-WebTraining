@@ -17,34 +17,50 @@
                     <li>Toewijzen, aanpassen en verwijderen van Locaties</li>
                 </ul>
                 <div class="row">
-                    <div class="col"/>
-                    <div class="col-6">
+                    <div class="col-4">
+                        <h2>Nieuwe les plannen</h2>
+                        <hr/>
                         <h:form>
-                            <p:growl id="growl" class=""/>  
+                            <p:growl id="planner_growl"/>  
                             <div class="form-group">
-                                <h:outputLabel for="lbox_trainingselect" value="Kies een training die je wil plannen"/>
-                                <h:selectOneListbox id="lbox_trainingselect" styleClass="form-control" value="#{plannerBean.courseID}" required="true" requiredMessage="Kies een cursus">
+                                <p:outputLabel for="lbox_trainingselect" value="Kies een training die je wil plannen"/>
+                                <p:selectOneListbox id="lbox_trainingselect" styleClass="form-control" value="#{plannerBean.courseID}" required="true" requiredMessage="Kies een training" filter="true" filterMatchMode="contains">
                                     <f:selectItems value="#{plannerBean.courses}" var="c"
                                                    itemLabel="#{c.shortString}" itemValue="#{c.id}"/>
-                                </h:selectOneListbox>
+                                </p:selectOneListbox>
                             </div>
                             <div class="form-group">
-                                <h:outputLabel for="inline" value="Kies een datum:" />
-                                <p:calendar id="inline" mode="inline" value="#{plannerBean.startDate}" required="true" requiredMessage=" Kies een datum"/>
+                                <p:outputLabel for="calendar" value="Kies een datum:" /><br/>
+                                <p:calendar id="calendar" value="#{plannerBean.startDate}" required="true" requiredMessage=" Kies een datum"/>     
                             </div>
                             <div class="form-group">
-                                <h:outputLabel for="location" value="Waar vindt deze training plaats?"/>
-                                <h:inputText id="location" styleClass="form-control" value="#{plannerBean.location}" required="true" requiredMessage="Geef een locatie op"/>
+                                <p:outputLabel for="location" value="Waar vindt deze training plaats?"/>
+                                <p:inputText id="location" styleClass="form-control" value="#{plannerBean.location}" required="true" requiredMessage="Geef een locatie op"/>
                             </div>
                             <div class="form-group">
-                                <p:commandButton  styleClass="btn btn-primary" value="Verzenden" update="growl" action="#{plannerBean.submitLesson()}"/>
+                                <p:commandButton value="Verzenden" update="planner_growl" action="#{plannerBean.submitLesson()}"/>
                             </div>
                         </h:form>
                     </div>
-                    <div class="col"/>
+                    <div class="col-8">
+                        <h2>Huidige geplande lessen:</h2>
+                        <hr/>
+                        <h:form>
+                            <div class="form-group">
+                            <p:growl id="lesson_growl" class=""/>  
+                            <p:outputLabel for="lbox_lessonselect" value="Kies een les die je wil wijzigen"/>
+                            <p:selectOneListbox id="lbox_lessonselect" styleClass="form-control" value="#{plannerBean.lessonID}" required="true" requiredMessage="Kies een les" filter="true" filterMatchMode="contains">
+                                <f:selectItems value="#{plannerBean.lessons}" var="l"
+                                               itemLabel="#{l.lessonString}" itemValue="#{l.id}"/>
+                            </p:selectOneListbox>
+                            </div>
+                            <div class="form-group">
+                            <p:commandButton value="Verwijderen" update="lesson_growl"/>
+                            </div>
+                        </h:form>
+                    </div>
                 </div>
             </div>
         </div>
-        <h:outputStylesheet library="style" name="PlannerStyle.css"/>
     </ui:define>
 </ui:composition>

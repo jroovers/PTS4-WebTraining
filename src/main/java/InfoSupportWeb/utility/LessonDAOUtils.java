@@ -31,6 +31,7 @@ public class LessonDAOUtils implements ILessonDAO {
     static final String QUERY_GET_LESSONS_FROM_COURSE = "SELECT l.*, c.* FROM Lesson l, Course c WHERE l.ID_Course=c.ID_Course AND l.ID_Course = ?";
     static final String QUERY_UPDATE_LESSON = "UPDATE Lesson SET StartTime = ?, EndTime = ?, Location = ?, ID_Course = ? WHERE ID_Lesson = ?";
     static final String QUERY_REMOVE_LESSON = "DELETE FROM Lesson WHERE ID_Lesson = ?";
+    static final String QUERY_SIGNUP_USER_TO_LESSON = "INSERT INTO Lesson_Registration(ID_Lesson, ID_User) VALUE (?,?);";
 
     public LessonDAOUtils() {
 
@@ -164,6 +165,23 @@ public class LessonDAOUtils implements ILessonDAO {
             System.out.println(ex_sql.getMessage());
         }
         return lessons;
+    }
+
+    @Override
+    public long signUpUser(long lesson_ID, long user_ID) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        ResultSetHandlerImp rsh = new ResultSetHandlerImp();
+        Object[] params = new Object[]{lesson_ID, user_ID};
+        try {
+            Object[] result = run.insert(QUERY_SIGNUP_USER_TO_LESSON, rsh, params);
+                                    
+            System.out.println("SQL Success");
+            return 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Failed to add lesson to db");
+            return 0;
+        }        
     }
 
 }

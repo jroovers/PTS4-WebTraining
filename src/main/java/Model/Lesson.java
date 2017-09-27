@@ -84,7 +84,7 @@ public class Lesson {
 }
 
     public String getLessonString() {
-        return format(startTime) + " - " + location;
+        return format(startTime) + " - " + location + " - " + course.getName();
     }
 
 }

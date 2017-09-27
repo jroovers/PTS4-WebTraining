@@ -49,4 +49,12 @@ public interface ILessonDAO {
      * @return List of lessons who are connected to the given id of the course
      */
     public List<Lesson> getLessonsFromCourse(long course_ID);
+    
+    /**
+     * Signs an user to the Database on the lesson he/she selected.
+     * 
+     * @param lesson_ID id of the lesson selected
+     * @param user_ID id of the user logged in
+     */
+    public long signUpUser(long lesson_ID, long user_ID);
 }
