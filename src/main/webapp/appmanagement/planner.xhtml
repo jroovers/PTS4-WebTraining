@@ -20,23 +20,24 @@
                     <div class="col"/>
                     <div class="col-6">
                         <h:form>
-                            <p:growl id="growl"/>  
+                            <p:growl id="growl" class=""/>  
                             <div class="form-group">
                                 <h:outputLabel for="lbox_trainingselect" value="Kies een training die je wil plannen"/>
-                                <h:selectOneListbox id="lbox_trainingselect" styleClass="form-control">
-                                    <f:selectItems />
+                                <h:selectOneListbox id="lbox_trainingselect" styleClass="form-control" value="#{plannerBean.courseID}" required="true" requiredMessage="Kies een cursus">
+                                    <f:selectItems value="#{plannerBean.courses}" var="c"
+                                                   itemLabel="#{c.shortString}" itemValue="#{c.id}"/>
                                 </h:selectOneListbox>
                             </div>
                             <div class="form-group">
                                 <h:outputLabel for="inline" value="Kies een datum:" />
-                                <p:calendar id="inline" mode="inline" value="#{plannerBean.startDate}"/>
+                                <p:calendar id="inline" mode="inline" value="#{plannerBean.startDate}" required="true" requiredMessage=" Kies een datum"/>
                             </div>
                             <div class="form-group">
                                 <h:outputLabel for="location" value="Waar vindt deze training plaats?"/>
-                                <h:inputText id="location" styleClass="form-control" value="#{plannerBean.location}"/>
+                                <h:inputText id="location" styleClass="form-control" value="#{plannerBean.location}" required="true" requiredMessage="Geef een locatie op"/>
                             </div>
                             <div class="form-group">
-                                <p:commandButton styleClass="btn btn-primary" value="Verzenden" update="growl" actionListener="#{plannerBean.submitLesson()}"/>
+                                <p:commandButton  styleClass="btn btn-primary" value="Verzenden" update="growl" action="#{plannerBean.submitLesson()}"/>
                             </div>
                         </h:form>
                     </div>
@@ -44,5 +45,6 @@
                 </div>
             </div>
         </div>
+        <h:outputStylesheet library="style" name="PlannerStyle.css"/>
     </ui:define>
 </ui:composition>

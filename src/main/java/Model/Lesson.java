@@ -5,14 +5,16 @@
  */
 package Model;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  *
  * @author Jeroen Roovers
  */
 public class Lesson {
-    
+
     private long id;
     private Calendar startTime;
     private Calendar endTime;
@@ -21,12 +23,12 @@ public class Lesson {
     //private Teacher teacher ?
     //private list cursists ?
     //SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    
-    public Lesson(Course course){
+
+    public Lesson(Course course) {
         this.course = course;
     }
-    
-    public Lesson(long id, Calendar startTime, Calendar endTime, String location, Course course){
+
+    public Lesson(long id, Calendar startTime, Calendar endTime, String location, Course course) {
         this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -74,7 +76,15 @@ public class Lesson {
         this.course = course;
     }
     
-    
-    
-    
+    public static String format(Calendar calendar){
+    SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
+    fmt.setCalendar(calendar);
+    String dateFormatted = fmt.format(calendar.getTime());
+    return dateFormatted;
+}
+
+    public String getLessonString() {
+        return format(startTime) + " - " + location;
+    }
+
 }

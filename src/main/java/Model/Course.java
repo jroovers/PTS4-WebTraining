@@ -161,5 +161,8 @@ public class Course {
     public void setCost(double cost) {
         this.cost = cost;
     }
-
+    
+    public String getShortString(){
+        return this.code + " - " + this.name;
+    }
 }
