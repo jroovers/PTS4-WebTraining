@@ -174,11 +174,9 @@ public class LessonDAOUtils implements ILessonDAO {
         Object[] params = new Object[]{lesson_ID, user_ID};
         try {
             Object[] result = run.insert(QUERY_SIGNUP_USER_TO_LESSON, rsh, params);
-            
-            long id = Long.parseLong(result[0].toString());            
-            System.out.println("SQL Success, output:");
-            System.out.println(id);
-            return id;
+                                    
+            System.out.println("SQL Success");
+            return 1;
         } catch (SQLException ex) {
             Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Failed to add lesson to db");
