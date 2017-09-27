@@ -21,3 +21,7 @@ table th {
     width: 190px;
 
 }
+
+table.ht.testie {
+    width: 300px;
+}
