@@ -27,7 +27,7 @@
                             <f:selectItems value="#{signupBean.allLessonsFromCourse}" var="c"
                                            itemLabel="#{c.lessonString}" itemValue="#{c.id}"/>
                         </h:selectOneListbox>                    
-                        <p:commandButton styleClass="btn btn-primary" action="#{signupBean.signUp()}" value="Accepteren" update="growl"/>
+                        <p:commandButton action="#{signupBean.signUp()}" value="Accepteren" update="growl"/>
                     </h:form>   
                 </div>
             </div>
