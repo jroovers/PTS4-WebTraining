@@ -31,14 +31,14 @@
                             </div>
                             <div class="form-group">
                                 <p:outputLabel for="calendar" value="Kies een datum:" /><br/>
-                                <p:calendar id="calendar" value="#{plannerBean.startDate}" required="true" requiredMessage=" Kies een datum"/>     
+                                <p:calendar id="calendar" value="#{plannerBean.startDate}" locale="nl" required="true" requiredMessage=" Kies een datum"/>     
                             </div>
                             <div class="form-group">
                                 <p:outputLabel for="location" value="Waar vindt deze training plaats?"/>
                                 <p:inputText id="location" styleClass="form-control" value="#{plannerBean.location}" required="true" requiredMessage="Geef een locatie op"/>
                             </div>
                             <div class="form-group">
-                                <p:commandButton value="Verzenden" update="planner_growl" action="#{plannerBean.submitLesson()}"/>
+                                <p:commandButton value="Verzenden" update="planner_growl" action="#{plannerBean.submitLesson()}" ajax="false"/>
                             </div>
                         </h:form>
                     </div>
@@ -47,15 +47,15 @@
                         <hr/>
                         <h:form>
                             <div class="form-group">
-                            <p:growl id="lesson_growl" class=""/>  
-                            <p:outputLabel for="lbox_lessonselect" value="Kies een les die je wil wijzigen"/>
-                            <p:selectOneListbox id="lbox_lessonselect" styleClass="form-control" value="#{plannerBean.lessonID}" required="true" requiredMessage="Kies een les" filter="true" filterMatchMode="contains">
-                                <f:selectItems value="#{plannerBean.lessons}" var="l"
-                                               itemLabel="#{l.lessonString}" itemValue="#{l.id}"/>
-                            </p:selectOneListbox>
+                                <p:growl id="lesson_growl" class=""/>  
+                                <p:outputLabel for="lbox_lessonselect" value="Kies een les die je wil wijzigen"/>
+                                <p:selectOneListbox id="lbox_lessonselect" styleClass="form-control" value="#{plannerBean.lessonID}" required="true" requiredMessage="Kies een les" filter="true" filterMatchMode="contains">
+                                    <f:selectItems value="#{plannerBean.lessons}" var="l"
+                                                   itemLabel="#{l.lessonString}" itemValue="#{l.id}"/>
+                                </p:selectOneListbox>
                             </div>
                             <div class="form-group">
-                            <p:commandButton value="Verwijderen" update="lesson_growl"/>
+                                <p:commandButton value="Verwijderen" update="lesson_growl" action="#{plannerBean.deleteLesson()}" ajax="false"/>
                             </div>
                         </h:form>
                     </div>
