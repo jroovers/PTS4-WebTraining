@@ -12,23 +12,45 @@
     <!-- Content -->
     <ui:define name="content">
         <div class="container">
-            <div class="mt-5">         
-                <div class="col-sm-4">
-                    <h1>Inschrijven</h1>
-                    <p class="lead">Selecteer een training en schrijf je in!<br/></p>           
-                    <h:form>
-                        <p:growl id="growl" class=""/>  
-                        <h:selectOneListbox id="lbox_courseSelect" styleClass="form-control" value="#{signupBean.courseID}" onchange="submit()">
-                            <f:valueChangeListener type="Listener.CourseValueListener" />
-                            <f:selectItems value="#{signupBean.allCourses}" var="c"
-                                           itemLabel="#{c.shortString}" itemValue="#{c.id}"/>
-                        </h:selectOneListbox>
-                        <h:selectOneListbox id="lbox_lessonSelect" styleClass="form-control" value="#{signupBean.lessonID}" onchange="submit()">
-                            <f:selectItems value="#{signupBean.allLessonsFromCourse}" var="c"
-                                           itemLabel="#{c.lessonString}" itemValue="#{c.id}"/>
-                        </h:selectOneListbox>                    
-                        <p:commandButton action="#{signupBean.signUp()}" value="Accepteren" update="growl"/>
-                    </h:form>   
+            <div class="mt-5">
+                <h1>Selecteer een training en schrijf je in!</h1>
+                <hr/><hr/>
+                <div class="row">
+                    <div class="col-4">
+                        <h3>Cursussen:</h3>
+                        <hr/>
+                        <h:form>
+                            <p:growl id="planner_growl"/>  
+                            <div class="form-group">
+                                <p:outputLabel for="lbox_trainingselect" value="Kies een cursus"/>
+                                <p:selectOneListbox id="lbox_trainingselect" styleClass="form-control" value="#{signupBean.courseID}" required="true" 
+                                                    requiredMessage="Kies een training" filter="true" filterMatchMode="contains" onchange="submit()">
+                                    <f:valueChangeListener type="Listener.CourseValueListener" />
+                                    <f:selectItems value="#{signupBean.allCourses}" var="c"
+                                                   itemLabel="#{c.shortString}" itemValue="#{c.id}"/>
+                                </p:selectOneListbox>
+                            </div>
+                        </h:form>
+                    </div>
+                    <div class="col-8">
+                        <h3>Huidige geplande lessen:</h3>
+                        <hr/>
+                        <h:form>
+                            <div class="form-group">
+                                <p:growl id="lesson_growl" class=""/>  
+                                <p:outputLabel for="lbox_lessonselect" value="Kies een les die je wil volgen"/>
+                                <p:selectOneListbox id="lbox_lessonselect" styleClass="form-control" value="#{signupBean.lessonID}" required="true" 
+                                                    requiredMessage="Kies een les" filter="true" filterMatchMode="contains" onchange="submit()">
+                                    <f:selectItems value="#{signupBean.allLessonsFromCourse}" var="c"
+                                                   itemLabel="#{c.lessonString}" itemValue="#{c.id}"/>
+                                </p:selectOneListbox>
+                            </div>
+                            <div class="form-group">
+                                <p:growl id="signup_growl" class=""/>
+                                <p:commandButton action="#{signupBean.signUp()}" value="Accepteren" update="signup_growl"/>
+                            </div>
+                        </h:form>
+                    </div>
                 </div>
             </div>
         </div>
