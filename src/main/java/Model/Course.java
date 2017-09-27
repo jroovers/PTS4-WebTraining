@@ -165,4 +165,8 @@ public class Course {
     public String getShortString(){
         return this.code + " - " + this.name;
     }
+    
+    public String getLongString(){
+        return this.name + " - " + this.location + " - Kosten: " + this.cost + " - Dagen: " + this.durationInDays;
+    }
 }
