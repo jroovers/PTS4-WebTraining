@@ -11,8 +11,10 @@ import Model.Course;
 import Model.Lesson;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -95,7 +97,13 @@ public class SignupBean {
     }
 
     public void signUp() {
-        System.out.println(name + lastname);
+        long id = ls.signUpUser(lessonID, 1);
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (id != 0) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training opgeslagen", "!"));
+        } else {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Training niet opgeslagen!", "Er is iets fouts gegaan! Probeer het later opnieuw"));
+        }
     }
 
     public List<Course> getAllCourses() {
@@ -112,9 +120,5 @@ public class SignupBean {
     public List<Lesson> getAllLessonsFromCourse() {
         lessons = ls.getLessonsFromCourse(courseID);
         return lessons;
-    }
-
-    public void submitSignUp(){
-        
     }
 }

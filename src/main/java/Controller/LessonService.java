@@ -90,5 +90,11 @@ public class LessonService {
         LessonDAOUtils lessonDAOUtils = new LessonDAOUtils();
         return lessonDAOUtils.getLessonsFromCourse(course_ID);
     }
+    
+    public long signUpUser(long lesson_ID, long user_ID) {
+        LessonDAOUtils lessonDAOUtils = new LessonDAOUtils();
+        long id = lessonDAOUtils.signUpUser(lesson_ID, user_ID);
+        return id;
+    }
 
 }
