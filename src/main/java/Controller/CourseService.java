@@ -30,7 +30,7 @@ public class CourseService {
     public Course addCourse(String code, String name) {
         CourseDAOUtils courseDAOUtils = new CourseDAOUtils();
         
-        Course c = new Course(name, code);
+        Course c = new Course(code, name);
         return courseDAOUtils.addCourse(c);
     }
 
@@ -65,7 +65,7 @@ public class CourseService {
      */
     public boolean editCourse(Course course) {
         CourseDAOUtils courseDAOUtils = new CourseDAOUtils();
-        throw new UnsupportedOperationException("Not yet implemented.");
+        return courseDAOUtils.editCourse(course);
     }
 
     /**
@@ -74,8 +74,8 @@ public class CourseService {
      * @param course
      * @return
      */
-    public boolean removeCourse(Course course) {
+    public boolean removeCourse(long course_ID) {
         CourseDAOUtils courseDAOUtils = new CourseDAOUtils();
-        throw new UnsupportedOperationException("Not yet implemented.");
+        return courseDAOUtils.removeCourse(course_ID);
     }
 }

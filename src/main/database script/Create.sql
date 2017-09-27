@@ -7,6 +7,8 @@ DROP TABLE IF EXISTS `db_dev_infosupport`.`Course`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Registration`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Category`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`UserType`;
+DROP TABLE IF EXISTS `db_dev_infosupport`.`Lesson_Registration`;
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE `db_dev_infosupport`.`UserType` (
@@ -64,8 +66,8 @@ CREATE TABLE `db_dev_infosupport`.`Lesson`(
 
 CREATE TABLE `db_dev_infosupport`.`Registration`(
   `ID_User` INT NOT NULL AUTO_INCREMENT,
-  `FirstName` DATE NOT NULL,
-  `LastName` DATE NOT NULL,
+  `FirstName` VARCHAR(255) NOT NULL,
+  `LastName` VARCHAR(255) NOT NULL,
   `Email` VARCHAR(30) NOT NULL,
   `PhoneNumber` INT NOT NULL,
   
@@ -98,15 +100,15 @@ CONSTRAINT `fk_PriorKnowledge_PreCourse`
   ON DELETE CASCADE
 );
 
-CREATE TABLE `db_dev_infosupport`.`Course_Registration`(
-  `ID_Course` INT NOT NULL,
+CREATE TABLE `db_dev_infosupport`.`Lesson_Registration`(
+  `ID_Lesson` INT NOT NULL,
   `ID_User` INT NOT NULL,
-  CONSTRAINT `fk_Registration_Course`
-   FOREIGN KEY (`ID_Course`)
-   REFERENCES `db_dev_infosupport`.`Course` (`ID_Course`)
+  CONSTRAINT `fk_Registration_Lesson`
+   FOREIGN KEY (`ID_Lesson`)
+   REFERENCES `db_dev_infosupport`.`Lesson` (`ID_Lesson`)
    ON DELETE CASCADE,
   CONSTRAINT `fk_Registration_User`
    FOREIGN KEY (`ID_User`)
-   REFERENCES `db_dev_infosupport`.`User` (`ID_User`)
+   REFERENCES `db_dev_infosupport`.`Registration` (`ID_User`)
    ON DELETE CASCADE
 );

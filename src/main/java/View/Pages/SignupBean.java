@@ -11,6 +11,10 @@ import Model.Course;
 import Model.Lesson;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,8 +23,8 @@ import javax.inject.Named;
  *
  * @author jeroen, antonio
  */
-@Named(value = "signupBean")
-@RequestScoped
+@ManagedBean(name = "signupBean")
+@SessionScoped
 public class SignupBean {
 
     @Inject
@@ -28,6 +32,8 @@ public class SignupBean {
     @Inject
     LessonService ls;
 
+    private long courseID;
+    private long lessonID;
     private Course selectedCourse;
     private String name;
     private String lastname;
@@ -58,6 +64,22 @@ public class SignupBean {
         this.lastname = lastname;
     }
 
+    public long getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(long courseID) {
+        this.courseID = courseID;
+    }
+
+    public long getLessonID() {
+        return lessonID;
+    }
+
+    public void setLessonID(long lessonID) {
+        this.lessonID = lessonID;
+    }
+
     public Course getSelectedCourse() {
         return selectedCourse;
     }
@@ -73,11 +95,15 @@ public class SignupBean {
     public void setCourseCode(String courseCode) {
         this.courseCode = courseCode;
     }
-    
-    
 
     public void signUp() {
-        System.out.println(name + lastname);
+        long id = ls.signUpUser(lessonID, 1);
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (id != 0) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training opgeslagen", "!"));
+        } else {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Training niet opgeslagen!", "Er is iets fouts gegaan! Probeer het later opnieuw"));
+        }
     }
 
     public List<Course> getAllCourses() {
@@ -85,15 +111,14 @@ public class SignupBean {
         return courses;
     }
 
-    public List<Lesson> getAllLessonsFromCourse() {
-        lessons = ls.getLessonsFromCourse(selectedCourse.getId());
-        return lessons;
-    }
-    
     public void valueChanged(ValueChangeEvent e) {
         String code;
         code = e.getNewValue().toString();
         System.out.println(code);
     }
 
+    public List<Lesson> getAllLessonsFromCourse() {
+        lessons = ls.getLessonsFromCourse(courseID);
+        return lessons;
+    }
 }

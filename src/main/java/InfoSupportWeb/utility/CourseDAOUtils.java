@@ -5,6 +5,8 @@
  */
 package InfoSupportWeb.utility;
 
+import static InfoSupportWeb.utility.LessonDAOUtils.QUERY_REMOVE_LESSON;
+import static InfoSupportWeb.utility.LessonDAOUtils.QUERY_UPDATE_LESSON;
 import Interfaces.ICourseDAO;
 import Model.Course;
 import java.sql.SQLException;
@@ -24,11 +26,13 @@ public class CourseDAOUtils implements ICourseDAO {
 
     static final String QUERY_GET_COURSES = "SELECT * FROM Course";
     static final String QUERY_INSERT_COURSE = "INSERT INTO Course"
-		+ "(Code, Name, Description, CourseMaterials, KeyWords, Duration, Cost) VALUES"
-		+ "(?,?,?,?,?,?,?)";
-    
+            + "(Code, Name, Description, CourseMaterials, KeyWords, Duration, Cost) VALUES"
+            + "(?,?,?,?,?,?,?)";
+    static final String QUERY_UPDATE_COURSE = "UPDATE Course SET Code = ?, Name = ?, Description = ?, CourseMaterials = ?, KeyWords = ?, Duration = ?, Cost = ? WHERE ID_Course = ?";
+    static final String QUERY_REMOVE_COURSE = "DELETE FROM Course WHERE ID_Course = ?";
+
     public CourseDAOUtils() {
-        
+
     }
 
     @Override
@@ -48,9 +52,8 @@ public class CourseDAOUtils implements ICourseDAO {
                         o[4] == null ? null : o[4].toString(),
                         o[6] == null ? null : Integer.parseInt(o[6].toString()),
                         o[7] == null ? null : Double.parseDouble(o[7].toString())
-                        
                 );
-                
+
                 courses.add(course);
             }
         } catch (SQLException ex_sql) {
@@ -59,7 +62,7 @@ public class CourseDAOUtils implements ICourseDAO {
         }
         return courses;
     }
-    
+
     @Override
     public Course addCourse(Course course) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
@@ -67,9 +70,9 @@ public class CourseDAOUtils implements ICourseDAO {
         Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), Arrays.toString(course.getKeyWords()), course.getDurationInDays(), course.getCost()};
         try {
             Object[] result = run.insert(QUERY_INSERT_COURSE, rsh, params);
-            
+
             long id = Long.parseLong(result[0].toString());
-                        
+
             course.setId(id);
             System.out.println("SQL Success, output:");
             System.out.println(id);
@@ -83,13 +86,31 @@ public class CourseDAOUtils implements ICourseDAO {
 
     @Override
     public boolean editCourse(Course course) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), Arrays.toString(course.getKeyWords()), course.getDurationInDays(), course.getCost(), course.getId()};
+        try {
+            run.update(QUERY_UPDATE_COURSE, params);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Failed to edit course in db");
+            return false;
+        }
     }
 
     @Override
-    public boolean removeCourse(Course course) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean removeCourse(long course_ID) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        ResultSetHandlerImp rsh = new ResultSetHandlerImp();
+        Object[] params = new Object[]{course_ID};
+        try {
+            run.execute(QUERY_REMOVE_COURSE, rsh, params);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Failed to remove course from db");
+            return false;
+        }
     }
-    
-        
+
 }

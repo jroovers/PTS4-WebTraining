@@ -3,7 +3,8 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:f="http://xmlns.jcp.org/jsf/core">
     <!-- Tabblad naam -->
@@ -16,21 +17,17 @@
                     <h1>Inschrijven</h1>
                     <p class="lead">Selecteer een training en schrijf je in!<br/></p>           
                     <h:form>
-                        <div class="form-group">
-                            <h:outputLabel for="somTraining" value="Training: "/>
-                            <h:selectOneMenu id="somTraining" styleClass="form-control">
-                                <f:selectItem itemValue = "1" itemLabel = "Hardcoded Test Course 1" /> 
-                                <f:selectItem itemValue = "2" itemLabel = "Hardcoded Test Training 1" /> 
-                            </h:selectOneMenu>
-                        </div>
-                        <div class ="form-group">
-                            <h:selectOneListbox value="#{signupBean.allCourses}" onchange="submit()" styleClass="form-control">
-                                <f:valueChangeListener type="com.mkyong.CountryValueListener"/>
-                                <f:selectItems value="#{signupBean.allCourses}" var="y"
-                                               itemLabel="#{y.code}" itemValue="#{y.name}"/>
-                            </h:selectOneListbox>
-                        </div>
-                        <h:commandButton styleClass="btn btn-outline-success my-2 my-sm-0" action="#{signupBean.signUp()}" value="Accepteren"/>
+                        <p:growl id="growl" class=""/>  
+                        <h:selectOneListbox id="lbox_courseSelect" styleClass="form-control" value="#{signupBean.courseID}" onchange="submit()">
+                            <f:valueChangeListener type="Listener.CourseValueListener" />
+                            <f:selectItems value="#{signupBean.allCourses}" var="c"
+                                           itemLabel="#{c.shortString}" itemValue="#{c.id}"/>
+                        </h:selectOneListbox>
+                        <h:selectOneListbox id="lbox_lessonSelect" styleClass="form-control" value="#{signupBean.lessonID}" onchange="submit()">
+                            <f:selectItems value="#{signupBean.allLessonsFromCourse}" var="c"
+                                           itemLabel="#{c.lessonString}" itemValue="#{c.id}"/>
+                        </h:selectOneListbox>                    
+                        <p:commandButton styleClass="btn btn-primary" action="#{signupBean.signUp()}" value="Accepteren" update="growl"/>
                     </h:form>   
                 </div>
             </div>

@@ -30,7 +30,8 @@ public class LessonDAOUtils implements ILessonDAO {
     static final String QUERY_INSERT_LESSON = "INSERT INTO Lesson(StartTime, EndTime, Location, ID_Course) VALUES(?,?,?,?)";
     static final String QUERY_GET_LESSONS_FROM_COURSE = "SELECT l.*, c.* FROM Lesson l, Course c WHERE l.ID_Course=c.ID_Course AND l.ID_Course = ?";
     static final String QUERY_UPDATE_LESSON = "UPDATE Lesson SET StartTime = ?, EndTime = ?, Location = ?, ID_Course = ? WHERE ID_Lesson = ?";
-
+    static final String QUERY_REMOVE_LESSON = "DELETE FROM Lesson WHERE ID_Lesson = ?";
+    static final String QUERY_SIGNUP_USER_TO_LESSON = "INSERT INTO Lesson_Registration(ID_Lesson, ID_User) VALUE (?,?);";
 
     public LessonDAOUtils() {
 
@@ -106,13 +107,24 @@ public class LessonDAOUtils implements ILessonDAO {
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Failed to add lesson to db");
+            System.err.println("Failed to edit lesson in db");
             return false;
-        }    }
+        }
+    }
 
     @Override
-    public boolean removeLesson(Lesson lesson) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean removeLesson(long lesson_ID) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        ResultSetHandlerImp rsh = new ResultSetHandlerImp();
+        Object[] params = new Object[]{lesson_ID};
+        try {
+            run.execute(QUERY_REMOVE_LESSON, rsh, params);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Failed to remove lesson from db");
+            return false;
+        }
     }
 
     @Override
@@ -120,7 +132,6 @@ public class LessonDAOUtils implements ILessonDAO {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ArrayListHandler alh = new ArrayListHandler();
         List<Lesson> lessons = new ArrayList<>();
-        //Object[] params = new Object[]{lesson.getStartTime().getTime(), lesson.getEndTime().getTime(), lesson.getLocation(), lesson.getCourse().getId()};
         Object[] params = new Object[]{course_ID};
         try {
             List<Object[]> result = run.query(QUERY_GET_LESSONS_FROM_COURSE, alh, params);
@@ -154,6 +165,25 @@ public class LessonDAOUtils implements ILessonDAO {
             System.out.println(ex_sql.getMessage());
         }
         return lessons;
+    }
+
+    @Override
+    public long signUpUser(long lesson_ID, long user_ID) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        ResultSetHandlerImp rsh = new ResultSetHandlerImp();
+        Object[] params = new Object[]{lesson_ID, user_ID};
+        try {
+            Object[] result = run.insert(QUERY_SIGNUP_USER_TO_LESSON, rsh, params);
+            
+            long id = Long.parseLong(result[0].toString());            
+            System.out.println("SQL Success, output:");
+            System.out.println(id);
+            return id;
+        } catch (SQLException ex) {
+            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Failed to add lesson to db");
+            return 0;
+        }        
     }
 
 }

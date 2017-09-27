@@ -5,11 +5,14 @@
  */
 package View.Pages;
 
+import Controller.CourseService;
 import Controller.LessonService;
 import Model.Course;
 import Model.Lesson;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -25,17 +28,31 @@ import javax.inject.Inject;
 public class PlannerBean {
 
     @Inject
-    LessonService service;
+    LessonService lService;
+    @Inject
+    CourseService cService;
 
     private long courseID;
+    private long lessonID;
+    private List<Course> courses;
+    private List<Lesson> lessons;
     private Date startDate;
     private String location;
-    private String feedbackMessage;
 
     /**
      * Creates a new instance of plannerBean
      */
     public PlannerBean() {
+    }
+
+    @PostConstruct
+    public void init() {
+        if (courses == null) {
+            courses = cService.getAllCourses();
+        }
+        if (lessons == null) {
+            lessons = lService.getLessons();
+        }
     }
 
     public long getCourseID() {
@@ -44,6 +61,14 @@ public class PlannerBean {
 
     public void setCourseID(long courseID) {
         this.courseID = courseID;
+    }
+
+    public long getLessonID() {
+        return lessonID;
+    }
+
+    public void setLessonID(long lessonID) {
+        this.lessonID = lessonID;
     }
 
     public Date getStartDate() {
@@ -62,28 +87,49 @@ public class PlannerBean {
         this.location = location;
     }
 
-    public String getFeedbackMessage() {
-        return feedbackMessage;
+    public List<Course> getCourses() {
+        return courses;
     }
 
-    public void setFeedbackMessage(String feedbackMessage) {
-        this.feedbackMessage = feedbackMessage;
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 
     public String submitLesson() {
-        GregorianCalendar time = new GregorianCalendar();
-        time.setTime(startDate);
-
         Course selectedCourse = new Course();
         selectedCourse.setId(courseID);
 
+        GregorianCalendar starttime = new GregorianCalendar();
+        starttime.setTime(startDate);
+        GregorianCalendar endtime = (GregorianCalendar) starttime.clone();
+        for (Course c : courses) {
+            if (courseID == c.getId()) {
+                if (c.getDurationInDays() > 1) {
+                    endtime.add(GregorianCalendar.DAY_OF_YEAR, c.getDurationInDays() - 1);
+                }
+            }
+        }
+
         Lesson newLesson = new Lesson(selectedCourse);
         newLesson.setLocation(location);
-        newLesson.setStartTime(time);
-        
-        //service.addLesson(newLesson);
+        newLesson.setStartTime(starttime);
+        newLesson.setEndTime(endtime);
+
+        lService.addLesson(newLesson);
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Training opgeslagen"));
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training opgeslagen", "whoopizz"));
         return "planner";
+    }
+    
+    public void deleteLesson(){
+        
     }
 }
