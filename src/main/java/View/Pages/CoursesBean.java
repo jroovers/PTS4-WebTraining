@@ -36,6 +36,7 @@ public class CoursesBean {
     private String cost;                // value in the "cost" texfield
     private String location;            // value in the "location" texfield
     private String keywords;            // value in the keywords texfield
+    
     private List<Course> courses;       // List of courses
     private Course course;              // Current course  
     private String selectedCode;        // Selected item in SelectOneMenu
@@ -114,6 +115,10 @@ public class CoursesBean {
                 }
                 try {
                     c.setLocation(location);
+                } catch (NullPointerException ex) {
+                }
+                try {
+                    c.setKeyWords(splitText(keywords));
                 } catch (NullPointerException ex) {
                 }
                 exist = true;
@@ -212,7 +217,7 @@ public class CoursesBean {
             this.description = "";
         }
         try {
-            this.requiredKnowledge = this.splitStringList(course.getPriorKnowledge());
+            this.requiredKnowledge = splitStringList(course.getPriorKnowledge());
         } catch (NullPointerException ex) {
             this.requiredKnowledge = "";
         }
@@ -235,6 +240,11 @@ public class CoursesBean {
             this.location = course.getLocation();
         } catch (NullPointerException ex) {
             this.location = "";
+        }
+        try {
+            this.keywords = splitStringList(course.getKeyWords());
+        } catch (NullPointerException ex) {
+            this.keywords = "";
         }
     }
 
