@@ -42,7 +42,7 @@ public class LessonServiceTest {
     @Before
     public void setUp() {
         c1 = new Course("banaan", "appel");
-        c1.setId(1);
+        c1.setId(2);
         l1 = new Lesson(c1);
         l2 = new Lesson(c1);
         
