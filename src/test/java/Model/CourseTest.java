@@ -364,6 +364,5 @@ public class CourseTest {
         assertEquals(courseMaterials, newCourse.getCourseMaterials());
         assertEquals(durationInDays, newCourse.getDurationInDays());
         assertEquals(cost, newCourse.getCost(),0.01);
-
     }
 }
