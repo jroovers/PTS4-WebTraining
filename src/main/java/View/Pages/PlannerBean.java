@@ -9,9 +9,13 @@ import Controller.CourseService;
 import Controller.LessonService;
 import Model.Course;
 import Model.Lesson;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -52,6 +56,8 @@ public class PlannerBean {
         }
         if (lessons == null) {
             lessons = lService.getLessons();
+            Comparator<Lesson> timecompare = (Lesson o1, Lesson o2) -> o1.getStartTime().compareTo(o2.getStartTime());
+            Collections.sort(lessons, timecompare);
         }
     }
 
@@ -107,8 +113,9 @@ public class PlannerBean {
         Course selectedCourse = new Course();
         selectedCourse.setId(courseID);
 
-        GregorianCalendar starttime = new GregorianCalendar();
+        GregorianCalendar starttime = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
         starttime.setTime(startDate);
+        starttime.add(Calendar.HOUR_OF_DAY, 12);
         GregorianCalendar endtime = (GregorianCalendar) starttime.clone();
         for (Course c : courses) {
             if (courseID == c.getId()) {
@@ -126,10 +133,14 @@ public class PlannerBean {
         lService.addLesson(newLesson);
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training opgeslagen", "whoopizz"));
-        return "planner";
+        return "planner?faces-redirect=true";
     }
-    
-    public void deleteLesson(){
-        
+
+    public String deleteLesson() {
+        lService.deleteLesson(lessonID);
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Les verwijderd", "whoopizz"));
+        return "planner?faces-redirect=true";
+
     }
 }

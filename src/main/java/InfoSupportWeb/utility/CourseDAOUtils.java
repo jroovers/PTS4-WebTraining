@@ -9,6 +9,7 @@ import static InfoSupportWeb.utility.LessonDAOUtils.QUERY_REMOVE_LESSON;
 import static InfoSupportWeb.utility.LessonDAOUtils.QUERY_UPDATE_LESSON;
 import Interfaces.ICourseDAO;
 import Model.Course;
+import com.sun.org.apache.xpath.internal.compiler.Keywords;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,9 +66,17 @@ public class CourseDAOUtils implements ICourseDAO {
 
     @Override
     public Course addCourse(Course course) {
+
+        String keyWords = "";
+
+        if (course.getKeyWords() != null) {
+            for (String s : course.getKeyWords()) {
+                keyWords += s + ",";
+            }
+        }
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
-        Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), Arrays.toString(course.getKeyWords()), course.getDurationInDays(), course.getCost()};
+        Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), keyWords, course.getDurationInDays(), course.getCost()};
         try {
             Object[] result = run.insert(QUERY_INSERT_COURSE, rsh, params);
 
