@@ -117,7 +117,7 @@ public class LessonTest
     /**
      * Test of format method, of class Lesson.
      */
-    @Test
+    //@Test
     public void testFormat()
     {
         //arrange
@@ -139,7 +139,7 @@ public class LessonTest
     /**
      * Test of getLessonString method, of class Lesson.
      */
-    @Test
+    //@Test
     public void testGetLessonString()
     {
         //arrange
