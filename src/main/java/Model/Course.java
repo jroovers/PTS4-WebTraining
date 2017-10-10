@@ -20,9 +20,6 @@ public class Course {
     private String[] keyWords;
     private int durationInDays;
     private double cost;
-    private String location;
-
- 
 
     /**
      * A blank course
@@ -63,8 +60,8 @@ public class Course {
         this.durationInDays = durationInDays;
         this.cost = cost;
     }
-    
-        public Course(long id, String code, String name, String description, String[] priorKnowledge, String courseMaterials, String[] keyWords, int durationInDays, double cost) {
+
+    public Course(long id, String code, String name, String description, String[] priorKnowledge, String courseMaterials, String[] keyWords, int durationInDays, double cost) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -82,14 +79,6 @@ public class Course {
 
     public void setId(long id) {
         this.id = id;
-    }
-    
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public String getCode() {
@@ -117,12 +106,12 @@ public class Course {
     }
 
     public String[] getPriorKnowledge() {
-        
-        if(this.priorKnowledge == null){
-        String[] myStringArray = new String[]{"Niet geladen"};
+
+        if (this.priorKnowledge == null) {
+            String[] myStringArray = new String[]{"Niet geladen"};
             return myStringArray;
         }
-        
+
         return priorKnowledge;
     }
 
@@ -137,7 +126,7 @@ public class Course {
     public void setCourseMaterials(String courseMaterials) {
         this.courseMaterials = courseMaterials;
     }
-    
+
     public String[] getKeyWords() {
         return keyWords;
     }
@@ -161,12 +150,12 @@ public class Course {
     public void setCost(double cost) {
         this.cost = cost;
     }
-    
-    public String getShortString(){
+
+    public String getShortString() {
         return this.code + " - " + this.name;
     }
-    
-    public String getLongString(){
-        return this.name + " - " + this.location + " - Kosten: " + this.cost + " - Dagen: " + this.durationInDays;
+
+    public String getLongString() {
+        return this.code + " - " + this.name + " - Kosten: " + this.cost + " - Dagen: " + this.durationInDays;
     }
 }

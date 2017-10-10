@@ -51,10 +51,6 @@
                             <th><h:inputText value="#{coursesBean.cost}" style="width: 200%" a:placeholder="Bijv. 23.30"></h:inputText></th>
                         </tr>
                         <tr>
-                            <th><p>Locatie</p></th>
-                            <th><h:inputText value="#{coursesBean.location}" style="width: 200%" a:placeholder="Bijv. Eindhoven"></h:inputText></th>
-                        </tr>
-                        <tr>
                             <th><p>Tags</p></th>
                             <th><h:inputText value="#{coursesBean.keywords}" style="width: 200%"  a:placeholder="Bijv. Java, Netbeans, Eindhoven"></h:inputText></th>
                         </tr>
@@ -111,37 +107,6 @@
                                     <f:selectItems value="#{coursesBean.coursesCmb}"/>
                                 </h:selectOneMenu></th>
                             <th><h:button value="Categorie verwijderen" style="width: 100%"></h:button></th>
-                        </tr>
-                    </table>
-                </h:form>
-
-                <br></br>
-                <br></br>
-
-                <h3>Trefwoorden</h3>
-                <h:form>
-                    <table class="#tabletest">
-                        <tr>
-                            <th style="width: 190px"><p>Trefwoord aanmaken</p></th>
-                            <th><h:inputText a:placeholder="Naam invullen" ></h:inputText></th>
-                            <th></th>
-                            <th><h:button value="Trefwoord toevoegen" style="width: 100%"></h:button></th>
-                        </tr>
-                        <tr>
-                            <th><p>Trefwoord toevoegen</p></th>
-                            <th><h:inputText a:placeholder="Naam invullen"></h:inputText></th>
-                            <th><h:selectOneMenu value="#{coursesBean.selectedCode}">
-                                    <f:selectItems value="#{coursesBean.coursesCmb}"/>
-                                </h:selectOneMenu></th>
-                            <th><h:button value="Trefwoord toevoegen" style="width: 100%"></h:button></th>
-                        </tr>
-                        <tr>
-                            <th><p>Trefwoord verwijderen</p></th>
-                            <th></th>
-                            <th><h:selectOneMenu value="#{coursesBean.selectedCode}">
-                                    <f:selectItems value="#{coursesBean.coursesCmb}"/>
-                                </h:selectOneMenu></th>
-                            <th><h:button value="Trefwoord verwijderen" style="width: 100%"></h:button></th>
                         </tr>
                     </table>
                 </h:form>

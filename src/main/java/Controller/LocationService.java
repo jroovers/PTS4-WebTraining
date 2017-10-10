@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import InfoSupportWeb.utility.LocationDAOUtils;
 import java.util.List;
 import javax.ejb.Stateless;
 
@@ -26,7 +27,8 @@ public class LocationService {
      * @return false if any exceptions, otherwise true
      */
     public boolean addLocation(String location) {
-        throw new UnsupportedOperationException("not yet implemented");
+        LocationDAOUtils locationDAOUtils = new LocationDAOUtils();
+        return locationDAOUtils.addLocation(location);
     }
 
     /**
@@ -35,7 +37,8 @@ public class LocationService {
      * @return list of locations
      */
     public List<String> getLocations() {
-        throw new UnsupportedOperationException("not yet implemented");
+        LocationDAOUtils locationDAOUtils = new LocationDAOUtils();
+        return locationDAOUtils.getLocations();
     }
 
     /**

@@ -61,36 +61,6 @@ public class CourseTest {
     }
 
     /**
-     * Test of getLocation method, of class Course.
-     */
-    @Test
-    public void testGetLocation() {
-        //arrange
-        String expResult = null;
-        //act
-        String result = course.getLocation();
-        //assert
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of setLocation method, of class Course.
-     */
-    @Test
-    public void testSetLocation() {
-        //arrange
-        String location;
-        String expLocation = "Eindhoven";
-        //act
-        course.setLocation(expLocation);
-
-        location = course.getLocation();
-
-        //assert
-        assertEquals(expLocation, location);
-    }
-
-    /**
      * Test of getCode method, of class Course.
      */
     @Test

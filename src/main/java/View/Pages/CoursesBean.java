@@ -114,10 +114,6 @@ public class CoursesBean {
                 } catch (NullPointerException ex) {
                 }
                 try {
-                    c.setLocation(location);
-                } catch (NullPointerException ex) {
-                }
-                try {
                     c.setKeyWords(splitText(keywords));
                 } catch (NullPointerException ex) {
                 }
@@ -140,7 +136,7 @@ public class CoursesBean {
     public boolean addCourse() {
         if (!name.equals("") && !code.equals("")) {
 
-            if (!description.isEmpty() && !keywords.isEmpty() && !requiredKnowledge.isEmpty() && !cursusMaterial.isEmpty() && !timeInDays.isEmpty() && !cost.isEmpty() && !location.isEmpty() && !requiredKnowledge.isEmpty()) {
+            if (!description.isEmpty() && !keywords.isEmpty() && !requiredKnowledge.isEmpty() && !cursusMaterial.isEmpty() && !timeInDays.isEmpty() && !cost.isEmpty() && !requiredKnowledge.isEmpty()) {
 
                 double nCost = 0;
                 int nTimeIndDays = 0;
@@ -154,15 +150,14 @@ public class CoursesBean {
                     return false;
                 }
 
-                Course cource = new Course(this.code, this.name);
-                cource.setCost(nCost);
-                cource.setCourseMaterials(cursusMaterial);
-                cource.setDescription(description);
-                cource.setDurationInDays(nTimeIndDays);
-                cource.setPriorKnowledge(nRequiredKnowledge);
-                cource.setLocation(location);
-                cource.setKeyWords(nKeywords);
-                cService.addCourse(cource);
+                Course course = new Course(this.code, this.name);
+                course.setCost(nCost);
+                course.setCourseMaterials(cursusMaterial);
+                course.setDescription(description);
+                course.setDurationInDays(nTimeIndDays);
+                course.setPriorKnowledge(nRequiredKnowledge);
+                course.setKeyWords(nKeywords);
+                cService.addCourse(course);
                 return true;
             } else {
                 cService.addCourse(code, name);
@@ -235,11 +230,6 @@ public class CoursesBean {
             this.cost = Double.toString(course.getCost());
         } catch (NullPointerException ex) {
             this.cost = "";
-        }
-        try {
-            this.location = course.getLocation();
-        } catch (NullPointerException ex) {
-            this.location = "";
         }
         try {
             this.keywords = splitStringList(course.getKeyWords());
