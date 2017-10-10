@@ -31,5 +31,5 @@ public interface ILocationDAO {
      *
      * @return True if succeeded, false when failed to remove location from database.
      */
-    public boolean removeLocation(int location_ID);
+    public boolean removeLocation(String locationName);
 }

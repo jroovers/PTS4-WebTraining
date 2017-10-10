@@ -5,7 +5,6 @@
  */
 package InfoSupportWeb.utility;
 
-import static InfoSupportWeb.utility.CourseDAOUtils.QUERY_REMOVE_COURSE;
 import Interfaces.ILocationDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class LocationDAOUtils implements ILocationDAO {
 
     static final String QUERY_GET_LOCATIONS = "SELECT * FROM Location";
     static final String QUERY_INSERT_LOCATION = "INSERT INTO Location" + "(Name) VALUES" + "(?)";
-    static final String QUERY_REMOVE_LOCATION = "DELETE FROM Location WHERE ID_Location = ?";
+    static final String QUERY_REMOVE_LOCATION = "DELETE FROM Location WHERE Name = ?";
 
     @Override
     public List<String> getLocations() {
@@ -59,10 +58,10 @@ public class LocationDAOUtils implements ILocationDAO {
         }}
 
     @Override
-    public boolean removeLocation(int location_ID) {
+    public boolean removeLocation(String locationName) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
-        Object[] params = new Object[]{location_ID};
+        Object[] params = new Object[]{locationName};
         try {
             run.execute(QUERY_REMOVE_LOCATION, rsh, params);
             return true;
