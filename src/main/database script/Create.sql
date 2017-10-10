@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS `db_dev_infosupport`.`Course_PriorKnowledge`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Course_TargetUsers`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Course_Category`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Lesson`;
+DROP TABLE IF EXISTS `db_dev_infosupport`.`Location`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Course`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Registration`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Category`;
@@ -62,6 +63,13 @@ CREATE TABLE `db_dev_infosupport`.`Lesson`(
   FOREIGN KEY (`ID_Course`)
   REFERENCES `db_dev_infosupport`.`Course` (`ID_Course`)
   ON DELETE CASCADE
+);
+
+CREATE TABLE `db_dev_infosupport`.`Location` (
+  `ID_Location` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`ID_Location`),
+  CONSTRAINT Location_UNIQUE UNIQUE (Name)
 );
 
 CREATE TABLE `db_dev_infosupport`.`Registration`(
