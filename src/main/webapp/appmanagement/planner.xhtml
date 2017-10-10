@@ -34,8 +34,11 @@
                                 <p:calendar id="calendar" value="#{plannerBean.startDate}" locale="nl" required="true" requiredMessage=" Kies een datum"/>     
                             </div>
                             <div class="form-group">
-                                <p:outputLabel for="location" value="Waar vindt deze training plaats?"/>
-                                <p:inputText id="location" styleClass="form-control" value="#{plannerBean.location}" required="true" requiredMessage="Geef een locatie op"/>
+                                <p:outputLabel for="lbox_locationselect" value="Waar vindt deze training plaats?"/>
+                                <p:selectOneListbox id="lbox_locationselect" styleClass="form-control" value="#{plannerBean.location}" required="true" requiredMessage="Kies een locatie" filter="true" filterMatchMode="contains">
+                                    <f:selectItems value="#{plannerBean.locations}" var="l"
+                                                   itemValue="#{l.toString}"/>
+                                </p:selectOneListbox>
                             </div>
                             <div class="form-group">
                                 <p:commandButton value="Verzenden" update="planner_growl" action="#{plannerBean.submitLesson()}" ajax="false"/>

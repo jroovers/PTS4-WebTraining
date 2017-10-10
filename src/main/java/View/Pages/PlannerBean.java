@@ -7,6 +7,7 @@ package View.Pages;
 
 import Controller.CourseService;
 import Controller.LessonService;
+import Controller.LocationService;
 import Model.Course;
 import Model.Lesson;
 import java.util.Calendar;
@@ -32,16 +33,19 @@ import javax.inject.Inject;
 public class PlannerBean {
 
     @Inject
-    LessonService lService;
+    LessonService lessonService;
     @Inject
-    CourseService cService;
+    CourseService courseService;
+    @Inject
+    LocationService locationService;
 
     private long courseID;
     private long lessonID;
+    private String location;
     private List<Course> courses;
     private List<Lesson> lessons;
+    private List<String> locations;
     private Date startDate;
-    private String location;
 
     /**
      * Creates a new instance of plannerBean
@@ -52,12 +56,16 @@ public class PlannerBean {
     @PostConstruct
     public void init() {
         if (courses == null) {
-            courses = cService.getAllCourses();
+            courses = courseService.getAllCourses();
         }
         if (lessons == null) {
-            lessons = lService.getLessons();
+            lessons = lessonService.getLessons();
             Comparator<Lesson> timecompare = (Lesson o1, Lesson o2) -> o1.getStartTime().compareTo(o2.getStartTime());
             Collections.sort(lessons, timecompare);
+        }
+        if (locations == null) {
+            locations = locationService.getLocations();
+            Collections.sort(locations);
         }
     }
 
@@ -109,6 +117,14 @@ public class PlannerBean {
         this.lessons = lessons;
     }
 
+    public List<String> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(List<String> locations) {
+        this.locations = locations;
+    }
+
     public String submitLesson() {
         Course selectedCourse = new Course();
         selectedCourse.setId(courseID);
@@ -130,14 +146,14 @@ public class PlannerBean {
         newLesson.setStartTime(starttime);
         newLesson.setEndTime(endtime);
 
-        lService.addLesson(newLesson);
+        lessonService.addLesson(newLesson);
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training opgeslagen", "whoopizz"));
         return "planner?faces-redirect=true";
     }
 
     public String deleteLesson() {
-        lService.deleteLesson(lessonID);
+        lessonService.deleteLesson(lessonID);
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Les verwijderd", "whoopizz"));
         return "planner?faces-redirect=true";
