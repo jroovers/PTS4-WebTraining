@@ -5,11 +5,8 @@
  */
 package InfoSupportWeb.utility;
 
-import static InfoSupportWeb.utility.LessonDAOUtils.QUERY_REMOVE_LESSON;
-import static InfoSupportWeb.utility.LessonDAOUtils.QUERY_UPDATE_LESSON;
 import Interfaces.ICourseDAO;
 import Model.Course;
-import com.sun.org.apache.xpath.internal.compiler.Keywords;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;

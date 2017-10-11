@@ -8,9 +8,8 @@ package View.Pages;
 import Controller.CourseService;
 import Model.Course;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.model.SelectItem;
@@ -40,6 +39,7 @@ public class CoursesBean {
     private List<Course> courses;       // List of courses
     private Course course;              // Current course  
     private String selectedCode;        // Selected item in SelectOneMenu
+    private boolean hasSelectedCourse;
 
     /**
      * Creates a new instance of coursesBean
@@ -48,6 +48,17 @@ public class CoursesBean {
 
     }
 
+    @PostConstruct
+    public void init() {
+        if(!selectedCode.isEmpty()){
+            hasSelectedCourse = true;
+        }
+        else
+        {
+            hasSelectedCourse = false;
+        }
+    }
+    
     /**
      * Checks if the course already exists. If so then the course will be
      * changed in the database. if not then a new course will be added to the
@@ -55,7 +66,6 @@ public class CoursesBean {
      */
     public void updateCourse() {
         boolean exist = changeCourse();
-
         if (!exist) {
             addCourse();
         }
