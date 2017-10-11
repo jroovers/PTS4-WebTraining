@@ -9,7 +9,6 @@ import Controller.CourseService;
 import Model.Course;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.model.SelectItem;
@@ -47,18 +46,6 @@ public class CoursesBean {
     public CoursesBean() {
 
     }
-
-    @PostConstruct
-    public void init() {
-        if(!selectedCode.isEmpty()){
-            hasSelectedCourse = true;
-        }
-        else
-        {
-            hasSelectedCourse = false;
-        }
-    }
-    
     /**
      * Checks if the course already exists. If so then the course will be
      * changed in the database. if not then a new course will be added to the
