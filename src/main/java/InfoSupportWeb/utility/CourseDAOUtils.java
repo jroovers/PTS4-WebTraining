@@ -120,6 +120,9 @@ public class CourseDAOUtils implements ICourseDAO {
     }
     
     private String arrayToString(String[] array){
+        if(array == null){
+            return "";
+        }
         StringBuilder keyWords = new StringBuilder();
         for (String s : array) {
             keyWords.append(s);
