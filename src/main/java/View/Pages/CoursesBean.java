@@ -10,7 +10,11 @@ import Model.Course;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Named;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
@@ -20,7 +24,7 @@ import javax.inject.Inject;
  * @author Kyle van Raaij
  */
 @Named(value = "coursesBean")
-@SessionScoped
+@ConversationScoped
 
 public class CoursesBean implements Serializable {
 
@@ -37,16 +41,49 @@ public class CoursesBean implements Serializable {
     private String location;            // value in the "location" texfield
     private String keywords;            // value in the keywords texfield
 
+    private boolean editorIsOpen;
+
     private List<Course> courses;       // List of courses
     private Course course;              // Current course  
     private String selectedCode;        // Selected item in SelectOneMenu
     private boolean hasSelectedCourse;
 
+    @Inject
+    private Conversation conversation;
+
     /**
      * Creates a new instance of coursesBean
      */
     public CoursesBean() {
+        editorIsOpen = false;
+    }
 
+    public void onSelectedItem(ValueChangeEvent e) {
+        if (!conversation.isTransient()) {
+            conversation.end();
+            editorIsOpen = false;
+        }
+
+        if (conversation.isTransient()) {
+            conversation.begin();
+            editorIsOpen = true;
+        }
+
+        selectedCode = (String) e.getNewValue();
+        setCourseData();
+    }
+
+    public void onCreateNewItem(ActionEvent e) {
+        code = "";
+        name = "";
+        description = "";
+        requiredKnowledge = "";
+        cursusMaterial = "";
+        timeInDays = "";
+        cost = "";
+        location = "";
+        keywords = "";
+        editorIsOpen = true;
     }
 
     /**
