@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS `db_dev_infosupport`.`Course_PriorKnowledge`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Course_TargetUsers`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Course_Category`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Lesson_Registration`;
+DROP TABLE IF EXISTS `db_dev_infosupport`.`Lesson_Teacher`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`User`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Lesson`;
 DROP TABLE IF EXISTS `db_dev_infosupport`.`Location`;
@@ -117,6 +118,7 @@ CREATE TABLE `db_dev_infosupport`.`Course_TargetUsers`(
 CREATE TABLE `db_dev_infosupport`.`Course_PriorKnowledge`(
 	`ID_Course` INT NOT NULL,
 	`PriorCourse` INT NOT NULL,
+	
 	CONSTRAINT `fk_PriorKnowledge_MainCourse`
 	FOREIGN KEY (`ID_Course`)
 	REFERENCES `db_dev_infosupport`.`Course` (`ID_Course`)
@@ -130,11 +132,26 @@ CREATE TABLE `db_dev_infosupport`.`Course_PriorKnowledge`(
 CREATE TABLE `db_dev_infosupport`.`Lesson_Registration`(
 	`ID_Lesson` INT NOT NULL,
 	`ID_User` INT NOT NULL,
+	
 	CONSTRAINT `fk_Registration_Lesson`
 	FOREIGN KEY (`ID_Lesson`)
 	REFERENCES `db_dev_infosupport`.`Lesson` (`ID_Lesson`)
 	ON DELETE CASCADE,
 	CONSTRAINT `fk_Registration_User`
+	FOREIGN KEY (`ID_User`)
+	REFERENCES `db_dev_infosupport`.`Registration` (`ID_User`)
+	ON DELETE CASCADE
+);
+
+CREATE TABLE `db_dev_infosupport`.`Lesson_Teacher`(
+	`ID_Lesson` INT NOT NULL,
+	`ID_User` INT NOT NULL,
+	
+	CONSTRAINT `fk_Lesson_Teacher`
+	FOREIGN KEY (`ID_Lesson`)
+	REFERENCES `db_dev_infosupport`.`Lesson` (`ID_Lesson`)
+	ON DELETE CASCADE,
+	CONSTRAINT `fk_Registration_Teacher`
 	FOREIGN KEY (`ID_User`)
 	REFERENCES `db_dev_infosupport`.`Registration` (`ID_User`)
 	ON DELETE CASCADE

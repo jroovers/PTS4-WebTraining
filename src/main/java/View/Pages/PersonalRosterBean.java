@@ -2,11 +2,8 @@ package View.Pages;
 
 import Controller.CourseService;
 import Controller.LessonService;
-import InfoSupportWeb.utility.CourseDAOUtils;
-import Model.Course;
 import Model.Lesson;
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -15,7 +12,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
-import org.primefaces.context.RequestContext;
 
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
@@ -31,7 +27,7 @@ import org.primefaces.model.ScheduleModel;
 public class PersonalRosterBean implements Serializable
 {
 
-    private ScheduleModel eventModel;
+    private ScheduleModel lessonSchedule;
 
     private ScheduleEvent event = new DefaultScheduleEvent();
 
@@ -39,24 +35,27 @@ public class PersonalRosterBean implements Serializable
     private LessonService lessonService;
     private Lesson selectedLesson;
 
-    // <editor-fold desc="Default event stuff" >
     @PostConstruct
     public void init()
     {
         courseService = new CourseService();
         lessonService = new LessonService();
+        lessonSchedule = new DefaultScheduleModel();
+        RefreshLessons();
+    }
 
-        eventModel = new DefaultScheduleModel();
-        for (Lesson l : lessonService.getLessonsFromCourse(2))
+    private void RefreshLessons()
+    {
+        lessonSchedule.clear();
+        for (Lesson lesson : lessonService.GetLessonsByTeacher(1))
         {
-            eventModel.addEvent(new DefaultScheduleEvent(l.getCourse().getName(), l.getStartTime().getTime(), l.getEndTime().getTime(), l));
-
+            lessonSchedule.addEvent(new DefaultScheduleEvent(lesson.getCourse().getName(), lesson.getStartTime().getTime(), lesson.getEndTime().getTime(), lesson));
         }
     }
 
     public ScheduleModel getEventModel()
     {
-        return eventModel;
+        return lessonSchedule;
     }
 
     public ScheduleEvent getEvent()
@@ -83,10 +82,10 @@ public class PersonalRosterBean implements Serializable
     {
         if (event.getId() == null)
         {
-            eventModel.addEvent(event);
+            lessonSchedule.addEvent(event);
         } else
         {
-            eventModel.updateEvent(event);
+            lessonSchedule.updateEvent(event);
         }
         event = new DefaultScheduleEvent();
     }
