@@ -20,11 +20,13 @@ public class User {
     private int userID;
     private String username;
     private String password;
+    private int accesLevel;
     
-    public User(int userID ,String username, String password){
+    public User(int userID ,String username, String password, int accesLevel){
         this.userID = userID;
         this.username = username;
         this.password = password;
+        this.accesLevel = accesLevel;
     }
     
     public User(){

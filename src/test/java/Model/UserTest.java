@@ -22,7 +22,7 @@ public class UserTest
 
     @Before
     public void CreateTestUser() {
-        user = new User(1,"InfoSupportStaff1","pass"  );
+        user = new User(1,"InfoSupportStaff1","pass",1 );
     }
    
 
