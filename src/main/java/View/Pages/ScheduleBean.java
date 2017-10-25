@@ -5,13 +5,15 @@
  */
 package View.Pages;
 
-import InfoSupportWeb.utility.CourseDAOUtils;
+import Controller.CourseService;
 import Model.Course;
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.model.SelectItem;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
+import javax.inject.Inject;
 
 /**
  *
@@ -23,62 +25,65 @@ public class ScheduleBean
 {   /**
      * Creates a new instance of scheduleBean
      */
-    
-    private Course[] courseList;
-    private String courseId;
-    private List<Course> courses;
+    private long courseID;
+    private Course selectedCourse;
     private List<Course> allCourses;
-    
-    private CourseDAOUtils courseDAOUtils;
+    @Inject
+    CourseService cs;
     
     public ScheduleBean() 
     {
-        this.courseDAOUtils = new CourseDAOUtils();
-    }
-    
-    public String getCourseId()
-    {
-        return courseId;
-    }
-    
-    public Course[] getCourseValue() 
-    {
-        allCourses = new ArrayList<>(courseDAOUtils.getCourses());
-        courses = new ArrayList<>();
         
-        for(Course course : allCourses)
+    }
+    
+    public long getCourseID()
+    {
+        return courseID;
+    }
+
+    public void setCourseID(long courseID) {
+        this.courseID = courseID;
+        setSelectedCourse();
+    }
+    
+    public List<Course> getAllCourses() 
+    {
+        allCourses = cs.getAllCourses();
+        
+        return allCourses;
+    }
+
+    public Course getSelectedCourse() {
+        return selectedCourse;
+    }
+    
+    public void setSelectedCourse()
+    {
+        for(Course c : allCourses)
         {
-            if(course.getDurationInDays() > 1)
+            if(c.getId() == courseID)
             {
-                courses.add(course);
-                //courses.add(new SelectItem(course.getName(), Integer.toString(course.getDurationInDays()), course.getCourseMaterials()));
+                selectedCourse = c;
             }
         }
-        
-        Course[] courseArray = new Course[courses.size()];
-        courseArray = courses.toArray(courseArray);
-        
-        return courseArray;
     }
     
-    public Course[] getTrainingValue() 
+    public void signup()
     {
-        allCourses = new ArrayList<>(courseDAOUtils.getCourses());
-        courses = new ArrayList<>();
-        
-        for(Course course : allCourses)
+        FacesContext context = FacesContext.getCurrentInstance();
+        if(selectedCourse == null)
         {
-            if(course.getDurationInDays() == 1)
-            {
-                courses.add(course);
-            }
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Selecteer een cursus",""));
         }
-        
-        Course[] courseArray = new Course[courses.size()];
-        courseArray = courses.toArray(courseArray);
-        
-        return courseArray;
     }
+    
+    public void valueChanged(ValueChangeEvent e) 
+    {
+        String code;
+        code = e.getNewValue().toString();
+        System.out.println(code);
+    }
+    
 
     
 }
