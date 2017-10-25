@@ -29,6 +29,10 @@ public class User {
     }
 
     public User(int userID, String username, String password) {
+        
+    }
+    
+    public User(int userID ,String username, String password, int accesLevel){
         this.userID = userID;
         this.username = username;
         this.password = password;
