@@ -7,10 +7,11 @@ package View.Pages;
 
 import Controller.CourseService;
 import Model.Course;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 
@@ -19,8 +20,9 @@ import javax.inject.Inject;
  * @author Kyle van Raaij
  */
 @Named(value = "coursesBean")
-@RequestScoped
-public class CoursesBean {
+@SessionScoped
+
+public class CoursesBean implements Serializable {
 
     @Inject
     CourseService cService;             // Connection to the database
@@ -34,7 +36,7 @@ public class CoursesBean {
     private String cost;                // value in the "cost" texfield
     private String location;            // value in the "location" texfield
     private String keywords;            // value in the keywords texfield
-    
+
     private List<Course> courses;       // List of courses
     private Course course;              // Current course  
     private String selectedCode;        // Selected item in SelectOneMenu
@@ -46,6 +48,7 @@ public class CoursesBean {
     public CoursesBean() {
 
     }
+
     /**
      * Checks if the course already exists. If so then the course will be
      * changed in the database. if not then a new course will be added to the

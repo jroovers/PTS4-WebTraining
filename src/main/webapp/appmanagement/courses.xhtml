@@ -34,11 +34,10 @@
                     <h1>Cursusmanagement</h1>
                     <h3>Cursussen en trainingen</h3>
                     <div class="row">
-                        <h:form styleClass="form-inline">
+                        <h:form>
                             <div class="col form-group">
                                 <p:outputLabel for="select_training" value="Kies een bestaande training" /><br/>
-                                <p:selectOneMenu id="select_training" value="#{coursesBean.selectedCode}" styleClass="form-control" filter="true" filterMatchMode="contains">
-                                    <f:valueChangeListener type="Listener.CourseValueListener" />
+                                <p:selectOneMenu id="select_training" value="#{coursesBean.selectedCode}" styleClass="form-control" filter="true" filterMatchMode="contains" onchange="submit()">
                                     <f:selectItems value="#{coursesBean.coursesCmb}"/>
                                 </p:selectOneMenu>
                             </div>
@@ -49,6 +48,7 @@
                         </h:form>
                     </div>
                 </div>
+                <div id="Trainingsgegevens" class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
                     <h:form>
                         <p:panel>
                             <div class="form-col">
@@ -166,10 +166,12 @@
                         </table>
                     </h:form>
                 </div>
-                <div class="form-group">
-                    <p:outputLabel for="delete_training" value="Verwijder training" /><br/>
-                    <p:commandButton id="delete_training" value="Geselecteerde training verwijderen" action="#{coursesBean.deleteCourse()}"  />
-                </div>
+            </div>
+
+            <div class="form-group">
+                <p:outputLabel for="delete_training" value="Verwijder training" /><br/>
+                <p:commandButton id="delete_training" value="Geselecteerde training verwijderen" action="#{coursesBean.deleteCourse()}"  />
+            </div>
         </div>
     </ui:define>
 </ui:composition>

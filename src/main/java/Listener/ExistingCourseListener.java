@@ -26,6 +26,7 @@ public class ExistingCourseListener implements ValueChangeListener {
         CoursesBean coursesBean = (CoursesBean) facesContext.getApplication().createValueBinding("#{coursesBean}").getValue(facesContext);
         
         coursesBean.setSelectedCode(coursesBean.getSelectedCode());
+        coursesBean.changeCourse();
     }
 
 }
