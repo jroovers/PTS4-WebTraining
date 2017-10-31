@@ -6,6 +6,7 @@
 package Listener;
 
 import View.Pages.ScheduleBean;
+import View.Pages.SaveIDBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ValueChangeEvent;
@@ -24,8 +25,10 @@ public class ScheduleValueListener implements ValueChangeListener {
         //access country bean directly
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ScheduleBean scheduleBean = (ScheduleBean) facesContext.getApplication().createValueBinding("#{scheduleBean}").getValue(facesContext);
+        SaveIDBean saveIDBean= (SaveIDBean) facesContext.getApplication().createValueBinding("#{saveIDBean}").getValue(facesContext);
         
-        scheduleBean.setCourseID(Long.valueOf(scheduleBean.getCourseID()));
+        scheduleBean.setLessonID(Long.valueOf(scheduleBean.getLessonID()));
+        saveIDBean.setLessonID(Long.valueOf(scheduleBean.getLessonID()));
     }
     
 }
