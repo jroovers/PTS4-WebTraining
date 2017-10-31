@@ -29,6 +29,7 @@ public class LessonDAOUtils implements ILessonDAO {
     static final String QUERY_GET_LESSONS = "SELECT l.*, c.* FROM Lesson l, Course c WHERE l.ID_Course=c.ID_Course";
     static final String QUERY_INSERT_LESSON = "INSERT INTO Lesson(StartTime, EndTime, Location, ID_Course) VALUES(?,?,?,?)";
     static final String QUERY_GET_LESSONS_FROM_COURSE = "SELECT l.*, c.* FROM Lesson l, Course c WHERE l.ID_Course=c.ID_Course AND l.ID_Course = ?";
+    static final String QUERY_GET_LESSONS_BY_TEACHER = "SELECT L.*, C.* FROM Lesson L, Course C , Lesson_Teacher LT WHERE LT.ID_Lesson = L.ID_Lesson AND L.ID_Course = C.ID_Course AND L.ID_Lesson = LT.ID_Lesson AND LT.ID_User = ?";
     static final String QUERY_UPDATE_LESSON = "UPDATE Lesson SET StartTime = ?, EndTime = ?, Location = ?, ID_Course = ? WHERE ID_Lesson = ?";
     static final String QUERY_REMOVE_LESSON = "DELETE FROM Lesson WHERE ID_Lesson = ?";
     static final String QUERY_SIGNUP_USER_TO_LESSON = "INSERT INTO Lesson_Registration(ID_Lesson, ID_User) VALUE (?,?);";
@@ -163,6 +164,50 @@ public class LessonDAOUtils implements ILessonDAO {
         } catch (SQLException ex_sql) {
             System.out.println("SQL Exception code " + ex_sql.getErrorCode());
             System.out.println(ex_sql.getMessage());
+        }
+        return lessons;
+    }
+    
+      @Override
+    public List<Lesson> getLessonsByTeacher(long user_ID) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        ArrayListHandler alh = new ArrayListHandler();
+        List<Lesson> lessons = new ArrayList<>();
+        Object[] params = new Object[]{user_ID};
+        try {
+            List<Object[]> result = run.query(QUERY_GET_LESSONS_BY_TEACHER, alh, params);
+            for (Object[] o : result) {
+
+                Calendar beginTime = new GregorianCalendar();
+                beginTime.setTime(o[1] == null ? null : Date.valueOf(o[1].toString()));
+                Calendar endTime = new GregorianCalendar();
+                endTime.setTime(o[2] == null ? null : Date.valueOf(o[2].toString()));
+
+                long id = Long.parseLong(o[5].toString());
+                String code = o[6].toString();
+                String name = o[7].toString();
+                String description = o[8].toString();
+                String[] priorKnowledge = null;
+                String courseMaterials = o[9].toString();
+                String[] keyWords = null;
+                int durationInDays = Integer.parseInt(o[11].toString());
+                double cost = Double.parseDouble(o[12].toString());
+
+                Lesson lesson = new Lesson(
+                        o[0] == null ? -1 : Long.parseLong(o[0].toString()),
+                        beginTime,
+                        endTime,
+                        o[3] == null ? null : o[3].toString(),              
+                        new Course( id,code,name,description,priorKnowledge,courseMaterials,keyWords,durationInDays,cost     )
+                );
+                lessons.add(lesson);
+            }
+        } catch (SQLException ex_sql) {
+            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.out.println(ex_sql.getMessage());
+        }
+        catch(Exception e){
+            System.out.println(e);
         }
         return lessons;
     }

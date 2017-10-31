@@ -15,7 +15,7 @@
                         <h:link styleClass="nav-link"  outcome="/index_templated" value="Home"/>
                     </li>
                     <li class="nav-item">
-                        <h:link styleClass="nav-link" value="Link 2"/>
+                        <h:link styleClass="nav-link" outcome="/external/authorization" value="Login"/>
                     </li>
                     <li class="nav-item">
                         <h:link styleClass="nav-link" value="Link 3"/>
@@ -25,6 +25,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
                             <h:link styleClass="dropdown-item" outcome="/appmanagement/courses" value="Trainingsbeheer"/>
                             <h:link styleClass="dropdown-item" outcome="/appmanagement/planner" value="Trainingsplanner"/>
+                            <h:link styleClass="dropdown-item" outcome="/appmanagement/personalroster" value="Docenten Trainingsrooster"/>
                             <h:link styleClass="dropdown-item" outcome="/external/schedule" value="Trainingsrooster"/>
                             <h:link styleClass="dropdown-item" outcome="/external/signup" value="Inschrijfformulier"/>
                         </div>
