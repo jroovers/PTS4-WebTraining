@@ -14,13 +14,17 @@
         <div class="container">
             <div class="col-sm-9 ml-sm-auto col-md-10 pt-3">
                 <h:form>
-                    <h1>Training aanpassen</h1>
-                    <h1>Nieuwe training</h1>
+                    <h:panelGroup rendered="#{coursesBean.hasSelectedCourse}">
+                        <h1>Training aanpassen</h1>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{!coursesBean.hasSelectedCourse}">
+                        <h1>Nieuwe training</h1>
+                    </h:panelGroup>
                     <div class="row">
                         <div class="col">
                             <div class="form-inline">
-                                <p:commandButton id="save_training" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Opslaan" icon="fa fa-floppy-o"/>
-                                <p:commandButton id="cancel_action" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Annuleren" icon="fa fa-ban" />
+                                <p:commandButton id="save_training" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Opslaan" icon="fa fa-floppy-o" action="#{coursesBean.updateCourse()}"/>
+                                <p:button id="cancel_action" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Annuleren" icon="fa fa-ban" outcome="courses"/>
                             </div>
                         </div>
                     </div>
@@ -28,49 +32,49 @@
                     <div class="form-group row">
                         <h:outputLabel for="coursecode" value="Trainingscode" styleClass="col-sm-3 col-form-label"/>
                         <div class="col-sm-6">
-                            <h:inputText id="coursecode" a:placeholder="Code" styleClass="form-control"/>
+                            <h:inputText id="coursecode" a:placeholder="Code" styleClass="form-control" value="#{coursesBean.code}"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <h:outputLabel for="coursename" value="Trainingsnaam" class="col-sm-3 col-form-label"/>
                         <div class="col-sm-6">
-                            <h:inputText id="coursename" a:placeholder="Naam" styleClass="form-control"/>
+                            <h:inputText id="coursename" a:placeholder="Naam" styleClass="form-control" value="#{coursesBean.name}"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <h:outputLabel for="coursedescription" value="Korte omschrijving" styleClass="col-sm-3 col-form-label"/>
                         <div class="col-sm-6">
-                            <h:inputText id="coursedescription" a:placeholder="Beschrijving" styleClass="form-control"/>
+                            <h:inputText id="coursedescription" a:placeholder="Beschrijving" styleClass="form-control" value="#{coursesBean.description}"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <h:outputLabel for="courseprereq" value="Benodigde voorkennis" styleClass="col-sm-3 col-form-label"/>
                         <div class="col-sm-6">
-                            <h:inputText id="courseprereq" a:placeholder="Trainingscodes, of algemene kennis" styleClass="form-control"/>
+                            <h:inputText id="courseprereq" a:placeholder="Trainingscodes, of algemene kennis" styleClass="form-control" value="#{coursesBean.requiredKnowledge}"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <h:outputLabel for="coursematerial" value="Cursusmateriaal" styleClass="col-sm-3 col-form-label"/>
                         <div class="col-sm-6">
-                            <h:inputText id="coursematerial" a:placeholder="Benodigde materialen om zelf mee te nemen" styleClass="form-control"/>
+                            <h:inputText id="coursematerial" a:placeholder="Benodigde materialen om zelf mee te nemen" styleClass="form-control" value="#{coursesBean.cursusMaterial}"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <h:outputLabel for="courseduration" value="Tijdsduur in dagen" styleClass="col-sm-3 col-form-label"/>
                         <div class="col-sm-6">
-                            <h:inputText id="courseduration" a:placeholder="Tijdsduur in dagen" styleClass="form-control"/>
+                            <h:inputText id="courseduration" a:placeholder="Tijdsduur in dagen" styleClass="form-control" value="#{coursesBean.timeInDays}"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <h:outputLabel for="coursetariff" value="Tarief" styleClass="col-sm-3 col-form-label"/>
                         <div class="col-sm-6">
-                            <h:inputText id="coursetariff" a:placeholder="498" styleClass="form-control"/>
+                            <h:inputText id="coursetariff" a:placeholder="498" styleClass="form-control" value="#{coursesBean.cost}"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <h:outputLabel for="coursetags" value="Tags" styleClass="col-sm-3 col-form-label"/>
                         <div class="col-sm-6">
-                            <h:inputText id="coursetags" a:placeholder="Java,meerdaags,UIX" styleClass="form-control"/>
+                            <h:inputText id="coursetags" a:placeholder="Java,meerdaags,UIX" styleClass="form-control" value="#{coursesBean.keywords}"/>
                         </div>
                     </div>
                 </h:form>

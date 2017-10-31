@@ -11,28 +11,42 @@
 
     <!-- Content -->
     <ui:define name="content">
-        <h:outputStylesheet library="style" name="Table.css" />
         <div class="container">
             <div class="row">
-                <div id="Trainingsbeheer" class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+                <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#courses">Trainingsbeheer <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#categories">Categorieën</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#targetusers">Doelgroepen</a>
+                        </li>
+                    </ul>
+                </nav>
+                <div id="courses" class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
                     <h1>Cursusmanagement</h1>
                     <h3>Cursussen en trainingen</h3>
                     <div class="row">
                         <div class="col">
                             <h:form >
+                                <p:growl id="growl" showDetail="false" sticky="false" globalOnly="true"/>
                                 <div class="form-inline">
-                                    <p:commandButton id="new_training" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nieuwe Training" action="#{coursesBean.onCreateNewItem(e)}" icon="fa fa-plus"/>
-                                    <p:commandButton id="edit_training" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Bewerken" action="#{coursesBean.updateCourse()}" icon="fa fa-pencil" />
-                                    <p:commandButton id="delete_training" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijderen" action="#{coursesBean.deleteCourse()}" icon="fa fa-trash-o" />
+                                    <p:commandButton id="new_training" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nieuwe Training" action="#{coursesBean.onCreateNewItem()}" icon="fa fa-plus"/>
+                                    <p:commandButton id="edit_training" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Bewerken" action="#{coursesBean.onEditItem()}" icon="fa fa-pencil" update="growl"/>
+                                    <p:commandButton id="delete_training" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijderen" type="button" onclick="PF('deleteconfirmation').show();" icon="fa fa-trash-o"/>
+
+                                    <p:dialog header="Modal Dialog" widgetVar="deleteconfirmation" modal="true" minHeight="200" minWidth="200">
+                                        <h:outputText value="Weet je zeker dat je deze training wil verwijderen?" />
+                                        <hr/>
+                                        <p:commandButton id="reallydelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijderen" action="#{coursesBean.onDeleteItem()}" icon="fa fa-trash-o" />
+                                        <p:commandButton id="nonotreally" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nee toch niet" type="button" onclick="PF('deleteconfirmation').hide();" icon="fa fa-ban" />
+                                    </p:dialog>
                                 </div>
-                            </h:form>
-                        </div>
-                    </div>
-                    <hr/>
-                    <div class="row">
-                        <div class="col">
-                            <h:form>
-                                <p:selectOneListbox id="select_training" value="#{coursesBean.selectedCode}" valueChangeListener="#{coursesBean.onSelectedItem}" styleClass="form-control" filter="true" filterMatchMode="contains" onchange="submit();">
+                                <hr/>
+                                <p:selectOneListbox id="select_training" value="#{coursesBean.selectedCode}" styleClass="form-control" filter="true" filterMatchMode="contains">
                                     <f:selectItems value="#{coursesBean.coursesCmb}"/>
                                 </p:selectOneListbox>
                             </h:form>

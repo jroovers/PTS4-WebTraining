@@ -13,7 +13,10 @@ import java.util.List;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Named;
 import javax.faces.model.SelectItem;
@@ -41,8 +44,6 @@ public class CoursesBean implements Serializable {
     private String location;            // value in the "location" texfield
     private String keywords;            // value in the keywords texfield
 
-    private boolean editorIsOpen;
-
     private List<Course> courses;       // List of courses
     private Course course;              // Current course  
     private String selectedCode;        // Selected item in SelectOneMenu
@@ -55,25 +56,20 @@ public class CoursesBean implements Serializable {
      * Creates a new instance of coursesBean
      */
     public CoursesBean() {
-        editorIsOpen = false;
+        hasSelectedCourse = false;
     }
 
-    public void onSelectedItem(ValueChangeEvent e) {
+    private void resetConversation() {
         if (!conversation.isTransient()) {
             conversation.end();
-            editorIsOpen = false;
         }
-
         if (conversation.isTransient()) {
             conversation.begin();
-            editorIsOpen = true;
         }
-
-        selectedCode = (String) e.getNewValue();
-        setCourseData();
     }
 
-    public void onCreateNewItem(ActionEvent e) {
+    public String onCreateNewItem() {
+        resetConversation();
         code = "";
         name = "";
         description = "";
@@ -83,7 +79,37 @@ public class CoursesBean implements Serializable {
         cost = "";
         location = "";
         keywords = "";
-        editorIsOpen = true;
+        hasSelectedCourse = false;
+        return "editcourse?faces-redirect=true";
+    }
+
+    public String onEditItem() {
+        if (selectedCode != null) {
+            resetConversation();
+            setCourseData();
+            hasSelectedCourse = true;
+            return "editcourse?faces-redirect=true";
+        } else {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Kies eerst een cursus", ""));
+            return null;
+        }
+    }
+
+    public String onDeleteItem() {
+        if (selectedCode != null) {
+            for (Course c : courses) {
+                if (selectedCode.equals(c.getCode())) {
+                    cService.removeCourse(c.getId());
+                }
+            }
+            courses = cService.getAllCourses();
+            return "courses?faces-redirect=true";
+        } else {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Kies eerst een cursus", ""));
+            return null;
+        }
     }
 
     /**
@@ -92,6 +118,7 @@ public class CoursesBean implements Serializable {
      * database.
      */
     public void updateCourse() {
+
         boolean exist = changeCourse();
         if (!exist) {
             addCourse();
@@ -389,4 +416,11 @@ public class CoursesBean implements Serializable {
         this.location = location;
     }
 
+    public boolean isHasSelectedCourse() {
+        return hasSelectedCourse;
+    }
+
+    public void setHasSelectedCourse(boolean hasSelectedCourse) {
+        this.hasSelectedCourse = hasSelectedCourse;
+    }
 }
