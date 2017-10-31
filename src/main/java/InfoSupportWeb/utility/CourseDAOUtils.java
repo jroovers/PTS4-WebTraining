@@ -9,7 +9,6 @@ import Interfaces.ICourseDAO;
 import Model.Course;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,7 +50,10 @@ public class CourseDAOUtils implements ICourseDAO {
                         o[6] == null ? null : Integer.parseInt(o[6].toString()),
                         o[7] == null ? null : Double.parseDouble(o[7].toString())
                 );
-
+                
+                String[] keyWords = o[5] == null ? null : o[5].toString().split(",");
+                course.setKeyWords(keyWords);
+                
                 courses.add(course);
             }
         } catch (SQLException ex_sql) {
@@ -64,13 +66,8 @@ public class CourseDAOUtils implements ICourseDAO {
     @Override
     public Course addCourse(Course course) {
 
-        String keyWords = "";
-
-        if (course.getKeyWords() != null) {
-            for (String s : course.getKeyWords()) {
-                keyWords += s + ",";
-            }
-        }
+        String keyWords = arrayToString(course.getKeyWords());
+        
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
         Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), keyWords, course.getDurationInDays(), course.getCost()};
@@ -92,8 +89,11 @@ public class CourseDAOUtils implements ICourseDAO {
 
     @Override
     public boolean editCourse(Course course) {
+
+        String keyWords = arrayToString(course.getKeyWords());       
+        
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
-        Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), Arrays.toString(course.getKeyWords()), course.getDurationInDays(), course.getCost(), course.getId()};
+        Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), keyWords, course.getDurationInDays(), course.getCost(), course.getId()};
         try {
             run.update(QUERY_UPDATE_COURSE, params);
             return true;
@@ -117,6 +117,18 @@ public class CourseDAOUtils implements ICourseDAO {
             System.err.println("Failed to remove course from db");
             return false;
         }
+    }
+    
+    private String arrayToString(String[] array){
+        if(array == null){
+            return "";
+        }
+        StringBuilder keyWords = new StringBuilder();
+        for (String s : array) {
+            keyWords.append(s);
+            keyWords.append(",");
+        }
+        return keyWords.toString();
     }
 
 }

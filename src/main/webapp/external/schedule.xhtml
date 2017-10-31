@@ -3,38 +3,80 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core">
-    
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
     <!-- Tabblad naam -->
     <ui:define name="title">Courserooster</ui:define>
     <!-- Content -->
     <ui:define name="content">
+        <h:outputStylesheet library="style" name="ScheduleTable.css" />
         <div class="container">
             <div class="mt-3">
-                
-                <h1>Cursussen</h1>
-                
-                <h:form>
-                    
-                    <h:selectOneListbox value="#{scheduleBean.courseId}">
-                        <f:selectItems value="#{scheduleBean.courseValue}" var="y"
-                                       itemLabel="#{y.longString}" itemValue="#{y.code}" />
-   		</h:selectOneListbox>
-                    
-                </h:form>
-                <br></br>
-                <h1>Eendaagse trainingen</h1>
-                
-                <h:form>
-                    
-                    <h:selectOneListbox value="#{scheduleBean.courseId}">
-                        <f:selectItems value="#{scheduleBean.trainingValue}" var="y"
-                                       itemLabel="#{y.longString}" itemValue="#{y.code}" />
-   		</h:selectOneListbox>
-                    
-                </h:form>
-                
-                
+                <div class="row">
+                    <div class="col-5"> 
+
+
+                        <h:form onsubmit="event.preventDefault()">
+                            <div class="form-group">
+                                <h1>Cursussen</h1>
+                                <p:growl id="Select_Warning" />
+                                <p:selectOneListbox value="#{scheduleBean.lessonID}" filter="true" valueChangeListener="#{scheduleBean.valueChanged}" 
+                                                    filterMatchMode="contains" styleClass="form-control" onchange="submit()" required="false">
+                                                    <f:valueChangeListener type="Listener.ScheduleValueListener" />
+                                    <f:selectItems value="#{scheduleBean.allLessons}" var="y"
+                                                   itemLabel="#{y.lessonString}" itemValue="#{y.id}" />
+                                </p:selectOneListbox>
+                            </div>
+                        </h:form>
+                        
+
+                    </div>
+                    <div class="col-6">
+                        <h1>Informatie</h1>
+                       <h:form >
+
+                            <table class="table" >
+                                <tbody>
+                                    <tr>
+                                        <th>Naam</th>
+                                        
+                                        <th>#{scheduleBean.selectedLesson.course.name}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Cursus dagen</th>
+                                        <th>#{scheduleBean.selectedLesson.course.durationInDays}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Kosten</th>
+                                        <th>#{scheduleBean.selectedLesson.course.cost}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Materiaal</th>
+                                        <th>#{scheduleBean.selectedLesson.course.courseMaterials}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Beschrijving</th>
+                                        <th>#{scheduleBean.selectedLesson.course.description}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <!-- Disable werkt niet goed. hij roept de action niet aan :( -->
+                                           <h:button value="Inschrijven" outcome="signup.xhtml" />
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                           
+                            
+                       </h:form>
+                        <h:form id="hiddenForm" onsubmit="event.preventDefault()">
+                            <h:inputHidden value="#{scheduleBean.lessonID}" id="hiddenLessonID"/>
+                        </h:form>
+                    </div>
+
+
+                </div>
             </div>
         </div>
     </ui:define>

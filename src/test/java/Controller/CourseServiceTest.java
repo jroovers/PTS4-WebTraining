@@ -5,20 +5,11 @@
  */
 package Controller;
 
-import InfoSupportWeb.utility.CourseDAOUtils;
 import Model.Course;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.ejb.embeddable.EJBContainer;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -50,22 +41,22 @@ public class CourseServiceTest {
     /**
      * Test of addCourse method, of class CourseService.
      */
-    @Test
-    public void testAddCourse_String_String() throws Exception {
-        System.out.println("addCourse with code and name");
-        
-        Course expResult = c2;
-        Course result = courseService.addCourse(c1.getCode(), c1.getName());
-        
-        //Test of de course een id heeft gekregen in de database.
-        assertNotNull(result.getId());
-        
-        //Test of de codes en namen gelijk zijn.
-        assertEquals(expResult.getCode(), result.getCode());
-        assertEquals(expResult.getName(), result.getName());
-        
-        courseService.removeCourse(result.getId());
-    }
+//    //@Test
+//    public void testAddCourse_String_String() throws Exception {
+//        System.out.println("addCourse with code and name");
+//        
+//        Course expResult = c2;
+//        Course result = courseService.addCourse(c1.getCode(), c1.getName());
+//        
+//        //Test of de course een id heeft gekregen in de database.
+//        assertNotNull(result.getId());
+//        
+//        //Test of de codes en namen gelijk zijn.
+//        assertEquals(expResult.getCode(), result.getCode());
+//        assertEquals(expResult.getName(), result.getName());
+//        
+//        courseService.removeCourse(result.getId());
+//    }
 
     /**
      * Test of addCourse method, of class CourseService.

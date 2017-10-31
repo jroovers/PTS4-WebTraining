@@ -91,6 +91,17 @@ public class LessonService {
         return lessonDAOUtils.getLessonsFromCourse(course_ID);
     }
     
+     /**
+     * Gets all lessons scheduled to be given by a teacher
+     * 
+     * @param user_ID ID of the teacher
+     * @return List of lessons which are connected to the course ID
+     */
+    public List<Lesson> GetLessonsByTeacher(long user_ID) {
+        LessonDAOUtils lessonDAOUtils = new LessonDAOUtils();
+        return lessonDAOUtils.getLessonsByTeacher(user_ID);
+    }
+    
     public long signUpUser(long lesson_ID, long user_ID) {
         LessonDAOUtils lessonDAOUtils = new LessonDAOUtils();
         long id = lessonDAOUtils.signUpUser(lesson_ID, user_ID);

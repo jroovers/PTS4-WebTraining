@@ -1,0 +1,49 @@
+<ui:composition template="../WEB-INF/template/defaultTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <!-- Tabblad naam -->
+    <ui:define name="title">Persoonlijk Trainingsrooster</ui:define>
+    <!-- Content -->
+    <ui:define name="content">
+        <div class="container">
+            <h1>Cursussen</h1>
+            <h:form>
+                <p:growl id="messages" showDetail="true" />
+
+                <h:panelGrid columnClasses="value">
+                    <h3 style="margin-top: 0">Editable Schedule</h3>
+                    <p:schedule id="schedule" 
+                                value="#{personalRosterBean.eventModel}" 
+                                widgetVar="myschedule" 
+                                timeZone="GMT+2" 
+                                draggable="false"
+                                style ="width: 60%;">
+                        <p:ajax event="dateSelect" listener="#{personalRosterBean.onDateSelect}" update="eventDetails"/>
+
+
+                        <p:ajax event="eventSelect" listener="#{personalRosterBean.onEventSelect}" update="eventDetails"  />
+
+                        <p:ajax event="eventMove" listener="#{personalRosterBean.onEventMove}" update="messages"/>
+                        <p:ajax event="eventResize" listener="#{personalRosterBean.onEventResize}" update="messages" />
+                    </p:schedule>
+                </h:panelGrid>
+
+                <h:panelGrid id="eventDetails" columns="2">
+                    <p:outputLabel for="title" value="Titles:" />
+                    <p:inputText id="title" value="#{personalRosterBean.selectedLesson.course.name}" required="true"/>
+
+                    <p:outputLabel for="from" value="From:" />
+                    <p:calendar id="from" value="#{personalRosterBean.selectedLesson.startTime.time}" timeZone="GMT+1" pattern="dd/MM/yyyy HH:mm"/>
+
+                    <p:outputLabel for="to" value="To:" />
+                    <p:calendar id="to" value="#{personalRosterBean.selectedLesson.endTime.time}" timeZone="GMT+1" pattern="dd/MM/yyyy HH:mm"/>
+                </h:panelGrid>
+            </h:form>    
+        </div>
+    </ui:define>
+</ui:composition>

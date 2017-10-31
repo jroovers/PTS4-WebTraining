@@ -51,7 +51,18 @@ public class UserDAOUtils implements IUserDAO {
         return users;
     }
     
+    /**
+     * TODO
+     * @param username the username of the user.
+     * @return User if exists, Null if it doesn't
+     */
+    public User getUser(String username) {
+        return null;
+    }
+    
     public String test(){
         return "test";
     }
 }
+
+ 
