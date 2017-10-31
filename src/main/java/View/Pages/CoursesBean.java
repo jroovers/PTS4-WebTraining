@@ -7,17 +7,15 @@ package View.Pages;
 
 import Controller.CourseService;
 import Model.Course;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.ValueChangeEvent;
 import javax.inject.Named;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
@@ -25,6 +23,7 @@ import javax.inject.Inject;
 /**
  *
  * @author Kyle van Raaij
+ * @author Jeroen Roovers
  */
 @Named(value = "coursesBean")
 @ConversationScoped
@@ -56,20 +55,31 @@ public class CoursesBean implements Serializable {
      * Creates a new instance of coursesBean
      */
     public CoursesBean() {
-        hasSelectedCourse = false;
     }
 
     private void resetConversation() {
-        if (!conversation.isTransient()) {
-            conversation.end();
-        }
+        endConversation();
+        startConversation();
+    }
+
+    private void startConversation() {
         if (conversation.isTransient()) {
             conversation.begin();
         }
     }
 
+    private void endConversation() {
+        if (!conversation.isTransient()) {
+            conversation.end();
+        }
+    }
+
+    /**
+     * Method to call when the user wants to create a new training
+     *
+     * @return
+     */
     public String onCreateNewItem() {
-        resetConversation();
         code = "";
         name = "";
         description = "";
@@ -80,9 +90,15 @@ public class CoursesBean implements Serializable {
         location = "";
         keywords = "";
         hasSelectedCourse = false;
+        endConversation();
         return "editcourse?faces-redirect=true";
     }
 
+    /**
+     * Method to call when the user wants to edit an exisiting training
+     *
+     * @return
+     */
     public String onEditItem() {
         if (selectedCode != null) {
             resetConversation();
@@ -91,24 +107,34 @@ public class CoursesBean implements Serializable {
             return "editcourse?faces-redirect=true";
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Kies eerst een cursus", ""));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Kies eerst een cursus", ""));
             return null;
         }
     }
 
+    /**
+     * Method to call when the user wants to remove an exisiting training
+     *
+     * @return
+     */
     public String onDeleteItem() {
         if (selectedCode != null) {
+            resetConversation();
             for (Course c : courses) {
                 if (selectedCode.equals(c.getCode())) {
                     cService.removeCourse(c.getId());
                 }
             }
             courses = cService.getAllCourses();
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.getExternalContext().getFlash().setKeepMessages(true);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Verwijderd", ""));
             return "courses?faces-redirect=true";
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Kies eerst een cursus", ""));
-            return null;
+            context.getExternalContext().getFlash().setKeepMessages(true);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Kies eerst een cursus", ""));
+            return "courses?faces-redirect=true";
         }
     }
 
@@ -117,12 +143,16 @@ public class CoursesBean implements Serializable {
      * changed in the database. if not then a new course will be added to the
      * database.
      */
-    public void updateCourse() {
-
+    public String updateCourse() {
         boolean exist = changeCourse();
         if (!exist) {
             addCourse();
         }
+        endConversation();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Opgeslagen!", ""));
+        return "courses?faces-redirect=true";
     }
 
     /**
@@ -147,6 +177,7 @@ public class CoursesBean implements Serializable {
      */
     public boolean changeCourse() {
         boolean exist = false;
+        courses = cService.getAllCourses();
         for (Course c : courses) {
             if (this.code.equals(c.getCode())) {
                 try {

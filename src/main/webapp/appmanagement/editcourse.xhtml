@@ -23,12 +23,13 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-inline">
-                                <p:commandButton id="save_training" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Opslaan" icon="fa fa-floppy-o" action="#{coursesBean.updateCourse()}"/>
+                                <p:commandButton id="save_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-floppy-o" value="Opslaan"  action="#{coursesBean.updateCourse()}"/>
                                 <p:button id="cancel_action" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Annuleren" icon="fa fa-ban" outcome="courses"/>
                             </div>
                         </div>
                     </div>
                     <hr/>
+                    <h3>Trainingsgegevens</h3>
                     <div class="form-group row">
                         <h:outputLabel for="coursecode" value="Trainingscode" styleClass="col-sm-3 col-form-label"/>
                         <div class="col-sm-6">
@@ -62,13 +63,13 @@
                     <div class="form-group row">
                         <h:outputLabel for="courseduration" value="Tijdsduur in dagen" styleClass="col-sm-3 col-form-label"/>
                         <div class="col-sm-6">
-                            <h:inputText id="courseduration" a:placeholder="Tijdsduur in dagen" styleClass="form-control" value="#{coursesBean.timeInDays}"/>
+                            <h:inputText id="courseduration" a:placeholder="1" styleClass="form-control" value="#{coursesBean.timeInDays}"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <h:outputLabel for="coursetariff" value="Tarief" styleClass="col-sm-3 col-form-label"/>
                         <div class="col-sm-6">
-                            <h:inputText id="coursetariff" a:placeholder="498" styleClass="form-control" value="#{coursesBean.cost}"/>
+                            <h:inputText id="coursetariff" a:placeholder="499.99" styleClass="form-control" value="#{coursesBean.cost}"/>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -79,45 +80,48 @@
                     </div>
                 </h:form>
                 <hr/>
+                <h3>Gekoppelde categorieën en groepen</h3>
                 <div class="row">
-                    <p:tabView>
-                        <p:tab title="Categorieën">
-                            <h:form>
-                                <div class="row">
-                                    <div class="form-inline">
-                                        <p:commandButton id="add_category" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Toevoegen" icon="fa fa-plus"/>
-                                        <p:commandButton id="delete_category" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijder geselecteerde" icon="fa fa-trash-o" />
+                    <div class="col-12">
+                        <p:tabView>
+                            <p:tab title="Categorieën">
+                                <h:form>
+                                    <div class="row">
+                                        <div class="form-inline">
+                                            <p:commandButton id="add_category" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Toevoegen" icon="fa fa-plus"/>
+                                            <p:commandButton id="delete_category" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijder geselecteerde categorie" icon="fa fa-trash-o" />
+                                        </div>
                                     </div>
-                                </div>
-                                <hr/>
-                                <div class="row">
-                                    <p:selectOneListbox>
-                                        <f:selectItem itemLabel="Option 1" itemValue="1" />
-                                        <f:selectItem itemLabel="Option 2" itemValue="2" />
-                                        <f:selectItem itemLabel="Option 3" itemValue="3" />
-                                    </p:selectOneListbox>
-                                </div>
-                            </h:form>
-                        </p:tab>
-                        <p:tab title="Doelgroepen">
-                            <h:form>
-                                <div class="row">
-                                    <div class="form-inline">
-                                        <p:commandButton id="add_category" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Toevoegen" icon="fa fa-plus"/>
-                                        <p:commandButton id="delete_category" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijder geselecteerde" icon="fa fa-trash-o" />
+                                    <hr/>
+                                    <div class="row">
+                                        <p:selectOneListbox styleClass="form-control">
+                                            <f:selectItem itemLabel="Voorbeeldcategorie 1" itemValue="1" />
+                                            <f:selectItem itemLabel="Voorbeeldcategorie 2" itemValue="2" />
+                                            <f:selectItem itemLabel="Voorbeeldcategorie 3" itemValue="3" />
+                                        </p:selectOneListbox>
                                     </div>
-                                </div>
-                                <hr/>
-                                <div class="row">
-                                    <p:selectOneListbox>
-                                        <f:selectItem itemLabel="Option 1" itemValue="1" />
-                                        <f:selectItem itemLabel="Option 2" itemValue="2" />
-                                        <f:selectItem itemLabel="Option 3" itemValue="3" />
-                                    </p:selectOneListbox>
-                                </div>
-                            </h:form>
-                        </p:tab>
-                    </p:tabView>
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="Doelgroepen">
+                                <h:form>
+                                    <div class="row">
+                                        <div class="form-inline">
+                                            <p:commandButton id="add_category" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Toevoegen" icon="fa fa-plus"/>
+                                            <p:commandButton id="delete_category" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijder geselecteerde doelgroep" icon="fa fa-trash-o" />
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="row">
+                                        <p:selectOneListbox styleClass="form-control">
+                                            <f:selectItem itemLabel="Voorbeelddoelgroep 1" itemValue="1" />
+                                            <f:selectItem itemLabel="Voorbeelddoelgroep 2" itemValue="2" />
+                                            <f:selectItem itemLabel="Voorbeelddoelgroep 3" itemValue="3" />
+                                        </p:selectOneListbox>
+                                    </div>
+                                </h:form>
+                            </p:tab>
+                        </p:tabView>
+                    </div>
                 </div>
             </div>
         </div>
