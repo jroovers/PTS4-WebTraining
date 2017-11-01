@@ -16,6 +16,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -134,6 +135,7 @@ public class LessonServiceTest {
     @Test
     public void testGetLessonsByTeacher() throws Exception {
         System.out.println("getLessonsFromCourse");
+        u1.setUserID(1);
         List<Lesson> result = lessonService.GetLessonsByTeacher(u1.getUserID());
         assertTrue(!result.isEmpty());
     }
