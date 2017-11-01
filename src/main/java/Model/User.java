@@ -11,7 +11,7 @@ package Model;
  */
 public class User {
 
-    private int userID;
+    private long userID;
     private String name;
     private String surname;
     private String username;
@@ -32,7 +32,7 @@ public class User {
      * @param email
      * @param accesLevel 
      */
-    public User(int userID ,String name, String surname, String username, String password, String phoneNr, String email, int accesLevel){
+    public User(long userID ,String name, String surname, String username, String password, String phoneNr, String email, int accesLevel){
         this.userID = userID;
         this.name = name;
         this.surname = surname;
@@ -79,11 +79,11 @@ public class User {
         this.accesLevel = accesLevel;
     }
 
-    public int getUserID() {
+    public long getUserID() {
         return userID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(long userID) {
         this.userID = userID;
     }
 

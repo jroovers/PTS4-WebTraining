@@ -35,9 +35,9 @@ public class UserDAOUtils implements IUserDAO {
         try {
             List<Object[]> result = run.query(QUERY_GET_USERS, alh);
             for (Object[] o : result) {
-                //(int userID ,String name, String surname, String username, String password, String phoneNr, String email, int accesLevel)
+                //(long userID ,String name, String surname, String username, String password, String phoneNr, String email, int accesLevel)
                 User u = new User(
-                    o[1] == null ? null : Integer.parseInt(o[1].toString()), // userID
+                    o[1] == null ? null : Long.parseLong(o[1].toString()), // userID
                     o[2] == null ? null : o[2].toString(), // Name
                     o[3] == null ? null : o[3].toString(), // Surname
                     o[4] == null ? null : o[4].toString(), // username
