@@ -390,22 +390,6 @@ INSERT INTO `Registration` (`ID_User`, `FirstName`, `LastName`, `Email`, `PhoneN
 	(1, 'Frank', 'Frenken', 'Frank@Frenken.fankie', 623946734);
 /*!40000 ALTER TABLE `Registration` ENABLE KEYS */;
 
--- Dumping structure for table db_dev_infosupport.User
-DROP TABLE IF EXISTS `User`;
-CREATE TABLE IF NOT EXISTS `User` (
-  `ID_User` int(11) NOT NULL AUTO_INCREMENT,
-  `Username` varchar(255) NOT NULL,
-  `Password` varchar(255) NOT NULL,
-  PRIMARY KEY (`ID_User`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
--- Dumping data for table db_dev_infosupport.User: ~2 rows (approximately)
-/*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` (`ID_User`, `Username`, `Password`) VALUES
-	(1, 'Frank', 'franken'),
-	(2, 'Bert', 'bertus');
-/*!40000 ALTER TABLE `User` ENABLE KEYS */;
-
 -- Dumping structure for table db_dev_infosupport.UserType
 DROP TABLE IF EXISTS `UserType`;
 CREATE TABLE IF NOT EXISTS `UserType` (
@@ -415,9 +399,38 @@ CREATE TABLE IF NOT EXISTS `UserType` (
   UNIQUE KEY `UserType_UNIQUE` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `UserType` (`ID_UserType`, `Name`) VALUES
+	(1, 'Guest'),
+	(2, 'Admin'),
+	(3, 'User');
+
 -- Dumping data for table db_dev_infosupport.UserType: ~0 rows (approximately)
 /*!40000 ALTER TABLE `UserType` DISABLE KEYS */;
 /*!40000 ALTER TABLE `UserType` ENABLE KEYS */;
+
+-- Dumping structure for table db_dev_infosupport.User
+DROP TABLE IF EXISTS `User`;
+CREATE TABLE IF NOT EXISTS `User` (
+  `ID_User` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) NOT NULL,
+  `Surname` varchar(255) NOT NULL,
+  `Username` varchar(255) UNIQUE NULL,
+  `Password` varchar(255) NULL,
+  `PhoneNr` varchar(255) NOT NULL,
+  `Email` varchar(255) NOT NULL,
+  `ID_UserType` INT(11) NOT NULL,
+  PRIMARY KEY (`ID_User`),
+  KEY `fk_User_Type` (`ID_UserType`),
+  CONSTRAINT `fk_User_Type` FOREIGN KEY (`ID_UserType`) REFERENCES `UserType` (`ID_UserType`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table db_dev_infosupport.User: ~2 rows (approximately)
+/*!40000 ALTER TABLE `User` DISABLE KEYS */;
+INSERT INTO `User` (`ID_User`, `Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`,`ID_UserType`) VALUES
+	(1, 'Frank', 'franken', 'Frankster', 'frankisthebest', '001234', 'Frankster@TheG.com', 2),
+	(2, 'Bert', 'bertus','Bertster','bertisthebest','004321','BertusThebertustest@banana.com', 1),
+	(3, 'Kyle', 'bendover','Bender','BendingLoverxx','09000900','Kylethe****Lover@gmail.com', 3);
+/*!40000 ALTER TABLE `User` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

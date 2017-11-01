@@ -60,9 +60,11 @@ public class AuthorizationBean {
 //            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ingelogd", "!"));
 //        }
 
-            User user = new User(321,"Kyle","WW", 1);
+            User user = new User(1, "Frank" , "franken", "Frankster", "frankisthebest", "001234", "Frankster@TheG.com", 2);
             HttpSession hs = AuthorizationUtils.getSession();
-            hs.setAttribute("LoggedInUser", user);
+            //hs.setAttribute("LoggedInUser", user);
+            hs.setAttribute("AccesLevel", 1);
+            hs.setAttribute("Username", "Kyle");
             System.out.println("Sessie gestart van: " + user.getUsername());
             return "/index_templated.xhtml";
     }
@@ -73,21 +75,42 @@ public class AuthorizationBean {
         return "/authorization.xhtml";
     }
     
-    // 1 admin
-    // 2 docent
-    // 3 cursist
+    
+    /**
+     * Checks if the user has the permission to use the page.
+     * @param accesLevel Level that the user has acces to.
+     * @throws IOException 
+     */
     public void checkPermission(int accesLevel) throws IOException {
-        HttpSession hs = AuthorizationUtils.getSession();
-        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-        if(hs.getAttribute("LoggedInUser") != null) {
-            user = (User) hs.getAttribute("LoggedInUser");
+        try {
+            HttpSession hs = AuthorizationUtils.getSession();
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            if (hs.getAttribute("AccesLevel") != null) {
+                int level = (int) hs.getAttribute("AccesLevel");
+
+                if (level > accesLevel) {
+                    context.redirect("/InfoSupportWeb/external/authorization.xhtml");
+                }
+            } else {
+                context.redirect("/InfoSupportWeb/external/authorization.xhtml");
+            }
+
+        } catch (IOException ex) {
             
-            
-            if(user.getAccesLevel() > accesLevel) {
-               context.redirect("/InfoSupportWeb/external/authorization.xhtml"); 
-            }    
-        } else {
-            context.redirect("/InfoSupportWeb/external/authorization.xhtml"); 
         }
+    }
+    
+    public boolean checkVisible(int accesLevel) {
+        HttpSession hs = AuthorizationUtils.getSession();
+        if (hs.getAttribute("AccesLevel") != null) {
+            int level = (int) hs.getAttribute("AccesLevel");
+
+            if (level > accesLevel) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        return true;
     }
 }
