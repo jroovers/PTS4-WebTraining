@@ -23,6 +23,7 @@ public class User {
     private String password;
     private String phoneNr;
     private String email;
+    private int accesLevel;
 
     public User() {
 
@@ -36,6 +37,7 @@ public class User {
         this.userID = userID;
         this.username = username;
         this.password = password;
+        this.accesLevel = accesLevel;
     }
 
     public User(String name, String surname, String phoneNr, String email) {
@@ -43,6 +45,14 @@ public class User {
         this.surname = surname;
         this.phoneNr = phoneNr;
         this.email = email;
+    }
+
+    public int getAccesLevel() {
+        return accesLevel;
+    }
+
+    public void setAccesLevel(int accesLevel) {
+        this.accesLevel = accesLevel;
     }
 
     public String getUsername() {
