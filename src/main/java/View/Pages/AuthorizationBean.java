@@ -60,7 +60,7 @@ public class AuthorizationBean {
 //            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ingelogd", "!"));
 //        }
 
-            user = new User(321,"Kyle","WW", 1);
+            User user = new User(1, "Frank" , "franken", "Frankster", "frankisthebest", "001234", "Frankster@TheG.com", 2);
             HttpSession hs = AuthorizationUtils.getSession();
             //hs.setAttribute("LoggedInUser", user);
             hs.setAttribute("AccesLevel", 1);

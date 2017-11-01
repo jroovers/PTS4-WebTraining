@@ -125,7 +125,7 @@ public class SignupBean {
     }
 
     public void signUp() {
-        User user = new User(name, surname, phonenr, email);
+        User user = new User(name,surname,phonenr,email,1);
         long id = ls.signUpUser(lessonID, 1);
         FacesContext context = FacesContext.getCurrentInstance();
         if (id != 0) {

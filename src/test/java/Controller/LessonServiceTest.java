@@ -7,6 +7,7 @@ package Controller;
 
 import Model.Course;
 import Model.Lesson;
+import Model.User;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -28,6 +29,9 @@ public class LessonServiceTest {
     private Lesson l1;
     private Lesson l2;
     
+    private User u1;
+    private User u2;
+    
     private Calendar startTime;
     private Calendar endTime;
     
@@ -45,6 +49,8 @@ public class LessonServiceTest {
         c1.setId(2);
         l1 = new Lesson(c1);
         l2 = new Lesson(c1);
+        u1 = new User("Frank", "franken", "001234", "Frankster@TheG.com", 2);
+        u2 = new User("Bert", "bertus", "004321", "BertusThebertustest@banana.com", 1);
         
         lessonService = new LessonService();
         location = "eindhoven";
@@ -125,4 +131,10 @@ public class LessonServiceTest {
         assertTrue(!result.isEmpty());
     }
     
+    @Test
+    public void testGetLessonsByTeacher() throws Exception {
+        System.out.println("getLessonsFromCourse");
+        List<Lesson> result = lessonService.GetLessonsByTeacher(u1.getUserID());
+        assertTrue(!result.isEmpty());
+    }
 }
