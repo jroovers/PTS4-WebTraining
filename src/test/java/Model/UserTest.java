@@ -107,6 +107,34 @@ public class UserTest {
     }
 
     /**
+     * Test of getSurname method, of class User.
+     */
+    @Test
+    public void testGetSurname() {
+        //arange
+        String expSurname = "franken";
+        //act
+        user.setSurname(expSurname);
+        String result = user.getSurname();
+        //assert
+        assertEquals(expSurname, result);
+    }
+
+    /**
+     * Test of setName method, of class User.
+     */
+    @Test
+    public void testSetSurname() {
+        //arange
+        String newSurname = "Henken";
+        //act
+        user.setSurname(newSurname);
+        String result = user.getSurname();
+        //assert
+        assertEquals(newSurname, result);
+    }
+
+    /**
      * Test of getUserName method, of class User.
      */
     @Test
@@ -167,10 +195,56 @@ public class UserTest {
     }
 
     /**
-     * Test of add method, of class User.
+     * Test of setPassword method, of class User.
      */
     @Test
-    public void testAdd() {
-        //fail("wtf does this do.");
+    public void testGetPhoneNR() {
+        //arrange
+        String expPhoneNR = "001234";
+        //act        
+        String result = user.getPhoneNr();
+        //assert
+        assertEquals(expPhoneNR, result);
+    }
+
+    /**
+     * Test of setPassword method, of class User.
+     */
+    @Test
+    public void testSetPhoneNR() {
+        //arrange
+        String newPhoneNr = "123400";
+        //act
+        user.setPhoneNr(newPhoneNr);
+        String result = user.getPhoneNr();
+        //assert
+        assertEquals(newPhoneNr, result);
+    }
+
+    /**
+     * Test of setPassword method, of class User.
+     */
+    @Test
+    public void testGetEmail() {
+        //arrange
+        String expEmail = "Frankster@TheG.com";
+        //act
+        String result = user.getEmail();
+        //assert
+        assertEquals(expEmail, result);
+    }
+
+    /**
+     * Test of setPassword method, of class User.
+     */
+    @Test
+    public void testSetEmail() {
+        //arrange
+        String newEmail = "Frankster@TheG.com";
+        //act
+        user.setEmail(newEmail);
+        String result = user.getEmail();
+        //assert
+        assertEquals(newEmail, result);
     }
 }
