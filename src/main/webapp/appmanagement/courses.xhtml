@@ -42,9 +42,8 @@
                                 <f:selectItems value="#{coursesBean.coursesCmb}"/>
                                 <f:ajax event="change" onevent="unlockbuttons" render="edit_training delete_training" />
                             </p:selectOneListbox>
-                            <p:commandButton  onclick="PF('delete_training').disable();" value="swag"/>
                             <p:dialog header="Modal Dialog" widgetVar="deleteconfirmation" modal="true" minHeight="200" minWidth="200" closeOnEscape="true">
-                                <h:outputText value="Weet je zeker dat je deze training wil verwijderen?" />
+                                <h:outputText value="Weet je zeker dat je deze training wilt verwijderen?" />
                                 <hr/>
                                 <p:commandButton id="confirmdelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijderen" action="#{coursesBean.onDeleteItem()}" icon="fa fa-trash-o" />
                                 <p:commandButton id="canceldelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nee toch niet" type="button" onclick="PF('deleteconfirmation').hide();" icon="fa fa-ban" />
