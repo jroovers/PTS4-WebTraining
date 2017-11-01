@@ -41,14 +41,14 @@ public class UserDAOUtils implements IUserDAO {
             for (Object[] o : result) {
                 //(int userID ,String name, String surname, String username, String password, String phoneNr, String email, int accesLevel)
                 User u = new User(
-                        o[1] == null ? null : Integer.parseInt(o[1].toString()), // userID
-                        o[2] == null ? null : o[2].toString(), // Name
-                        o[3] == null ? null : o[3].toString(), // Surname
-                        o[4] == null ? null : o[4].toString(), // username
-                        o[5] == null ? null : o[5].toString(), // Password
-                        o[6] == null ? null : o[6].toString(), // phoneNr
-                        o[7] == null ? null : o[7].toString(), // email
-                        o[8] == null ? null : Integer.parseInt(o[8].toString()) // accessLevel
+                        o[0] == null ? null : Integer.parseInt(o[0].toString()), // userID
+                        o[1] == null ? null : o[1].toString(), // Name
+                        o[2] == null ? null : o[2].toString(), // Surname
+                        o[3] == null ? null : o[3].toString(), // username
+                        o[4] == null ? null : o[4].toString(), // Password
+                        o[5] == null ? null : o[5].toString(), // phoneNr
+                        o[6] == null ? null : o[6].toString(), // email
+                        o[7] == null ? null : Integer.parseInt(o[7].toString()) // accessLevel
                 );
                 users.add(u);
             }
@@ -69,14 +69,14 @@ public class UserDAOUtils implements IUserDAO {
             List<Object[]> result = run.query(QUERY_GET_USER, alh, username);
             for (Object[] o : result) {
                 user = new User(
-                        o[1] == null ? null : Integer.parseInt(o[1].toString()), // userID
-                        o[2] == null ? null : o[2].toString(), // Name
-                        o[3] == null ? null : o[3].toString(), // Surname
-                        o[4] == null ? null : o[4].toString(), // username
-                        o[5] == null ? null : o[5].toString(), // Password
-                        o[6] == null ? null : o[6].toString(), // phoneNr
-                        o[7] == null ? null : o[7].toString(), // email
-                        o[8] == null ? null : Integer.parseInt(o[8].toString()) // accessLevel
+                        o[0] == null ? null : Integer.parseInt(o[0].toString()), // userID
+                        o[1] == null ? null : o[1].toString(), // Name
+                        o[2] == null ? null : o[2].toString(), // Surname
+                        o[3] == null ? null : o[3].toString(), // username
+                        o[4] == null ? null : o[4].toString(), // Password
+                        o[5] == null ? null : o[5].toString(), // phoneNr
+                        o[6] == null ? null : o[6].toString(), // email
+                        o[7] == null ? null : Integer.parseInt(o[7].toString()) // accessLevel
                 );
             }
         } catch (SQLException ex_sql) {
