@@ -32,14 +32,16 @@ public interface IUserDAO {
      * Adds a User to database.
      *
      * @param user 
+     * @return  
      */
-    public void addUser(User user);
+    public boolean addUser(User user);
     
     /**
      * Removes a User from database.
      *
-     * @param userName 
+     * @param User_ID
+     * @return  
      */
-    public void removeUser(String userName);
+    public boolean removeUser(long User_ID);
 
 }
