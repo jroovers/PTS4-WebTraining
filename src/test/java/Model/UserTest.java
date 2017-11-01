@@ -16,15 +16,95 @@ import static org.junit.Assert.*;
  *
  * @author Pajama Sammy
  */
-public class UserTest
-{
+public class UserTest {
+
     private User user;
 
     @Before
     public void CreateTestUser() {
-        User user = new User(1, "Frank" , "franken", "Frankster", "frankisthebest", "001234", "Frankster@TheG.com", 2);
+        user = new User(1, "Frank", "franken", "Frankster", "frankisthebest", "001234", "Frankster@TheG.com", 2);
     }
-   
+
+    /**
+     * Test of getUserID method, of class User.
+     */
+    @Test
+    public void testGetUserID() {
+        //arange
+        long expID = 1;
+        //act
+        long result = user.getUserID();
+        //assert
+        assertEquals(expID, result);
+    }
+
+    /**
+     * Test of setUserID method, of class User.
+     */
+    @Test
+    public void testSetUserID() {
+        //arange
+        long newID = 2;
+        //act
+        user.setUserID(newID);
+        long result = user.getUserID();
+        //assert
+        assertEquals(newID, result);
+    }
+
+    /**
+     * Test of getAccesLVL method, of class User.
+     */
+    @Test
+    public void testGetAccesLVL() {
+        //arange
+        int expLVL = 2;
+        //act
+        int result = user.getAccesLevel();
+        //assert
+        assertEquals(expLVL, result);
+    }
+
+    /**
+     * Test of setAccesLVL method, of class User.
+     */
+    @Test
+    public void testSetAccesLVL() {
+        //arange
+        int newLVL = 1;
+        //act
+        user.setAccesLevel(newLVL);
+        int result = user.getAccesLevel();
+        //assert
+        assertEquals(newLVL, result);
+    }
+
+    /**
+     * Test of getName method, of class User.
+     */
+    @Test
+    public void testGetName() {
+        //arange
+        String expName = "Frank";
+        //act
+        String result = user.getName();
+        //assert
+        assertEquals(expName, result);
+    }
+
+    /**
+     * Test of setName method, of class User.
+     */
+    @Test
+    public void testSetName() {
+        //arange
+        String newName = "Henk";
+        //act
+        user.setName(newName);
+        String result = user.getName();
+        //assert
+        assertEquals(newName, result);
+    }
 
     /**
      * Test of getUserName method, of class User.
@@ -32,7 +112,7 @@ public class UserTest
     @Test
     public void testGetUserName() {
         //arrange
-        String expResult = "InfoSupportStaff1";
+        String expResult = "Frankster";
         //act
         String result = user.getUsername();
         //assert
@@ -62,7 +142,7 @@ public class UserTest
     @Test
     public void testPassword() {
         //arrange
-        String expResult = "pass";
+        String expResult = "frankisthebest";
         //act
         String result = user.getPassword();
         //assert
@@ -85,12 +165,12 @@ public class UserTest
         //assert
         assertEquals(expCode, code);
     }
+
     /**
      * Test of add method, of class User.
      */
     @Test
-    public void testAdd()
-    {
+    public void testAdd() {
         //fail("wtf does this do.");
-    } 
+    }
 }
