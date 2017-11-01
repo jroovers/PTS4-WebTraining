@@ -41,7 +41,15 @@ public class AuthorizationBean {
         role = "werknemer";
     }
     
-    
+     public String logindummie() {
+         User user = new User(1, "Frank", "franken", "Frankster", "frankisthebest", "001234", "Frankster@TheG.com", 2);
+         HttpSession hs = AuthorizationUtils.getSession();
+         //hs.setAttribute("LoggedInUser", user);
+         hs.setAttribute("AccesLevel", 2);
+         hs.setAttribute("Username", "Kyle");
+         return "/index_templated.xhtml";
+         
+     }
     
 
     public String login() {
@@ -64,7 +72,7 @@ public class AuthorizationBean {
         
         // Gebruiker    : Frankster
         // Wachtwoord   : frankisthebest
-        // Level        : 
+        // Level        : 2
         
 //            User user = new User(1, "Frank" , "franken", "Frankster", "frankisthebest", "001234", "Frankster@TheG.com", 2);
 //            HttpSession hs = AuthorizationUtils.getSession();
