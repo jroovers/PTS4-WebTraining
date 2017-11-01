@@ -24,9 +24,10 @@ public interface IUserDAO {
     /**
      * Gets a User from database.
      *
+     * @param username
      * @return User 
      */
-    public User getUser();
+    public User getUser(String username);
     
     /**
      * Adds a User to database.

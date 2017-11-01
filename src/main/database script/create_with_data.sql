@@ -24,6 +24,12 @@ CREATE TABLE IF NOT EXISTS `Category` (
 /*!40000 ALTER TABLE `Category` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Category` ENABLE KEYS */;
 
+INSERT INTO `Category` (Name) VALUES
+	('Design'),
+	('Java'),
+	('Office'),
+	('Sql');
+
 -- Dumping structure for table db_dev_infosupport.Course
 DROP TABLE IF EXISTS `Course`;
 CREATE TABLE IF NOT EXISTS `Course` (
