@@ -63,9 +63,8 @@ public class AuthorizationBean {
             User user = new User(1, "Frank" , "franken", "Frankster", "frankisthebest", "001234", "Frankster@TheG.com", 2);
             HttpSession hs = AuthorizationUtils.getSession();
             //hs.setAttribute("LoggedInUser", user);
-            hs.setAttribute("AccesLevel", 1);
+            hs.setAttribute("AccesLevel", 2);
             hs.setAttribute("Username", "Kyle");
-            System.out.println("Sessie gestart van: " + user.getUsername());
             return "/index_templated.xhtml";
     }
     
@@ -82,35 +81,44 @@ public class AuthorizationBean {
      * @throws IOException 
      */
     public void checkPermission(int accesLevel) throws IOException {
+        HttpSession hs = AuthorizationUtils.getSession();
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
         try {
-            HttpSession hs = AuthorizationUtils.getSession();
-            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-            if (hs.getAttribute("AccesLevel") != null) {
-                int level = (int) hs.getAttribute("AccesLevel");
+            int level = (int) hs.getAttribute("AccesLevel");
 
-                if (level > accesLevel) {
-                    context.redirect("/InfoSupportWeb/external/authorization.xhtml");
-                }
-            } else {
-                context.redirect("/InfoSupportWeb/external/authorization.xhtml");
+            if (accesLevel == 1) {
+                return;
             }
 
-        } catch (IOException ex) {
-            
+            if (level >= accesLevel) {
+                return;
+            }
+            context.redirect("/InfoSupportWeb/external/authorization.xhtml");
+        } catch (NullPointerException ex) {
+            context.redirect("/InfoSupportWeb/external/authorization.xhtml");
         }
     }
     
+    /**
+     * Checks if the users acceslevel is high enough.
+     * @param accesLevel
+     * @return True if acceslevel is high enough, false if not
+     */
     public boolean checkVisible(int accesLevel) {
         HttpSession hs = AuthorizationUtils.getSession();
-        if (hs.getAttribute("AccesLevel") != null) {
-            int level = (int) hs.getAttribute("AccesLevel");
-
-            if (level > accesLevel) {
-                return false;
+        try {
+            int level = (int) hs.getAttribute("AccesLevel");      
+            
+            if (accesLevel == 1) {
+                return true;
             }
-        } else {
+            
+            if (level >= accesLevel) {
+                return true;
+            }
+            return false;  
+        } catch (NullPointerException ex) {
             return false;
         }
-        return true;
     }
 }
