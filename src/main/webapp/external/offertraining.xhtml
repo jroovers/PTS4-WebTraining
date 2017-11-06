@@ -1,0 +1,91 @@
+<ui:composition template="../WEB-INF/template/defaultTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <!-- Tabblad naam -->
+    <ui:define name="title">OfferTraining</ui:define>
+    <!-- Content -->
+    <ui:define name="content">
+        <h:outputStylesheet library="style" name="ScheduleTable.css" />
+        <div class="container">
+            <div class="mt-3">
+                <div class="col-6">
+                    <h1>Persoonlijke informatie</h1>
+                       <h:form >
+
+                            <table class="table" >
+                                <tbody>
+                                    <tr>
+                                        <th>Naam</th>
+                                        
+                                        <th><p:inputText id="Name" value="#{offerTrainingBean.name}" style="width: 200%" a:placeholder="Vul je voornaam in" required="true" requiredMessage="Vul eerst je voornaam in"></p:inputText></th>
+                                    </tr>
+                                    <tr>
+                                        <th>Achternaam</th>
+                                        
+                                        <th><p:inputText id="LastName" value="#{offerTrainingBean.surname}" style="width: 200%" a:placeholder="Vul je achternaam in" required="true" requiredMessage="Vul eerst je achternaam in"></p:inputText></th>
+                                    </tr>
+                                    <tr>
+                                        <th>E-mail</th>
+                                        
+                                        <th><p:inputText id="email" value="#{offerTrainingBean.email}" style="width: 200%" a:placeholder="Bijv. voorbeeld@outlook.com" required="true" requiredMessage="Vul je e-mail adres in"></p:inputText></th>
+                                    </tr>
+                                    <tr>
+                                        <th>Telefoonnummer</th>
+                                        
+                                        <th><p:inputText id="phonenumber" value="#{offerTrainingBean.phonenr}" style="width: 200%" a:placeholder="Bijv. 0612345678" required="true" requiredMessage="Vul je telefoonnummer in waar je op te bereiken bent"></p:inputText></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                          </h:form>
+         <h1>Training informatie</h1>
+            <h:form>
+                    <table>
+                        <tr>
+                            <th><p>Trainingscode</p></th>
+                            <th><p:inputText id="trainingcode" value="#{offerTrainingBean.code}" style="width: 200%" a:placeholder="Bijv. 2FD523F" ></p:inputText></th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <th><p>Trainingsnaam</p></th>
+                            <th><p:inputText id="trainingnaam" value="#{offerTrainingBean.courseName}" style="width: 200%" a:placeholder="Bijv. Java cursus"></p:inputText></th>
+                        </tr>
+                        <tr>
+                            <th><p>Beschrijving</p></th>
+                            <th><p:inputTextarea value="#{offerTrainingBean.description}" style="width: 200%" a:placeholder="Bijv. In deze cursus wordt java gegeven."></p:inputTextarea></th>
+                        </tr>
+                        <tr>
+                            <th><p>Benodigde voorkennis</p></th>
+                            <th><p:inputText value="#{offerTrainingBean.requiredKnowledge}" style="width: 200%" a:placeholder="Bijv. Computerkennis, Internetkennis"></p:inputText></th>
+                        </tr>
+                        <tr>
+                            <th><p>Cursusmateriaal</p></th>
+                            <th><p:inputText value="#{offerTrainingBean.cursusMaterial}" style="width: 200%" a:placeholder="Bijv. Netbeans, Internet Explorer"></p:inputText></th>
+                        </tr>
+                        <tr>
+                            <th><p>Tijdsduur in dagen</p></th>
+                            <th><p:inputText value="#{offerTrainingBean.timeInDays}" style="width: 200%" a:placeholder="Bijv. 1"></p:inputText></th>
+                        </tr>
+                        <tr>
+                            <th><p>Tarief</p></th>
+                            <th><p:inputText value="#{offerTrainingBean.cost}" style="width: 200%" a:placeholder="Bijv. 23.30"></p:inputText></th>
+                        </tr>
+                        
+                        <tr>
+                            <th><p>Training toevoegen</p></th>
+
+                            <div class="form-group">
+                                    <p:growl id="signup_growl" class=""/>
+                                    <p:commandButton value="Inschrijven" ajax="false" action="#{offerTrainingBean.signUp()}" style="float:right; margin-top: 10px; margin-bottom: 20px;"/>
+                                </div> </tr>
+                    </table>
+            </h:form>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
