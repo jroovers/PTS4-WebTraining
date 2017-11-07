@@ -11,16 +11,13 @@ import Controller.UserService;
 import Model.Course;
 import Model.Lesson;
 import Model.User;
-import java.util.ArrayList;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  *
@@ -128,28 +125,18 @@ public class SignupBean {
     }
 
     public void signUp() {
-        User user = new User(name,surname,phonenr,email,1);
-        long id = ls.signUpUser(lessonID, 1);
         FacesContext context = FacesContext.getCurrentInstance();
+        long id = ls.signUpUser(lessonID, 1);
         if (id != 0) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training opgeslagen", "!"));
-            us.addUser(user);
+            if (name != null) {
+                User user = new User(name, surname, phonenr, email, 1);
+                us.addUser(user);
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training en data opgeslagen", "!"));
+            }
         } else {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Training niet opgeslagen!", "Er is iets fouts gegaan! Probeer het later opnieuw"));
         }
-        if (name == null) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Naam moet ingevuld zijn", "!"));
-        }
-        if (surname == null) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Achternaam moet ingevuld zijn", "!"));
-        }
-        if (email == null) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Email moet ingevuld zijn", "!"));
-        }
-        if (phonenr == null) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Telefoon nummer moet ingevuld zijn", "!"));
-        }
-
     }
 
     public List<Course> getAllCourses() {

@@ -35,18 +35,18 @@
                             <p:growl id="growl" showDetail="false" sticky="false" globalOnly="true"/>
                             <p:commandButton id="new_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-plus" value="Nieuwe Training" action="#{coursesBean.onCreateNewItem()}"  />
                             <p:commandButton id="edit_training" widgetVar="edit_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-pencil" value="Bewerken" update="growl" action="#{coursesBean.onEditItem()}" />
-                            <p:commandButton id="delete_training" widgetVar="delete_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-trash-o" value="Verwijderen" type="button" onclick="PF('deleteconfirmation').show();" />
+                            <p:commandButton id="delete_training" widgetVar="delete_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-trash-o" value="Verwijderen" type="button" onclick="PF('deleteCourseConfirmation').show();" />
                             <br/>
                             <br/>
                             <p:selectOneListbox id="select_training" value="#{coursesBean.selectedCode}" styleClass="form-control" filter="true" filterMatchMode="contains">
                                 <f:selectItems value="#{coursesBean.coursesCmb}"/>
                                 <f:ajax event="change" onevent="unlockbuttons" render="edit_training delete_training" />
                             </p:selectOneListbox>
-                            <p:dialog header="Modal Dialog" widgetVar="deleteconfirmation" modal="true" minHeight="200" minWidth="200" closeOnEscape="true">
+                            <p:dialog header="Waarschuwing" widgetVar="deleteCourseConfirmation" modal="true" minHeight="200" minWidth="200" closeOnEscape="true">
                                 <h:outputText value="Weet je zeker dat je deze training wilt verwijderen?" />
                                 <hr/>
                                 <p:commandButton id="confirmdelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijderen" action="#{coursesBean.onDeleteItem()}" icon="fa fa-trash-o" />
-                                <p:commandButton id="canceldelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nee toch niet" type="button" onclick="PF('deleteconfirmation').hide();" icon="fa fa-ban" />
+                                <p:commandButton id="canceldelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nee toch niet" type="button" onclick="PF('deleteCourseConfirmation').hide();" icon="fa fa-ban" />
                             </p:dialog>
                         </h:form>
                     </div>
@@ -60,10 +60,10 @@
                             <div class="form-group row">
                                 <h:outputLabel for="categoryname" value="Categorie aanmaken" class="col-sm-3 col-form-label"/>
                                 <div class="col-sm-6">
-                                    <h:inputText id="categoryname" a:placeholder="Naam" styleClass="form-control" value="NOT IMPLEMENTED"/>
+                                    <h:inputText id="categoryname" a:placeholder="Naam" styleClass="form-control" value="#{coursesBean.newCategoryName}"/>
                                 </div>
                                 <div class="col-sm-3">
-                                    <p:commandButton id="savecategory" styleClass="mb-2 mr-sm-2 mb-sm-0" p:icon="fa fa-floppy-o" value="Opslaan" />
+                                    <p:commandButton id="savecategory" styleClass="mb-2 mr-sm-2 mb-sm-0" p:icon="fa fa-floppy-o" value="Opslaan" action="#{coursesBean.onCreateNewCategory()}"/>
                                 </div>
                             </div>
                         </h:form>
@@ -71,16 +71,20 @@
                             <div class="form-group row">
                                 <h:outputLabel value="Categorie verwijderen" class="col-sm-3 col-form-label"/>
                                 <div class="col-sm-6">
-                                    <p:selectOneMenu>
-                                        <f:selectItem itemLabel="Option 1" itemValue="1" />
-                                        <f:selectItem itemLabel="Option 2" itemValue="2" />
-                                        <f:selectItem itemLabel="Option 3" itemValue="3" />
+                                    <p:selectOneMenu value="#{coursesBean.selectedCategory}" style="width:100%;">
+                                        <f:selectItems value="#{coursesBean.categoriesCmb}" var="c" itemLabel="#{c.name}" itemValue="#{c.id}" />
                                     </p:selectOneMenu>
                                 </div>
                                 <div class="col-sm-3">
-                                    <p:commandButton id="deletecategory" styleClass="mb-2 mr-sm-2 mb-sm-0" p:icon="fa fa-trash-o" value="Verwijderen" />
+                                    <p:commandButton id="deletecategory" styleClass="mb-2 mr-sm-2 mb-sm-0" p:icon="fa fa-trash-o" value="Verwijderen" type="button" onclick="PF('deleteCatConfirmation').show();" />
                                 </div>
                             </div>
+                            <p:dialog header="Waarschuwing" widgetVar="deleteCatConfirmation" modal="true" minHeight="200" minWidth="200" closeOnEscape="true">
+                                <h:outputText value="Weet je zeker dat je deze categorie wilt verwijderen?" />
+                                <hr/>
+                                <p:commandButton id="confirmdelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijderen" action="#{coursesBean.onDeleteCategory()}" icon="fa fa-trash-o" />
+                                <p:commandButton id="canceldelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nee toch niet" type="button" onclick="PF('deleteCatConfirmation').hide();" icon="fa fa-ban" />
+                            </p:dialog>
                         </h:form>
                     </div>
                 </div>
