@@ -7,6 +7,7 @@ package View.Pages;
 
 import Controller.CourseService;
 import Controller.LessonService;
+import Controller.UserService;
 import Model.Course;
 import Model.User;
 import java.util.List;
@@ -29,6 +30,8 @@ public class OfferTrainingBean
     CourseService cs;
     @Inject
     LessonService ls;
+    @Inject
+    UserService us;
     
     private String name;
     private String surname;
@@ -207,8 +210,10 @@ public class OfferTrainingBean
 
     
     
-    public boolean addCourseAndUser() {
-        if (!courseName.equals("") && !code.equals("")) {
+    public void addCourseAndUser() 
+    {
+        //Add course
+        if (!name.equals("") && !code.equals("")) {
 
             if (!description.isEmpty() && !keywords.isEmpty() && !requiredKnowledge.isEmpty() && !cursusMaterial.isEmpty() && !timeInDays.isEmpty() && !cost.isEmpty() && !requiredKnowledge.isEmpty()) {
 
@@ -221,10 +226,9 @@ public class OfferTrainingBean
                     nTimeIndDays = Integer.parseInt(timeInDays);
                     nCost = Double.parseDouble(cost);
                 } catch (NumberFormatException ex) {
-                    return false;
                 }
 
-                Course course = new Course(this.code, this.courseName);
+                Course course = new Course(this.code, this.name);
                 course.setCost(nCost);
                 course.setCourseMaterials(cursusMaterial);
                 course.setDescription(description);
@@ -232,20 +236,19 @@ public class OfferTrainingBean
                 course.setPriorKnowledge(nRequiredKnowledge);
                 course.setKeyWords(nKeywords);
                 cs.addCourse(course);
-                return true;
             } else {
-                cs.addCourse(code, courseName);
-                return true;
+                cs.addCourse(code, name);
             }
         }
         cs.getAllCourses();
-        //code 4 ofzo voor docent?
         
-        User user = new User(name, surname, phonenr, email);
+        //Add user
+        User user = new User(name,surname,phonenr,email,1);
         long id = ls.signUpUser(lessonID, 1);
         FacesContext context = FacesContext.getCurrentInstance();
         if (id != 0) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training opgeslagen", "!"));
+            us.addUser(user);
         } else {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Training niet opgeslagen!", "Er is iets fouts gegaan! Probeer het later opnieuw"));
         }
@@ -261,8 +264,9 @@ public class OfferTrainingBean
         if (phonenr == null) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Telefoon nummer moet ingevuld zijn", "!"));
         }
-        return true;
+        
     }
+
     
     public String[] splitText(String text) {
         text = text.toLowerCase();
