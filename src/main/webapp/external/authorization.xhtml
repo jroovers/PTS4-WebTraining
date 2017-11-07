@@ -36,7 +36,7 @@
                     </tr>
                     <tr>
                         <th>Wachtwoord</th>
-                        <th><p:inputText id="password"  value="#{authorizationBean.password}" style="width: 200%" a:placeholder="" required="true" requiredMessage="Wachtwoord moet eerst ingevuld worden"></p:inputText></th>
+                        <th><p:inputText id="password"  value="#{authorizationBean.password}" type="password" style="width: 200%" a:placeholder="" required="true" requiredMessage="Wachtwoord moet eerst ingevuld worden"></p:inputText></th>
                     </tr>                             
                 </table> <br></br>
                 <p:commandButton id="login" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Inloggen" icon="fa fa-sign-in" action="#{authorizationBean.login()}" />
