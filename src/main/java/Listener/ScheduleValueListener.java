@@ -25,10 +25,10 @@ public class ScheduleValueListener implements ValueChangeListener {
         //access country bean directly
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ScheduleBean scheduleBean = (ScheduleBean) facesContext.getApplication().createValueBinding("#{scheduleBean}").getValue(facesContext);
-        SaveIDBean saveIDBean= (SaveIDBean) facesContext.getApplication().createValueBinding("#{saveIDBean}").getValue(facesContext);
+       // SaveIDBean saveIDBean= (SaveIDBean) facesContext.getApplication().createValueBinding("#{saveIDBean}").getValue(facesContext);
         
-        scheduleBean.setLessonID(Long.valueOf(scheduleBean.getLessonID()));
-        saveIDBean.setLessonID(Long.valueOf(scheduleBean.getLessonID()));
+        scheduleBean.setCourseID(Long.valueOf(scheduleBean.getCourseID()));
+        //saveIDBean.setLessonID(Long.valueOf(scheduleBean.getLessonID()));
     }
     
 }

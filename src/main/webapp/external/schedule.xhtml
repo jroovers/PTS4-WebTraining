@@ -23,11 +23,11 @@
                             <div class="form-group">
                                 <h1>Cursussen</h1>
                                 <p:growl id="Select_Warning" />
-                                <p:selectOneListbox value="#{scheduleBean.lessonID}" filter="true" valueChangeListener="#{scheduleBean.valueChanged}" 
+                                <p:selectOneListbox value="#{scheduleBean.courseID}" filter="true" valueChangeListener="#{scheduleBean.valueChanged}" 
                                                     filterMatchMode="contains" styleClass="form-control" onchange="submit()" required="false">
                                                     <f:valueChangeListener type="Listener.ScheduleValueListener" />
-                                    <f:selectItems value="#{scheduleBean.allLessons}" var="y"
-                                                   itemLabel="#{y.lessonString}" itemValue="#{y.id}" />
+                                    <f:selectItems value="#{scheduleBean.allCourses}" var="y"
+                                                   itemLabel="#{y.getShortString()}" itemValue="#{y.id}" />
                                 </p:selectOneListbox>
                             </div>
                         </h:form>
@@ -43,28 +43,32 @@
                                     <tr>
                                         <th>Naam</th>
                                         
-                                        <th>#{scheduleBean.selectedLesson.course.name}</th>
+                                        <th>#{scheduleBean.selectedCourse.name}</th>
                                     </tr>
                                     <tr>
                                         <th>Cursus dagen</th>
-                                        <th>#{scheduleBean.selectedLesson.course.durationInDays}</th>
+                                        <th>#{scheduleBean.selectedCourse.durationInDays}</th>
                                     </tr>
                                     <tr>
                                         <th>Kosten</th>
-                                        <th>#{scheduleBean.selectedLesson.course.cost}</th>
+                                        <th>#{scheduleBean.selectedCourse.cost}</th>
                                     </tr>
                                     <tr>
                                         <th>Materiaal</th>
-                                        <th>#{scheduleBean.selectedLesson.course.courseMaterials}</th>
+                                        <th>#{scheduleBean.selectedCourse.courseMaterials}</th>
                                     </tr>
                                     <tr>
                                         <th>Beschrijving</th>
-                                        <th>#{scheduleBean.selectedLesson.course.description}</th>
+                                        <th>#{scheduleBean.selectedCourse.description}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Aanbieder</th>
+                                        <th>#{scheduleBean.selectedCourse.supplier}</th>
                                     </tr>
                                     <tr>
                                         <th>
                                             <!-- Disable werkt niet goed. hij roept de action niet aan :( -->
-                                           <h:button value="Inschrijven" outcome="signup.xhtml" />
+                                          <!-- <h:button value="Inschrijven" outcome="signup.xhtml" />-->
                                         </th>
                                     </tr>
                                 </tbody>
@@ -73,7 +77,7 @@
                             
                        </h:form>
                         <h:form id="hiddenForm" onsubmit="event.preventDefault()">
-                            <h:inputHidden value="#{scheduleBean.lessonID}" id="hiddenLessonID"/>
+                            <h:inputHidden value="#{scheduleBean.courseID}" id="hiddenLessonID"/>
                         </h:form>
                     </div>
 

@@ -5,8 +5,8 @@
  */
 package View.Pages;
 
-import Controller.LessonService;
-import Model.Lesson;
+import Controller.CourseService;
+import Model.Course;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -26,11 +26,11 @@ public class ScheduleBean
 {   /**
      * Creates a new instance of scheduleBean
      */
-    private long lessonID;
-    private Lesson selectedLesson;
-    private List<Lesson> allLessons;
+    private long courseID;
+    private Course selectedCourse;
+    private List<Course> allCourses;
     @Inject
-    LessonService ls;
+    CourseService cs;
     
     public ScheduleBean() 
     {
@@ -39,42 +39,42 @@ public class ScheduleBean
     
     public ScheduleBean(long l)
     {
-        this.lessonID = l;
+        this.courseID = l;
     }
     
-    public long getLessonID()
+    public long getCourseID()
     {
-        return lessonID;
+        return courseID;
     }
 
-    public void setLessonID(long lessonID) 
+    public void setCourseID(long courseID) 
     {
-        this.lessonID = lessonID;
+        this.courseID = courseID;
     }
     
-    public List<Lesson> getAllLessons() 
+    public List<Course> getAllCourses() 
     {
-        allLessons = ls.getLessons();
+        allCourses = cs.getAllCourses();
         
-        return allLessons;
+        return allCourses;
     }
 
-    public Lesson getSelectedLesson() 
+    public Course getSelectedCourse() 
     {
-        return selectedLesson;
+        return selectedCourse;
     }
     
     public void setSelectedCourse()
     {
-        for(Lesson lesson : allLessons)
+        for(Course course : allCourses)
         {
-            if(lesson.getId() == lessonID)
+            if(course.getId() == courseID)
             {
-                selectedLesson = lesson;
+                selectedCourse = course;
             }
         }
     }
-    
+    //Werkt nog niet (button)
     public void signup()
     {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
@@ -88,7 +88,7 @@ public class ScheduleBean
     
     public void valueChanged(ValueChangeEvent e) 
     {
-        lessonID = (long)e.getNewValue();
+        courseID = (long)e.getNewValue();
         setSelectedCourse();
     }
     
