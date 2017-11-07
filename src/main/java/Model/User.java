@@ -92,6 +92,20 @@ public class User {
         this.phoneNr = phoneNr;
         this.email = email;
     }
+    
+         /**
+     * Constructor for Suppliers
+     * @param username
+     * @param phoneNr
+     * @param accesLevel
+     * @param email
+     */
+    public User(String username, String phoneNr, String email, int accesLevel){
+        this.username = username;
+        this.phoneNr = phoneNr;
+        this.email = email;
+        this.accesLevel = accesLevel;
+    }
 
     public long getUserID() {
         return userID;
