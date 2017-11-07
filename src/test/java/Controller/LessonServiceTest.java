@@ -133,10 +133,10 @@ public class LessonServiceTest {
     }
     
     @Test
-    public void testGetLessonsByTeacher() throws Exception {
+    public void testGetLessonAndRegistrationsByTeacher() throws Exception {
         System.out.println("getLessonsFromCourse");
         u1.setUserID(1);
-        List<Lesson> result = lessonService.GetLessonsByTeacher(u1.getUserID());
+        List<Lesson> result = lessonService.GetLessonAndRegistrationsByTeacher(u1.getUserID());
         assertTrue(!result.isEmpty());
     }
 }
