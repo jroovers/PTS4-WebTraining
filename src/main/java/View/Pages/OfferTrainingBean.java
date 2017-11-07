@@ -239,6 +239,7 @@ public class OfferTrainingBean
             }
         }
         cs.getAllCourses();
+        //code 4 ofzo voor docent?
         
         User user = new User(name, surname, phonenr, email);
         long id = ls.signUpUser(lessonID, 1);
