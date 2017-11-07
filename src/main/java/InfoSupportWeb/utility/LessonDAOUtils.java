@@ -225,8 +225,9 @@ public class LessonDAOUtils implements ILessonDAO {
                 String surname = o[1].toString();
                 String email = o[2].toString();
                 String phone = o[3].toString();
+                int accesLevel = Integer.parseInt(o[7].toString());
                 
-                User u = new User(name,surname,email,phone);
+                User u = new User(name,surname,phone, email, accesLevel);
                             
                 users.add(u);
             }
