@@ -136,7 +136,7 @@ public class LessonServiceTest {
     public void testGetLessonsByTeacher() throws Exception {
         System.out.println("getLessonsFromCourse");
         u1.setUserID(1);
-        List<Lesson> result = lessonService.GetLessonsByTeacher(u1.getUserID());
+        List<Lesson> result = lessonService.GetLessonsAndRegistrationsByTeacher(u1.getUserID());
         assertTrue(!result.isEmpty());
     }
 }

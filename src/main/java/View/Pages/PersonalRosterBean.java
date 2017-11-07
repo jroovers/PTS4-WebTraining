@@ -49,7 +49,7 @@ public class PersonalRosterBean implements Serializable
     private void RefreshLessons()
     {
         lessonSchedule.clear();
-        for (Lesson lesson : lessonService.GetLessonAndRegistrationsByTeacher(1))
+        for (Lesson lesson : lessonService.GetLessonsAndRegistrationsByTeacher(1))
         {
           //  ArrayList<User> users = new ArrayList<User>();
            // users.add(new User(1, "Ricardo van Dijke", "sefs"));

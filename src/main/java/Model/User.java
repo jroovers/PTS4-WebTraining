@@ -78,6 +78,20 @@ public class User {
         this.email = email;
         this.accesLevel = accesLevel;
     }
+    
+     /**
+     * Constructor to get lesson registrations
+     * @param name
+     * @param surname
+     * @param phoneNr
+     * @param email
+     */
+    public User(String name, String surname, String phoneNr, String email){
+        this.name = name;
+        this.surname = surname;
+        this.phoneNr = phoneNr;
+        this.email = email;
+    }
 
     public long getUserID() {
         return userID;

@@ -56,7 +56,7 @@ public interface ILessonDAO {
      * @param user_ID the userID of the teacher
      * @return  list of lessons scheduled to be given by the teacher
      */
-    public List<Lesson> GetLessonAndRegistrationsByTeacher(long user_ID);
+    public List<Lesson> GetLessonsAndRegistrationsByTeacher(long user_ID);
 
     /**
      * Signs an user to the Database on the lesson he/she selected.

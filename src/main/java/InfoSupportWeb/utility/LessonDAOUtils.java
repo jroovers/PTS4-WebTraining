@@ -171,7 +171,7 @@ public class LessonDAOUtils implements ILessonDAO {
     }
     
     @Override
-    public List<Lesson> GetLessonAndRegistrationsByTeacher(long user_ID){
+    public List<Lesson> GetLessonsAndRegistrationsByTeacher(long user_ID){
          QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ArrayListHandler alh = new ArrayListHandler();
         List<Lesson> lessons = new ArrayList<>();
@@ -225,9 +225,8 @@ public class LessonDAOUtils implements ILessonDAO {
                 String surname = o[1].toString();
                 String email = o[2].toString();
                 String phone = o[3].toString();
-                int accesLevel = Integer.parseInt(o[7].toString());
                 
-                User u = new User(name,surname,phone, email, accesLevel);
+                User u = new User(name,surname,phone, email);
                             
                 users.add(u);
             }
