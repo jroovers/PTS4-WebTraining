@@ -13,6 +13,7 @@ import Model.User;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,10 +23,9 @@ import javax.inject.Named;
  * @author Jowelle
  */
 @Named(value = "offerTrainingBean")
-@RequestScoped
+@SessionScoped
 public class OfferTrainingBean 
 {
-    // Even alles nakijken. Signup user is met lesson. Moet zonder lessen. En misschien koppelen aan een lesson als docent?
     @Inject
     CourseService cs;
     @Inject
@@ -243,7 +243,7 @@ public class OfferTrainingBean
         cs.getAllCourses();
         
         //Add user
-        User user = new User(name,surname,phonenr,email,1);
+        User user = new User(name,surname,phonenr,email,4);
         long id = ls.signUpUser(lessonID, 1);
         FacesContext context = FacesContext.getCurrentInstance();
         if (id != 0) {
