@@ -1,98 +1,45 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author Jorian, Antonio
  */
+@ManagedBean(name = "obj")
+@SessionScoped
 public class User {
 
-    private long userID;
+    private int userID;
     private String name;
     private String surname;
     private String username;
     private String password;
     private String phoneNr;
     private String email;
-    private int accesLevel;
 
+    public User() {
 
-    /**
-     * Constructor for pulling users from database
-     * @param userID
-     * @param name
-     * @param surname
-     * @param username
-     * @param password
-     * @param phoneNr
-     * @param email
-     * @param accesLevel 
-     */
-    public User(long userID ,String name, String surname, String username, String password, String phoneNr, String email, int accesLevel){
+    }
+
+    public User(int userID, String username, String password) {
         this.userID = userID;
-        this.name = name;
-        this.surname = surname;
         this.username = username;
         this.password = password;
-        this.phoneNr = phoneNr;
-        this.email = email;
-        this.accesLevel = accesLevel;
     }
     
-    /**
-     * Constructor for registering a new user
-     * @param name
-     * @param surname
-     * @param username
-     * @param password
-     * @param phoneNr
-     * @param email
-     * @param accesLevel 
-     */
-    public User(String name, String surname, String username, String password, String phoneNr, String email, int accesLevel){
-        this.name = name;
-        this.surname = surname;
+    public User(int userID ,String username, String password, int accesLevel){
+        this.userID = userID;
         this.username = username;
         this.password = password;
-        this.phoneNr = phoneNr;
-        this.email = email;
-        this.accesLevel = accesLevel;
     }
-    
-    /**
-     * Constructor to register a guest
-     * @param name
-     * @param surname
-     * @param phoneNr
-     * @param email
-     * @param accesLevel 
-     */
-    public User(String name, String surname, String phoneNr, String email, int accesLevel){
+
+    public User(String name, String surname, String phoneNr, String email) {
         this.name = name;
         this.surname = surname;
         this.phoneNr = phoneNr;
         this.email = email;
-        this.accesLevel = accesLevel;
-    }
-
-    public long getUserID() {
-        return userID;
-    }
-
-    public void setUserID(long userID) {
-        this.userID = userID;
-    }
-
-    public int getAccesLevel() {
-        return accesLevel;
-    }
-
-    public void setAccesLevel(int accesLevel) {
-        this.accesLevel = accesLevel;
     }
 
     public String getUsername() {

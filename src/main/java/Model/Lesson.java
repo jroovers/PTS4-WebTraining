@@ -7,6 +7,7 @@ package Model;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 
 /**
@@ -23,6 +24,8 @@ public class Lesson {
     //private Teacher teacher ?
     //private list cursists ?
     //SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+    private Collection<User> registrations;
 
     public Lesson(Course course) {
         this.course = course;
@@ -74,6 +77,16 @@ public class Lesson {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+    
+    public Collection<User> getRegistrations()
+    {
+        return registrations;
+    }
+
+    public void setRegistrations(Collection<User> registrations)
+    {
+        this.registrations = registrations;
     }
     
     public static String format(Calendar calendar){
