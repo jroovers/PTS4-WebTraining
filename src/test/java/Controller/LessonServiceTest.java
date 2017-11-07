@@ -133,7 +133,7 @@ public class LessonServiceTest {
     }
     
     @Test
-    public void testGetLessonsByTeacher() throws Exception {
+    public void testGetLessonsAndRegistrationsByTeacher() throws Exception {
         System.out.println("getLessonsFromCourse");
         u1.setUserID(1);
         List<Lesson> result = lessonService.GetLessonsAndRegistrationsByTeacher(u1.getUserID());
