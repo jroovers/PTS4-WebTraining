@@ -215,6 +215,7 @@ public class OfferTrainingBean
                 course.setDurationInDays(nTimeIndDays);
                 course.setPriorKnowledge(nRequiredKnowledge);
                 course.setKeyWords(nKeywords);
+                course.setSupplier(userName);
                 cs.addCourse(course);
             } else {
                 cs.addCourse(code, userName);
