@@ -17,28 +17,30 @@
                 <h1>Selecteer een training en schrijf je in!</h1>
                 <hr/>                
                 <h:form id="userForm">
-                    <div>
-                        <h3>Vul je gegevens in</h3>
-                        <hr/>
-                        <table>
-                            <tr>
-                                <th><p>Voornaam</p></th>
-                                <th><p:inputText id="name" value="#{signupBean.name}" style="width: 200%" a:placeholder="Bijv. John" required="true" requiredMessage="Naam moet eerst ingevuld worden"></p:inputText></th>                                    
-                            </tr>
-                            <tr>
-                                <th><p>Achternaam</p></th>
-                                <th><p:inputText id="surname" value="#{signupBean.surname}" style="width: 200%" a:placeholder="Bijv. Doe" required="true" requiredMessage="Achternaam moet eerst ingevuld worden"></p:inputText></th>
-                            </tr>
-                            <tr>
-                                <th><p>Email</p></th>
-                                <th><p:inputText id="email" value="#{signupBean.email}" style="width: 200%" a:placeholder="Bijv. JohnDoe@gmail.com" required="true" requiredMessage="Email moet eerst ingevuld worden"></p:inputText></th>
-                            </tr>
-                            <tr>
-                                <th><p>Telefoon nummer</p></th>
-                                <th><p:inputText id="phonenr" value="#{signupBean.phonenr}" style="width: 200%" a:placeholder="Bijv. 0612345678" required="true" requiredMessage="Uw telefoonnummer moet eerst ingevuld worden"></p:inputText></th>
-                            </tr>                                
-                        </table> 
-                    </div>
+                    <ui:fragment rendered="#{!authorizationBean.checkVisible(2)}">
+                        <div>
+                            <h3>Vul je gegevens in</h3>
+                            <hr/>
+                            <table>
+                                <tr>
+                                    <th><p>Voornaam</p></th>
+                                    <th><p:inputText id="name" value="#{signupBean.name}" style="width: 200%" a:placeholder="Bijv. John" required="true" requiredMessage="Naam moet eerst ingevuld worden"></p:inputText></th>                                    
+                                </tr>
+                                <tr>
+                                    <th><p>Achternaam</p></th>
+                                    <th><p:inputText id="surname" value="#{signupBean.surname}" style="width: 200%" a:placeholder="Bijv. Doe" required="true" requiredMessage="Achternaam moet eerst ingevuld worden"></p:inputText></th>
+                                </tr>
+                                <tr>
+                                    <th><p>Email</p></th>
+                                    <th><p:inputText id="email" value="#{signupBean.email}" style="width: 200%" a:placeholder="Bijv. JohnDoe@gmail.com" required="true" requiredMessage="Email moet eerst ingevuld worden"></p:inputText></th>
+                                </tr>
+                                <tr>
+                                    <th><p>Telefoon nummer</p></th>
+                                    <th><p:inputText id="phonenr" value="#{signupBean.phonenr}" style="width: 200%" a:placeholder="Bijv. 0612345678" required="true" requiredMessage="Uw telefoonnummer moet eerst ingevuld worden"></p:inputText></th>
+                                </tr>                                
+                            </table> 
+                        </div>
+                    </ui:fragment>
                     <br/>
                     <div class="row" style="width: 800px">
                         <div class="col-4">                         
