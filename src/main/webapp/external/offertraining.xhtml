@@ -22,12 +22,7 @@
                                     <tr>
                                         <th>Naam</th>
                                         
-                                        <th><p:inputText id="Name" value="#{offerTrainingBean.name}" style="width: 200%" a:placeholder="Vul je voornaam in" required="true" requiredMessage="Vul eerst je voornaam in"></p:inputText></th>
-                                    </tr>
-                                    <tr>
-                                        <th>Achternaam</th>
-                                        
-                                        <th><p:inputText id="LastName" value="#{offerTrainingBean.surname}" style="width: 200%" a:placeholder="Vul je achternaam in" required="true" requiredMessage="Vul eerst je achternaam in"></p:inputText></th>
+                                        <th><p:inputText id="Name" value="#{offerTrainingBean.userName}" style="width: 200%" a:placeholder="Vul je bedrijfsnaam in" required="true" requiredMessage="Vul eerst je voornaam in"></p:inputText></th>
                                     </tr>
                                     <tr>
                                         <th>E-mail</th>
@@ -42,7 +37,7 @@
                                 </tbody>
                             </table>
                           </h:form>
-         <h1>Training informatie</h1>
+         <h1>Cursus informatie</h1>
             <h:form>
                     <table>
                         <tr>
@@ -76,13 +71,15 @@
                         </tr>
                         
                         <tr>
-                            <th><p>Training toevoegen</p></th>
-
+                    <th>
                             <div class="form-group">
                                     <p:growl id="signup_growl" class=""/>
                                     <p:commandButton value="Inschrijven" ajax="false" action="#{offerTrainingBean.addCourseAndUser()}" style="float:right; margin-top: 10px; margin-bottom: 20px;"/>
-                                </div> </tr>
+                                </div> 
+                    </th>
+                </tr>
                     </table>
+                
             </h:form>
                 </div>
             </div>
