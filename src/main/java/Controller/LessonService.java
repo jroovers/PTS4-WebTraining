@@ -83,9 +83,9 @@ public class LessonService {
      * @param user_ID ID of the teacher
      * @return List of lessons which are connected to the course ID
      */
-    public List<Lesson> GetLessonAndRegistrationsByTeacher(long user_ID) {
+    public List<Lesson> GetLessonsAndRegistrationsByTeacher(long user_ID) {
         LessonDAOUtils lessonDAOUtils = new LessonDAOUtils();
-        return lessonDAOUtils.GetLessonAndRegistrationsByTeacher(user_ID);
+        return lessonDAOUtils.GetLessonsAndRegistrationsByTeacher(user_ID);
     }
     
     public long signUpUser(long lesson_ID, long user_ID) {

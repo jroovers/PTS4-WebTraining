@@ -3,7 +3,8 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
     
     <!-- Tabblad naam -->
     <ui:define name="title">Courserooster</ui:define>
@@ -38,11 +39,10 @@
                     </table>
                       <h:commandButton value="Login" style="width: 305px" action="#{authorizationBean.login}"></h:commandButton>
                 </h:form>
+            </div>
+            <div class="col-12">
+               
                 
-                
-                
-                                        
- 
             </div>
         </div>
     </ui:define>

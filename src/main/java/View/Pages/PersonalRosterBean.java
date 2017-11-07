@@ -2,6 +2,7 @@ package View.Pages;
 
 import Controller.CourseService;
 import Controller.LessonService;
+import InfoSupportWeb.utility.AuthorizationUtils;
 import Model.Lesson;
 import Model.User;
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
@@ -48,15 +50,14 @@ public class PersonalRosterBean implements Serializable
 
     private void RefreshLessons()
     {
+        HttpSession hs = AuthorizationUtils.getSession();
+
+        int id = (int) hs.getAttribute("UserID");
         lessonSchedule.clear();
-        for (Lesson lesson : lessonService.GetLessonAndRegistrationsByTeacher(1))
+        for (Lesson lesson : lessonService.GetLessonsAndRegistrationsByTeacher(id))
         {
-          //  ArrayList<User> users = new ArrayList<User>();
-           // users.add(new User(1, "Ricardo van Dijke", "sefs"));
-           // lesson.setRegistrations(users);
             lessonSchedule.addEvent(new DefaultScheduleEvent(lesson.getCourse().getName(), lesson.getStartTime().getTime(), lesson.getEndTime().getTime(), lesson));
         } 
-        //Users are not being displayed
     }
 
     public ScheduleModel getEventModel()
