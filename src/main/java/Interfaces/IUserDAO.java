@@ -20,5 +20,29 @@ public interface IUserDAO {
      * @return User List
      */
     public List<User> getUsers();
+    
+    /**
+     * Gets a User from database.
+     *
+     * @param username
+     * @return User 
+     */
+    public User getUser(String username);
+    
+    /**
+     * Adds a User to database.
+     *
+     * @param user 
+     * @return  
+     */
+    public boolean addUser(User user);
+    
+    /**
+     * Removes a User from database.
+     *
+     * @param User_ID
+     * @return  
+     */
+    public boolean removeUser(long User_ID);
 
 }

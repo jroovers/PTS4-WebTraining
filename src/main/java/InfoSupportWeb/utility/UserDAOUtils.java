@@ -5,13 +5,15 @@
  */
 package InfoSupportWeb.utility;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import Model.User;
+import Interfaces.IUserDAO;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
-import Interfaces.IUserDAO;
 
 /**
  *
@@ -19,11 +21,14 @@ import Interfaces.IUserDAO;
  */
 public class UserDAOUtils implements IUserDAO {
 
+    static final String QUERY_GET_USER = "SELECT * FROM User where Username = ?";
+    static final String QUERY_GET_USERS = "SELECT * FROM User";
+    static final String QUERY_INSERT_USER = "INSERT INTO User(`Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`,`ID_UserType`) VALUES(?,?,?,?,?,?,?)";
+    static final String QUERY_REMOVE_USER = "DELETE FROM User WHERE ID_User = ?";
 
-    static final String QUERY_GET_USER = "SELECT u.* FROM User u";
 
     public UserDAOUtils() {
-        
+
     }
 
     @Override
@@ -32,37 +37,84 @@ public class UserDAOUtils implements IUserDAO {
         ArrayListHandler alh = new ArrayListHandler();
         List<User> users = new ArrayList<>();
         try {
-            List<Object[]> result = run.query(QUERY_GET_USER, alh);
+            List<Object[]> result = run.query(QUERY_GET_USERS, alh);
             for (Object[] o : result) {
-                User user = new User();
-                user.setUsername(o[1] == null ? null : o[1].toString());
-                user.setPassword(o[2] == null ? null : o[2].toString());
-//                User user = new User(
-//                        o[0] == null ? -1 : Integer.parseInt(o[0].toString()),
-//                        o[1] == null ? null : o[1].toString(),
-//                        o[2] == null ? null : o[2].toString()
-//                );
-                users.add(user);
+                //(int userID ,String name, String surname, String username, String password, String phoneNr, String email, int accesLevel)
+                User u = new User(
+                        o[0] == null ? null : Integer.parseInt(o[0].toString()), // userID
+                        o[1] == null ? null : o[1].toString(), // Name
+                        o[2] == null ? null : o[2].toString(), // Surname
+                        o[3] == null ? null : o[3].toString(), // username
+                        o[4] == null ? null : o[4].toString(), // Password
+                        o[5] == null ? null : o[5].toString(), // phoneNr
+                        o[6] == null ? null : o[6].toString(), // email
+                        o[7] == null ? null : Integer.parseInt(o[7].toString()) // accessLevel
+                );
+                users.add(u);
             }
         } catch (SQLException ex_sql) {
             System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.err.println("Failed to get users from database");
             System.out.println(ex_sql.getMessage());
         }
         return users;
     }
-    
-    /**
-     * TODO
-     * @param username the username of the user.
-     * @return User if exists, Null if it doesn't
-     */
-    public User getUser(String username) {
-        return null;
-    }
-    
-    public String test(){
-        return "test";
-    }
-}
 
- 
+    @Override
+    public User getUser(String username) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        ArrayListHandler alh = new ArrayListHandler();
+        User user = null;
+        try {
+            List<Object[]> result = run.query(QUERY_GET_USER, alh, username);
+            for (Object[] o : result) {
+                user = new User(
+                        o[0] == null ? null : Integer.parseInt(o[0].toString()), // userID
+                        o[1] == null ? null : o[1].toString(), // Name
+                        o[2] == null ? null : o[2].toString(), // Surname
+                        o[3] == null ? null : o[3].toString(), // username
+                        o[4] == null ? null : o[4].toString(), // Password
+                        o[5] == null ? null : o[5].toString(), // phoneNr
+                        o[6] == null ? null : o[6].toString(), // email
+                        o[7] == null ? null : Integer.parseInt(o[7].toString()) // accessLevel
+                );
+            }
+        } catch (SQLException ex_sql) {
+            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.err.println("Failed to get user from database");
+            System.out.println(ex_sql.getMessage());
+        }
+        return user;
+    }
+
+    @Override
+    public boolean addUser(User user) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        ResultSetHandlerImp rsh = new ResultSetHandlerImp();
+        //`Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`,`ID_UserType`
+        Object[] params = new Object[]{user.getName(), user.getSurname(), user.getUsername(), user.getPassword(), user.getPhoneNr(), user.getEmail(), user.getAccesLevel()};
+        try {
+            run.insert(QUERY_INSERT_USER, rsh, params);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Failed to add User to db");
+            return false;
+        }}
+
+    @Override
+    public boolean removeUser(long User_ID) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        ResultSetHandlerImp rsh = new ResultSetHandlerImp();
+        Object[] params = new Object[]{User_ID};
+        try {
+            run.execute(QUERY_REMOVE_USER, rsh, params);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Failed to remove user from db");
+            return false;
+        }
+    }
+
+}
