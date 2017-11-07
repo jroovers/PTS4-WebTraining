@@ -22,7 +22,7 @@ import org.apache.commons.dbutils.handlers.ArrayListHandler;
 public class CategoryDAODbUtilsImpl implements ICategoryDAO {
 
     static final String QUERY_INSERT_CATEGORY = "INSERT INTO Category(Name) VALUES (?)";
-    static final String QUERY_SELECT_ALLCATEGORIES = "SELECT * FROM Category";
+    static final String QUERY_SELECT_ALLCATEGORIES = "SELECT * FROM Category ORDER BY Name";
     static final String QUERY_UPDATE_CATEGORY = "UPDATE Category SET Name = ? WHERE ID_Category = ?";
     static final String QUERY_DELETE_CATEGORY = "DELETE FROM Category WHERE ID_Category = ?";
 

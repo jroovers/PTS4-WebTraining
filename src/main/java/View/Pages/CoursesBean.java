@@ -5,7 +5,9 @@
  */
 package View.Pages;
 
+import Controller.CategoryService;
 import Controller.CourseService;
+import Model.Category;
 import Model.Course;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,7 +31,9 @@ import javax.inject.Inject;
 public class CoursesBean implements Serializable {
 
     @Inject
-    CourseService cService;             // Connection to the database
+    CourseService courseService;
+    @Inject
+    CategoryService catService;
 
     private String code;                // value in the "code" texfield
     private String name;                // value in the "name" texfield
@@ -45,6 +49,8 @@ public class CoursesBean implements Serializable {
     private Course course;              // Current course  
     private String selectedCode;        // Selected item in SelectOneMenu
     private boolean hasSelectedCourse;
+    private String newCategoryName;
+    private String selectedCategory;
 
     @Inject
     private Conversation conversation;
@@ -120,10 +126,10 @@ public class CoursesBean implements Serializable {
             resetConversation();
             for (Course c : courses) {
                 if (selectedCode.equals(c.getCode())) {
-                    cService.removeCourse(c.getId());
+                    courseService.removeCourse(c.getId());
                 }
             }
-            courses = cService.getAllCourses();
+            courses = courseService.getAllCourses();
             FacesContext context = FacesContext.getCurrentInstance();
             context.getExternalContext().getFlash().setKeepMessages(true);
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Verwijderd", ""));
@@ -160,10 +166,10 @@ public class CoursesBean implements Serializable {
     public void deleteCourse() {
         for (Course c : courses) {
             if (selectedCode.equals(c.getCode())) {
-                cService.removeCourse(c.getId());
+                courseService.removeCourse(c.getId());
             }
         }
-        courses = cService.getAllCourses();
+        courses = courseService.getAllCourses();
     }
 
     /**
@@ -175,7 +181,7 @@ public class CoursesBean implements Serializable {
      */
     public boolean changeCourse() {
         boolean exist = false;
-        courses = cService.getAllCourses();
+        courses = courseService.getAllCourses();
         for (Course c : courses) {
             if (this.code.equals(c.getCode())) {
                 try {
@@ -211,7 +217,7 @@ public class CoursesBean implements Serializable {
                 } catch (NullPointerException ex) {
                 }
                 exist = true;
-                cService.editCourse(c);
+                courseService.editCourse(c);
             }
         }
         return exist;
@@ -250,14 +256,14 @@ public class CoursesBean implements Serializable {
                 course.setDurationInDays(nTimeIndDays);
                 course.setPriorKnowledge(nRequiredKnowledge);
                 course.setKeyWords(nKeywords);
-                cService.addCourse(course);
+                courseService.addCourse(course);
                 return true;
             } else {
-                cService.addCourse(code, name);
+                courseService.addCourse(code, name);
                 return true;
             }
         }
-        cService.getAllCourses();
+        courseService.getAllCourses();
         return true;
     }
 
@@ -270,11 +276,37 @@ public class CoursesBean implements Serializable {
     public List<SelectItem> getCoursesCmb() {
 
         List<SelectItem> listCmb = new ArrayList<>();
-        courses = this.cService.getAllCourses();
+        courses = this.courseService.getAllCourses();
         for (Course c : courses) {
             listCmb.add(new SelectItem(c.getCode(), c.getName()));
         }
         return listCmb;
+    }
+
+    public List<Category> getCategoriesCmb() {
+        List<Category> listCmb = this.catService.getAllCategories();
+        
+        return listCmb;
+    }
+
+    public String onCreateNewCategory() {
+        if (!newCategoryName.isEmpty()) {
+            catService.addCategory(newCategoryName);
+            return "courses?faces-redirect=true";
+        } else {
+            return null;
+        }
+    }
+
+    public String onDeleteCategory() {
+        if (!selectedCategory.isEmpty()) {
+            Category selectedItem = new Category();
+            selectedItem.setId(Long.parseLong(selectedCategory));
+            catService.removeCategory(selectedItem);
+            return "courses?faces-redirect=true";
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -452,4 +484,21 @@ public class CoursesBean implements Serializable {
     public void setHasSelectedCourse(boolean hasSelectedCourse) {
         this.hasSelectedCourse = hasSelectedCourse;
     }
+
+    public String getSelectedCategory() {
+        return selectedCategory;
+    }
+
+    public void setSelectedCategory(String selectedCategory) {
+        this.selectedCategory = selectedCategory;
+    }
+
+    public String getNewCategoryName() {
+        return newCategoryName;
+    }
+
+    public void setNewCategoryName(String newCategoryName) {
+        this.newCategoryName = newCategoryName;
+    }
+
 }
