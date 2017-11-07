@@ -45,6 +45,7 @@ public class AuthorizationBean {
          User user = new User(1, "Frank", "franken", "Frankster", "frankisthebest", "001234", "Frankster@TheG.com", 2);
          HttpSession hs = AuthorizationUtils.getSession();
          //hs.setAttribute("LoggedInUser", user);
+         hs.setAttribute("UserID", 1);
          hs.setAttribute("AccesLevel", 2);
          hs.setAttribute("Username", "Kyle");
          return "/index_templated.xhtml";
@@ -60,6 +61,7 @@ public class AuthorizationBean {
             
             if(user.getPassword().equals(password)) {
                 HttpSession hs = AuthorizationUtils.getSession();
+                hs.setAttribute("UserID", user.getUserID());
                 hs.setAttribute("AccesLevel", user.getAccesLevel());
                 hs.setAttribute("Username", user.getUsername());
                 return "/index_templated.xhtml";
