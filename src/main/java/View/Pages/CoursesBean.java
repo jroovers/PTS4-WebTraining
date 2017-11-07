@@ -7,20 +7,26 @@ package View.Pages;
 
 import Controller.CourseService;
 import Model.Course;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 
 /**
  *
  * @author Kyle van Raaij
+ * @author Jeroen Roovers
  */
 @Named(value = "coursesBean")
-@RequestScoped
-public class CoursesBean {
+@ConversationScoped
+
+public class CoursesBean implements Serializable {
 
     @Inject
     CourseService cService;             // Connection to the database
@@ -34,16 +40,100 @@ public class CoursesBean {
     private String cost;                // value in the "cost" texfield
     private String location;            // value in the "location" texfield
     private String keywords;            // value in the keywords texfield
-    
+
     private List<Course> courses;       // List of courses
     private Course course;              // Current course  
     private String selectedCode;        // Selected item in SelectOneMenu
+    private boolean hasSelectedCourse;
+
+    @Inject
+    private Conversation conversation;
 
     /**
      * Creates a new instance of coursesBean
      */
     public CoursesBean() {
+    }
 
+    private void resetConversation() {
+        endConversation();
+        startConversation();
+    }
+
+    private void startConversation() {
+        if (conversation.isTransient()) {
+            conversation.begin();
+        }
+    }
+
+    private void endConversation() {
+        if (!conversation.isTransient()) {
+            conversation.end();
+        }
+    }
+
+    /**
+     * Method to call when the user wants to create a new training
+     *
+     * @return
+     */
+    public String onCreateNewItem() {
+        code = "";
+        name = "";
+        description = "";
+        requiredKnowledge = "";
+        cursusMaterial = "";
+        timeInDays = "";
+        cost = "";
+        location = "";
+        keywords = "";
+        hasSelectedCourse = false;
+        endConversation();
+        return "editcourse?faces-redirect=true";
+    }
+
+    /**
+     * Method to call when the user wants to edit an exisiting training
+     *
+     * @return
+     */
+    public String onEditItem() {
+        if (selectedCode != null) {
+            resetConversation();
+            setCourseData();
+            hasSelectedCourse = true;
+            return "editcourse?faces-redirect=true";
+        } else {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Kies eerst een cursus", ""));
+            return null;
+        }
+    }
+
+    /**
+     * Method to call when the user wants to remove an exisiting training
+     *
+     * @return
+     */
+    public String onDeleteItem() {
+        if (selectedCode != null) {
+            resetConversation();
+            for (Course c : courses) {
+                if (selectedCode.equals(c.getCode())) {
+                    cService.removeCourse(c.getId());
+                }
+            }
+            courses = cService.getAllCourses();
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.getExternalContext().getFlash().setKeepMessages(true);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Verwijderd", ""));
+            return "courses?faces-redirect=true";
+        } else {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.getExternalContext().getFlash().setKeepMessages(true);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Kies eerst een cursus", ""));
+            return "courses?faces-redirect=true";
+        }
     }
 
     /**
@@ -51,12 +141,16 @@ public class CoursesBean {
      * changed in the database. if not then a new course will be added to the
      * database.
      */
-    public void updateCourse() {
+    public String updateCourse() {
         boolean exist = changeCourse();
-
         if (!exist) {
             addCourse();
         }
+        endConversation();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Opgeslagen!", ""));
+        return "courses?faces-redirect=true";
     }
 
     /**
@@ -81,6 +175,7 @@ public class CoursesBean {
      */
     public boolean changeCourse() {
         boolean exist = false;
+        courses = cService.getAllCourses();
         for (Course c : courses) {
             if (this.code.equals(c.getCode())) {
                 try {
@@ -350,4 +445,11 @@ public class CoursesBean {
         this.location = location;
     }
 
+    public boolean isHasSelectedCourse() {
+        return hasSelectedCourse;
+    }
+
+    public void setHasSelectedCourse(boolean hasSelectedCourse) {
+        this.hasSelectedCourse = hasSelectedCourse;
+    }
 }

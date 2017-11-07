@@ -18,6 +18,7 @@ public class Course {
     private String[] priorKnowledge;
     private String courseMaterials;
     private String[] keyWords;
+    private String supplier; // Leverancier
     private int durationInDays;
     private double cost;
 
@@ -133,6 +134,14 @@ public class Course {
 
     public void setKeyWords(String[] keyWords) {
         this.keyWords = keyWords;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
     }
 
     public int getDurationInDays() {

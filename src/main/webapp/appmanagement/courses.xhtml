@@ -3,145 +3,123 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                    
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{authorizationBean.checkPermission(2)}"/>
+    </f:metadata>
 
     <!-- Tabblad naam -->
     <ui:define name="title">Cursusbeheer</ui:define>
 
     <!-- Content -->
     <ui:define name="content">
-        <h:outputStylesheet library="style" name="Table.css" />
+        <script language='javascript'>
+            function lockbuttons() {
+                PF('delete_training').disable();
+                PF('edit_training').disable();
+            }
+
+            function unlockbuttons() {
+                PF('delete_training').enable();
+                PF('edit_training').enable();
+            }
+        </script>
         <div class="container">
             <div class="mt-3">
-                <h1>cursusmanagement</h1>
-
-            </div>
-            <div class="mt-3">
+                <h1>Cursusmanagement</h1>
                 <h3>Cursussen en trainingen</h3>
-                <h:form>
-                    <table>
-                        <tr>
-                            <th><p>Trainingscode</p></th>
-                            <th><h:inputText id="code" value="#{coursesBean.code}" style="width: 200%" a:placeholder="Bijv. 2FD523F" ></h:inputText></th>
-                            <th></th>
-                        </tr>
-                        <tr>
-                            <th><p>Trainingsnaam</p></th>
-                            <th><h:inputText id="naam" value="#{coursesBean.name}" style="width: 200%" a:placeholder="Bijv. Java cursus"></h:inputText></th>
-                        </tr>
-                        <tr>
-                            <th><p>Beschrijving</p></th>
-                            <th><h:inputTextarea value="#{coursesBean.description}" style="width: 200%" a:placeholder="Bijv. In deze cursus wordt java gegeven."></h:inputTextarea></th>
-                        </tr>
-                        <tr>
-                            <th><p>Benodigde voorkennis</p></th>
-                            <th><h:inputText value="#{coursesBean.requiredKnowledge}" style="width: 200%" a:placeholder="Bijv. Computerkennis, Internetkennis"></h:inputText></th>
-                        </tr>
-                        <tr>
-                            <th><p>Cursusmateriaal</p></th>
-                            <th><h:inputText value="#{coursesBean.cursusMaterial}" style="width: 200%" a:placeholder="Bijv. Netbeans, Internet Explorer"></h:inputText></th>
-                        </tr>
-                        <tr>
-                            <th><p>Tijdsduur in dagen</p></th>
-                            <th><h:inputText value="#{coursesBean.timeInDays}" style="width: 200%" a:placeholder="Bijv. 1"></h:inputText></th>
-                        </tr>
-                        <tr>
-                            <th><p>Tarief</p></th>
-                            <th><h:inputText value="#{coursesBean.cost}" style="width: 200%" a:placeholder="Bijv. 23.30"></h:inputText></th>
-                        </tr>
-                        <tr>
-                            <th><p>Tags</p></th>
-                            <th><h:inputText value="#{coursesBean.keywords}" style="width: 200%"  a:placeholder="Bijv. Java, Netbeans, Eindhoven"></h:inputText></th>
-                        </tr>
-                        <tr>
-                            <th><p>Training toevoegen</p></th>
+                <div id="courses" class="row">
+                    <div class="col-12">
+                        <h:form>
+                            <p:growl id="growl" showDetail="false" sticky="false" globalOnly="true"/>
+                            <p:commandButton id="new_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-plus" value="Nieuwe Training" action="#{coursesBean.onCreateNewItem()}"  />
+                            <p:commandButton id="edit_training" widgetVar="edit_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-pencil" value="Bewerken" update="growl" action="#{coursesBean.onEditItem()}" />
+                            <p:commandButton id="delete_training" widgetVar="delete_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-trash-o" value="Verwijderen" type="button" onclick="PF('deleteconfirmation').show();" />
+                            <br/>
+                            <br/>
+                            <p:selectOneListbox id="select_training" value="#{coursesBean.selectedCode}" styleClass="form-control" filter="true" filterMatchMode="contains">
+                                <f:selectItems value="#{coursesBean.coursesCmb}"/>
+                                <f:ajax event="change" onevent="unlockbuttons" render="edit_training delete_training" />
+                            </p:selectOneListbox>
+                            <p:dialog header="Modal Dialog" widgetVar="deleteconfirmation" modal="true" minHeight="200" minWidth="200" closeOnEscape="true">
+                                <h:outputText value="Weet je zeker dat je deze training wilt verwijderen?" />
+                                <hr/>
+                                <p:commandButton id="confirmdelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijderen" action="#{coursesBean.onDeleteItem()}" icon="fa fa-trash-o" />
+                                <p:commandButton id="canceldelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nee toch niet" type="button" onclick="PF('deleteconfirmation').hide();" icon="fa fa-ban" />
+                            </p:dialog>
+                        </h:form>
+                    </div>
+                </div>
 
-                            <th><h:commandButton  action="#{coursesBean.updateCourse()}" value="Toevoegen/Aanpassen" style="width: 100%"></h:commandButton ></th>
-                        </tr>
-                        <tr>
-                            <th><br></br></th>
-                        </tr>
-                        <tr>
-                            <th>Beheren</th>
-                        </tr>
-                        <tr>
-                            <th><p>Training beheren</p></th>
-                            
-                            <th><h:selectOneMenu style="width: 200%" value="#{coursesBean.selectedCode}">
-                                    <f:selectItems value="#{coursesBean.coursesCmb}"/>
-                                </h:selectOneMenu></th>
-                            <th></th>
-                            <th><h:commandButton value="Training verwijderen" style="width: 100%" action="#{coursesBean.deleteCourse()}"  ></h:commandButton></th>
-                            <th><h:commandButton value="Training beheren" style="width: 100%" action="#{coursesBean.setCourseData()}" ></h:commandButton></th>
-
-                        </tr>
-
-                    </table>
-                </h:form>
-
-                <br></br>
-                <br></br>
-
+                <hr/>
                 <h3>Categorieën</h3>
-                <h:form>
-                    <table class="#tabletest">
-                        <tr>
-                            <th style="width: 190px"><p>Categorie aanmaken</p></th>
-                            <th><h:inputText a:placeholder="Naam invullen" ></h:inputText></th>
-                            <th></th>
-                            <th><h:button value="Categorie toevoegen" style="width: 100%"></h:button></th>
-                        </tr>
-                        <tr>
-                            <th><p>Categorie toevoegen</p></th>
-                            <th><h:inputText a:placeholder="Naam invullen"></h:inputText></th>
-                            <th><h:selectOneMenu value="#{coursesBean.selectedCode}">
-                                    <f:selectItems value="#{coursesBean.coursesCmb}"/>
-                                </h:selectOneMenu></th>
-                            <th><h:button value="Categorie toevoegen" style="width: 100%"></h:button></th>
-                        </tr>
-                        <tr>
-                            <th><p>Categorie verwijderen</p></th>
-                            <th></th>
-                            <th><h:selectOneMenu value="#{coursesBean.selectedCode}">
-                                    <f:selectItems value="#{coursesBean.coursesCmb}"/>
-                                </h:selectOneMenu></th>
-                            <th><h:button value="Categorie verwijderen" style="width: 100%"></h:button></th>
-                        </tr>
-                    </table>
-                </h:form>
-
-                <br></br>
-                <br></br>
-
+                <div id="categories" class="row">
+                    <div class="col-12">
+                        <h:form>
+                            <div class="form-group row">
+                                <h:outputLabel for="categoryname" value="Categorie aanmaken" class="col-sm-3 col-form-label"/>
+                                <div class="col-sm-6">
+                                    <h:inputText id="categoryname" a:placeholder="Naam" styleClass="form-control" value="NOT IMPLEMENTED"/>
+                                </div>
+                                <div class="col-sm-3">
+                                    <p:commandButton id="savecategory" styleClass="mb-2 mr-sm-2 mb-sm-0" p:icon="fa fa-floppy-o" value="Opslaan" />
+                                </div>
+                            </div>
+                        </h:form>
+                        <h:form>
+                            <div class="form-group row">
+                                <h:outputLabel value="Categorie verwijderen" class="col-sm-3 col-form-label"/>
+                                <div class="col-sm-6">
+                                    <p:selectOneMenu>
+                                        <f:selectItem itemLabel="Option 1" itemValue="1" />
+                                        <f:selectItem itemLabel="Option 2" itemValue="2" />
+                                        <f:selectItem itemLabel="Option 3" itemValue="3" />
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="col-sm-3">
+                                    <p:commandButton id="deletecategory" styleClass="mb-2 mr-sm-2 mb-sm-0" p:icon="fa fa-trash-o" value="Verwijderen" />
+                                </div>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+                <hr/>
                 <h3>Doelgroepen</h3>
-                <h:form>
-                    <table class="#tabletest">
-                        <tr>
-                            <th style="width: 190px"><p>Doelgroep aanmaken</p></th>
-                            <th><h:inputText a:placeholder="Naam invullen" ></h:inputText></th>
-                            <th></th>
-                            <th><h:button value="Doelgroep toevoegen" style="width: 100%"></h:button></th>
-                        </tr>
-                        <tr>
-                            <th><p>Doelgroep toevoegen</p></th>
-                            <th><h:inputText a:placeholder="Naam invullen"></h:inputText></th>
-                            <th><h:selectOneMenu value="#{coursesBean.selectedCode}">
-                                    <f:selectItems value="#{coursesBean.coursesCmb}"/>
-                                </h:selectOneMenu></th>
-                            <th><h:button value="Doelgroep toevoegen" style="width: 100%"></h:button></th>
-                        </tr>
-                        <tr>
-                            <th><p>Doelgroep verwijderen</p></th>
-                            <th></th>
-                            <th><h:selectOneMenu value="#{coursesBean.selectedCode}">
-                                    <f:selectItems value="#{coursesBean.coursesCmb}"/>
-                                </h:selectOneMenu></th>
-                            <th><h:button value="Doelgroep verwijderen" style="width: 100%"></h:button></th>
-                        </tr>
-                    </table>
-                </h:form>
+                <div id="targetusers" class="row">
+                    <div class="col-12">
+                        <h:form>
+                            <div class="form-group row">
+                                <h:outputLabel for="targetgroupname" value="Doelgroep aanmaken" class="col-sm-3 col-form-label"/>
+                                <div class="col-sm-6">
+                                    <h:inputText id="targetgroupname" a:placeholder="Naam" styleClass="form-control" value="NOT IMPLEMENTED"/>
+                                </div>
+                                <div class="col-sm-3">
+                                    <p:commandButton id="savetargetgroup" styleClass="mb-2 mr-sm-2 mb-sm-0" p:icon="fa fa-floppy-o" value="Opslaan" />
+                                </div>
+                            </div>
+                        </h:form>
+                        <h:form>
+                            <div class="form-group row">
+                                <h:outputLabel value="Doelgroep verwijderen" class="col-sm-3 col-form-label"/>
+                                <div class="col-sm-6">
+                                    <p:selectOneMenu>
+                                        <f:selectItem itemLabel="Option 1" itemValue="1" />
+                                        <f:selectItem itemLabel="Option 2" itemValue="2" />
+                                        <f:selectItem itemLabel="Option 3" itemValue="3" />
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="col-sm-3">
+                                    <p:commandButton id="deletetargetgroup" styleClass="mb-2 mr-sm-2 mb-sm-0" p:icon="fa fa-trash-o" value="Verwijderen" />
+                                </div>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
             </div>
         </div>
+        <script>
+            window.onload = lockbuttons;
+        </script>
     </ui:define>
 </ui:composition>

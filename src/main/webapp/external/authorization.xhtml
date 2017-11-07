@@ -18,11 +18,30 @@
                 <h:form>
                     <table>
                         <tr>
-                            <th><h:commandButton value="Login als ..."></h:commandButton></th>
-                            <th><h:commandButton  value="Toevoegen/Aanpassen" style="width: 100%" action="#{authorizationBean.login}"></h:commandButton ></th>
+                            <th><h:commandButton value="Dummie Login" style="width: 250px" action="#{authorizationBean.logindummie()}"></h:commandButton></th>
+                            <th><h:commandButton  value="Dummie Logout" style="width: 250px" action="#{authorizationBean.logout()}" ></h:commandButton ></th>
                         </tr>
                     </table>
                 </h:form>
+                <br></br><br></br>
+                 <h:form>
+                    <table>
+                        <tr>
+                            <th>Gebruikersnaam</th>
+                            <th><h:inputText value="#{authorizationBean.username}"></h:inputText></th>
+                        </tr>
+                        <tr>
+                            <th>Wachtwoord</th>
+                            <th><h:inputText value="#{authorizationBean.password}"></h:inputText></th>
+                        </tr>
+                       
+                    </table>
+                      <h:commandButton value="Login" style="width: 305px" action="#{authorizationBean.login}"></h:commandButton>
+                </h:form>
+                
+                
+                
+                                        
  
             </div>
         </div>

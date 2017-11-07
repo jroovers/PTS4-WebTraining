@@ -5,7 +5,7 @@
  */
 package Listener;
 
-import View.Pages.SignupBean;
+import View.Pages.CoursesBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ValueChangeEvent;
@@ -13,18 +13,20 @@ import javax.faces.event.ValueChangeListener;
 
 /**
  *
- * @author Mijic
+ * @author Jeroen Roovers
  */
-public class CourseValueListener implements ValueChangeListener {
+public class ExistingCourseListener implements ValueChangeListener {
 
     @Override
     public void processValueChange(ValueChangeEvent event)
             throws AbortProcessingException {
 
-        //access country bean directly
+        // Access bean directly
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        SignupBean signupBean = (SignupBean) facesContext.getApplication().createValueBinding("#{signupBean}").getValue(facesContext);
-        signupBean.setCourseID(Long.valueOf(signupBean.getCourseID()));
+        CoursesBean coursesBean = (CoursesBean) facesContext.getApplication().createValueBinding("#{coursesBean}").getValue(facesContext);
+        
+        coursesBean.setSelectedCode(coursesBean.getSelectedCode());
+        coursesBean.changeCourse();
     }
 
 }

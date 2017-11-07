@@ -7,6 +7,7 @@ package View.Pages;
 
 import Controller.CourseService;
 import Controller.LessonService;
+import Controller.UserService;
 import Model.Course;
 import Model.Lesson;
 import Model.User;
@@ -33,6 +34,8 @@ public class SignupBean {
     CourseService cs;
     @Inject
     LessonService ls;
+    @Inject
+    UserService us;
 
     private long courseID;
     private long lessonID;
@@ -125,11 +128,12 @@ public class SignupBean {
     }
 
     public void signUp() {
-        User user = new User(name, surname, phonenr, email);
+        User user = new User(name,surname,phonenr,email,1);
         long id = ls.signUpUser(lessonID, 1);
         FacesContext context = FacesContext.getCurrentInstance();
         if (id != 0) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training opgeslagen", "!"));
+            us.addUser(user);
         } else {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Training niet opgeslagen!", "Er is iets fouts gegaan! Probeer het later opnieuw"));
         }

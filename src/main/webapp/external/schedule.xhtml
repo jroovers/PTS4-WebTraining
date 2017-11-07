@@ -5,7 +5,9 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
-
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{authorizationBean.checkPermission(2)}"/>
+    </f:metadata>
     <!-- Tabblad naam -->
     <ui:define name="title">Courserooster</ui:define>
     <!-- Content -->
@@ -17,56 +19,61 @@
                     <div class="col-5"> 
 
 
-                        <h:form>
+                        <h:form onsubmit="event.preventDefault()">
                             <div class="form-group">
                                 <h1>Cursussen</h1>
                                 <p:growl id="Select_Warning" />
-                                <p:selectOneListbox value="#{scheduleBean.courseID}" filter="true" filterMatchMode="contains" styleClass="form-control" onchange="submit()" required="false">
-                                    <f:valueChangeListener type="Listener.ScheduleValueListener" />
-                                    <f:selectItems value="#{scheduleBean.allCourses}" var="y"
-                                                   itemLabel="#{y.shortString}" itemValue="#{y.id}" />
+                                <p:selectOneListbox value="#{scheduleBean.lessonID}" filter="true" valueChangeListener="#{scheduleBean.valueChanged}" 
+                                                    filterMatchMode="contains" styleClass="form-control" onchange="submit()" required="false">
+                                                    <f:valueChangeListener type="Listener.ScheduleValueListener" />
+                                    <f:selectItems value="#{scheduleBean.allLessons}" var="y"
+                                                   itemLabel="#{y.lessonString}" itemValue="#{y.id}" />
                                 </p:selectOneListbox>
                             </div>
                         </h:form>
+                        
 
                     </div>
                     <div class="col-6">
                         <h1>Informatie</h1>
-                        <h:form>
+                       <h:form >
 
                             <table class="table" >
                                 <tbody>
                                     <tr>
                                         <th>Naam</th>
-                                        <th>#{scheduleBean.selectedCourse.name}</th>
+                                        
+                                        <th>#{scheduleBean.selectedLesson.course.name}</th>
                                     </tr>
                                     <tr>
                                         <th>Cursus dagen</th>
-                                        <th>#{scheduleBean.selectedCourse.durationInDays}</th>
+                                        <th>#{scheduleBean.selectedLesson.course.durationInDays}</th>
                                     </tr>
                                     <tr>
                                         <th>Kosten</th>
-                                        <th>#{scheduleBean.selectedCourse.cost}</th>
+                                        <th>#{scheduleBean.selectedLesson.course.cost}</th>
                                     </tr>
                                     <tr>
                                         <th>Materiaal</th>
-                                        <th>#{scheduleBean.selectedCourse.courseMaterials}</th>
+                                        <th>#{scheduleBean.selectedLesson.course.courseMaterials}</th>
                                     </tr>
                                     <tr>
                                         <th>Beschrijving</th>
-                                        <th>#{scheduleBean.selectedCourse.description}</th>
+                                        <th>#{scheduleBean.selectedLesson.course.description}</th>
                                     </tr>
                                     <tr>
                                         <th>
                                             <!-- Disable werkt niet goed. hij roept de action niet aan :( -->
-                                            <p:commandButton value="Inschrijven"  action="#{scheduleBean.signup()}" >
-                                            <f:ajax/>
-                                            </p:commandButton>
-                                           
+                                           <h:button value="Inschrijven" outcome="signup.xhtml" />
                                         </th>
                                     </tr>
                                 </tbody>
                             </table>
+                           
+                            
+                       </h:form>
+                        <h:form id="hiddenForm" onsubmit="event.preventDefault()">
+                            <h:inputHidden value="#{scheduleBean.lessonID}" id="hiddenLessonID"/>
                         </h:form>
                     </div>
 

@@ -5,12 +5,13 @@
  */
 package View.Pages;
 
-import Controller.CourseService;
-import Model.Course;
+import Controller.LessonService;
+import Model.Lesson;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
@@ -25,53 +26,61 @@ public class ScheduleBean
 {   /**
      * Creates a new instance of scheduleBean
      */
-    private long courseID;
-    private Course selectedCourse;
-    private List<Course> allCourses;
+    private long lessonID;
+    private Lesson selectedLesson;
+    private List<Lesson> allLessons;
     @Inject
-    CourseService cs;
+    LessonService ls;
     
     public ScheduleBean() 
     {
         
     }
     
-    public long getCourseID()
+    public ScheduleBean(long l)
     {
-        return courseID;
-    }
-
-    public void setCourseID(long courseID) {
-        this.courseID = courseID;
-        setSelectedCourse();
+        this.lessonID = l;
     }
     
-    public List<Course> getAllCourses() 
+    public long getLessonID()
     {
-        allCourses = cs.getAllCourses();
-        
-        return allCourses;
+        return lessonID;
     }
 
-    public Course getSelectedCourse() {
-        return selectedCourse;
+    public void setLessonID(long lessonID) 
+    {
+        this.lessonID = lessonID;
+    }
+    
+    public List<Lesson> getAllLessons() 
+    {
+        allLessons = ls.getLessons();
+        
+        return allLessons;
+    }
+
+    public Lesson getSelectedLesson() 
+    {
+        return selectedLesson;
     }
     
     public void setSelectedCourse()
     {
-        for(Course c : allCourses)
+        for(Lesson lesson : allLessons)
         {
-            if(c.getId() == courseID)
+            if(lesson.getId() == lessonID)
             {
-                selectedCourse = c;
+                selectedLesson = lesson;
             }
         }
     }
     
     public void signup()
     {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        String s2 = ec.getRequestParameterMap().get("hiddenForm:hiddenLessonID");
         FacesContext context = FacesContext.getCurrentInstance();
-        if(selectedCourse == null)
+        if(s2 == null)
         {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Selecteer een cursus",""));
         }
@@ -79,9 +88,8 @@ public class ScheduleBean
     
     public void valueChanged(ValueChangeEvent e) 
     {
-        String code;
-        code = e.getNewValue().toString();
-        System.out.println(code);
+        lessonID = (long)e.getNewValue();
+        setSelectedCourse();
     }
     
 
