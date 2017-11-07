@@ -3,7 +3,9 @@ package View.Pages;
 import Controller.CourseService;
 import Controller.LessonService;
 import Model.Lesson;
+import Model.User;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -47,10 +49,14 @@ public class PersonalRosterBean implements Serializable
     private void RefreshLessons()
     {
         lessonSchedule.clear();
-        for (Lesson lesson : lessonService.GetLessonsByTeacher(1))
+        for (Lesson lesson : lessonService.GetLessonAndRegistrationsByTeacher(1))
         {
+          //  ArrayList<User> users = new ArrayList<User>();
+           // users.add(new User(1, "Ricardo van Dijke", "sefs"));
+           // lesson.setRegistrations(users);
             lessonSchedule.addEvent(new DefaultScheduleEvent(lesson.getCourse().getName(), lesson.getStartTime().getTime(), lesson.getEndTime().getTime(), lesson));
-        }
+        } 
+        //Users are not being displayed
     }
 
     public ScheduleModel getEventModel()

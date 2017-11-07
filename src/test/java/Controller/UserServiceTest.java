@@ -61,6 +61,9 @@ public class UserServiceTest {
     public void testGetUser() throws Exception {
         System.out.println("getUser - Test");
         
+        User user = userService.getUser("Bertster");
+        System.out.println(user.getName());
+        assertEquals("bertus", user.getSurname());
     }
 
     /**
@@ -70,6 +73,14 @@ public class UserServiceTest {
     public void testRemoveUser() throws Exception {
         System.out.println("removeUser - Test"); 
         
+        List<User> beforeUsers = userService.getUsers();
+        boolean result = userService.addUser(user1);
+        List<User> users = userService.getUsers();
+        assertEquals(users.size(), beforeUsers.size() + 1);
+        User user = userService.getUser("Bert123");
+        userService.removeUser(user.getUserID());
+        List<User> afterUsers = userService.getUsers();
+        assertEquals(afterUsers.size(), beforeUsers.size());
     }
     
 }
