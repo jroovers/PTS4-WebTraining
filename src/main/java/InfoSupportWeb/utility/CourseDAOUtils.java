@@ -23,9 +23,9 @@ public class CourseDAOUtils implements ICourseDAO {
 
     static final String QUERY_GET_COURSES = "SELECT * FROM Course";
     static final String QUERY_INSERT_COURSE = "INSERT INTO Course"
-            + "(Code, Name, Description, CourseMaterials, KeyWords, Duration, Cost) VALUES"
-            + "(?,?,?,?,?,?,?)";
-    static final String QUERY_UPDATE_COURSE = "UPDATE Course SET Code = ?, Name = ?, Description = ?, CourseMaterials = ?, KeyWords = ?, Duration = ?, Cost = ? WHERE ID_Course = ?";
+            + "(Code, Name, Description, CourseMaterials, KeyWords, Duration, Cost, Supplier) VALUES"
+            + "(?,?,?,?,?,?,?,?)";
+    static final String QUERY_UPDATE_COURSE = "UPDATE Course SET Code = ?, Name = ?, Description = ?, CourseMaterials = ?, KeyWords = ?, Duration = ?, Cost = ?, Supplier = ? WHERE ID_Course = ?";
     static final String QUERY_REMOVE_COURSE = "DELETE FROM Course WHERE ID_Course = ?";
 
     public CourseDAOUtils() {
@@ -53,7 +53,7 @@ public class CourseDAOUtils implements ICourseDAO {
                 
                 String[] keyWords = o[5] == null ? null : o[5].toString().split(",");
                 course.setKeyWords(keyWords);
-                
+                course.setSupplier(o[8] == null ? null : o[8].toString());
                 courses.add(course);
             }
         } catch (SQLException ex_sql) {
@@ -70,7 +70,7 @@ public class CourseDAOUtils implements ICourseDAO {
         
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
-        Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), keyWords, course.getDurationInDays(), course.getCost()};
+        Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), keyWords, course.getDurationInDays(), course.getCost(), course.getSupplier()};
         try {
             Object[] result = run.insert(QUERY_INSERT_COURSE, rsh, params);
 
@@ -93,7 +93,7 @@ public class CourseDAOUtils implements ICourseDAO {
         String keyWords = arrayToString(course.getKeyWords());       
         
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
-        Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), keyWords, course.getDurationInDays(), course.getCost(), course.getId()};
+        Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), keyWords, course.getDurationInDays(), course.getCost(), course.getId(), course.getSupplier()};
         try {
             run.update(QUERY_UPDATE_COURSE, params);
             return true;

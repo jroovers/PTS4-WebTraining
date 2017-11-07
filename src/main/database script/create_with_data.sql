@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `Course` (
   `KeyWords` text,
   `Duration` int(11) DEFAULT '1',
   `Cost` decimal(10,0) DEFAULT NULL,
+  `Supplier` text,
   PRIMARY KEY (`ID_Course`)
 ) ENGINE=InnoDB AUTO_INCREMENT=446 DEFAULT CHARSET=utf8;
 

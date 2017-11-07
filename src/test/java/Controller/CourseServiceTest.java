@@ -27,10 +27,13 @@ public class CourseServiceTest {
     @Before
     public void setUp() {
         String[] testArray = new String[2];
+        String testSupplier = "InfoSupport";
         testArray[0] = "Jemam";
         testArray[1] = "Jepap";
         c1 = new Course(33, "UnitTest1", "name", "textDescription", testArray, "courseMaterials", testArray, 3, 1.1);
         c2 = new Course(33, "UnitTest1", "name", "textDescription", testArray, "courseMaterials", testArray, 3, 1.1);
+        c1.setSupplier(testSupplier);
+        c2.setSupplier(testSupplier);
         
     }
     
