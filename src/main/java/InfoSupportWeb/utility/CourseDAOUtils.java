@@ -98,7 +98,7 @@ public class CourseDAOUtils implements ICourseDAO {
         String keyWords = arrayToString(course.getKeyWords());
 
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
-        Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), keyWords, course.getDurationInDays(), course.getCost(), course.getId(), course.getSupplier()};
+        Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), keyWords, course.getDurationInDays(), course.getCost(), course.getSupplier(), course.getId()};
         try {
             run.update(QUERY_UPDATE_COURSE, params);
             return true;

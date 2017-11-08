@@ -91,7 +91,7 @@
                                 <h:form>
                                     <div class="row">
                                         <div class="form-inline">
-                                            <p:commandButton id="add_category" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-plus" value="Toevoegen" />
+                                            <p:commandButton id="add_category" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-plus" value="Toevoegen" type="button" onclick="PF('addCategoryDialog').show()"/>
                                             <p:commandButton id="delete_category" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-trash-o" value="Verwijder geselecteerde categorie" />
                                         </div>
                                     </div>
@@ -103,6 +103,16 @@
                                             <f:selectItem itemLabel="Voorbeeldcategorie 3" itemValue="3" />
                                         </p:selectOneListbox>
                                     </div>
+                                    <p:dialog header="Categorie toevoegen" widgetVar="addCategoryDialog" modal="true" minHeight="200" minWidth="200" closeOnEscape="true">
+                                        <h:outputText value="Welke categorie wil je toevoegen?" />
+                                        <hr/>
+                                        <p:selectOneMenu value="#{coursesBean.selectedCatToAdd}" style="width:100%;">
+                                            <f:selectItems value="#{coursesBean.categoriesToAdd}" var="c" itemLabel="#{c.name}" itemValue="#{c.id}" />
+                                        </p:selectOneMenu>
+                                        <hr/>
+                                        <p:commandButton id="confirmdelete" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-plus" value="Toevoegen" action="#{coursesBean.onAddCategoryToCourse()}" type="button" onclick="PF('addCategoryDialog').hide();" />
+                                        <p:commandButton id="canceldelete" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-ban" value="Nee toch niet" type="button" onclick="PF('addCategoryDialog').hide();" />
+                                    </p:dialog>
                                 </h:form>
                             </p:tab>
                             <p:tab title="Doelgroepen">

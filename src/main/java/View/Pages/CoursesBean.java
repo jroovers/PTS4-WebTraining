@@ -51,14 +51,19 @@ public class CoursesBean implements Serializable {
 
     private List<Course> courses;       // List of courses
     private Course course;              // Current course  
+
     private String selectedCode;        // Selected item in SelectOneMenu
     private boolean hasSelectedCourse;  // Determines if a group is selected
 
-    private String newCategoryName;     // Name of new category to add
-    private String selectedCategory;    // Long value (as string) of category ID to delete
-
+    private String newCatName;          // Name of new category to add
+    private String selectedCat;         // Long value (as string) of category ID to delete
     private String newUserGroupName;    // Name of new usergroup to add
     private String selectedUserGroup;   // Long value (as string) of usergroup ID to delete
+
+    private String selectedCatToAdd;     // Long value (as string) of category to add to course
+    private String selectedCatToRemove;  // Long value (as string) of category to add to course
+    private String selectedGroupToAdd;   // Long value (as string) of category to add to course
+    private String selectedGroupToRemove;// Long value (as string) of category to add to course
 
     @Inject
     private Conversation conversation;
@@ -301,9 +306,19 @@ public class CoursesBean implements Serializable {
         return listCmb;
     }
 
+    public List<Category> getCategoriesToAdd() {
+        List<Category> listCmb = this.catService.getAllCategories();
+        return listCmb;
+    }
+
+    public List<UserGroup> getUserGroupsToAdd() {
+        List<UserGroup> listCmb = this.groupService.getAllUserGroups();
+        return listCmb;
+    }
+
     public String onCreateNewCategory() {
-        if (!newCategoryName.isEmpty()) {
-            catService.addCategory(newCategoryName);
+        if (!newCatName.isEmpty()) {
+            catService.addCategory(newCatName);
             return "courses?faces-redirect=true";
         } else {
             return null;
@@ -311,9 +326,9 @@ public class CoursesBean implements Serializable {
     }
 
     public String onDeleteCategory() {
-        if (!selectedCategory.isEmpty()) {
+        if (!selectedCat.isEmpty()) {
             Category selectedItem = new Category();
-            selectedItem.setId(Long.parseLong(selectedCategory));
+            selectedItem.setId(Long.parseLong(selectedCat));
             catService.removeCategory(selectedItem);
             return "courses?faces-redirect=true";
         } else {
@@ -340,8 +355,24 @@ public class CoursesBean implements Serializable {
             return null;
         }
     }
-    
-    public String onCancelEdit(){
+
+    public String onAddCategoryToCourse() {
+        return null;
+    }
+
+    public String onAddUserGroupToCourse() {
+        return null;
+    }
+
+    public String onRemoveCategoryFromCourse() {
+        return null;
+    }
+
+    public String onRemoveUserGroupFromCourse() {
+        return null;
+    }
+
+    public String onCancelEdit() {
         endConversation();
         return "courses?faces-redirect=true";
     }
@@ -523,19 +554,19 @@ public class CoursesBean implements Serializable {
     }
 
     public String getSelectedCategory() {
-        return selectedCategory;
+        return selectedCat;
     }
 
     public void setSelectedCategory(String selectedCategory) {
-        this.selectedCategory = selectedCategory;
+        this.selectedCat = selectedCategory;
     }
 
     public String getNewCategoryName() {
-        return newCategoryName;
+        return newCatName;
     }
 
     public void setNewCategoryName(String newCategoryName) {
-        this.newCategoryName = newCategoryName;
+        this.newCatName = newCategoryName;
     }
 
     public String getNewUserGroupName() {
@@ -553,4 +584,45 @@ public class CoursesBean implements Serializable {
     public void setSelectedUserGroup(String selectedUserGroup) {
         this.selectedUserGroup = selectedUserGroup;
     }
+
+    public String getSelectedCat() {
+        return selectedCat;
+    }
+
+    public void setSelectedCat(String selectedCat) {
+        this.selectedCat = selectedCat;
+    }
+
+    public String getSelectedCatToAdd() {
+        return selectedCatToAdd;
+    }
+
+    public void setSelectedCatToAdd(String selectedCatToAdd) {
+        this.selectedCatToAdd = selectedCatToAdd;
+    }
+
+    public String getSelectedCatToRemove() {
+        return selectedCatToRemove;
+    }
+
+    public void setSelectedCatToRemove(String selectedCatToRemove) {
+        this.selectedCatToRemove = selectedCatToRemove;
+    }
+
+    public String getSelectedGroupToAdd() {
+        return selectedGroupToAdd;
+    }
+
+    public void setSelectedGroupToAdd(String selectedGroupToAdd) {
+        this.selectedGroupToAdd = selectedGroupToAdd;
+    }
+
+    public String getSelectedGroupToRemove() {
+        return selectedGroupToRemove;
+    }
+
+    public void setSelectedGroupToRemove(String selectedGroupToRemove) {
+        this.selectedGroupToRemove = selectedGroupToRemove;
+    }
+
 }

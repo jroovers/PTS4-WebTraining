@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.Category;
+import Model.Course;
 import Persistance.DbUtilsImpl.CategoryDAODbUtilsImpl;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -38,5 +39,21 @@ public class CategoryService {
     public boolean removeCategory(Category category) {
         CategoryDAODbUtilsImpl CategoryDAO = new CategoryDAODbUtilsImpl();
         return CategoryDAO.removeCategory(category);
+    }
+
+    public boolean addCategoryToCourse(Category category, Course course) {
+        return false;
+    }
+
+    public boolean addCategoryToCourse(long category_id, long course_id) {
+        return false;
+    }
+
+    public boolean removeCategoryFromCourse(Category category, Course course) {
+        return false;
+    }
+
+    public boolean removeCategoryFromCourse(long category_id, long course_id) {
+        return false;
     }
 }
