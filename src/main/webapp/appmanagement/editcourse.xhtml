@@ -27,7 +27,7 @@
                         <div class="col">
                             <div class="form-inline">
                                 <p:commandButton id="save_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-floppy-o" value="Opslaan"  action="#{coursesBean.updateCourse()}"/>
-                                <p:button id="cancel_action" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Annuleren" icon="fa fa-ban" outcome="courses"/>
+                                <p:commandButton id="cancel_action" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-ban" value="Annuleren" action="#{coursesBean.onCancelEdit()}"/>
                             </div>
                         </div>
                     </div>
@@ -91,8 +91,8 @@
                                 <h:form>
                                     <div class="row">
                                         <div class="form-inline">
-                                            <p:commandButton id="add_category" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Toevoegen" icon="fa fa-plus"/>
-                                            <p:commandButton id="delete_category" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijder geselecteerde categorie" icon="fa fa-trash-o" />
+                                            <p:commandButton id="add_category" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-plus" value="Toevoegen" />
+                                            <p:commandButton id="delete_category" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-trash-o" value="Verwijder geselecteerde categorie" />
                                         </div>
                                     </div>
                                     <hr/>
@@ -109,8 +109,8 @@
                                 <h:form>
                                     <div class="row">
                                         <div class="form-inline">
-                                            <p:commandButton id="add_category" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Toevoegen" icon="fa fa-plus"/>
-                                            <p:commandButton id="delete_category" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijder geselecteerde doelgroep" icon="fa fa-trash-o" />
+                                            <p:commandButton id="add_category" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-plus" value="Toevoegen"/>
+                                            <p:commandButton id="delete_category" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-trash-o" value="Verwijder geselecteerde doelgroep" />
                                         </div>
                                     </div>
                                     <hr/>

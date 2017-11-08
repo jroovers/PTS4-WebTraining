@@ -340,6 +340,11 @@ public class CoursesBean implements Serializable {
             return null;
         }
     }
+    
+    public String onCancelEdit(){
+        endConversation();
+        return "courses?faces-redirect=true";
+    }
 
     /**
      * Sets all the data from course in the textfields. if a value is null it
