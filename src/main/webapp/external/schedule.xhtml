@@ -46,6 +46,13 @@
                                         <th>#{scheduleBean.selectedCourse.name}</th>
                                     </tr>
                                     <tr>
+                                        <th>Locaties</th>
+                                        <th><p:selectOneListbox value="#{scheduleBean.locations}" 
+                                                    styleClass="form-control" >
+                                                <f:selectItems value="#{scheduleBean.locations}" var="y"
+                                                               itemLabel="#{locations}" itemValue="#{locations}" /></p:selectOneListbox> </th>
+                                    </tr>
+                                        <tr>
                                         <th>Cursus dagen</th>
                                         <th>#{scheduleBean.selectedCourse.durationInDays}</th>
                                     </tr>

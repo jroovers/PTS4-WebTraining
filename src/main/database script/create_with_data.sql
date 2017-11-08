@@ -30,6 +30,25 @@ INSERT INTO `Category` (Name) VALUES
 	('Office'),
 	('Sql');
 
+-- Dumping structure for table db_dev_infosupport.Category
+DROP TABLE IF EXISTS `UserGroup`;
+CREATE TABLE IF NOT EXISTS `UserGroup` (
+  `ID_UserGroup` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) NOT NULL,
+  PRIMARY KEY (`ID_UserGroup`),
+  UNIQUE KEY `UserGroup_UNIQUE` (`Name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table db_dev_infosupport.Category: ~0 rows (approximately)
+/*!40000 ALTER TABLE `Category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Category` ENABLE KEYS */;
+
+INSERT INTO `UserGroup` (Name) VALUES
+    ('Instroom 2017'),
+    ('MDWK Basiskennis'),
+    ('MDWK Nieuwe Medewerkers'),
+    ('MDWK Senior Medewerkers');
+
 -- Dumping structure for table db_dev_infosupport.Course
 DROP TABLE IF EXISTS `Course`;
 CREATE TABLE IF NOT EXISTS `Course` (
@@ -89,14 +108,15 @@ CREATE TABLE IF NOT EXISTS `Course_PriorKnowledge` (
 /*!40000 ALTER TABLE `Course_PriorKnowledge` ENABLE KEYS */;
 
 -- Dumping structure for table db_dev_infosupport.Course_TargetUsers
-DROP TABLE IF EXISTS `Course_TargetUsers`;
-CREATE TABLE IF NOT EXISTS `Course_TargetUsers` (
+DROP TABLE IF EXISTS `Course_UserGroup`;
+CREATE TABLE IF NOT EXISTS `Course_UserGroup` (
   `ID_Course` int(11) NOT NULL,
-  `ID_UserType` int(11) NOT NULL,
+  `ID_UserGroup` int(11) NOT NULL,
   KEY `fk_TargerUsers_Course` (`ID_Course`),
-  KEY `fk_TargerUsers_UserType` (`ID_UserType`),
-  CONSTRAINT `fk_TargerUsers_Course` FOREIGN KEY (`ID_Course`) REFERENCES `Course` (`ID_Course`) ON DELETE CASCADE,
-  CONSTRAINT `fk_TargerUsers_UserType` FOREIGN KEY (`ID_UserType`) REFERENCES `UserType` (`ID_UserType`) ON DELETE CASCADE
+  KEY `fk_TargerUsers_UserGroup` (`ID_UserGroup`),
+  CONSTRAINT `fk_TargetUsers_Course` FOREIGN KEY (`ID_Course`) REFERENCES `Course` (`ID_Course`) ON DELETE CASCADE,
+  CONSTRAINT `fk_TargerUsers_UserGroup` FOREIGN KEY (`ID_UserGroup`) REFERENCES `UserGroup` (`ID_UserGroup`) ON DELETE CASCADE
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dumping data for table db_dev_infosupport.Course_TargetUsers: ~0 rows (approximately)
