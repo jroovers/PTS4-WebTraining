@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -23,9 +24,13 @@ import javax.inject.Named;
  * @author Jowelle
  */
 @Named(value = "offerTrainingBean")
-@SessionScoped
+@RequestScoped
 public class OfferTrainingBean 
 {
+
+    public OfferTrainingBean() {
+    }    
+    
     @Inject
     CourseService cs;
     @Inject
@@ -55,6 +60,14 @@ public class OfferTrainingBean
         this.cs = cs;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+    
     public void setEmail(String email) {
         this.email = email;
     }
@@ -109,12 +122,6 @@ public class OfferTrainingBean
 
     public void setSelectedCode(String selectedCode) {
         this.selectedCode = selectedCode;
-    }
-
-    
-    
-    public CourseService getCs() {
-        return cs;
     }
 
     public String getEmail() {
@@ -183,7 +190,7 @@ public class OfferTrainingBean
         FacesContext context = FacesContext.getCurrentInstance();
         
         if (userName == null) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Bedrijf naam moet ingevuld zijn", "!"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Bedrijfsnaam moet ingevuld zijn", "!"));
         }
         if (email == null) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Email moet ingevuld zijn", "!"));
@@ -195,12 +202,11 @@ public class OfferTrainingBean
         //Add course
         if (!courseName.equals("") && !code.equals("")) {
 
-            if (!description.isEmpty() && !keywords.isEmpty() && !requiredKnowledge.isEmpty() && !cursusMaterial.isEmpty() && !timeInDays.isEmpty() && !cost.isEmpty() && !requiredKnowledge.isEmpty()) {
+            if (!description.isEmpty() && !requiredKnowledge.isEmpty() && !cursusMaterial.isEmpty() && !timeInDays.isEmpty() && !cost.isEmpty() && !requiredKnowledge.isEmpty()) {
 
                 double nCost = 0;
                 int nTimeIndDays = 0;
                 String[] nRequiredKnowledge = this.splitText(requiredKnowledge);
-                String[] nKeywords = this.splitText(keywords);
 
                 try {
                     nTimeIndDays = Integer.parseInt(timeInDays);
@@ -214,11 +220,12 @@ public class OfferTrainingBean
                 course.setDescription(description);
                 course.setDurationInDays(nTimeIndDays);
                 course.setPriorKnowledge(nRequiredKnowledge);
-                course.setKeyWords(nKeywords);
                 course.setSupplier(userName);
                 cs.addCourse(course);
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training is toegevoegd", "!"));
             } else {
                 cs.addCourse(code, userName);
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training is toegevoegd", "!"));
             }
         }
     }
