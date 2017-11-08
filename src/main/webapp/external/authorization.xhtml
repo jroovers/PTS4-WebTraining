@@ -29,17 +29,20 @@
             <div>
                 <h3>Inloggen</h3>
                 <hr/>
+                <h:form>
                 <table>
                     <tr>
                         <th style="width:150px;">Gebruikersnaam</th>
-                        <th><p:inputText id="username" value="#{authorizationBean.username}" style="width: 200%" a:placeholder="" required="true" requiredMessage="Gebruikersnaam moet eerst ingevuld worden"></p:inputText></th>                                    
+                        <th><h:inputText value="#{authorizationBean.username}" style="width: 200%" a:placeholder="" required="true" requiredMessage="Gebruikersnaam moet eerst ingevuld worden" ></h:inputText></th> 
                     </tr>
                     <tr>
                         <th>Wachtwoord</th>
-                        <th><p:inputText id="password"  value="#{authorizationBean.password}" type="password" style="width: 200%" a:placeholder="" required="true" requiredMessage="Wachtwoord moet eerst ingevuld worden"></p:inputText></th>
+                        <th><h:inputText value="#{authorizationBean.password}" style="width: 200%" a:placeholder="" required="true" requiredMessage="Wachtwoord moet eerst ingevuld worden" ></h:inputText></th> 
                     </tr>                             
                 </table> <br></br>
-                <p:commandButton id="login" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Inloggen" icon="fa fa-sign-in" action="#{authorizationBean.login()}" />
+                
+                <h:commandButton  value="Login" style="width: 250px" action="#{authorizationBean.login()}"></h:commandButton>
+                </h:form>
             </div>
         </div>
     </ui:define>
