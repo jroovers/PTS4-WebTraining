@@ -14,6 +14,7 @@
 
     <!-- Content -->
     <ui:define name="content">
+        <!-- Clientside hide enable buttons script -->
         <script language='javascript'>
             function lockbuttons() {
                 PF('delete_training').disable();
@@ -94,12 +95,12 @@
                     <div class="col-12">
                         <h:form>
                             <div class="form-group row">
-                                <h:outputLabel for="targetgroupname" value="Doelgroep aanmaken" class="col-sm-3 col-form-label"/>
+                                <h:outputLabel for="usergroupname" value="Doelgroep aanmaken" class="col-sm-3 col-form-label"/>
                                 <div class="col-sm-6">
-                                    <h:inputText id="targetgroupname" a:placeholder="Naam" styleClass="form-control" value="NOT IMPLEMENTED"/>
+                                    <h:inputText id="usergroupname" a:placeholder="Naam" styleClass="form-control" value="#{coursesBean.newUserGroupName}"/>
                                 </div>
                                 <div class="col-sm-3">
-                                    <p:commandButton id="savetargetgroup" styleClass="mb-2 mr-sm-2 mb-sm-0" p:icon="fa fa-floppy-o" value="Opslaan" />
+                                    <p:commandButton id="savetargetgroup" styleClass="mb-2 mr-sm-2 mb-sm-0" p:icon="fa fa-floppy-o" value="Opslaan" action="#{coursesBean.onCreateNewUserGroup()}" />
                                 </div>
                             </div>
                         </h:form>
@@ -107,16 +108,20 @@
                             <div class="form-group row">
                                 <h:outputLabel value="Doelgroep verwijderen" class="col-sm-3 col-form-label"/>
                                 <div class="col-sm-6">
-                                    <p:selectOneMenu>
-                                        <f:selectItem itemLabel="Option 1" itemValue="1" />
-                                        <f:selectItem itemLabel="Option 2" itemValue="2" />
-                                        <f:selectItem itemLabel="Option 3" itemValue="3" />
+                                    <p:selectOneMenu value="#{coursesBean.selectedUserGroup}" style="width:100%;">
+                                        <f:selectItems value="#{coursesBean.userGroupCmb}" var="ug" itemLabel="#{ug.name}" itemValue="#{ug.id}"/>
                                     </p:selectOneMenu>
                                 </div>
                                 <div class="col-sm-3">
-                                    <p:commandButton id="deletetargetgroup" styleClass="mb-2 mr-sm-2 mb-sm-0" p:icon="fa fa-trash-o" value="Verwijderen" />
+                                    <p:commandButton id="deletetargetgroup" styleClass="mb-2 mr-sm-2 mb-sm-0" p:icon="fa fa-trash-o" value="Verwijderen" type="button" onclick="PF('deleteUgConfirmation').show();" />
                                 </div>
                             </div>
+                            <p:dialog header="Waarschuwing" widgetVar="deleteUgConfirmation" modal="true" minHeight="200" minWidth="200" closeOnEscape="true">
+                                <h:outputText value="Weet je zeker dat je deze groep wilt verwijderen?" />
+                                <hr/>
+                                <p:commandButton id="confirmdelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijderen" action="#{coursesBean.onDeleteUserGroup()}" icon="fa fa-trash-o" />
+                                <p:commandButton id="canceldelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nee toch niet" type="button" onclick="PF('deleteUgConfirmation').hide();" icon="fa fa-ban" />
+                            </p:dialog>
                         </h:form>
                     </div>
                 </div>
