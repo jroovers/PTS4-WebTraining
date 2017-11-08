@@ -7,8 +7,10 @@ package View.Pages;
 
 import Controller.CategoryService;
 import Controller.CourseService;
+import Controller.UserGroupService;
 import Model.Category;
 import Model.Course;
+import Model.UserGroup;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,8 @@ public class CoursesBean implements Serializable {
     CourseService courseService;
     @Inject
     CategoryService catService;
+    @Inject
+    UserGroupService groupService;
 
     private String code;                // value in the "code" texfield
     private String name;                // value in the "name" texfield
@@ -48,9 +52,13 @@ public class CoursesBean implements Serializable {
     private List<Course> courses;       // List of courses
     private Course course;              // Current course  
     private String selectedCode;        // Selected item in SelectOneMenu
-    private boolean hasSelectedCourse;
-    private String newCategoryName;
-    private String selectedCategory;
+    private boolean hasSelectedCourse;  // Determines if a group is selected
+
+    private String newCategoryName;     // Name of new category to add
+    private String selectedCategory;    // Long value (as string) of category ID to delete
+
+    private String newUserGroupName;    // Name of new usergroup to add
+    private String selectedUserGroup;   // Long value (as string) of usergroup ID to delete
 
     @Inject
     private Conversation conversation;
@@ -285,7 +293,11 @@ public class CoursesBean implements Serializable {
 
     public List<Category> getCategoriesCmb() {
         List<Category> listCmb = this.catService.getAllCategories();
-        
+        return listCmb;
+    }
+
+    public List<UserGroup> getUserGroupCmb() {
+        List<UserGroup> listCmb = this.groupService.getAllUserGroups();
         return listCmb;
     }
 
@@ -307,6 +319,31 @@ public class CoursesBean implements Serializable {
         } else {
             return null;
         }
+    }
+
+    public String onCreateNewUserGroup() {
+        if (!newUserGroupName.isEmpty()) {
+            groupService.addUserGroup(newUserGroupName);
+            return "courses?faces-redirect=true";
+        } else {
+            return null;
+        }
+    }
+
+    public String onDeleteUserGroup() {
+        if (!selectedUserGroup.isEmpty()) {
+            UserGroup selectedItem = new UserGroup();
+            selectedItem.setId(Long.parseLong(selectedUserGroup));
+            groupService.removeUserGroup(selectedItem);
+            return "courses?faces-redirect=true";
+        } else {
+            return null;
+        }
+    }
+    
+    public String onCancelEdit(){
+        endConversation();
+        return "courses?faces-redirect=true";
     }
 
     /**
@@ -501,4 +538,19 @@ public class CoursesBean implements Serializable {
         this.newCategoryName = newCategoryName;
     }
 
+    public String getNewUserGroupName() {
+        return newUserGroupName;
+    }
+
+    public void setNewUserGroupName(String newUserGroupName) {
+        this.newUserGroupName = newUserGroupName;
+    }
+
+    public String getSelectedUserGroup() {
+        return selectedUserGroup;
+    }
+
+    public void setSelectedUserGroup(String selectedUserGroup) {
+        this.selectedUserGroup = selectedUserGroup;
+    }
 }

@@ -17,9 +17,6 @@
                     <li class="nav-item">
                         <h:link styleClass="nav-link" outcome="/external/authorization" value="Login"/>
                     </li>
-                    <li class="nav-item">
-                        <h:link styleClass="nav-link" value="Link 3"/>
-                    </li>
                     <li class="nav-item dropdown">
                         <h:link styleClass="nav-link dropdown-toggle" id="dropdown01" a:data-toggle="dropdown" a:aria-haspopup="true" a:aria-expanded="false">Paginakiezer</h:link>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -27,6 +24,7 @@
                             <h:link styleClass="dropdown-item" rendered="#{authorizationBean.checkVisible(2)}" outcome="/appmanagement/planner" value="Trainingsplanner"/>
                             <h:link styleClass="dropdown-item" rendered="#{authorizationBean.checkVisible(2)}" outcome="/appmanagement/personalroster" value="Docenten Trainingsrooster"/>
                             <h:link styleClass="dropdown-item" rendered="#{authorizationBean.checkVisible(2)}" outcome="/external/schedule" value="Trainingsrooster"/>
+                            <h:link styleClass="dropdown-item" outcome="/external/offertraining" value="Trainingaanbod"/>
                             <h:link styleClass="dropdown-item" outcome="/external/signup" value="Inschrijfformulier"/>
                         </div>
                     </li>

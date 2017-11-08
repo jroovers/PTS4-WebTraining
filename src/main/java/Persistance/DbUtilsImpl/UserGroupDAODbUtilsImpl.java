@@ -7,8 +7,9 @@ package Persistance.DbUtilsImpl;
 
 import InfoSupportWeb.utility.Database;
 import InfoSupportWeb.utility.ResultSetHandlerImp;
-import Persistance.Interfaces.ICategoryDAO;
-import Model.Category;
+import Model.UserGroup;
+import static Persistance.DbUtilsImpl.CategoryDAODbUtilsImpl.QUERY_INSERT_CATEGORY;
+import Persistance.Interfaces.IUserGroupDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,23 +20,20 @@ import org.apache.commons.dbutils.handlers.ArrayListHandler;
  *
  * @author Jeroen Roovers
  */
-public class CategoryDAODbUtilsImpl implements ICategoryDAO {
+public class UserGroupDAODbUtilsImpl implements IUserGroupDAO {
 
-    static final String QUERY_INSERT_CATEGORY = "INSERT INTO Category(Name) VALUES (?)";
-    static final String QUERY_SELECT_ALLCATEGORIES = "SELECT * FROM Category ORDER BY Name";
-    static final String QUERY_UPDATE_CATEGORY = "UPDATE Category SET Name = ? WHERE ID_Category = ?";
-    static final String QUERY_DELETE_CATEGORY = "DELETE FROM Category WHERE ID_Category = ?";
-
-    public CategoryDAODbUtilsImpl() {
-    }
+    static final String QUERY_INSERT_USERGROUP = "INSERT INTO UserGroup(Name) VALUES (?)";
+    static final String QUERY_SELECT_ALLUSERGROUPS = "SELECT * FROM UserGroup ORDER BY Name";
+    static final String QUERY_UPDATE_USERGROUP = "UPDATE UserGroup SET Name = ? WHERE ID_UserGroup = ?";
+    static final String QUERY_DELETE_USERGROUP = "DELETE FROM UserGroup WHERE ID_UserGroup = ?";
 
     @Override
-    public boolean addCategory(String name) {
+    public boolean addUserGroup(String name) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
         Object[] params = new Object[]{name};
         try {
-            run.insert(QUERY_INSERT_CATEGORY, rsh, params);
+            run.insert(QUERY_INSERT_USERGROUP, rsh, params);
             return true;
         } catch (SQLException ex_sql) {
             System.out.println("SQL Exception code " + ex_sql.getErrorCode());
@@ -45,14 +43,29 @@ public class CategoryDAODbUtilsImpl implements ICategoryDAO {
     }
 
     @Override
-    public List<Category> getAllCategories() {
+    public boolean updateUserGroup(UserGroup group) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        ResultSetHandlerImp rsh = new ResultSetHandlerImp();
+        Object[] params = new Object[]{group.getName(), group.getId()};
+        try {
+            run.update(QUERY_UPDATE_USERGROUP, rsh, params);
+            return true;
+        } catch (SQLException ex_sql) {
+            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.out.println(ex_sql.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public List<UserGroup> getAllUserGroups() {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ArrayListHandler alh = new ArrayListHandler();
-        List<Category> categories = new ArrayList<>();
+        List<UserGroup> categories = new ArrayList<>();
         try {
-            List<Object[]> result = run.query(QUERY_SELECT_ALLCATEGORIES, alh);
+            List<Object[]> result = run.query(QUERY_SELECT_ALLUSERGROUPS, alh);
             for (Object[] o : result) {
-                Category entry = new Category(
+                UserGroup entry = new UserGroup(
                         o[0] == null ? -1 : Long.parseLong(o[0].toString()),
                         o[1] == null ? null : o[1].toString()
                 );
@@ -66,27 +79,12 @@ public class CategoryDAODbUtilsImpl implements ICategoryDAO {
     }
 
     @Override
-    public boolean updateCategory(Category category) {
+    public boolean removeUseGroup(UserGroup group) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
-        Object[] params = new Object[]{category.getName(), category.getId()};
+        Object[] params = new Object[]{group.getId()};
         try {
-            run.update(QUERY_UPDATE_CATEGORY, rsh, params);
-            return true;
-        } catch (SQLException ex_sql) {
-            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
-            System.out.println(ex_sql.getMessage());
-            return false;
-        }
-    }
-
-    @Override
-    public boolean removeCategory(Category category) {
-        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
-        ResultSetHandlerImp rsh = new ResultSetHandlerImp();
-        Object[] params = new Object[]{category.getId()};
-        try {
-            run.execute(QUERY_DELETE_CATEGORY, rsh, params);
+            run.execute(QUERY_DELETE_USERGROUP, rsh, params);
             return true;
         } catch (SQLException ex_sql) {
             System.out.println("SQL Exception code " + ex_sql.getErrorCode());

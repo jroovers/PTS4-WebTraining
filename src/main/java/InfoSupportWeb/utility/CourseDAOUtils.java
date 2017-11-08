@@ -50,7 +50,7 @@ public class CourseDAOUtils implements ICourseDAO {
                         o[6] == null ? null : Integer.parseInt(o[6].toString()),
                         o[7] == null ? null : Double.parseDouble(o[7].toString())
                 );
-                
+
                 String[] keyWords = o[5] == null ? null : o[5].toString().split(",");
                 course.setKeyWords(keyWords);
                 course.setSupplier(o[8] == null ? null : o[8].toString());
@@ -66,8 +66,13 @@ public class CourseDAOUtils implements ICourseDAO {
     @Override
     public Course addCourse(Course course) {
 
-        String keyWords = arrayToString(course.getKeyWords());
-        
+        String keyWords;
+        if (course.getKeyWords() != null) {
+            keyWords = arrayToString(course.getKeyWords());
+        } else {
+            keyWords = "";
+        }
+
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
         Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), keyWords, course.getDurationInDays(), course.getCost(), course.getSupplier()};
@@ -90,8 +95,8 @@ public class CourseDAOUtils implements ICourseDAO {
     @Override
     public boolean editCourse(Course course) {
 
-        String keyWords = arrayToString(course.getKeyWords());       
-        
+        String keyWords = arrayToString(course.getKeyWords());
+
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), keyWords, course.getDurationInDays(), course.getCost(), course.getId(), course.getSupplier()};
         try {
@@ -118,9 +123,9 @@ public class CourseDAOUtils implements ICourseDAO {
             return false;
         }
     }
-    
-    private String arrayToString(String[] array){
-        if(array == null){
+
+    private String arrayToString(String[] array) {
+        if (array == null) {
             return "";
         }
         StringBuilder keyWords = new StringBuilder();
