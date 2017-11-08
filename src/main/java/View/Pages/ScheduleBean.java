@@ -6,8 +6,12 @@
 package View.Pages;
 
 import Controller.CourseService;
+import Controller.LessonService;
 import Model.Course;
+import Model.Lesson;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -27,19 +31,45 @@ public class ScheduleBean
      * Creates a new instance of scheduleBean
      */
     private long courseID;
+    private long lessonID;
     private Course selectedCourse;
     private List<Course> allCourses;
+    private List<Lesson> lessonsFromCourse;
+    private Set<String> locations;
+    
     @Inject
     CourseService cs;
+    @Inject
+    LessonService ls;
     
     public ScheduleBean() 
     {
-        
+        locations = new HashSet<String>();
     }
     
     public ScheduleBean(long l)
     {
         this.courseID = l;
+    }
+
+    public Set<String> getLocations() {
+        return locations;
+    }
+
+    public void setLessonID(long lessonID) {
+        this.lessonID = lessonID;
+    }
+
+    public void setSelectedCourse(Course selectedCourse) {
+        this.selectedCourse = selectedCourse;
+    }
+
+    public long getLessonID() {
+        return lessonID;
+    }
+
+    public List<Lesson> getLessonsFromCourse() {
+        return lessonsFromCourse;
     }
     
     public long getCourseID()
@@ -73,7 +103,15 @@ public class ScheduleBean
                 selectedCourse = course;
             }
         }
+        
+        lessonsFromCourse = ls.getLessonsFromCourse(courseID);
+        
+        for(Lesson l : lessonsFromCourse)
+        {
+            locations.add(l.getLocation());
+        }
     }
+    
     //Werkt nog niet (button)
     public void signup()
     {
