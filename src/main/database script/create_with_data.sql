@@ -41,21 +41,21 @@ CREATE TABLE IF NOT EXISTS `Course` (
   `KeyWords` text,
   `Duration` int(11) DEFAULT '1',
   `Cost` decimal(10,0) DEFAULT NULL,
-  `Supplier` text,
+  `Supplier` VARCHAR(255) DEFAULT 'InfoSupport',
   PRIMARY KEY (`ID_Course`)
 ) ENGINE=InnoDB AUTO_INCREMENT=446 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table db_dev_infosupport.Course: ~8 rows (approximately)
 /*!40000 ALTER TABLE `Course` DISABLE KEYS */;
-INSERT INTO `Course` (`ID_Course`, `Code`, `Name`, `Description`, `CourseMaterials`, `KeyWords`, `Duration`, `Cost`) VALUES
-	(2, '00322', 'Onderzoek', 'Workshop Onderzoek', 'Presentatie', '[]', 2, 90),
-	(3, '01849', 'Feedback geven', 'Workshop Feedback geven', 'Presentatie', 'null', 2, 8),
-	(34, '35820', 'Leer Photoshop', 'Een cursus die je leert hoe je het best Photoshop kan gebruiken', 'Photoshop, Paint', '[]', 3, 1),
-	(78, '34D342', 'Java cursus', 'In deze cursus word Java gegeven.', 'Netbeans', '[java,  netbeans]', 1, 12),
-	(115, '24KY362', 'Presenteren', 'Workshop presenteren', 'Powerpoint, Internet', '[]', 0, 0),
-	(119, '34235', 'Kyle complimenten geven', 'een Makkelijke cursus voor jong en oud.', 'Geen', '[]', 0, 0),
-	(154, '102485', 'Proftaak presentatie', 'Proftaak presenteren', 'Powerpoint', 'java, netbeans,', 1, 20),
-	(289, 'UnitTest1', 'name', 'textDescription', 'courseMaterials', 'Jemam,Jepap,', 3, 1);
+INSERT INTO `Course` (`ID_Course`, `Code`, `Name`, `Description`, `CourseMaterials`, `KeyWords`, `Duration`, `Cost`, `Supplier`) VALUES
+	(2, '00322', 'Onderzoek', 'Workshop Onderzoek', 'Presentatie', '[]', 2, 90, 'InfoSupport'),
+	(3, '01849', 'Feedback geven', 'Workshop Feedback geven', 'Presentatie', 'null', 2, 8, 'InfoSupport'),
+	(34, '35820', 'Leer Photoshop', 'Een cursus die je leert hoe je het best Photoshop kan gebruiken', 'Photoshop, Paint', '[]', 3, 1, 'InfoSupport'),
+	(78, '34D342', 'Java cursus', 'In deze cursus word Java gegeven.', 'Netbeans', '[java,  netbeans]', 1, 12, 'InfoSupport'),
+	(115, '24KY362', 'Presenteren', 'Workshop presenteren', 'Powerpoint, Internet', '[]', 0, 0, 'InfoSupport'),
+	(119, '34235', 'Kyle complimenten geven', 'een Makkelijke cursus voor jong en oud.', 'Geen', '[]', 0, 0, 'ExterneLeverancierNaam'),
+	(154, '102485', 'Proftaak presentatie', 'Proftaak presenteren', 'Powerpoint', 'java, netbeans,', 1, 20, 'ExterneLeverancierNaam'),
+	(289, 'UnitTest1', 'name', 'textDescription', 'courseMaterials', 'Jemam,Jepap,', 3, 1, 'ExterneLeverancierNaam');
 /*!40000 ALTER TABLE `Course` ENABLE KEYS */;
 
 -- Dumping structure for table db_dev_infosupport.Course_Category
@@ -436,7 +436,8 @@ CREATE TABLE IF NOT EXISTS `User` (
 INSERT INTO `User` (`ID_User`, `Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`,`ID_UserType`) VALUES
 	(1, 'Frank', 'franken', 'Frankster', 'frankisthebest', '001234', 'Frankster@TheG.com', 2),
 	(2, 'Bert', 'bertus','Bertster','bertisthebest','004321','BertusThebertustest@banana.com', 1),
-	(3, 'Kyle', 'bendover','Bender','BendingLoverxx','09000900','Kylethe****Lover@gmail.com', 3);
+	(3, 'Kyle', 'bendover','Bender','BendingLoverxx','09000900','Kylethe****Lover@gmail.com', 3),
+	(3, 'Bart', 'nobendover','Bender','BendingLoverxx','09000900','KyleTheWeab@msn.com', 4);
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
