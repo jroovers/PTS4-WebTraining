@@ -155,21 +155,37 @@ public class CoursesBean implements Serializable {
         }
     }
 
+    private void processCourseEdit() {
+        boolean exist = changeCourse();
+        if (!exist) {
+            addCourse();
+        }
+    }
+
+    private void showSaveMessage() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Opgeslagen!", ""));
+    }
+
     /**
      * Checks if the course already exists. If so then the course will be
      * changed in the database. if not then a new course will be added to the
      * database.
      */
     public String updateCourse() {
-        boolean exist = changeCourse();
-        if (!exist) {
-            addCourse();
-        }
+        processCourseEdit();
         endConversation();
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.getExternalContext().getFlash().setKeepMessages(true);
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Opgeslagen!", ""));
+        showSaveMessage();
         return "courses?faces-redirect=true";
+    }
+
+    public String quickUpdateCourse() {
+        processCourseEdit();
+        showSaveMessage();
+        startConversation();
+        hasSelectedCourse = true;
+        return "editcourse?faces-redirect=true";
     }
 
     /**
@@ -194,7 +210,6 @@ public class CoursesBean implements Serializable {
      */
     public boolean changeCourse() {
         boolean exist = false;
-        courses = courseService.getAllCourses();
         for (Course c : courses) {
             if (this.code.equals(c.getCode())) {
                 try {
@@ -286,34 +301,25 @@ public class CoursesBean implements Serializable {
      *
      * @return List with SelectItems
      */
-    public List<SelectItem> getCoursesCmb() {
-
-        List<SelectItem> listCmb = new ArrayList<>();
-        courses = this.courseService.getAllCourses();
-        for (Course c : courses) {
-            listCmb.add(new SelectItem(c.getCode(), c.getName()));
-        }
-        return listCmb;
+    public List<Course> getCourses() {
+        courses = courseService.getAllCourses();
+        return courses;
     }
 
-    public List<Category> getCategoriesCmb() {
-        List<Category> listCmb = this.catService.getAllCategories();
-        return listCmb;
+    public List<Category> getCategories() {
+        return this.catService.getAllCategories();
     }
 
-    public List<UserGroup> getUserGroupCmb() {
-        List<UserGroup> listCmb = this.groupService.getAllUserGroups();
-        return listCmb;
+    public List<UserGroup> getUserGroups() {
+        return this.groupService.getAllUserGroups();
     }
 
     public List<Category> getCategoriesToAdd() {
-        List<Category> listCmb = this.catService.getAllCategories();
-        return listCmb;
+        return getCategories();
     }
 
     public List<UserGroup> getUserGroupsToAdd() {
-        List<UserGroup> listCmb = this.groupService.getAllUserGroups();
-        return listCmb;
+        return getUserGroups();
     }
 
     public String onCreateNewCategory() {
@@ -382,7 +388,7 @@ public class CoursesBean implements Serializable {
      * will leave the textbox empty.
      */
     public void setCourseData() {
-        int number = 1;
+        courses = getCourses();
         for (Course c : courses) {
             if (selectedCode.equals(c.getCode())) {
                 course = c;

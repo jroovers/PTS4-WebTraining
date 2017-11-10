@@ -42,7 +42,7 @@ public class CategoryService {
     }
 
     public boolean addCategoryToCourse(Category category, Course course) {
-        return false;
+        return addCategoryToCourse(category.getId(), course.getId());
     }
 
     public boolean addCategoryToCourse(long category_id, long course_id) {
@@ -50,7 +50,7 @@ public class CategoryService {
     }
 
     public boolean removeCategoryFromCourse(Category category, Course course) {
-        return false;
+        return removeCategoryFromCourse(category.getId(), course.getId());
     }
 
     public boolean removeCategoryFromCourse(long category_id, long course_id) {
