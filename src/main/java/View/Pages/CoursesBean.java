@@ -12,14 +12,12 @@ import Model.Category;
 import Model.Course;
 import Model.UserGroup;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 
 /**
@@ -64,6 +62,9 @@ public class CoursesBean implements Serializable {
     private String selectedCatToRemove;  // Long value (as string) of category to add to course
     private String selectedGroupToAdd;   // Long value (as string) of category to add to course
     private String selectedGroupToRemove;// Long value (as string) of category to add to course
+
+    private List<Category> selectedCourseCategories;
+    private List<UserGroup> selectedCourseUsergroups;
 
     @Inject
     private Conversation conversation;
@@ -306,6 +307,16 @@ public class CoursesBean implements Serializable {
         return courses;
     }
 
+    public List<Category> getSelectedCourseCategories() {
+        selectedCourseCategories = catService.getCategoriesFromCourse(course);
+        return selectedCourseCategories;
+    }
+
+    public List<UserGroup> getSelectedCourseUsergroups() {
+        selectedCourseUsergroups = groupService.getUserGroupsFromCourse(course);
+        return selectedCourseUsergroups;
+    }
+
     public List<Category> getCategories() {
         return this.catService.getAllCategories();
     }
@@ -363,7 +374,8 @@ public class CoursesBean implements Serializable {
     }
 
     public String onAddCategoryToCourse() {
-        return null;
+        catService.addCategoryToCourse(Long.parseLong(selectedCatToAdd), course.getId());
+        return "editcourse";
     }
 
     public String onAddUserGroupToCourse() {
@@ -371,7 +383,8 @@ public class CoursesBean implements Serializable {
     }
 
     public String onRemoveCategoryFromCourse() {
-        return null;
+        catService.removeCategoryFromCourse(Long.parseLong(selectedCatToRemove), course.getId());
+        return "editcourse";
     }
 
     public String onRemoveUserGroupFromCourse() {
