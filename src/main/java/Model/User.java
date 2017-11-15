@@ -5,6 +5,9 @@
  */
 package Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Jorian, Antonio
@@ -19,6 +22,8 @@ public class User {
     private String phoneNr;
     private String email;
     private int accesLevel;
+    private List<Integer> accesLevels;
+    
 
 
     /**
@@ -105,6 +110,14 @@ public class User {
         this.phoneNr = phoneNr;
         this.email = email;
         this.accesLevel = accesLevel;
+    }
+
+    public List<Integer> getAccesLevels() {
+        return accesLevels;
+    }
+
+    public void setAccesLevels(List<Integer> accesLevels) {
+        this.accesLevels = accesLevels;
     }
 
     public long getUserID() {
