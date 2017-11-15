@@ -93,7 +93,7 @@ public class AuthorizationBean {
     public String logout() {
         HttpSession hs = AuthorizationUtils.getSession();
         hs.invalidate();
-        return "/authorization.xhtml";
+        return "/index_templated.xhtml";
     }
     
     

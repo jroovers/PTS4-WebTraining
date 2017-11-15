@@ -51,14 +51,19 @@ public class CoursesBean implements Serializable {
 
     private List<Course> courses;       // List of courses
     private Course course;              // Current course  
+
     private String selectedCode;        // Selected item in SelectOneMenu
     private boolean hasSelectedCourse;  // Determines if a group is selected
 
-    private String newCategoryName;     // Name of new category to add
-    private String selectedCategory;    // Long value (as string) of category ID to delete
-
+    private String newCatName;          // Name of new category to add
+    private String selectedCat;         // Long value (as string) of category ID to delete
     private String newUserGroupName;    // Name of new usergroup to add
     private String selectedUserGroup;   // Long value (as string) of usergroup ID to delete
+
+    private String selectedCatToAdd;     // Long value (as string) of category to add to course
+    private String selectedCatToRemove;  // Long value (as string) of category to add to course
+    private String selectedGroupToAdd;   // Long value (as string) of category to add to course
+    private String selectedGroupToRemove;// Long value (as string) of category to add to course
 
     @Inject
     private Conversation conversation;
@@ -150,21 +155,37 @@ public class CoursesBean implements Serializable {
         }
     }
 
+    private void processCourseEdit() {
+        boolean exist = changeCourse();
+        if (!exist) {
+            addCourse();
+        }
+    }
+
+    private void showSaveMessage() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Opgeslagen!", ""));
+    }
+
     /**
      * Checks if the course already exists. If so then the course will be
      * changed in the database. if not then a new course will be added to the
      * database.
      */
     public String updateCourse() {
-        boolean exist = changeCourse();
-        if (!exist) {
-            addCourse();
-        }
+        processCourseEdit();
         endConversation();
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.getExternalContext().getFlash().setKeepMessages(true);
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Opgeslagen!", ""));
+        showSaveMessage();
         return "courses?faces-redirect=true";
+    }
+
+    public String quickUpdateCourse() {
+        processCourseEdit();
+        showSaveMessage();
+        startConversation();
+        hasSelectedCourse = true;
+        return "editcourse?faces-redirect=true";
     }
 
     /**
@@ -189,7 +210,6 @@ public class CoursesBean implements Serializable {
      */
     public boolean changeCourse() {
         boolean exist = false;
-        courses = courseService.getAllCourses();
         for (Course c : courses) {
             if (this.code.equals(c.getCode())) {
                 try {
@@ -281,29 +301,30 @@ public class CoursesBean implements Serializable {
      *
      * @return List with SelectItems
      */
-    public List<SelectItem> getCoursesCmb() {
-
-        List<SelectItem> listCmb = new ArrayList<>();
-        courses = this.courseService.getAllCourses();
-        for (Course c : courses) {
-            listCmb.add(new SelectItem(c.getCode(), c.getName()));
-        }
-        return listCmb;
+    public List<Course> getCourses() {
+        courses = courseService.getAllCourses();
+        return courses;
     }
 
-    public List<Category> getCategoriesCmb() {
-        List<Category> listCmb = this.catService.getAllCategories();
-        return listCmb;
+    public List<Category> getCategories() {
+        return this.catService.getAllCategories();
     }
 
-    public List<UserGroup> getUserGroupCmb() {
-        List<UserGroup> listCmb = this.groupService.getAllUserGroups();
-        return listCmb;
+    public List<UserGroup> getUserGroups() {
+        return this.groupService.getAllUserGroups();
+    }
+
+    public List<Category> getCategoriesToAdd() {
+        return getCategories();
+    }
+
+    public List<UserGroup> getUserGroupsToAdd() {
+        return getUserGroups();
     }
 
     public String onCreateNewCategory() {
-        if (!newCategoryName.isEmpty()) {
-            catService.addCategory(newCategoryName);
+        if (!newCatName.isEmpty()) {
+            catService.addCategory(newCatName);
             return "courses?faces-redirect=true";
         } else {
             return null;
@@ -311,9 +332,9 @@ public class CoursesBean implements Serializable {
     }
 
     public String onDeleteCategory() {
-        if (!selectedCategory.isEmpty()) {
+        if (!selectedCat.isEmpty()) {
             Category selectedItem = new Category();
-            selectedItem.setId(Long.parseLong(selectedCategory));
+            selectedItem.setId(Long.parseLong(selectedCat));
             catService.removeCategory(selectedItem);
             return "courses?faces-redirect=true";
         } else {
@@ -341,12 +362,33 @@ public class CoursesBean implements Serializable {
         }
     }
 
+    public String onAddCategoryToCourse() {
+        return null;
+    }
+
+    public String onAddUserGroupToCourse() {
+        return null;
+    }
+
+    public String onRemoveCategoryFromCourse() {
+        return null;
+    }
+
+    public String onRemoveUserGroupFromCourse() {
+        return null;
+    }
+
+    public String onCancelEdit() {
+        endConversation();
+        return "courses?faces-redirect=true";
+    }
+
     /**
      * Sets all the data from course in the textfields. if a value is null it
      * will leave the textbox empty.
      */
     public void setCourseData() {
-        int number = 1;
+        courses = getCourses();
         for (Course c : courses) {
             if (selectedCode.equals(c.getCode())) {
                 course = c;
@@ -518,19 +560,19 @@ public class CoursesBean implements Serializable {
     }
 
     public String getSelectedCategory() {
-        return selectedCategory;
+        return selectedCat;
     }
 
     public void setSelectedCategory(String selectedCategory) {
-        this.selectedCategory = selectedCategory;
+        this.selectedCat = selectedCategory;
     }
 
     public String getNewCategoryName() {
-        return newCategoryName;
+        return newCatName;
     }
 
     public void setNewCategoryName(String newCategoryName) {
-        this.newCategoryName = newCategoryName;
+        this.newCatName = newCategoryName;
     }
 
     public String getNewUserGroupName() {
@@ -548,4 +590,45 @@ public class CoursesBean implements Serializable {
     public void setSelectedUserGroup(String selectedUserGroup) {
         this.selectedUserGroup = selectedUserGroup;
     }
+
+    public String getSelectedCat() {
+        return selectedCat;
+    }
+
+    public void setSelectedCat(String selectedCat) {
+        this.selectedCat = selectedCat;
+    }
+
+    public String getSelectedCatToAdd() {
+        return selectedCatToAdd;
+    }
+
+    public void setSelectedCatToAdd(String selectedCatToAdd) {
+        this.selectedCatToAdd = selectedCatToAdd;
+    }
+
+    public String getSelectedCatToRemove() {
+        return selectedCatToRemove;
+    }
+
+    public void setSelectedCatToRemove(String selectedCatToRemove) {
+        this.selectedCatToRemove = selectedCatToRemove;
+    }
+
+    public String getSelectedGroupToAdd() {
+        return selectedGroupToAdd;
+    }
+
+    public void setSelectedGroupToAdd(String selectedGroupToAdd) {
+        this.selectedGroupToAdd = selectedGroupToAdd;
+    }
+
+    public String getSelectedGroupToRemove() {
+        return selectedGroupToRemove;
+    }
+
+    public void setSelectedGroupToRemove(String selectedGroupToRemove) {
+        this.selectedGroupToRemove = selectedGroupToRemove;
+    }
+
 }

@@ -30,7 +30,7 @@ INSERT INTO `Category` (Name) VALUES
 	('Office'),
 	('Sql');
 
-	-- Dumping structure for table db_dev_infosupport.Category
+-- Dumping structure for table db_dev_infosupport.Category
 DROP TABLE IF EXISTS `UserGroup`;
 CREATE TABLE IF NOT EXISTS `UserGroup` (
   `ID_UserGroup` int(11) NOT NULL AUTO_INCREMENT,
@@ -44,10 +44,10 @@ CREATE TABLE IF NOT EXISTS `UserGroup` (
 /*!40000 ALTER TABLE `Category` ENABLE KEYS */;
 
 INSERT INTO `UserGroup` (Name) VALUES
-	('Instroom 2017'),
-	('MDWK Basiskennis'),
-	('MDWK Nieuwe Medewerkers'),
-	('MDWK Senior Medewerkers');
+    ('Instroom 2017'),
+    ('MDWK Basiskennis'),
+    ('MDWK Nieuwe Medewerkers'),
+    ('MDWK Senior Medewerkers');
 
 -- Dumping structure for table db_dev_infosupport.Course
 DROP TABLE IF EXISTS `Course`;
@@ -116,6 +116,7 @@ CREATE TABLE IF NOT EXISTS `Course_UserGroup` (
   KEY `fk_TargerUsers_UserGroup` (`ID_UserGroup`),
   CONSTRAINT `fk_TargetUsers_Course` FOREIGN KEY (`ID_Course`) REFERENCES `Course` (`ID_Course`) ON DELETE CASCADE,
   CONSTRAINT `fk_TargerUsers_UserGroup` FOREIGN KEY (`ID_UserGroup`) REFERENCES `UserGroup` (`ID_UserGroup`) ON DELETE CASCADE
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dumping data for table db_dev_infosupport.Course_TargetUsers: ~0 rows (approximately)
@@ -456,7 +457,7 @@ INSERT INTO `User` (`ID_User`, `Name`, `Surname`, `Username`, `Password`,`PhoneN
 	(1, 'Frank', 'franken', 'Frankster', 'frankisthebest', '001234', 'Frankster@TheG.com', 2),
 	(2, 'Bert', 'bertus','Bertster','bertisthebest','004321','BertusThebertustest@banana.com', 1),
 	(3, 'Kyle', 'bendover','Bender','BendingLoverxx','09000900','Kylethe****Lover@gmail.com', 3),
-	(3, 'Bart', 'nobendover','Bender','BendingLoverxx','09000900','KyleTheWeab@msn.com', 4);
+	(4, 'Bart', 'nobendover','Appeltje','banaan','004312321','KyleTheWeab@msn.com', 4);
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

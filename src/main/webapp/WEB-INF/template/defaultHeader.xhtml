@@ -10,31 +10,31 @@
             <h:button styleClass="navbar-toggler"/>
 
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <h:link styleClass="nav-link"  outcome="/index_templated" value="Home"/>
-                    </li>
-                    <li class="nav-item">
-                        <h:link styleClass="nav-link" outcome="/external/authorization" value="Login"/>
-                    </li>
+                <ul class="navbar-nav mr-auto"> 
                     <li class="nav-item dropdown">
-                        <h:link styleClass="nav-link dropdown-toggle" id="dropdown01" a:data-toggle="dropdown" a:aria-haspopup="true" a:aria-expanded="false">Paginakiezer</h:link>
+                        <h:link styleClass="nav-link dropdown-toggle" id="dropdown01" a:data-toggle="dropdown" a:aria-haspopup="true" a:aria-expanded="false">Cursussen</h:link>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
-                            <h:link styleClass="dropdown-item" rendered="#{authorizationBean.checkVisible(2)}" outcome="/appmanagement/courses" value="Trainingsbeheer"/>
-                            <h:link styleClass="dropdown-item" rendered="#{authorizationBean.checkVisible(2)}" outcome="/appmanagement/planner" value="Trainingsplanner"/>
-                            <h:link styleClass="dropdown-item" rendered="#{authorizationBean.checkVisible(2)}" outcome="/appmanagement/personalroster" value="Docenten Trainingsrooster"/>
-                            <h:link styleClass="dropdown-item" rendered="#{authorizationBean.checkVisible(2)}" outcome="/external/schedule" value="Trainingsrooster"/>
-                            <h:link styleClass="dropdown-item" outcome="/external/offertraining" value="Trainingaanbod"/>
-                            <h:link styleClass="dropdown-item" outcome="/external/signup" value="Inschrijfformulier"/>
+                            <h:link styleClass="dropdown-item" outcome="/external/offertraining" value="Aanmaken"/>
+                            <h:link styleClass="dropdown-item" rendered="#{authorizationBean.checkVisible(2)}" outcome="/external/schedule" value="Informatie"/>
+                            <h:link styleClass="dropdown-item" rendered="#{authorizationBean.checkVisible(2)}" outcome="/appmanagement/courses" value="Beheren"/>     
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <h:link styleClass="nav-link" rendered="#{authorizationBean.checkVisible(2)}" outcome="/appmanagement/planner" value="Lesplanner"/>
+                    </li>
+                    <li class="nav-item">
+                        <h:link styleClass="nav-link" rendered="#{authorizationBean.checkVisible(2)}" outcome="/appmanagement/personalroster" value="Docentenrooster"/>
+                    </li>
+                    <li class="nav-item">
+                        <h:link styleClass="nav-link" outcome="/external/signup" value="Inschrijfformulier"/>
+                    </li>
+                    <li class="nav-item">
+                        <h:link styleClass="nav-link" rendered="#{!authorizationBean.checkVisible(2)}" outcome="/external/authorization" value="Inloggen"/>
+                    </li>
+                    <li class="nav-item">
+                        <h:link styleClass="nav-link" rendered="#{authorizationBean.checkVisible(2)}" outcome="/external/authorization" value="Uitloggen"/>
+                    </li>  
                 </ul>
-                <h:form>
-                    <div class="form-inline my-2 my-lg-0">
-                        <h:inputText styleClass="form-control mr-sm-2" a:placeholder="Search" a:aria-label="Search"/>
-                        <h:commandButton styleClass="btn btn-outline-success my-2 my-sm-0" action="#" value="Search"/>
-                    </div>
-                </h:form>
             </div>
         </nav>
     </h:form>
