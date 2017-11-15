@@ -10,6 +10,8 @@ import InfoSupportWeb.utility.AuthorizationUtils;
 import InfoSupportWeb.utility.UserDAOUtils;
 import Model.User;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.servlet.http.HttpSession;
@@ -33,8 +35,13 @@ public class AuthorizationBean {
     private String username;
     private String password;
     private String role;
-
     
+    private List course_page = new ArrayList<>() ;
+    private List panner_page = new ArrayList();
+    private List personalroster_page = new ArrayList();
+    private List schedule_page = new ArrayList();
+    private List offertraining_page = new ArrayList();
+    private List signup_page = new ArrayList();
 
     public AuthorizationBean() {
         username = "";
@@ -43,10 +50,14 @@ public class AuthorizationBean {
     
      public String logindummie() {
          User user = new User(1, "Frank", "franken", "Frankster", "frankisthebest", "001234", "Frankster@TheG.com", 2);
+         List<Integer> acceslist = new ArrayList<Integer>();
+         acceslist.add(1);
+         acceslist.add(2);
+         user.setAccesLevels(acceslist);
          HttpSession hs = AuthorizationUtils.getSession();
          //hs.setAttribute("LoggedInUser", user);
          hs.setAttribute("UserID", 1);
-         hs.setAttribute("AccesLevel", 2);
+         hs.setAttribute("AccesLevels", acceslist);
          hs.setAttribute("Username", "Kyle");
          return "/index_templated.xhtml";
          
@@ -62,7 +73,7 @@ public class AuthorizationBean {
             if(user.getPassword().equals(password)) {
                 HttpSession hs = AuthorizationUtils.getSession();
                 hs.setAttribute("UserID", user.getUserID());
-                hs.setAttribute("AccesLevel", user.getAccesLevel());
+                hs.setAttribute("AccesLevels", user.getAccesLevels());
                 hs.setAttribute("Username", user.getUsername());
                 return "/index_templated.xhtml";
             }
@@ -86,31 +97,49 @@ public class AuthorizationBean {
     }
     
     
-    /**
-     * Checks if the user has the permission to use the page.
-     * @param accesLevel Level that the user has acces to.
-     * @throws IOException 
-     */
+//    /**
+//     * Checks if the user has the permission to use the page.
+//     * @param accesLevel Level that the user has acces to.
+//     * @throws IOException 
+//     */
+//    public void checkPermission(int accesLevel) throws IOException {
+//        HttpSession hs = AuthorizationUtils.getSession();
+//        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+//        try {
+//            int level = (int) hs.getAttribute("AccesLevel");
+//
+//            if (accesLevel == 1) {
+//                return;
+//            }
+//
+//            if (level >= accesLevel) {
+//                return;
+//            }
+//            context.redirect("/InfoSupportWeb/external/authorization.xhtml");
+//        } catch (NullPointerException ex) {
+//            context.redirect("/InfoSupportWeb/external/authorization.xhtml");
+//        }
+//    }
+    
+    
     public void checkPermission(int accesLevel) throws IOException {
         HttpSession hs = AuthorizationUtils.getSession();
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-        try {
-            int level = (int) hs.getAttribute("AccesLevel");
 
-            if (accesLevel == 1) {
+        List levelList = (List) hs.getAttribute("AccesLevels");
+        int level;
+
+        for (Object obj : levelList) {
+            level = (int) obj;
+            if(level == accesLevel) {
                 return;
             }
-
-            if (level >= accesLevel) {
-                return;
-            }
-            context.redirect("/InfoSupportWeb/external/authorization.xhtml");
-        } catch (NullPointerException ex) {
-            context.redirect("/InfoSupportWeb/external/authorization.xhtml");
         }
+        
+        context.redirect("/InfoSupportWeb/external/authorization.xhtml"); 
     }
     
-    /**
+       /**
      * Checks if the users acceslevel is high enough.
      * @param accesLevel
      * @return True if acceslevel is high enough, false if not
@@ -118,20 +147,44 @@ public class AuthorizationBean {
     public boolean checkVisible(int accesLevel) {
         HttpSession hs = AuthorizationUtils.getSession();
         try {
-            int level = (int) hs.getAttribute("AccesLevel");      
-            
-            if (accesLevel == 1) {
-                return true;
-            }
-            
-            if (level >= accesLevel) {
-                return true;
+            List levelList = (List) hs.getAttribute("AccesLevels");
+            int level;
+
+            for (Object obj : levelList) {
+                level = (int) obj;
+                if (level == accesLevel) {
+                    return true;
+                }
             }
             return false;  
         } catch (NullPointerException ex) {
             return false;
         }
     }
+
+//    
+//        /**
+//     * Checks if the users acceslevel is high enough.
+//     * @param accesLevel
+//     * @return True if acceslevel is high enough, false if not
+//     */
+//    public boolean checkVisible(int accesLevel) {
+//        HttpSession hs = AuthorizationUtils.getSession();
+//        try {
+//            int level = (int) hs.getAttribute("AccesLevel");      
+//            
+//            if (accesLevel == 1) {
+//                return true;
+//            }
+//            
+//            if (level >= accesLevel) {
+//                return true;
+//            }
+//            return false;  
+//        } catch (NullPointerException ex) {
+//            return false;
+//        }
+//    }
 
     public String getUsername() {
         return username;
