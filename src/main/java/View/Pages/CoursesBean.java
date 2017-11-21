@@ -210,6 +210,7 @@ public class CoursesBean implements Serializable {
      * @return true if succesfully changed, false if it failed.
      */
     public boolean changeCourse() {
+        getCourses();
         boolean exist = false;
         for (Course c : courses) {
             if (this.code.equals(c.getCode())) {
@@ -285,10 +286,11 @@ public class CoursesBean implements Serializable {
                 course.setDurationInDays(nTimeIndDays);
                 course.setPriorKnowledge(nRequiredKnowledge);
                 course.setKeyWords(nKeywords);
-                courseService.addCourse(course);
+                this.course = courseService.addCourse(course);
+
                 return true;
             } else {
-                courseService.addCourse(code, name);
+                this.course = courseService.addCourse(code, name);
                 return true;
             }
         }

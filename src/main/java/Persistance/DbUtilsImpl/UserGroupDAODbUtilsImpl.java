@@ -29,7 +29,7 @@ public class UserGroupDAODbUtilsImpl implements IUserGroupDAO {
 
     static final String QUERY_INSERT_COURSEUSERGROUP = "INSERT INTO Course_UserGroup(ID_Course, ID_UserGroup) VALUES (?, ?)";
     static final String QUERY_DELETE_COURSEUSERGROUP = "DELETE FROM Course_UserGroup WHERE ID_Course = ? AND ID_UserGroup = ?";
-    static final String QUERY_SELECT_USERGROUPSBYCOURSE = "SELECT usg.* FROM UserGroup usg, Course_UserGroup cu WHERE usg.ID_UserGroup = cu.ID_UserGroup AND cu.ID_Course = ?";
+    static final String QUERY_SELECT_USERGROUPSBYCOURSE = "SELECT usg.* FROM UserGroup usg, Course_UserGroup cu WHERE usg.ID_UserGroup = cu.ID_UserGroup AND cu.ID_Course = ? ORDER BY usg.Name";
 
     @Override
     public boolean addUserGroup(String name) {
