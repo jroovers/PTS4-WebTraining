@@ -40,14 +40,14 @@
                             <br/>
                             <br/>
                             <p:selectOneListbox id="select_training" value="#{coursesBean.selectedCode}" styleClass="form-control" filter="true" filterMatchMode="contains">
-                                <f:selectItems value="#{coursesBean.coursesCmb}"/>
+                                <f:selectItems value="#{coursesBean.courses}" var="t"  itemValue="#{t.code}" itemLabel="#{t.name}"/>
                                 <f:ajax event="change" onevent="unlockbuttons" render="edit_training delete_training" />
                             </p:selectOneListbox>
                             <p:dialog header="Waarschuwing" widgetVar="deleteCourseConfirmation" modal="true" minHeight="200" minWidth="200" closeOnEscape="true">
                                 <h:outputText value="Weet je zeker dat je deze training wilt verwijderen?" />
                                 <hr/>
                                 <p:commandButton id="confirmdelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijderen" action="#{coursesBean.onDeleteItem()}" icon="fa fa-trash-o" />
-                                <p:commandButton id="canceldelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nee toch niet" type="button" onclick="PF('deleteCourseConfirmation').hide();" icon="fa fa-ban" />
+                                <p:commandButton id="canceldelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nee toch niet" type="button" onclick="PF('deleteCourseConfirmation').hide();" icon="fa fa-times" />
                             </p:dialog>
                         </h:form>
                     </div>
@@ -72,8 +72,8 @@
                             <div class="form-group row">
                                 <h:outputLabel value="Categorie verwijderen" class="col-sm-3 col-form-label"/>
                                 <div class="col-sm-6">
-                                    <p:selectOneMenu value="#{coursesBean.selectedCategory}" style="width:100%;">
-                                        <f:selectItems value="#{coursesBean.categoriesCmb}" var="c" itemLabel="#{c.name}" itemValue="#{c.id}" />
+                                    <p:selectOneMenu value="#{coursesBean.selectedCat}" style="width:100%;">
+                                        <f:selectItems value="#{coursesBean.categories}" var="c" itemLabel="#{c.name}" itemValue="#{c.id}" />
                                     </p:selectOneMenu>
                                 </div>
                                 <div class="col-sm-3">
@@ -84,7 +84,7 @@
                                 <h:outputText value="Weet je zeker dat je deze categorie wilt verwijderen?" />
                                 <hr/>
                                 <p:commandButton id="confirmdelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijderen" action="#{coursesBean.onDeleteCategory()}" icon="fa fa-trash-o" />
-                                <p:commandButton id="canceldelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nee toch niet" type="button" onclick="PF('deleteCatConfirmation').hide();" icon="fa fa-ban" />
+                                <p:commandButton id="canceldelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nee toch niet" type="button" onclick="PF('deleteCatConfirmation').hide();" icon="fa fa-times" />
                             </p:dialog>
                         </h:form>
                     </div>
@@ -109,7 +109,7 @@
                                 <h:outputLabel value="Doelgroep verwijderen" class="col-sm-3 col-form-label"/>
                                 <div class="col-sm-6">
                                     <p:selectOneMenu value="#{coursesBean.selectedUserGroup}" style="width:100%;">
-                                        <f:selectItems value="#{coursesBean.userGroupCmb}" var="ug" itemLabel="#{ug.name}" itemValue="#{ug.id}"/>
+                                        <f:selectItems value="#{coursesBean.userGroups}" var="ug" itemLabel="#{ug.name}" itemValue="#{ug.id}"/>
                                     </p:selectOneMenu>
                                 </div>
                                 <div class="col-sm-3">
@@ -120,7 +120,7 @@
                                 <h:outputText value="Weet je zeker dat je deze groep wilt verwijderen?" />
                                 <hr/>
                                 <p:commandButton id="confirmdelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijderen" action="#{coursesBean.onDeleteUserGroup()}" icon="fa fa-trash-o" />
-                                <p:commandButton id="canceldelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nee toch niet" type="button" onclick="PF('deleteUgConfirmation').hide();" icon="fa fa-ban" />
+                                <p:commandButton id="canceldelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nee toch niet" type="button" onclick="PF('deleteUgConfirmation').hide();" icon="fa fa-times" />
                             </p:dialog>
                         </h:form>
                     </div>

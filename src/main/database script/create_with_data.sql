@@ -25,10 +25,17 @@ CREATE TABLE IF NOT EXISTS `Category` (
 /*!40000 ALTER TABLE `Category` ENABLE KEYS */;
 
 INSERT INTO `Category` (Name) VALUES
-	('Design'),
-	('Java'),
+	('UIX'),
+    ('Software Design'),
+    ('Java'),
+    ('C#'),
+	('Webapplicaties'),
+    ('Applicatiebeheer'),
+    ('BI'),
+    ('Deployment'),
+    ('Databases'),
 	('Office'),
-	('Sql');
+	('SQL');
 
 -- Dumping structure for table db_dev_infosupport.Category
 DROP TABLE IF EXISTS `UserGroup`;
@@ -44,10 +51,12 @@ CREATE TABLE IF NOT EXISTS `UserGroup` (
 /*!40000 ALTER TABLE `Category` ENABLE KEYS */;
 
 INSERT INTO `UserGroup` (Name) VALUES
-    ('Instroom 2017'),
+    ('MDWK Instroom 2017'),
     ('MDWK Basiskennis'),
     ('MDWK Nieuwe Medewerkers'),
-    ('MDWK Senior Medewerkers');
+    ('MDWK Senior Medewerkers'),
+    ('MDWK Unit Managers'),
+    ('MDWK Raad v Bestuur');
 
 -- Dumping structure for table db_dev_infosupport.Course
 DROP TABLE IF EXISTS `Course`;
@@ -82,9 +91,10 @@ DROP TABLE IF EXISTS `Course_Category`;
 CREATE TABLE IF NOT EXISTS `Course_Category` (
   `ID_Course` int(11) NOT NULL,
   `ID_Category` int(11) NOT NULL,
-  KEY `fk_Category_Cours` (`ID_Course`),
+  PRIMARY KEY (`ID_Course`, `ID_Category`),
+  KEY `fk_Category_Course` (`ID_Course`),
   KEY `fk_Category_Category` (`ID_Category`),
-  CONSTRAINT `fk_Category_Cours` FOREIGN KEY (`ID_Course`) REFERENCES `Course` (`ID_Course`) ON DELETE CASCADE,
+  CONSTRAINT `fk_Category_Course` FOREIGN KEY (`ID_Course`) REFERENCES `Course` (`ID_Course`) ON DELETE CASCADE,
   CONSTRAINT `fk_Category_Category` FOREIGN KEY (`ID_Category`) REFERENCES `Category` (`ID_Category`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -112,6 +122,7 @@ DROP TABLE IF EXISTS `Course_UserGroup`;
 CREATE TABLE IF NOT EXISTS `Course_UserGroup` (
   `ID_Course` int(11) NOT NULL,
   `ID_UserGroup` int(11) NOT NULL,
+  PRIMARY KEY (`ID_Course`, `ID_UserGroup`),
   KEY `fk_TargerUsers_Course` (`ID_Course`),
   KEY `fk_TargerUsers_UserGroup` (`ID_UserGroup`),
   CONSTRAINT `fk_TargetUsers_Course` FOREIGN KEY (`ID_Course`) REFERENCES `Course` (`ID_Course`) ON DELETE CASCADE,

@@ -45,4 +45,30 @@ public interface IUserGroupDAO {
      */
     public boolean removeUseGroup(UserGroup group);
 
+    /**
+     * Assigns the given usergroup too the selected course
+     *
+     * @param usergroup_id usergroup to add
+     * @param course_id course to add usergroup to
+     * @return true if succesful
+     */
+    public boolean addUsergroupToCourse(long usergroup_id, long course_id);
+
+    /**
+     * Unassigns the given usergroup from the given couse
+     *
+     * @param usergroup_id usergroup to remove
+     * @param course_id course to remove usergroup from from
+     * @return true if succesful
+     */
+    public boolean removeUsergroupFromCourse(long usergroup_id, long course_id);
+
+    /**
+     * Gets all Usergroups which are currently associated with given course
+     *
+     * @param course_id course to get usergroups of
+     * @return List of usergroups (empty if no groups)
+     */
+    public List<UserGroup> getUsergroupsByCourse(long course_id);
+
 }

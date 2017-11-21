@@ -1,0 +1,152 @@
+<ui:composition template="../WEB-INF/template/defaultTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{authorizationBean.checkPermission(2)}"/>
+    </f:metadata>
+    <!-- Tabblad naam -->
+    <ui:define name="title">Courserooster</ui:define>
+    <!-- Content -->
+    <ui:define name="content">
+        <h:outputStylesheet library="style" name="ScheduleTable.css" />
+        <div class="container">
+            <div class="mt-3">
+                <div class="row">
+                    <div class="col-5"> 
+                        <h:form onsubmit="event.preventDefault()">
+                            <div class="form-group">
+                                <h1>Docenten</h1>
+                                <hr/>
+                                <p:growl id="account_growl" />
+                                <p:selectOneListbox value="#{scheduleBean.courseID}" filter="true" valueChangeListener="#{scheduleBean.valueChanged}" 
+                                                    filterMatchMode="contains" styleClass="form-control" onchange="submit()" required="false">
+                                    <f:valueChangeListener type="Listener.ScheduleValueListener" />
+                                    <f:selectItems value="#{scheduleBean.allCourses}" var="y"
+                                                   itemLabel="#{y.getShortString()}" itemValue="#{y.id}" />
+                                </p:selectOneListbox>
+                            </div>
+                        </h:form>
+                    </div>
+                    <div class="col-6">
+                        <h1>Informatie</h1>
+                        <h:form >
+
+
+
+
+
+
+                            <p:dataTable id="cars2" var="car" value="Abc" editable="true" editMode="cell" widgetVar="cellCars">
+                                <f:facet name="header">
+                                    Account
+                                </f:facet>
+                                <p:ajax event="cellEdit" listener="#{dtEditView.onCellEdit}" update=":form:msgs" />
+
+                                <!--                                <p:column headerText="Id">
+                                                                    <p:cellEditor>
+                                                                        <f:facet name="output"><h:outputText value="1" /></f:facet>
+                                                                        <f:facet name="input"><p:inputText id="modelInput" value="#{car.id}" style="width:96%"/></f:facet>
+                                                                    </p:cellEditor>
+                                                                </p:column>-->
+
+                                <p:column headerText="">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="Naam" /></f:facet>     
+                                        <f:facet name="input"><p:inputText value="" style="width:96%" label="Name"/></f:facet>
+                                    </p:cellEditor>
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="Achternaam" /></f:facet>     
+                                        <f:facet name="input"><p:inputText value="" style="width:96%" label="Surname"/></f:facet>
+                                    </p:cellEditor>
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="Gebruikersnaam" /></f:facet>     
+                                        <f:facet name="input"><p:inputText value="" style="width:96%" label="Username"/></f:facet>
+                                    </p:cellEditor>
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="Telefoonnummer" /></f:facet>     
+                                        <f:facet name="input"><p:inputText value="" style="width:96%" label="Phonenr"/></f:facet>
+                                    </p:cellEditor>
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="Email" /></f:facet>     
+                                        <f:facet name="input"><p:inputText value="" style="width:96%" label="Email"/></f:facet>
+                                    </p:cellEditor>
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="Account type" /></f:facet>     
+                                        <f:facet name="input"><p:inputText value="" style="width:96%" label="AccountType"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+
+
+
+
+                                <p:column headerText="">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="Naam" /></f:facet>     
+                                        <f:facet name="input"><p:inputText value="" style="width:96%" label="Name"/></f:facet>
+                                    </p:cellEditor>
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="Achternaam" /></f:facet>     
+                                        <f:facet name="input"><p:inputText value="" style="width:96%" label="Name"/></f:facet>
+                                    </p:cellEditor>
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="Gebruikersnaam" /></f:facet>     
+                                        <f:facet name="input"><p:inputText value="" style="width:96%" label="Name"/></f:facet>
+                                    </p:cellEditor>
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="Telefoonnummer" /></f:facet>     
+                                        <f:facet name="input"><p:inputText value="" style="width:96%" label="Name"/></f:facet>
+                                    </p:cellEditor>
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="Email" /></f:facet>     
+                                        <f:facet name="input"><p:inputText value="" style="width:96%" label="Name"/></f:facet>
+                                    </p:cellEditor>
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="Account type" /></f:facet>     
+                                        <f:facet name="input"><p:inputText value="" style="width:96%" label="Name"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <!--                                <p:column headerText="Brand">
+                                                                    <p:cellEditor>
+                                                                        <f:facet name="output"><h:outputText value="Bertwagen" /></f:facet>
+                                                                        <f:facet name="input">
+                                                                            <h:selectOneMenu value="#{"Brand"}" style="width:100%">
+                                                                                <f:selectItems value="#{dtEditView.brands}" var="man" itemLabel="#{man}" itemValue="#{man}" />
+                                                                            </h:selectOneMenu>
+                                                                        </f:facet>
+                                                                    </p:cellEditor>
+                                                                </p:column>
+                                
+                                                                <p:column headerText="Color">
+                                                                    <p:cellEditor>
+                                                                        <f:facet name="output"><h:outputText value="#{car.color}" /></f:facet>
+                                                                        <f:facet name="input">
+                                                                            <h:selectOneMenu value="#{car.color}" style="width:100%">
+                                                                                <f:selectItems value="#{dtEditView.colors}" var="color" itemLabel="#{color}" itemValue="#{color}" />
+                                                                            </h:selectOneMenu>
+                                                                        </f:facet>
+                                                                    </p:cellEditor>
+                                                                </p:column>-->
+                            </p:dataTable>
+
+
+
+
+
+
+
+                        </h:form>
+                        <h:form id="hiddenForm" onsubmit="event.preventDefault()">
+                            <h:inputHidden value="#{scheduleBean.courseID}" id="hiddenLessonID"/>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

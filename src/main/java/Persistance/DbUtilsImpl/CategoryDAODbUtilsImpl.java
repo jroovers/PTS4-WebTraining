@@ -26,6 +26,10 @@ public class CategoryDAODbUtilsImpl implements ICategoryDAO {
     static final String QUERY_UPDATE_CATEGORY = "UPDATE Category SET Name = ? WHERE ID_Category = ?";
     static final String QUERY_DELETE_CATEGORY = "DELETE FROM Category WHERE ID_Category = ?";
 
+    static final String QUERY_INSERT_COURSECATEGORY = "INSERT INTO Course_Category(ID_Course, ID_Category) VALUES (?, ?)";
+    static final String QUERY_DELETE_COURSECATEGORY = "DELETE FROM Course_Category WHERE ID_Course = ? AND ID_Category = ?";
+    static final String QUERY_SELECT_CATEGORIESBYCOURSE = "SELECT cat.* FROM Category cat, Course_Category cc WHERE cat.ID_Category = cc.ID_Category AND cc.ID_Course = ?";
+
     public CategoryDAODbUtilsImpl() {
     }
 
@@ -93,6 +97,58 @@ public class CategoryDAODbUtilsImpl implements ICategoryDAO {
             System.out.println(ex_sql.getMessage());
             return false;
         }
+    }
+
+    @Override
+    public boolean addCategoryToCourse(long category_id, long course_id) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        ResultSetHandlerImp rsh = new ResultSetHandlerImp();
+        Object[] params = new Object[]{course_id, category_id};
+        try {
+            run.insert(QUERY_INSERT_COURSECATEGORY, rsh, params);
+            return true;
+        } catch (SQLException ex_sql) {
+            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.out.println(ex_sql.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean removeCategoryFromCourse(long category_id, long course_id) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        ResultSetHandlerImp rsh = new ResultSetHandlerImp();
+        Object[] params = new Object[]{course_id, category_id};
+        try {
+            run.execute(QUERY_DELETE_COURSECATEGORY, rsh, params);
+            return true;
+        } catch (SQLException ex_sql) {
+            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.out.println(ex_sql.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public List<Category> getCategoriesByCourse(long course_id) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        ArrayListHandler alh = new ArrayListHandler();
+        Object[] params = new Object[]{course_id};
+        List<Category> categories = new ArrayList<>();
+        try {
+            List<Object[]> result = run.query(QUERY_SELECT_CATEGORIESBYCOURSE, alh, params);
+            for (Object[] o : result) {
+                Category entry = new Category(
+                        o[0] == null ? -1 : Long.parseLong(o[0].toString()),
+                        o[1] == null ? null : o[1].toString()
+                );
+                categories.add(entry);
+            }
+        } catch (SQLException ex_sql) {
+            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.out.println(ex_sql.getMessage());
+        }
+        return categories;
     }
 
 }

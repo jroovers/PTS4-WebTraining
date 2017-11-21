@@ -56,6 +56,15 @@ public class CourseService {
         List<Course> courses = courseDAOUtils.getCourses();
         return courses;
     }
+    
+    /**
+     * Gets a single course from the database bsaed on give the code
+     * @param code
+     * @return course if found, otherwise null
+     */
+    public Course getCourseByCode(String code){
+        return null;
+    }
 
     /**
      * Edits an existing course
