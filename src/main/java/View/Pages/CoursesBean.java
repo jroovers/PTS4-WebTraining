@@ -379,7 +379,8 @@ public class CoursesBean implements Serializable {
     }
 
     public String onAddUserGroupToCourse() {
-        return null;
+        groupService.addUserGroupToCourse(Long.parseLong(selectedGroupToAdd), course.getId());
+        return "editcourse";
     }
 
     public String onRemoveCategoryFromCourse() {
@@ -388,7 +389,8 @@ public class CoursesBean implements Serializable {
     }
 
     public String onRemoveUserGroupFromCourse() {
-        return null;
+        groupService.removeUserGroupFromCourse(Long.parseLong(selectedGroupToRemove), course.getId());
+        return "editcourse";
     }
 
     public String onCancelEdit() {
