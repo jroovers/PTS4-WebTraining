@@ -30,19 +30,16 @@ import org.primefaces.model.ScheduleModel;
 @ViewScoped
 public class PersonalRosterBean implements Serializable
 {
-
     private ScheduleModel lessonSchedule;
 
     private ScheduleEvent event = new DefaultScheduleEvent();
 
-    private CourseService courseService;
     private LessonService lessonService;
     private Lesson selectedLesson;
 
     @PostConstruct
     public void init()
     {
-        courseService = new CourseService();
         lessonService = new LessonService();
         lessonSchedule = new DefaultScheduleModel();
         RefreshLessons();
