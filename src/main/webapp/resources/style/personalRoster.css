@@ -1,3 +1,8 @@
+.content{
+    width:80%;
+    margin:30px;
+}
+
 .registrationTable {   
     /*width:400px;*/
     border-collapse:collapse;
@@ -35,12 +40,13 @@ registrationTable th, td{
 
 .calendar{
     float:left;
-    width:40%;
+    width:55%;
     margin:20px;
 }
 
 .eventData{
-    margin:90px 50px;
+    width:40%;
+    margin:80px 0px;
     float:left;
 }
 
