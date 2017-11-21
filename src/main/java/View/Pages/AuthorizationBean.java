@@ -49,13 +49,10 @@ public class AuthorizationBean {
     }
     
      public String logindummie() {
-         User user = new User(1, "Frank", "franken", "Frankster", "frankisthebest", "001234", "Frankster@TheG.com", 2);
          List<Integer> acceslist = new ArrayList<Integer>();
          acceslist.add(1);
          acceslist.add(2);
-         user.setAccesLevels(acceslist);
          HttpSession hs = AuthorizationUtils.getSession();
-         //hs.setAttribute("LoggedInUser", user);
          hs.setAttribute("UserID", 1);
          hs.setAttribute("AccesLevels", acceslist);
          hs.setAttribute("Username", "Kyle");
@@ -126,17 +123,22 @@ public class AuthorizationBean {
         HttpSession hs = AuthorizationUtils.getSession();
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 
-        List levelList = (List) hs.getAttribute("AccesLevels");
-        int level;
+        try {
+            List levelList = (List) hs.getAttribute("AccesLevels");
+            int level;
 
-        for (Object obj : levelList) {
-            level = (int) obj;
-            if(level == accesLevel) {
-                return;
+            for (Object obj : levelList) {
+                level = (int) obj;
+                if (level == accesLevel) {
+                    return;
+                }
             }
+            
+            context.redirect("/InfoSupportWeb/external/authorization.xhtml"); 
+        } catch(Exception ex) {
+            context.redirect("/InfoSupportWeb/external/authorization.xhtml"); 
         }
-        
-        context.redirect("/InfoSupportWeb/external/authorization.xhtml"); 
+ 
     }
     
        /**
