@@ -28,7 +28,7 @@ public class CategoryDAODbUtilsImpl implements ICategoryDAO {
 
     static final String QUERY_INSERT_COURSECATEGORY = "INSERT INTO Course_Category(ID_Course, ID_Category) VALUES (?, ?)";
     static final String QUERY_DELETE_COURSECATEGORY = "DELETE FROM Course_Category WHERE ID_Course = ? AND ID_Category = ?";
-    static final String QUERY_SELECT_CATEGORIESBYCOURSE = "SELECT cat.* FROM Category cat, Course_Category cc WHERE cat.ID_Category = cc.ID_Category AND cc.ID_Course = ?";
+    static final String QUERY_SELECT_CATEGORIESBYCOURSE = "SELECT cat.* FROM Category cat, Course_Category cc WHERE cat.ID_Category = cc.ID_Category AND cc.ID_Course = ? ORDER BY cat.Name";
 
     public CategoryDAODbUtilsImpl() {
     }
