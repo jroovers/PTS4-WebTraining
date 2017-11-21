@@ -134,4 +134,11 @@ public class ManageAccountBean {
     public void valueChanged(ValueChangeEvent e) {
         userID = (Long) e.getNewValue();
     }
+    
+    public void editUser() {
+        User user = new User(name, surname, username, phonenr, email, 2);
+        //TODO:
+        //us.editUser(user);
+    }
+    
 }

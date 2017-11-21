@@ -18,7 +18,8 @@
                 <div class="row">
 
                     <h:form onsubmit="event.preventDefault()">
-                        <div class="col-5"> 
+                        <div class="row" style="width: 700px">
+                        <div class="col-4"> 
                             <div class="floating-box" style="float: left">
                                 <div class="form-group">
                                     <h1>Docenten</h1>
@@ -32,8 +33,9 @@
                                     </p:selectOneListbox>
                                 </div>
                             </div>
+                        </div> 
                         </div>
-                        <div class="col-6">
+                        <div class="col-8">
                             <div class="floating-box" style="float: left;">
                                 <h1>Informatie</h1>
                                 <h:panelGrid columns="2" columnClasses="column" cellpadding="0">
@@ -63,20 +65,15 @@
                                     </p:inplace>                                     
 
                                     <h:outputLabel for="ajaxAccountType" value="Account Type:"/>
-                                    <p:inplace id="ajaxAccountType" label="AccountTypes" effectSpeed="fast" event="click" >
-
-
+                                    <p:inplace id="ajaxAccountType" label="Kies een type door te klikken" effectSpeed="fast" event="click" >
                                         <p:selectOneMenu value="#{manageAccountBean.accountType}">
                                             <f:selectItems value="#{manageAccountBean.accountTypes}" />
                                         </p:selectOneMenu> 
-
-
-
                                     </p:inplace>                                    
                                 </h:panelGrid>
                             </div>
+                        
                         </div>
-
                     </h:form>
 
                 </div>

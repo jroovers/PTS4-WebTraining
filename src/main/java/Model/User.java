@@ -114,6 +114,15 @@ public class User {
         this.email = email;
         this.accesLevel = accesLevel;
     }
+    
+    public User(String name, String surname, String username, String phoneNr, String email, int accesLevel) {
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.phoneNr = phoneNr;
+        this.email = email;
+        this.accesLevel = accesLevel;
+    }
 
     public List<Integer> getAccesLevels() {
         return accesLevels;

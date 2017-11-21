@@ -23,6 +23,6 @@ public class UserListener implements ValueChangeListener {
         //Access ManageAccountBean directly
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ManageAccountBean manageAccountBean = (ManageAccountBean) facesContext.getApplication().createValueBinding("#{manageAccountBean}").getValue(facesContext);
-        manageAccountBean.setUserID(manageAccountBean.getUserID());
+        manageAccountBean.setUserID(manageAccountBean.getUserID()); 
     }
 }
