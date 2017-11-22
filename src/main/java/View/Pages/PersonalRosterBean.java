@@ -1,12 +1,9 @@
 package View.Pages;
 
-import Controller.CourseService;
 import Controller.LessonService;
 import InfoSupportWeb.utility.AuthorizationUtils;
 import Model.Lesson;
-import Model.User;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -45,11 +42,15 @@ public class PersonalRosterBean implements Serializable
         RefreshLessons();
     }
 
+    
+    /**
+     * Get the lessons from the database and add them to the calendar
+     */
     private void RefreshLessons()
     {
         HttpSession hs = AuthorizationUtils.getSession();
 
-        int id = (int) hs.getAttribute("UserID");
+        int id = (int) hs.getAttribute("UserID"); //get logged in user's ID
         lessonSchedule.clear();
         for (Lesson lesson : lessonService.GetLessonsAndRegistrationsByTeacher(id))
         {
@@ -81,44 +82,9 @@ public class PersonalRosterBean implements Serializable
     {
         this.selectedLesson = selectedLesson;
     }
-
-    public void addEvent(ActionEvent actionEvent)
-    {
-        if (event.getId() == null)
-        {
-            lessonSchedule.addEvent(event);
-        } else
-        {
-            lessonSchedule.updateEvent(event);
-        }
-        event = new DefaultScheduleEvent();
-    }
-
     public void onEventSelect(SelectEvent selectEvent)
     {
         event = (ScheduleEvent) selectEvent.getObject();
         setSelectedLesson((Lesson) event.getData());
-    }
-
-    public void onDateSelect(SelectEvent selectEvent)
-    {
-        event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
-    }
-
-    public void onEventMove(ScheduleEntryMoveEvent event)
-    {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event moved", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
-        addMessage(message);
-    }
-
-    public void onEventResize(ScheduleEntryResizeEvent event)
-    {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
-        addMessage(message);
-    }
-
-    private void addMessage(FacesMessage message)
-    {
-        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }
