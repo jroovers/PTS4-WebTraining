@@ -26,7 +26,7 @@ import javax.inject.Inject;
 
 /**
  *
- * @author Jeroen Roovers
+ * @author Jeroen Roovers, Ricardo van Dijke
  */
 @Named(value = "plannerBean")
 @RequestScoped
@@ -44,6 +44,10 @@ public class PlannerBean {
     private String location;
     private List<Course> courses;
     private List<Lesson> lessons;
+    private List<Lesson> filteredLessons;
+    private Lesson selectedLesson;
+    private Course selectedCourse;
+
     private List<String> locations;
     private Date startDate;
 
@@ -60,6 +64,7 @@ public class PlannerBean {
         }
         if (lessons == null) {
             lessons = lessonService.getLessons();
+            filteredLessons = lessons;
             Comparator<Lesson> timecompare = (Lesson o1, Lesson o2) -> o1.getStartTime().compareTo(o2.getStartTime());
             Collections.sort(lessons, timecompare);
         }
@@ -69,12 +74,12 @@ public class PlannerBean {
         }
     }
 
-    public long getCourseID() {
-        return courseID;
+    public Course getSelectedCourse() {
+        return selectedCourse;
     }
 
-    public void setCourseID(long courseID) {
-        this.courseID = courseID;
+    public void setSelectedCourse(Course course) {
+        this.selectedCourse = course;
     }
 
     public long getLessonID() {
@@ -83,6 +88,14 @@ public class PlannerBean {
 
     public void setLessonID(long lessonID) {
         this.lessonID = lessonID;
+    }
+    
+     public long getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(long courseID) {
+        this.courseID = courseID;
     }
 
     public Date getStartDate() {
@@ -115,6 +128,22 @@ public class PlannerBean {
 
     public void setLessons(List<Lesson> lessons) {
         this.lessons = lessons;
+    }
+
+    public List<Lesson> getFilteredLessons() {
+        return filteredLessons;
+    }
+
+    public void setFilteredLessons(List<Lesson> filteredlessons) {
+        this.filteredLessons = filteredlessons;
+    }
+
+    public Lesson getSelectedLesson() {
+        return selectedLesson;
+    }
+
+    public void setSelectedLesson(Lesson selectedLesson) {
+        this.selectedLesson = selectedLesson;
     }
 
     public List<String> getLocations() {
@@ -153,10 +182,9 @@ public class PlannerBean {
     }
 
     public String deleteLesson() {
-        lessonService.deleteLesson(lessonID);
+        lessonService.deleteLesson(selectedLesson.getId());
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Les verwijderd", "whoopizz"));
         return "planner?faces-redirect=true";
-
     }
 }
