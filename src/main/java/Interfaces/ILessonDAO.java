@@ -65,4 +65,12 @@ public interface ILessonDAO {
      * @param user_ID id of the user logged in
      */
     public long signUpUser(long lesson_ID, long user_ID);
+    
+    /**
+     * Signs an user to the Database on the lesson he/she selected.
+     * 
+     * @param email email from user
+     * @return 
+     */
+    public List<Lesson> getLessonsByUserEmail(String email);
 }
