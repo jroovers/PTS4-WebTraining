@@ -28,15 +28,17 @@
                     <li class="nav-item">
                         <h:link styleClass="nav-link" outcome="/external/signup" value="Inschrijfformulier"/>
                     </li>
+                    
+                    <li class="nav-item">
+                        <h:link styleClass="nav-link" rendered="#{authorizationBean.checkVisible(2)}" outcome="/appmanagement/manageaccounts" value="Accountbeheer"/>
+                    </li> 
                     <li class="nav-item">
                         <h:link styleClass="nav-link" rendered="#{!authorizationBean.checkVisible(2)}" outcome="/external/authorization" value="Inloggen"/>
                     </li>
                     <li class="nav-item">
                         <h:link styleClass="nav-link" rendered="#{authorizationBean.checkVisible(2)}" outcome="/external/authorization" value="Uitloggen"/>
                     </li>  
-                    <li class="nav-item">
-                        <h:link styleClass="nav-link" rendered="#{authorizationBean.checkVisible(2)}" outcome="/appmanagement/manageaccounts" value="Accountbeheer"/>
-                    </li>  
+                     
                 </ul>
             </div>
         </nav>
