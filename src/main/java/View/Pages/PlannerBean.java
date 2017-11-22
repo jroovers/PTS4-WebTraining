@@ -155,9 +155,6 @@ public class PlannerBean {
     }
 
     public String submitLesson() {
-        Course selectedCourse = new Course();
-        selectedCourse.setId(courseID);
-
         GregorianCalendar starttime = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
         starttime.setTime(startDate);
         starttime.add(Calendar.HOUR_OF_DAY, 12);
