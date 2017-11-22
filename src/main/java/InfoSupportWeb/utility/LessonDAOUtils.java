@@ -30,7 +30,7 @@ public class LessonDAOUtils implements ILessonDAO {
     static final String QUERY_GET_LESSONS = "SELECT l.*, c.* FROM Lesson l, Course c WHERE l.ID_Course=c.ID_Course";
     static final String QUERY_INSERT_LESSON = "INSERT INTO Lesson(StartTime, EndTime, Location, ID_Course) VALUES(?,?,?,?)";
     static final String QUERY_GET_LESSONS_FROM_COURSE = "SELECT l.*, c.* FROM Lesson l, Course c WHERE l.ID_Course=c.ID_Course AND l.ID_Course = ?";
-    static final String QUERY_GET_LESSONS_BY_TEACHER = "SELECT L.*, C.* FROM Lesson L, Course C , Lesson_Teacher LT WHERE LT.ID_Lesson = L.ID_Lesson AND L.ID_Course = C.ID_Course AND L.ID_Lesson = LT.ID_Lesson AND LT.ID_User = ?";
+    static final String QUERY_GET_LESSONS_BY_TEACHER = "SELECT L.*, C.* FROM Lesson L, Course C WHERE L.Teacher_ID_User = ? AND L.ID_Course = C.ID_Course";
     static final String QUERY_GET_USERS_BY_LESSON = "SELECT U.Name, U.Surname, U.Email, U.PhoneNr from User U, Lesson_Registration LR WHERE LR.ID_User = U.ID_User AND LR.ID_Lesson = ?";
     static final String QUERY_UPDATE_LESSON = "UPDATE Lesson SET StartTime = ?, EndTime = ?, Location = ?, ID_Course = ? WHERE ID_Lesson = ?";
     static final String QUERY_REMOVE_LESSON = "DELETE FROM Lesson WHERE ID_Lesson = ?";
