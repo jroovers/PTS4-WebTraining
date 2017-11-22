@@ -60,14 +60,14 @@ public class LessonDAOUtils implements ILessonDAO {
                         endTime,
                         o[3] == null ? null : o[3].toString(),
                         new Course(
-                                o[5] == null ? -1 : Long.parseLong(o[5].toString()),
-                                o[6] == null ? null : o[6].toString(),
+                                o[6] == null ? -1 : Long.parseLong(o[6].toString()),
                                 o[7] == null ? null : o[7].toString(),
                                 o[8] == null ? null : o[8].toString(),
-                                null,
                                 o[9] == null ? null : o[9].toString(),
-                                o[11] == null ? null : Integer.parseInt(o[11].toString()),
-                                o[12] == null ? null : Double.parseDouble(o[12].toString())
+                                null,
+                                o[11] == null ? null : o[11].toString(),
+                                o[12] == null ? null : Integer.parseInt(o[12].toString()),
+                                o[13] == null ? null : Double.parseDouble(o[13].toString())
                         )
                 );
 
@@ -169,10 +169,10 @@ public class LessonDAOUtils implements ILessonDAO {
         }
         return lessons;
     }
-    
+
     @Override
-    public List<Lesson> GetLessonsAndRegistrationsByTeacher(long user_ID){
-         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+    public List<Lesson> GetLessonsAndRegistrationsByTeacher(long user_ID) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ArrayListHandler alh = new ArrayListHandler();
         List<Lesson> lessons = new ArrayList<>();
         Object[] params = new Object[]{user_ID};
@@ -191,17 +191,17 @@ public class LessonDAOUtils implements ILessonDAO {
                         endTime,
                         o[3] == null ? null : o[3].toString(),
                         new Course(
-                                o[5] == null ? -1 : Long.parseLong(o[5].toString()),
-                                o[6] == null ? null : o[6].toString(),
+                                o[6] == null ? -1 : Long.parseLong(o[6].toString()),
                                 o[7] == null ? null : o[7].toString(),
                                 o[8] == null ? null : o[8].toString(),
-                                null,
                                 o[9] == null ? null : o[9].toString(),
-                                o[11] == null ? null : Integer.parseInt(o[11].toString()),
-                                o[12] == null ? null : Double.parseDouble(o[12].toString())
+                                null,
+                                o[10] == null ? null : o[10].toString(),
+                                o[12] == null ? null : Integer.parseInt(o[12].toString()),
+                                o[13] == null ? null : Double.parseDouble(o[13].toString())
                         )
                 );
-                
+
                 lesson.setRegistrations(GetUsersByLesson(lesson.getId()));
                 lessons.add(lesson);
             }
@@ -211,7 +211,7 @@ public class LessonDAOUtils implements ILessonDAO {
         }
         return lessons;
     }
-    
+
     private List<User> GetUsersByLesson(long lesson_id) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ArrayListHandler alh = new ArrayListHandler();
@@ -225,16 +225,15 @@ public class LessonDAOUtils implements ILessonDAO {
                 String surname = o[1].toString();
                 String email = o[2].toString();
                 String phone = o[3].toString();
-                
-                User u = new User(name,surname,phone, email);
-                            
+
+                User u = new User(name, surname, phone, email);
+
                 users.add(u);
             }
         } catch (SQLException ex_sql) {
             System.out.println("SQL Exception code " + ex_sql.getErrorCode());
             System.out.println(ex_sql.getMessage());
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return users;
@@ -247,14 +246,14 @@ public class LessonDAOUtils implements ILessonDAO {
         Object[] params = new Object[]{lesson_ID, user_ID};
         try {
             Object[] result = run.insert(QUERY_SIGNUP_USER_TO_LESSON, rsh, params);
-                                    
+
             System.out.println("SQL Success");
             return 1;
         } catch (SQLException ex) {
             Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Failed to add lesson to db");
             return 0;
-        }        
+        }
     }
 
 }
