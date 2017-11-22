@@ -25,10 +25,10 @@
                                         <hr/>
                                         <p:growl id="account_growl" />
                                         <p:selectOneListbox value="#{manageAccountBean.userID}" filter="true" valueChangeListener="#{manageAccountBean.valueChanged}" 
-                                                            filterMatchMode="contains" styleClass="form-control" onchange="submit()" required="false">
-                                            <f:valueChangeListener type="Listener.UserListener" />
+                                                            filterMatchMode="contains" styleClass="form-control" required="false" >
                                             <f:selectItems value="#{manageAccountBean.allUsers}" var="y"
                                                            itemLabel="#{y.getShortString()}" itemValue="#{y.userID}" />
+                                            <f:ajax  render="ajaxName ajaxSurname ajaxUsername ajaxPhoneNr ajaxEmail ajaxAccountType" />
                                         </p:selectOneListbox>
                                     </div>
                                 </div>

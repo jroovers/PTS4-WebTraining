@@ -30,7 +30,7 @@ public class ManageAccountBean {
     private Map<String, String> accountTypes;
     private int accountType;
     private User selectedUser;
-    private Long userID;
+    private String userID;
     private String name;
     private String surname;
     private String email;
@@ -63,11 +63,11 @@ public class ManageAccountBean {
         editUser();
     }
 
-    public Long getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(Long userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 
@@ -77,8 +77,8 @@ public class ManageAccountBean {
 
     public void setName(String name) {
         this.name = name;
-        selectedUser.setName(name);
-        us.editUser(selectedUser); 
+//        selectedUser.setName(name);
+//        us.editUser(selectedUser);
         //editUser();
     }
 
@@ -138,24 +138,26 @@ public class ManageAccountBean {
         this.accountTypes = accountTypes;
     }
 
-    public void valueChanged(ValueChangeEvent e) {
-        userID = (Long) e.getNewValue();
+    public String valueChanged(ValueChangeEvent e) {
+        long longid = Long.parseLong(e.getNewValue().toString());
         for (User u : allUsers) {
-            if(u.getUserID() == userID) {
+            if (u.getUserID() == longid) {
                 setName(u.getName());
                 setSurname(u.getSurname());
                 setUsername(u.getUsername());
                 setPhonenr(u.getPhoneNr());
                 setEmail(u.getEmail());
                 setAccountType(u.getAccesLevel());
+                break;
             }
         }
+        return "manageaccounts";
     }
 
     public void editUser() {
         User user = new User(userID, name, surname, username, phonenr, email, accountType);
         //TODO:
-        us.editUser(user); 
+        us.editUser(user);
     }
 
 }
