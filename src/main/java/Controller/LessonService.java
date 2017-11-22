@@ -94,9 +94,9 @@ public class LessonService {
      * @param email ID of participant
      * @return List of lessons which are connected to the course ID
      */
-    public List<Lesson> GetLessonsAndRegistrationsByTeacher(String email) {
+    public List<Lesson> GetLessonsAndRegistrationsByEmail(String email) {
         LessonDAOUtils lessonDAOUtils = new LessonDAOUtils();
-        return lessonDAOUtils.GetLessonsAndRegistrationsByTeacher(user_ID);
+        return lessonDAOUtils.getLessonsByUserEmail(email);
     }
     
     public long signUpUser(long lesson_ID, long user_ID) {
