@@ -28,7 +28,7 @@ public class ManageAccountBean {
 
     private List<User> allUsers;
     private Map<String, String> accountTypes;
-    private String accountType;
+    private int accountType;
     private User selectedUser;
     private Long userID;
     private String name;
@@ -36,7 +36,6 @@ public class ManageAccountBean {
     private String email;
     private String phonenr;
     private String username;
-
 
     /**
      * Creates a new instance of manageAccountBean
@@ -55,14 +54,15 @@ public class ManageAccountBean {
         this.selectedUser = selectedUser;
     }
 
-    public String getAccountType() {
+    public int getAccountType() {
         return accountType;
     }
 
-    public void setAccountType(String accountType) {
+    public void setAccountType(int accountType) {
         this.accountType = accountType;
-    }    
-    
+        editUser();
+    }
+
     public Long getUserID() {
         return userID;
     }
@@ -77,6 +77,9 @@ public class ManageAccountBean {
 
     public void setName(String name) {
         this.name = name;
+        selectedUser.setName(name);
+        us.editUser(selectedUser); 
+        //editUser();
     }
 
     public String getSurname() {
@@ -85,6 +88,7 @@ public class ManageAccountBean {
 
     public void setSurname(String surname) {
         this.surname = surname;
+        editUser();
     }
 
     public String getEmail() {
@@ -93,6 +97,7 @@ public class ManageAccountBean {
 
     public void setEmail(String email) {
         this.email = email;
+        editUser();
     }
 
     public String getPhonenr() {
@@ -101,6 +106,7 @@ public class ManageAccountBean {
 
     public void setPhonenr(String phonenr) {
         this.phonenr = phonenr;
+        editUser();
     }
 
     public List<User> getAllUsers() {
@@ -119,6 +125,7 @@ public class ManageAccountBean {
 
     public void setUsername(String username) {
         this.username = username;
+        editUser();
     }
 
     public Map<String, String> getAccountTypes() {
@@ -133,12 +140,22 @@ public class ManageAccountBean {
 
     public void valueChanged(ValueChangeEvent e) {
         userID = (Long) e.getNewValue();
+        for (User u : allUsers) {
+            if(u.getUserID() == userID) {
+                setName(u.getName());
+                setSurname(u.getSurname());
+                setUsername(u.getUsername());
+                setPhonenr(u.getPhoneNr());
+                setEmail(u.getEmail());
+                setAccountType(u.getAccesLevel());
+            }
+        }
     }
-    
+
     public void editUser() {
-        User user = new User(name, surname, username, phonenr, email, 2);
+        User user = new User(userID, name, surname, username, phonenr, email, accountType);
         //TODO:
-        //us.editUser(user);
+        us.editUser(user); 
     }
-    
+
 }

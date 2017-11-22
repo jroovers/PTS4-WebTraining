@@ -25,6 +25,7 @@ public class UserDAOUtils implements IUserDAO {
     static final String QUERY_GET_USERS = "SELECT * FROM User";
     static final String QUERY_INSERT_USER = "INSERT INTO User(`Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`,`ID_UserType`) VALUES(?,?,?,?,?,?,?)";
     static final String QUERY_REMOVE_USER = "DELETE FROM User WHERE ID_User = ?";
+    static final String QUERY_UPDATE_USER = "UPDATE User SET Name = ?, Surname = ?, Username = ?, PhoneNr = ?, Email = ?, ID_UserType = ? WHERE ID_User = ?;";
 
 
     public UserDAOUtils() {
@@ -113,6 +114,20 @@ public class UserDAOUtils implements IUserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Failed to remove user from db");
+            return false;
+        }
+    }
+    
+    @Override
+    public boolean editUser(User user) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        Object[] params = new Object[]{user.getName(), user.getSurname(), user.getUsername(), user.getPhoneNr(), user.getEmail(), user.getAccesLevel(), user.getUserID()};
+        try {
+            run.update(QUERY_UPDATE_USER, params);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Failed to edit lesson in db");
             return false;
         }
     }

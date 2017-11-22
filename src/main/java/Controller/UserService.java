@@ -63,4 +63,15 @@ public class UserService {
         UserDAOUtils userDAOUtils = new UserDAOUtils();
         return userDAOUtils.removeUser(user_ID);
     }
+    
+    /**
+     * Edits an existing user
+     * 
+     * @param user
+     * @return 
+     */
+    public boolean editUser(User user) {
+        UserDAOUtils userDAOUtils = new UserDAOUtils();
+        return userDAOUtils.editUser(user);
+    }
 }

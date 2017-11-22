@@ -45,4 +45,11 @@ public interface IUserDAO {
      */
     public boolean removeUser(long User_ID);
 
+    /**
+     * Edits an existing User.
+     * 
+     * @param user
+     * @return 
+     */
+    public boolean editUser(User user);
 }
