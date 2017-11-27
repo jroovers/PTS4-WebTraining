@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Pages;
 
 import Controller.CourseService;
@@ -39,12 +34,9 @@ public class PlannerBean {
     @Inject
     LocationService locationService;
 
-    private long courseID;
-    private long lessonID;
     private String location;
     private List<Course> courses;
     private List<Lesson> lessons;
-    private List<Lesson> filteredLessons;
     private Lesson selectedLesson;
     private Course selectedCourse;
 
@@ -64,7 +56,7 @@ public class PlannerBean {
         }
         if (lessons == null) {
             lessons = lessonService.getLessons();
-            filteredLessons = lessons;
+            //filteredLessons = lessons;
             Comparator<Lesson> timecompare = (Lesson o1, Lesson o2) -> o1.getStartTime().compareTo(o2.getStartTime());
             Collections.sort(lessons, timecompare);
         }
@@ -72,30 +64,6 @@ public class PlannerBean {
             locations = locationService.getLocations();
             Collections.sort(locations);
         }
-    }
-
-    public Course getSelectedCourse() {
-        return selectedCourse;
-    }
-
-    public void setSelectedCourse(Course course) {
-        this.selectedCourse = course;
-    }
-
-    public long getLessonID() {
-        return lessonID;
-    }
-
-    public void setLessonID(long lessonID) {
-        this.lessonID = lessonID;
-    }
-    
-     public long getCourseID() {
-        return courseID;
-    }
-
-    public void setCourseID(long courseID) {
-        this.courseID = courseID;
     }
 
     public Date getStartDate() {
@@ -130,20 +98,20 @@ public class PlannerBean {
         this.lessons = lessons;
     }
 
-    public List<Lesson> getFilteredLessons() {
-        return filteredLessons;
-    }
-
-    public void setFilteredLessons(List<Lesson> filteredlessons) {
-        this.filteredLessons = filteredlessons;
-    }
-
     public Lesson getSelectedLesson() {
         return selectedLesson;
     }
 
     public void setSelectedLesson(Lesson selectedLesson) {
         this.selectedLesson = selectedLesson;
+    }
+        public Course getSelectedCourse() {
+        return selectedCourse;
+    }
+
+    public void setSelectedCourse(Course course) {
+        this.selectedCourse = course;
+        System.out.println(selectedCourse.getShortString());
     }
 
     public List<String> getLocations() {
@@ -155,16 +123,14 @@ public class PlannerBean {
     }
 
     public String submitLesson() {
+        System.out.println(selectedCourse.getShortString());
         GregorianCalendar starttime = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
         starttime.setTime(startDate);
         starttime.add(Calendar.HOUR_OF_DAY, 12);
         GregorianCalendar endtime = (GregorianCalendar) starttime.clone();
-        for (Course c : courses) {
-            if (courseID == c.getId()) {
-                if (c.getDurationInDays() > 1) {
-                    endtime.add(GregorianCalendar.DAY_OF_YEAR, c.getDurationInDays() - 1);
-                }
-            }
+
+        if (selectedCourse.getDurationInDays() > 1) {
+            endtime.add(GregorianCalendar.DAY_OF_YEAR, selectedCourse.getDurationInDays() - 1);
         }
 
         Lesson newLesson = new Lesson(selectedCourse);

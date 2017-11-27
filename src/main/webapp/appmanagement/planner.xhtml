@@ -28,11 +28,11 @@
                                              value="#{plannerBean.courses}" 
                                              selectionMode="single" 
                                              selection="#{plannerBean.selectedCourse}" 
-                                             rowKey="#{plannerBean.courseID}"
+                                             rowKey="#{course.id}"
                                              widgetVar="courseTable"
-                                             filteredValue="#{plannerBean.filteredLessons}"
                                              scrollable="true"
                                              scrollHeight="300">
+                                    <p:ajax event="rowSelect" />
                                     <f:facet name="header">
                                         <p:outputPanel>
                                             <h:outputText value="Zoeken: " />
@@ -79,10 +79,11 @@
                                              selectionMode="single" 
                                              selection="#{plannerBean.selectedLesson}" 
                                              widgetVar="lessonsTable"
-                                             rowKey="#{plannerBean.lessonID}"
-                                             filteredValue="#{plannerBean.filteredLessons}"
+                                             rowKey="#{lesson.id}"
                                              scrollable="true"
                                              scrollHeight="300">
+                                    <p:ajax event="rowSelect"/>
+
                                     <f:facet name="header">
                                         <p:outputPanel>
                                             <h:outputText value="Zoeken: " />
