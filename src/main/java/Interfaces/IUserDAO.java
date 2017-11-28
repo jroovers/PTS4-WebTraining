@@ -7,6 +7,7 @@ package Interfaces;
 
 import Model.User;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -52,4 +53,6 @@ public interface IUserDAO {
      * @return 
      */
     public boolean editUser(User user);
+    
+    public Map<String, String> getAccountTypes();
 }
