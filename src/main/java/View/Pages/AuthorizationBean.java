@@ -6,14 +6,11 @@
 package View.Pages;
 
 import Controller.UserService;
-import InfoSupportWeb.utility.AuthorizationUtils;
-import InfoSupportWeb.utility.UserDAOUtils;
 import Model.User;
 import View.Session.SessionBean;
 import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.servlet.http.HttpSession;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -32,9 +29,7 @@ public class AuthorizationBean {
     @Inject
     private UserService service;
 
-    private UserDAOUtils userdb;
     private User user;
-
     private String username;
     private String password;
 
@@ -125,13 +120,6 @@ public class AuthorizationBean {
                 return "/index_templated.xhtml";
             }
         }
-
-        // Gebruiker    : Bertster
-        // Wachtwoord   : bertisthebest
-        // Level        : 1
-        // Gebruiker    : Frankster
-        // Wachtwoord   : frankisthebest
-        // Level        : 2
         return "/authorization.xhtml";
     }
 

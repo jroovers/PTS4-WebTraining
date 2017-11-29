@@ -6,14 +6,9 @@
 package View.Session;
 
 import Model.User;
-import java.io.IOException;
 import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
-import javax.faces.event.ComponentSystemEvent;
 
 /**
  *
@@ -23,8 +18,12 @@ import javax.faces.event.ComponentSystemEvent;
 @SessionScoped
 public class SessionBean implements Serializable {
 
-    private boolean loggedIn;
     private User user;
+    /**
+     * Dirty solution for acces management; Ideally these booleans are
+     * incorperated into the User object and loaded whenever an user is loaded.
+     */
+    private boolean loggedIn;
     private boolean employee;
     private boolean teacher;
     private boolean manager;
@@ -34,33 +33,6 @@ public class SessionBean implements Serializable {
      * Creates a new instance of sessionBean
      */
     public SessionBean() {
-    }
-
-    private void CheckPermission(boolean value_to_check) {
-        if (this.loggedIn) {
-            if (value_to_check) {
-                return;
-            }
-        }
-        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-        try {
-            context.redirect("/InfoSupportWeb/external/authorization.xhtml");
-        } catch (IOException ex) {
-            System.out.println("IOEXCEPTION@AuthorizationBean.CheckPermissionNew:");
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    public void CheckIfManager(ComponentSystemEvent event) throws AbortProcessingException {
-        CheckPermission(this.manager);
-    }
-
-    public void CheckIfAdmin(ComponentSystemEvent event) throws AbortProcessingException {
-        CheckPermission(this.admin);
-    }
-
-    public void CheckIfTeacher(ComponentSystemEvent event) throws AbortProcessingException {
-        CheckPermission(this.admin || this.teacher);
     }
 
     public boolean isLoggedIn() {
