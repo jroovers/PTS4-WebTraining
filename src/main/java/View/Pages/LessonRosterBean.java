@@ -57,6 +57,12 @@ public class LessonRosterBean implements Serializable
     {
         lessonSchedule.clear();
         List<Lesson> lessons = lessonService.GetLessonsAndRegistrationsByEmail(email);
+        if(lessons.isEmpty()){
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deze gebruiker heeft geen lessen, of het Email Adres is verkeerd ingevuld", ""));
+            return;         
+        }
+        
         for(Lesson lesson : lessons)
         {
             lessonSchedule.addEvent(new DefaultScheduleEvent(lesson.getCourse().getName(), lesson.getStartTime().getTime(), lesson.getEndTime().getTime(), lesson));
