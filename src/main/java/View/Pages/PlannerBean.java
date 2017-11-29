@@ -3,8 +3,10 @@ package View.Pages;
 import Controller.CourseService;
 import Controller.LessonService;
 import Controller.LocationService;
+import Controller.UserService;
 import Model.Course;
 import Model.Lesson;
+import Model.User;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,7 +22,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 /**
- *
  * @author Jeroen Roovers, Ricardo van Dijke
  */
 @Named(value = "plannerBean")
@@ -30,15 +31,23 @@ public class PlannerBean {
     @Inject
     LessonService lessonService;
     @Inject
+    UserService userService;
+    @Inject
     CourseService courseService;
     @Inject
     LocationService locationService;
 
     private String location;
     private List<Course> courses;
+    private List<Course> filteredCourses;
+
+    private List<User> teachers;
+    private List<User> filteredTeachers;
     private List<Lesson> lessons;
-    private Lesson selectedLesson;
+    private List<Lesson> filteredLessons;
     private Course selectedCourse;
+    private User selectedTeacher;
+    private Lesson selectedLesson;
 
     private List<String> locations;
     private Date startDate;
@@ -56,9 +65,11 @@ public class PlannerBean {
         }
         if (lessons == null) {
             lessons = lessonService.getLessons();
-            //filteredLessons = lessons;
             Comparator<Lesson> timecompare = (Lesson o1, Lesson o2) -> o1.getStartTime().compareTo(o2.getStartTime());
             Collections.sort(lessons, timecompare);
+        }
+        if (teachers == null) {
+            teachers = userService.getTeachers();
         }
         if (locations == null) {
             locations = locationService.getLocations();
@@ -90,12 +101,40 @@ public class PlannerBean {
         this.courses = courses;
     }
 
+    public List<Course> getFilteredCourses() {
+        return filteredCourses;
+    }
+
+    public void setFilteredCourses(List<Course> filteredCourses) {
+        this.filteredCourses = filteredCourses;
+    }
+
+    public List<User> getTeachers() {
+        return teachers;
+    }
+
+    public List<User> getFilteredTeachers() {
+        return filteredTeachers;
+    }
+
+    public void setFilteredTeachers(List<User> filteredTeachers) {
+        this.filteredTeachers = filteredTeachers;
+    }
+
     public List<Lesson> getLessons() {
         return lessons;
     }
 
     public void setLessons(List<Lesson> lessons) {
         this.lessons = lessons;
+    }
+
+    public List<Lesson> getFilteredLessons() {
+        return filteredLessons;
+    }
+
+    public void setFilteredLessons(List<Lesson> filteredLessons) {
+        this.filteredLessons = filteredLessons;
     }
 
     public Lesson getSelectedLesson() {
@@ -105,13 +144,21 @@ public class PlannerBean {
     public void setSelectedLesson(Lesson selectedLesson) {
         this.selectedLesson = selectedLesson;
     }
-        public Course getSelectedCourse() {
+
+    public Course getSelectedCourse() {
         return selectedCourse;
     }
 
     public void setSelectedCourse(Course course) {
         this.selectedCourse = course;
-        System.out.println(selectedCourse.getShortString());
+    }
+
+    public User getSelectedTeacher() {
+        return selectedTeacher;
+    }
+
+    public void setSelectedTeacher(User selectedTeacher) {
+        this.selectedTeacher = selectedTeacher;
     }
 
     public List<String> getLocations() {
@@ -137,7 +184,7 @@ public class PlannerBean {
         newLesson.setLocation(location);
         newLesson.setStartTime(starttime);
         newLesson.setEndTime(endtime);
-
+        newLesson.setTeacher(selectedTeacher);
         lessonService.addLesson(newLesson);
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training opgeslagen", "whoopizz"));

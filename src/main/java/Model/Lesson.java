@@ -1,18 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.GregorianCalendar;
 
 /**
  *
- * @author Jeroen Roovers
+ * @author Jeroen, Ricardo
  */
 public class Lesson {
 
@@ -21,7 +15,7 @@ public class Lesson {
     private Calendar endTime;
     private String location;
     private Course course;
-    //private Teacher teacher ?
+    private User teacher;
     //private list cursists ?
     //SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
@@ -78,26 +72,31 @@ public class Lesson {
     public void setCourse(Course course) {
         this.course = course;
     }
-    
-    public Collection<User> getRegistrations()
-    {
+
+    public Collection<User> getRegistrations() {
         return registrations;
     }
-
-    public void setRegistrations(Collection<User> registrations)
-    {
+    
+    public void setRegistrations(Collection<User> registrations) {
         this.registrations = registrations;
     }
     
-    public static String format(Calendar calendar){
-    SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
-    fmt.setCalendar(calendar);
-    String dateFormatted = fmt.format(calendar.getTime());
-    return dateFormatted;
-}
+    public User getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(User teacher) {
+        this.teacher = teacher;
+    }
+
+    public static String format(Calendar calendar) {
+        SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
+        fmt.setCalendar(calendar);
+        String dateFormatted = fmt.format(calendar.getTime());
+        return dateFormatted;
+    }
 
     public String getLessonString() {
         return format(startTime) + " - " + location + " - " + course.getName();
     }
-
 }

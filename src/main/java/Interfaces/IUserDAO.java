@@ -52,4 +52,10 @@ public interface IUserDAO {
      * @return 
      */
     public boolean editUser(User user);
+    
+    /**
+     * gets list of teachers from database
+     * @return list of teachers from database
+     */
+    public List<User> getTeachers();
 }

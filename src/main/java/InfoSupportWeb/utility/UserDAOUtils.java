@@ -23,10 +23,10 @@ public class UserDAOUtils implements IUserDAO {
 
     static final String QUERY_GET_USER = "SELECT * FROM User where Username = ?";
     static final String QUERY_GET_USERS = "SELECT * FROM User";
+    static final String QUERY_GET_USERS_WITH_PERMISSION_ID = "SELECT Distinct User.* FROM User, User_UserType, UserType WHERE User.ID_User = User_UserType.ID_User AND User_UserType.ID_UserType = ?";
     static final String QUERY_INSERT_USER = "INSERT INTO User(`Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`,`ID_UserType`) VALUES(?,?,?,?,?,?,?)";
     static final String QUERY_REMOVE_USER = "DELETE FROM User WHERE ID_User = ?";
     static final String QUERY_UPDATE_USER = "UPDATE User SET Name = ?, Surname = ?, Username = ?, PhoneNr = ?, Email = ?, ID_UserType = ? WHERE ID_User = ?;";
-
 
     public UserDAOUtils() {
 
@@ -101,7 +101,8 @@ public class UserDAOUtils implements IUserDAO {
             Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Failed to add User to db");
             return false;
-        }}
+        }
+    }
 
     @Override
     public boolean removeUser(long User_ID) {
@@ -117,7 +118,7 @@ public class UserDAOUtils implements IUserDAO {
             return false;
         }
     }
-    
+
     @Override
     public boolean editUser(User user) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
@@ -132,4 +133,27 @@ public class UserDAOUtils implements IUserDAO {
         }
     }
 
+    public List<User> getTeachers() {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        ArrayListHandler alh = new ArrayListHandler();
+        List<User> users = new ArrayList<>();
+        Object[] params = new Object[]{2};
+        try {
+            List<Object[]> result = run.query(QUERY_GET_USERS_WITH_PERMISSION_ID, alh, params);
+            for (Object[] o : result) {
+                User user = new User(
+                        o[0] == null ? -1 : Long.parseLong(o[0].toString()),
+                        o[1] == null ? null : o[1].toString(),
+                        o[2] == null ? null : o[2].toString(),
+                        o[4] == null ? null : o[4].toString(),
+                        o[5] == null ? null : o[5].toString()
+                );
+                users.add(user);
+            }
+        } catch (SQLException ex_sql) {
+            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.out.println(ex_sql.getMessage());
+        }
+        return users;
+    }
 }

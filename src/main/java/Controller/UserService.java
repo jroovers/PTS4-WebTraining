@@ -74,4 +74,13 @@ public class UserService {
         UserDAOUtils userDAOUtils = new UserDAOUtils();
         return userDAOUtils.editUser(user);
     }
+
+    /**
+     * Gets list of users registrated as teachers
+     * @return 
+     */
+    public List<User> getTeachers() {
+        UserDAOUtils userDAOUtils = new UserDAOUtils();
+        return userDAOUtils.getTeachers();
+    }
 }

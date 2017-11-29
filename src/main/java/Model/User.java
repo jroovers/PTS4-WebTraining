@@ -5,12 +5,11 @@
  */
 package Model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author Jorian, Antonio
+ * @author Jorian, Antonio, Ricardo
  */
 public class User {
 
@@ -85,6 +84,22 @@ public class User {
         this.accesLevel = accesLevel;
     }
 
+     /**
+     * Constructor to get lesson teachers
+     *
+     * @param name
+     * @param surname
+     * @param phoneNr
+     * @param email
+     */
+    public User(long id, String name, String surname, String phoneNr, String email) {
+        this.userID = id;
+        this.name = name;
+        this.surname = surname;
+        this.phoneNr = phoneNr;
+        this.email = email;
+    }
+    
     /**
      * Constructor to get lesson registrations
      *
@@ -134,7 +149,7 @@ public class User {
         this.email = email;
         this.accesLevel = accesLevel;
     }
-
+    
     public List<Integer> getAccesLevels() {
         return accesLevels;
     }
