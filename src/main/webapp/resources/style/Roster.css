@@ -1,0 +1,46 @@
+.registrationTable {   
+    /*width:400px;*/
+    border-collapse:collapse;
+    border:1px solid #000000;
+    margin: 20px 0px;
+} 
+
+registrationTable th, td{
+    border:1px solid #000000;
+}
+.registrationTableHeader {
+    text-align:left;
+    background:none repeat scroll 0 0 #B5B5B5;
+    border-bottom:1px solid #000000;  
+    padding:2px;
+}
+
+.registrationTableOddRow {
+    text-align:left;
+    background:none repeat scroll 0 0 #FFFFFFF;	
+}
+
+.registrationTableEvenRow {
+    text-align:left;
+    background:none repeat scroll 0 0 #D3D3D3;
+}
+
+.cName { 
+    width: 160px;
+}
+
+.cEmail { 
+    width: 240px; 
+}
+
+.calendar{
+    float:left;
+    width:40%;
+    margin:20px;
+}
+
+.eventData{
+    margin:90px 50px;
+    float:left;
+}
+
