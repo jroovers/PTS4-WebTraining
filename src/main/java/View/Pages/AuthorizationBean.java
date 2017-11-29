@@ -5,13 +5,12 @@
  */
 package View.Pages;
 
+import Controller.UserService;
 import InfoSupportWeb.utility.AuthorizationUtils;
 import InfoSupportWeb.utility.UserDAOUtils;
 import Model.User;
 import View.Session.SessionBean;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.servlet.http.HttpSession;
@@ -30,6 +29,8 @@ public class AuthorizationBean {
 
     @Inject
     private SessionBean session;
+    @Inject
+    private UserService service;
 
     private UserDAOUtils userdb;
     private User user;
@@ -43,10 +44,12 @@ public class AuthorizationBean {
 
     /**
      * Logs in the user with all permissions.
+     *
      * @return String for redirection using XHTML action
      */
     public String quickLogin() {
         session.setAllBools(true);
+        session.setUser(service.getUser("Frankster"));
         return "/index_templated.xhtml";
     }
 
@@ -115,16 +118,10 @@ public class AuthorizationBean {
      * @return string for redirection using XHTML action
      */
     public String login() {
-
         if (username != null && password != null) {
-            userdb = new UserDAOUtils();
-            user = userdb.getUserByUsername(username);
-
+            user = service.getUser(username);
             if (user.getPassword().equals(password)) {
-                HttpSession hs = AuthorizationUtils.getSession();
-                hs.setAttribute("UserID", user.getUserID());
-                hs.setAttribute("AccesLevels", user.getAccesLevels());
-                hs.setAttribute("Username", user.getUsername());
+                session.setUser(user);
                 return "/index_templated.xhtml";
             }
         }
@@ -136,37 +133,6 @@ public class AuthorizationBean {
         // Wachtwoord   : frankisthebest
         // Level        : 2
         return "/authorization.xhtml";
-    }
-
-    public String logout() {
-        HttpSession hs = AuthorizationUtils.getSession();
-        hs.invalidate();
-        session.logOff();
-        return "/index_templated.xhtml";
-    }
-
-    /**
-     * Checks if the users acceslevel is high enough.
-     *
-     * @param accesLevel
-     * @return True if acceslevel is high enough, false if not
-     */
-    public boolean checkVisible(int accesLevel) {
-        HttpSession hs = AuthorizationUtils.getSession();
-        try {
-            List levelList = (List) hs.getAttribute("AccesLevels");
-            int level;
-
-            for (Object obj : levelList) {
-                level = (int) obj;
-                if (level == accesLevel) {
-                    return true;
-                }
-            }
-            return false;
-        } catch (NullPointerException ex) {
-            return false;
-        }
     }
 
     public String getUsername() {

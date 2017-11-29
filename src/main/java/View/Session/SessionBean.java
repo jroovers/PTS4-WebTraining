@@ -5,6 +5,7 @@
  */
 package View.Session;
 
+import Model.User;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.inject.Named;
@@ -22,12 +23,12 @@ import javax.faces.event.ComponentSystemEvent;
 @SessionScoped
 public class SessionBean implements Serializable {
 
-    boolean loggedIn;
-
-    boolean employee;
-    boolean teacher;
-    boolean manager;
-    boolean admin;
+    private boolean loggedIn;
+    private User user;
+    private boolean employee;
+    private boolean teacher;
+    private boolean manager;
+    private boolean admin;
 
     /**
      * Creates a new instance of sessionBean
@@ -100,6 +101,14 @@ public class SessionBean implements Serializable {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setAllBools(boolean status) {
