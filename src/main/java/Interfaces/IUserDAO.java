@@ -7,6 +7,7 @@ package Interfaces;
 
 import Model.User;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -58,4 +59,5 @@ public interface IUserDAO {
      * @return list of teachers from database
      */
     public List<User> getTeachers();
+    public Map<String, String> getAccountTypes();
 }

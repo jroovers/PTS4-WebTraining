@@ -10,6 +10,8 @@ import Model.User;
 import Interfaces.IUserDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.dbutils.QueryRunner;
@@ -27,6 +29,7 @@ public class UserDAOUtils implements IUserDAO {
     static final String QUERY_INSERT_USER = "INSERT INTO User(`Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`,`ID_UserType`) VALUES(?,?,?,?,?,?,?)";
     static final String QUERY_REMOVE_USER = "DELETE FROM User WHERE ID_User = ?";
     static final String QUERY_UPDATE_USER = "UPDATE User SET Name = ?, Surname = ?, Username = ?, PhoneNr = ?, Email = ?, ID_UserType = ? WHERE ID_User = ?;";
+    static final String QUERY_GET_USERTYPE = "SELECT Name, ID_UserType FROM UserType";
 
     public UserDAOUtils() {
 
@@ -155,5 +158,23 @@ public class UserDAOUtils implements IUserDAO {
             System.out.println(ex_sql.getMessage());
         }
         return users;
+    }
+
+    @Override
+    public Map<String, String> getAccountTypes() {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        ArrayListHandler alh = new ArrayListHandler();
+        Map<String, String> accountTypes = new LinkedHashMap<String, String>();
+        try {
+            List<Object[]> result = run.query(QUERY_GET_USERTYPE, alh);
+            for (Object[] o : result) {
+                accountTypes.put(o[0].toString(), o[1].toString());               
+            }
+        } catch (SQLException ex_sql) {
+            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.err.println("Failed to get users from database");
+            System.out.println(ex_sql.getMessage());
+        }
+        return accountTypes;
     }
 }

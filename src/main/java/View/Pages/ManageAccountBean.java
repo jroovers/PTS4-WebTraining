@@ -11,6 +11,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,8 +44,6 @@ public class ManageAccountBean {
      */
     public ManageAccountBean() {
         accountTypes = new LinkedHashMap<String, String>();
-        accountTypes.put("Admin", "1");
-        accountTypes.put("User", "2");
     }
 
     public User getSelectedUser() {
@@ -60,7 +60,6 @@ public class ManageAccountBean {
 
     public void setAccountType(int accountType) {
         this.accountType = accountType;
-        editUser();
     }
 
     public String getUserID() {
@@ -77,9 +76,6 @@ public class ManageAccountBean {
 
     public void setName(String name) {
         this.name = name;
-//        selectedUser.setName(name);
-//        us.editUser(selectedUser);
-        //editUser();
     }
 
     public String getSurname() {
@@ -88,7 +84,6 @@ public class ManageAccountBean {
 
     public void setSurname(String surname) {
         this.surname = surname;
-        editUser();
     }
 
     public String getEmail() {
@@ -97,7 +92,6 @@ public class ManageAccountBean {
 
     public void setEmail(String email) {
         this.email = email;
-        editUser();
     }
 
     public String getPhonenr() {
@@ -106,7 +100,6 @@ public class ManageAccountBean {
 
     public void setPhonenr(String phonenr) {
         this.phonenr = phonenr;
-        editUser();
     }
 
     public List<User> getAllUsers() {
@@ -124,13 +117,16 @@ public class ManageAccountBean {
     }
 
     public void setUsername(String username) {
-        this.username = username;
-        editUser();
+        if (username != null) {
+            this.username = username;
+        } else {
+            this.username = "Geen gebruikersnaam geregistreerd";
+        }
     }
 
     public Map<String, String> getAccountTypes() {
         //TODO:
-        //accountTpes = us.getAccountTypes();
+        accountTypes = us.getAccountTypes();
         return accountTypes;
     }
 
@@ -154,10 +150,44 @@ public class ManageAccountBean {
         return "manageaccounts";
     }
 
-    public void editUser() {
+    public String editUser() {
         User user = new User(userID, name, surname, username, phonenr, email, accountType);
-        //TODO:
-        us.editUser(user);
+        boolean succes = us.editUser(user);
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (succes) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Gebruiker aangepast", "!"));
+        } else {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Gebruiker niet aangepast, probeer later opnieuw", "!"));
+        }
+        return "manageaccounts";
     }
 
+    public String deleteUser() {
+        boolean succes = us.removeUser(Long.parseLong(userID));
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (succes) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Gebruiker verwijderd", "!"));
+        } else {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Gebruiker niet verwijderd, probeer later opnieuw", "!"));
+        }
+        return "manageaccounts";
+    }
+    
+    public void changeListener(){
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ManageAccountBean manageAccountBean = (ManageAccountBean) facesContext.getApplication().createValueBinding("#{manageAccountBean}").getValue(facesContext);
+        manageAccountBean.setUserID(manageAccountBean.getUserID());
+        long longid = Long.parseLong(manageAccountBean.getUserID());
+        for (User u : allUsers) {
+            if (u.getUserID() == longid) {
+                setName(u.getName());
+                setSurname(u.getSurname());
+                setUsername(u.getUsername());
+                setPhonenr(u.getPhoneNr());
+                setEmail(u.getEmail());
+                setAccountType(u.getAccesLevel());
+                break;
+            }
+        }
+    }
 }

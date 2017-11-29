@@ -10,6 +10,7 @@ import InfoSupportWeb.utility.UserDAOUtils;
 import Model.Course;
 import Model.User;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Stateless;
 
 /**
@@ -82,5 +83,10 @@ public class UserService {
     public List<User> getTeachers() {
         UserDAOUtils userDAOUtils = new UserDAOUtils();
         return userDAOUtils.getTeachers();
+    }
+    
+    public Map<String, String> getAccountTypes() {
+        UserDAOUtils userDAOUtils = new UserDAOUtils();
+        return userDAOUtils.getAccountTypes();
     }
 }
