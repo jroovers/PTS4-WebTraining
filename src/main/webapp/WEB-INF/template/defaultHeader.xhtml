@@ -15,28 +15,28 @@
                         <h:link styleClass="nav-link dropdown-toggle" id="dropdown01" a:data-toggle="dropdown" a:aria-haspopup="true" a:aria-expanded="false">Cursussen</h:link>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
                             <h:link styleClass="dropdown-item" outcome="/external/offertraining" value="Aanmaken"/>
-                            <h:link styleClass="dropdown-item" rendered="#{authorizationBean.checkVisible(2)}" outcome="/external/schedule" value="Informatie"/>
-                            <h:link styleClass="dropdown-item" rendered="#{authorizationBean.checkVisible(2)}" outcome="/appmanagement/courses" value="Beheren"/>     
+                            <h:link styleClass="dropdown-item" outcome="/external/schedule" value="Informatie"/>
+                            <h:link styleClass="dropdown-item" rendered="#{sessionBean.admin}" outcome="/appmanagement/courses" value="Beheren"/>     
                         </div>
                     </li>
                     <li class="nav-item">
-                        <h:link styleClass="nav-link" rendered="#{authorizationBean.checkVisible(2)}" outcome="/appmanagement/planner" value="Lesplanner"/>
+                        <h:link styleClass="nav-link" rendered="#{sessionBean.admin}" outcome="/appmanagement/planner" value="Lesplanner"/>
                     </li>
                     <li class="nav-item">
-                        <h:link styleClass="nav-link" rendered="#{authorizationBean.checkVisible(2)}" outcome="/appmanagement/personalroster" value="Docentenrooster"/>
+                        <h:link styleClass="nav-link" rendered="#{sessionBean.teacher}" outcome="/appmanagement/personalroster" value="Docentenrooster"/>
                     </li>
                     <li class="nav-item">
                         <h:link styleClass="nav-link" outcome="/external/signup" value="Inschrijfformulier"/>
                     </li>
                     
                     <li class="nav-item">
-                        <h:link styleClass="nav-link" rendered="#{authorizationBean.checkVisible(2)}" outcome="/appmanagement/manageaccounts" value="Accountbeheer"/>
+                        <h:link styleClass="nav-link" rendered="#{sessionBean.admin}" outcome="/appmanagement/manageaccounts" value="Accountbeheer"/>
                     </li> 
                     <li class="nav-item">
-                        <h:link styleClass="nav-link" rendered="#{!authorizationBean.checkVisible(2)}" outcome="/external/authorization" value="Inloggen"/>
+                        <h:link styleClass="nav-link" rendered="#{!sessionBean.loggedIn}" outcome="/external/authorization" value="Inloggen"/>
                     </li>
                     <li class="nav-item">
-                        <h:link styleClass="nav-link" rendered="#{authorizationBean.checkVisible(2)}" outcome="/external/authorization" value="Uitloggen"/>
+                        <h:commandLink styleClass="nav-link" rendered="#{sessionBean.loggedIn}" action="#{authorizationBean.quickLogout()}" value="Uitloggen"/>
                     </li>  
                      
                 </ul>

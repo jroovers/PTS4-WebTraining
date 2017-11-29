@@ -20,39 +20,53 @@ public interface IUserDAO {
      *
      * @return User List
      */
-    public List<User> getUsers();
-    
+    public List<User> getAllUsers();
+
     /**
      * Gets a User from database.
      *
      * @param username
-     * @return User 
+     * @return User
      */
-    public User getUser(String username);
-    
+    public User getUserByUsername(String username);
+
     /**
      * Adds a User to database.
      *
-     * @param user 
-     * @return  
+     * @param user
+     * @return
      */
     public boolean addUser(User user);
-    
+
     /**
      * Removes a User from database.
      *
      * @param User_ID
-     * @return  
+     * @return
      */
-    public boolean removeUser(long User_ID);
+    public boolean removeUserByID(long User_ID);
 
     /**
      * Edits an existing User.
-     * 
+     *
      * @param user
-     * @return 
+     * @return
      */
     public boolean editUser(User user);
-    
-    public Map<String, String> getAccountTypes();
+
+    /**
+     * Returns a map with string description and id's of all possible usertypes.
+     *
+     * @return
+     */
+    public Map<String, String> getAllAccountTypes();
+
+    /**
+     * Returns a list with all the accounttype ID's that are assigned to a
+     * registered user.
+     *
+     * @param ID_user user to check accounttypes of
+     * @return list of usertype ID's.
+     */
+    public List<Long> getUserTypesByUserID(long ID_user);
 }
