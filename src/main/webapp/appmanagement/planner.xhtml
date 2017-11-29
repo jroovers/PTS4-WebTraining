@@ -28,13 +28,14 @@
                                 <p:dataTable id="dt_courseselect"
                                              var="course" 
                                              value="#{plannerBean.courses}" 
+                                             filteredValue="#{plannerBean.filteredCourses}"
                                              selectionMode="single" 
                                              selection="#{plannerBean.selectedCourse}" 
-                                             rowKey="#{plannerBean.courseID}"
+                                             rowKey="#{course.id}"
                                              widgetVar="courseTable"
-                                             filteredValue="#{plannerBean.filteredLessons}"
                                              scrollable="true"
-                                             scrollHeight="300">
+                                             scrollHeight="200">
+                                    <p:ajax event="rowSelect" />
                                     <f:facet name="header">
                                         <p:outputPanel>
                                             <h:outputText value="Zoeken: " />
@@ -48,6 +49,34 @@
 
                                     <p:column filterBy="#{course.name}" filterStyle="display:none" filterMatchMode="contains">
                                         <h:outputText value="#{course.name}" />
+                                    </p:column>
+                                </p:dataTable>
+                                <br/>
+                                <p:outputLabel for="dt_teacherselect" value="Kies een leraar voor de training"/>
+                                <p:dataTable id="dt_teacherselect"
+                                             var="user" 
+                                             value="#{plannerBean.teachers}" 
+                                             filteredValue="#{plannerBean.filteredTeachers}"
+                                             selectionMode="single" 
+                                             selection="#{plannerBean.selectedTeacher}" 
+                                             rowKey="#{user.userID}"
+                                             widgetVar="teacherTable"
+                                             scrollable="true"
+                                             scrollHeight="100">
+                                    <p:ajax event="rowSelect" />
+                                    <f:facet name="header">
+                                        <p:outputPanel>
+                                            <h:outputText value="Zoeken: " />
+                                            <p:inputText id="globalFilter" onkeyup="PF('teacherTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                                        </p:outputPanel>
+                                    </f:facet>
+
+                                    <p:column filterBy="#{user.name}" filterStyle="display:none" filterMatchMode="contains">
+                                        <h:outputText value="#{user.name}" />
+                                    </p:column>
+
+                                    <p:column filterBy="#{user.phoneNr}" filterStyle="display:none" filterMatchMode="contains">
+                                        <h:outputText value="#{user.phoneNr}" />
                                     </p:column>
                                 </p:dataTable>
                             </div>
@@ -78,13 +107,15 @@
                                 <p:dataTable id="dt_lessonselect"
                                              var="lesson" 
                                              value="#{plannerBean.lessons}" 
+                                             filteredValue="#{plannerBean.filteredLessons}"
                                              selectionMode="single" 
                                              selection="#{plannerBean.selectedLesson}" 
                                              widgetVar="lessonsTable"
-                                             rowKey="#{plannerBean.lessonID}"
-                                             filteredValue="#{plannerBean.filteredLessons}"
+                                             rowKey="#{lesson.id}"
                                              scrollable="true"
                                              scrollHeight="300">
+                                    <p:ajax event="rowSelect"/>
+
                                     <f:facet name="header">
                                         <p:outputPanel>
                                             <h:outputText value="Zoeken: " />

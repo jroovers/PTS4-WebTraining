@@ -1,15 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Pages;
 
 import Controller.CourseService;
 import Controller.LessonService;
 import Controller.LocationService;
+import Controller.UserService;
 import Model.Course;
 import Model.Lesson;
+import Model.User;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -25,7 +22,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 /**
- *
  * @author Jeroen Roovers, Ricardo van Dijke
  */
 @Named(value = "plannerBean")
@@ -35,18 +31,23 @@ public class PlannerBean {
     @Inject
     LessonService lessonService;
     @Inject
+    UserService userService;
+    @Inject
     CourseService courseService;
     @Inject
     LocationService locationService;
 
-    private long courseID;
-    private long lessonID;
     private String location;
     private List<Course> courses;
+    private List<Course> filteredCourses;
+
+    private List<User> teachers;
+    private List<User> filteredTeachers;
     private List<Lesson> lessons;
     private List<Lesson> filteredLessons;
-    private Lesson selectedLesson;
     private Course selectedCourse;
+    private User selectedTeacher;
+    private Lesson selectedLesson;
 
     private List<String> locations;
     private Date startDate;
@@ -64,38 +65,16 @@ public class PlannerBean {
         }
         if (lessons == null) {
             lessons = lessonService.getLessons();
-            filteredLessons = lessons;
             Comparator<Lesson> timecompare = (Lesson o1, Lesson o2) -> o1.getStartTime().compareTo(o2.getStartTime());
             Collections.sort(lessons, timecompare);
+        }
+        if (teachers == null) {
+            teachers = userService.getTeachers();
         }
         if (locations == null) {
             locations = locationService.getLocations();
             Collections.sort(locations);
         }
-    }
-
-    public Course getSelectedCourse() {
-        return selectedCourse;
-    }
-
-    public void setSelectedCourse(Course course) {
-        this.selectedCourse = course;
-    }
-
-    public long getLessonID() {
-        return lessonID;
-    }
-
-    public void setLessonID(long lessonID) {
-        this.lessonID = lessonID;
-    }
-    
-     public long getCourseID() {
-        return courseID;
-    }
-
-    public void setCourseID(long courseID) {
-        this.courseID = courseID;
     }
 
     public Date getStartDate() {
@@ -122,6 +101,26 @@ public class PlannerBean {
         this.courses = courses;
     }
 
+    public List<Course> getFilteredCourses() {
+        return filteredCourses;
+    }
+
+    public void setFilteredCourses(List<Course> filteredCourses) {
+        this.filteredCourses = filteredCourses;
+    }
+
+    public List<User> getTeachers() {
+        return teachers;
+    }
+
+    public List<User> getFilteredTeachers() {
+        return filteredTeachers;
+    }
+
+    public void setFilteredTeachers(List<User> filteredTeachers) {
+        this.filteredTeachers = filteredTeachers;
+    }
+
     public List<Lesson> getLessons() {
         return lessons;
     }
@@ -134,8 +133,8 @@ public class PlannerBean {
         return filteredLessons;
     }
 
-    public void setFilteredLessons(List<Lesson> filteredlessons) {
-        this.filteredLessons = filteredlessons;
+    public void setFilteredLessons(List<Lesson> filteredLessons) {
+        this.filteredLessons = filteredLessons;
     }
 
     public Lesson getSelectedLesson() {
@@ -144,6 +143,22 @@ public class PlannerBean {
 
     public void setSelectedLesson(Lesson selectedLesson) {
         this.selectedLesson = selectedLesson;
+    }
+
+    public Course getSelectedCourse() {
+        return selectedCourse;
+    }
+
+    public void setSelectedCourse(Course course) {
+        this.selectedCourse = course;
+    }
+
+    public User getSelectedTeacher() {
+        return selectedTeacher;
+    }
+
+    public void setSelectedTeacher(User selectedTeacher) {
+        this.selectedTeacher = selectedTeacher;
     }
 
     public List<String> getLocations() {
@@ -155,23 +170,21 @@ public class PlannerBean {
     }
 
     public String submitLesson() {
+        System.out.println(selectedCourse.getShortString());
         GregorianCalendar starttime = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
         starttime.setTime(startDate);
         starttime.add(Calendar.HOUR_OF_DAY, 12);
         GregorianCalendar endtime = (GregorianCalendar) starttime.clone();
-        for (Course c : courses) {
-            if (courseID == c.getId()) {
-                if (c.getDurationInDays() > 1) {
-                    endtime.add(GregorianCalendar.DAY_OF_YEAR, c.getDurationInDays() - 1);
-                }
-            }
+
+        if (selectedCourse.getDurationInDays() > 1) {
+            endtime.add(GregorianCalendar.DAY_OF_YEAR, selectedCourse.getDurationInDays() - 1);
         }
 
         Lesson newLesson = new Lesson(selectedCourse);
         newLesson.setLocation(location);
         newLesson.setStartTime(starttime);
         newLesson.setEndTime(endtime);
-
+        newLesson.setTeacher(selectedTeacher);
         lessonService.addLesson(newLesson);
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training opgeslagen", "whoopizz"));

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Interfaces;
 
 import Model.Lesson;
@@ -10,7 +5,7 @@ import java.util.List;
 
 /**
  *
- * @author Jorian
+ * @author Jorian, Ricardo
  */
 public interface ILessonDAO {
        

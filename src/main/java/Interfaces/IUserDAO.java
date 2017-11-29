@@ -69,4 +69,11 @@ public interface IUserDAO {
      * @return list of usertype ID's.
      */
     public List<Long> getUserTypesByUserID(long ID_user);
+
+    /**
+     * gets list of teachers from database
+     *
+     * @return list of teachers from database
+     */
+    public List<User> getTeachers();
 }
