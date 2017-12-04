@@ -9,6 +9,7 @@
         <link rel="icon" href="http://getbootstrap.com/favicon.ico"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
         <h:outputStylesheet library="style" name="StickyHeaderFooter.css" />
+        <h:outputStylesheet library="style" name="DefaultTemplateStyle.css" />
         <link rel="stylesheet" href="http://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/sticky-footer-navbar.css"/>
         <title>
             <ui:insert name="title">
@@ -16,14 +17,14 @@
             </ui:insert>
         </title>
     </h:head>
-    <h:body>
+    <h:body class="template-body">
         <div id="page">
-            <div id="header">
+            <div class="w3-container"  id="header">
                 <ui:insert name="header" >
                     <ui:include src="../template/defaultHeader.xhtml" />
                 </ui:insert>
             </div>
-            <div id="content">
+            <div class="defaultContent" id="content">
                 <ui:insert name="content" >
                 </ui:insert>
             </div>

@@ -1,0 +1,23 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 22-nov-2017, 15:48:03
+    Author     : Jowelle
+*/
+
+body
+{
+    
+}
+
+#content
+{
+    font-family: "proxima-nova","Helvetica Neue",Helvetica,Arial,sans-serif;
+    padding-top: 5% !important;
+    padding-bottom: 4%;    
+    padding-left: 0;
+    padding-right: 0;
+}
