@@ -35,36 +35,37 @@
 
             <div class="eventData">
                 <h:form id="eventDetails" >
-                    <p:panelGrid columns="2">
+                    <p:panelGrid columns="2" columnClasses="firstColumn, secondColumn">
                         <p:outputLabel for="title" value="Cursus:" />
                         <p:outputLabel id="title" value="#{personalRosterBean.selectedLesson.course.name}" />
 
-                        <p:outputLabel value="Begindatum" />
+                        <p:outputLabel value="Begindatum:" />
                         <h:outputFormat value="{0, date, yyyy-MM-dd}">
                             <f:param value="#{personalRosterBean.selectedLesson.startTime.time}" />
                         </h:outputFormat>
 
-                        <p:outputLabel value="Einddatum" />
+                        <p:outputLabel value="Einddatum:" />
                         <h:outputFormat value="{0, date, yyyy-MM-dd}">
                             <f:param value="#{personalRosterBean.selectedLesson.endTime.time}" />
                         </h:outputFormat>
 
-                        <p:outputLabel for="location" value="Locatie" />
+                        <p:outputLabel for="location:" value="Locatie" />
                         <p:outputLabel id="location" value="#{personalRosterBean.selectedLesson.location}"/>
 
-                        <p:outputLabel for="description" value="Beschrijving" />
+                        <p:outputLabel for="description:" value="Beschrijving" />
                         <p:outputLabel id="description" value="#{personalRosterBean.selectedLesson.course.description}"/>
                     </p:panelGrid>
 
+                    <br/>
                     <h2>Aanmeldingen</h2>
                     <p:dataTable value = "#{personalRosterBean.selectedLesson.registrations}" 
                                  var ="registration"
                                  styleClass = "registrationTable">
-                        <p:column>    				
+                        <p:column width="100">    				
                             <f:facet name = "header">Name</f:facet>    				
                                 #{registration.name} #{registration.surname}
                         </p:column>
-                        <p:column>
+                        <p:column width="200">
                             <f:facet name = "header">Email</f:facet>
                                 #{registration.email}
                         </p:column>
