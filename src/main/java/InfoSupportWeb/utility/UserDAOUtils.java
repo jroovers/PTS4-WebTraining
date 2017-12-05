@@ -29,14 +29,15 @@ public class UserDAOUtils implements IUserDAO {
     static final String QUERY_INSERT_USER = "INSERT INTO User(`Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`,`ID_UserType`) VALUES(?,?,?,?,?,?,?)";
     static final String QUERY_REMOVE_USER = "DELETE FROM User WHERE ID_User = ?";
     static final String QUERY_UPDATE_USER = "UPDATE User SET Name = ?, Surname = ?, Username = ?, PhoneNr = ?, Email = ?, ID_UserType = ? WHERE ID_User = ?;";
-    static final String QUERY_GET_USERTYPE = "SELECT Name, ID_UserType FROM UserType";
+    static final String QUERY_GET_ALL_USERTYPES = "SELECT Name, ID_UserType FROM UserType";
+    static final String QUERY_GET_USER_USERTYPES = "SELECT ut.ID_UserType FROM User_UserType ut, User u WHERE u.ID_User = ut.ID_User AND u.ID_User = ?";
 
     public UserDAOUtils() {
 
     }
 
     @Override
-    public List<User> getUsers() {
+    public List<User> getAllUsers() {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ArrayListHandler alh = new ArrayListHandler();
         List<User> users = new ArrayList<>();
@@ -65,7 +66,7 @@ public class UserDAOUtils implements IUserDAO {
     }
 
     @Override
-    public User getUser(String username) {
+    public User getUserByUsername(String username) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ArrayListHandler alh = new ArrayListHandler();
         User user = null;
@@ -108,7 +109,7 @@ public class UserDAOUtils implements IUserDAO {
     }
 
     @Override
-    public boolean removeUser(long User_ID) {
+    public boolean removeUserByID(long User_ID) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
         Object[] params = new Object[]{User_ID};
@@ -161,14 +162,14 @@ public class UserDAOUtils implements IUserDAO {
     }
 
     @Override
-    public Map<String, String> getAccountTypes() {
+    public Map<String, String> getAllAccountTypes() {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ArrayListHandler alh = new ArrayListHandler();
-        Map<String, String> accountTypes = new LinkedHashMap<String, String>();
+        Map<String, String> accountTypes = new LinkedHashMap<>();
         try {
-            List<Object[]> result = run.query(QUERY_GET_USERTYPE, alh);
+            List<Object[]> result = run.query(QUERY_GET_ALL_USERTYPES, alh);
             for (Object[] o : result) {
-                accountTypes.put(o[0].toString(), o[1].toString());               
+                accountTypes.put(o[0].toString(), o[1].toString());
             }
         } catch (SQLException ex_sql) {
             System.out.println("SQL Exception code " + ex_sql.getErrorCode());
@@ -176,5 +177,24 @@ public class UserDAOUtils implements IUserDAO {
             System.out.println(ex_sql.getMessage());
         }
         return accountTypes;
+    }
+
+    @Override
+    public List<Long> getUserTypesByUserID(long ID_user) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        Object[] params = new Object[]{ID_user};
+        ArrayListHandler alh = new ArrayListHandler();
+        List<Long> usertypes = new ArrayList<>();
+        try {
+            List<Object[]> result = run.query(QUERY_GET_USER_USERTYPES, params, alh);
+            for (Object[] o : result) {
+                usertypes.add(Long.parseLong(o[0].toString()));
+            }
+        } catch (SQLException ex_sql) {
+            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.err.println("Failed to get users from database");
+            System.out.println(ex_sql.getMessage());
+        }
+        return usertypes;
     }
 }

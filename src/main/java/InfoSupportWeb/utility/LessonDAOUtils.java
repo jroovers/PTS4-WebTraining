@@ -230,19 +230,19 @@ public class LessonDAOUtils implements ILessonDAO {
                 endTime.setTime(o[3] == null ? null : Date.valueOf(o[3].toString()));
 
                 Lesson lesson = new Lesson(
-                        o[0] == null ? -1 : Long.parseLong(o[0].toString()),
+                        o[1] == null ? -1 : Long.parseLong(o[1].toString()),
                         beginTime,
                         endTime,
                         o[4] == null ? null : o[4].toString(),
                         new Course(
-                                o[6] == null ? -1 : Long.parseLong(o[6].toString()),
-                                o[7] == null ? null : o[7].toString(),
+                                o[5] == null ? -1 : Long.parseLong(o[5].toString()),
                                 o[8] == null ? null : o[8].toString(),
                                 o[9] == null ? null : o[9].toString(),
+                                o[10] == null ? null : o[10].toString(),
                                 null,
-                                o[12] == null ? null : o[10].toString(),
-                                o[13] == null ? null : Integer.parseInt(o[12].toString()),
-                                o[14] == null ? null : Double.parseDouble(o[13].toString())
+                                o[11] == null ? null : o[11].toString(),
+                                o[13] == null ? null : Integer.parseInt(o[13].toString()),
+                                o[14] == null ? null : Double.parseDouble(o[14].toString())
                         )
                 );
 

@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -22,7 +23,7 @@ import org.junit.Ignore;
  *
  * @author Jorian
  */
-@Ignore
+
 public class LessonServiceTest {
     
     private Course c1;
@@ -64,6 +65,7 @@ public class LessonServiceTest {
         l1.setLocation(location);
         l1.setStartTime(startTime);
         l1.setEndTime(endTime);
+        l1.setTeacher(u1);
         l1.setId(1);
         
         l2.setLocation(location);
@@ -76,19 +78,7 @@ public class LessonServiceTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of addLesson method, of class LessonService.
-     */
-    @Test
-    public void testAddLesson_Lesson() throws Exception {
-        System.out.println("addLesson");
-        Lesson expResult = l1;
-        Lesson result = lessonService.addLesson(l1);
-        assertNotNull(result.getId());
-        assertEquals(expResult.getLessonString(), result.getLessonString());
-        assertEquals(expResult.getLocation(), result.getLocation());
-        assertEquals(expResult.getStartTime(), result.getStartTime());
-    }
+   
 
     /**
      * Test of getLessons method, of class LessonService.
@@ -122,6 +112,21 @@ public class LessonServiceTest {
         boolean result = lessonService.deleteLesson(l1.getId());
         assertEquals(expResult, result);
     }
+    
+     /**
+     * Test of addLesson method, of class LessonService.
+     */
+    @Test
+    @Ignore
+    public void testAddLesson_Lesson() throws Exception {
+        System.out.println("addLesson");
+        Lesson expResult = l1;
+        Lesson result = lessonService.addLesson(l1);
+        assertNotNull(result.getId());
+        assertEquals(expResult.getLessonString(), result.getLessonString());
+        assertEquals(expResult.getLocation(), result.getLocation());
+        assertEquals(expResult.getStartTime(), result.getStartTime());
+    }
 
     /**
      * Test of getLessonsFromCourse method, of class LessonService.
@@ -135,9 +140,26 @@ public class LessonServiceTest {
     
     @Test
     public void testGetLessonsAndRegistrationsByTeacher() throws Exception {
-        System.out.println("getLessonsFromCourse");
+        System.out.println("getLessonsAndRegistrationsByTeacher");
         u1.setUserID(1);
+
         List<Lesson> result = lessonService.GetLessonsAndRegistrationsByTeacher(u1.getUserID());
         assertTrue(!result.isEmpty());
     }
+    
+    @Test
+    public void testGetLessonsAndRegisterationByEmail() throws Exception {
+        System.out.println("getLessonsAndRegistrationBijEmail");
+        List<Lesson> result = lessonService.GetLessonsAndRegistrationsByEmail(u1.getEmail());
+        assertTrue(!result.isEmpty());
+    }
+    
+    @Test
+    public void testSingUpUser(){
+        System.out.println("signUpUser");
+        long result = lessonService.signUpUser(l1.getId(), u1.getUserID());
+        assertNotEquals(null, result);
+    }
+    
+    
 }

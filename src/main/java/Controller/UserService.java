@@ -41,7 +41,7 @@ public class UserService {
      */
     public List<User> getUsers() {
         UserDAOUtils userDAOUtils = new UserDAOUtils();
-        return userDAOUtils.getUsers();
+        return userDAOUtils.getAllUsers();
     }
 
     /**
@@ -51,7 +51,7 @@ public class UserService {
      */
     public User getUser(String username) {
         UserDAOUtils userDAOUtils = new UserDAOUtils();
-        return userDAOUtils.getUser(username);
+        return userDAOUtils.getUserByUsername(username);
     }
 
     /**
@@ -62,7 +62,7 @@ public class UserService {
      */
     public boolean removeUser(long user_ID) {
         UserDAOUtils userDAOUtils = new UserDAOUtils();
-        return userDAOUtils.removeUser(user_ID);
+        return userDAOUtils.removeUserByID(user_ID);
     }
     
     /**
@@ -87,6 +87,6 @@ public class UserService {
     
     public Map<String, String> getAccountTypes() {
         UserDAOUtils userDAOUtils = new UserDAOUtils();
-        return userDAOUtils.getAccountTypes();
+        return userDAOUtils.getAllAccountTypes();
     }
 }
