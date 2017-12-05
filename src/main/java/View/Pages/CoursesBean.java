@@ -265,7 +265,7 @@ public class CoursesBean implements Serializable {
     public boolean addCourse() {
         if (!name.equals("") && !code.equals("")) {
 
-            if (!description.isEmpty() && !keywords.isEmpty() && !requiredKnowledge.isEmpty() && !cursusMaterial.isEmpty() && !timeInDays.isEmpty() && !cost.isEmpty() && !requiredKnowledge.isEmpty()) {
+            if (!description.isEmpty() && !keywords.isEmpty() && !requiredKnowledge.isEmpty() && !cursusMaterial.isEmpty() && !timeInDays.isEmpty() && !cost.isEmpty()) {
 
                 double nCost = 0;
                 int nTimeIndDays = 0;
@@ -476,14 +476,14 @@ public class CoursesBean implements Serializable {
      */
     public String splitStringList(String[] list) {
         String value = "";
-        boolean first = true;
+      //  boolean first = true;
         for (String s : list) {
-            if (!first) {
+//            if (!first) {
                 value = value + ", ";
-            } else {
-                s:
-                value = s;
-            }
+//            } else {
+//                s:
+//                value = s;
+//            }
         }
         return value;
     }
