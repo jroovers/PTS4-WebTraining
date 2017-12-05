@@ -20,20 +20,20 @@
             <hr/>
             <p:growl id="msgs" showDetail="true"/>
 
-            <p:dataTable id="userForm" var="user" value="#{manageAccountBean.users}" editable="true" editMode="cell" widgetVar="cellUsers" filteredValue="#{manageAccountBean.filteredUsers}">
+            <p:dataTable id="userDataTable" var="user" value="#{manageAccountBean.users}" editable="true" editMode="cell" widgetVar="cellUsers">
                 <f:facet name="header">
                     Aanpassen door te klikken
                 </f:facet>
 
-                <p:ajax event="cellEdit" listener="#{manageAccountBean.onCellEdit(event)}" update=":form:msgs" />
+                <p:ajax event="cellEdit" listener="#{manageAccountBean.onCellEdit}" update=":form:msgs" />
 
-                <p:column headerText="UserID" filterBy="#{user[column.property]}" sortBy="#{user[column.property]}" >
+                <p:column headerText="UserID">
                     <p:column>
                         <h:outputText value="#{user.userID}" />
                     </p:column>
                 </p:column>
 
-                <p:column headerText="Naam" sortBy="#{user[column.property]}" filterBy="#{user[column.property]}">
+                <p:column headerText="Naam">
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{user.name}" /></f:facet>
                         <f:facet name="input"><p:inputText value="#{user.name}" style="width:96%" label="Naam"/></f:facet>
@@ -77,7 +77,7 @@
 
             </p:dataTable>
 
-            <p:contextMenu for="userForm" widgetVar="cMenu">   
+            <p:contextMenu for="userDataTable" widgetVar="cMenu">   
                 <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellUsers').showCellEditor();return false;"/>  
                 <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
             </p:contextMenu> 
