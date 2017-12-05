@@ -19,6 +19,7 @@ import org.primefaces.component.datatable.DataTable;
 public class ManageAccountBean implements Serializable {
 
     private List<User> users;
+    private List<User> filteredUsers;
 
     @Inject
     UserService us;
@@ -32,6 +33,14 @@ public class ManageAccountBean implements Serializable {
         return users;
     }
 
+    public List<User> getFilteredUsers() {
+        return filteredUsers;
+    }
+
+    public void setFilteredUsers(List<User> filteredUsers) {
+        this.filteredUsers = filteredUsers;
+    }
+    
     public void onRowEdit(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("User Editted", Long.toString(((User) event.getObject()).getUserID()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -82,7 +91,7 @@ public class ManageAccountBean implements Serializable {
         }
 
         if (newValue != null && !newValue.equals(oldValue)) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Gebruiker aangepast", "Oud: " + oldValue + ", Nieuw:" + newValue);
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }
