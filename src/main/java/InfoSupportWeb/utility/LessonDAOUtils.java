@@ -31,7 +31,7 @@ public class LessonDAOUtils implements ILessonDAO {
     static final String QUERY_INSERT_LESSON = "INSERT INTO Lesson(StartTime, EndTime, Location, ID_Course,Teacher_ID_User) VALUES(?,?,?,?,?)";
     static final String QUERY_GET_LESSONS_FROM_COURSE = "SELECT l.*, c.* FROM Lesson l, Course c WHERE l.ID_Course=c.ID_Course AND l.ID_Course = ?";
     static final String QUERY_GET_LESSONS_BY_TEACHER = "SELECT L.*, C.* FROM Lesson L, Course C WHERE L.Teacher_ID_User = ? AND L.ID_Course = C.ID_Course";
-    static final String QUERY_GET_LESSONS_BY_EMAIL = "SELECT DISTINCT(u.ID_User), c.*, lr.ID_Lesson from User u, Course c, Lesson_Registration lr, Lesson l WHERE u.ID_User = lr.ID_User AND lr.ID_Lesson = l.ID_Lesson and c.ID_Course = l.ID_Course AND u.Email = ?";
+    static final String QUERY_GET_LESSONS_BY_EMAIL = "SELECT DISTINCT(u.ID_User), l.*, c.*, lr.ID_Lesson from User u, Course c, Lesson_Registration lr, Lesson l WHERE u.ID_User = lr.ID_User AND lr.ID_Lesson = l.ID_Lesson and c.ID_Course = l.ID_Course AND u.Email = ?";
     static final String QUERY_GET_USERS_BY_LESSON = "SELECT U.Name, U.Surname, U.Email, U.PhoneNr from User U, Lesson_Registration LR WHERE LR.ID_User = U.ID_User AND LR.ID_Lesson = ?";
     static final String QUERY_UPDATE_LESSON = "UPDATE Lesson SET StartTime = ?, EndTime = ?, Location = ?, ID_Course = ? WHERE ID_Lesson = ?";
     static final String QUERY_REMOVE_LESSON = "DELETE FROM Lesson WHERE ID_Lesson = ?";
@@ -225,24 +225,24 @@ public class LessonDAOUtils implements ILessonDAO {
             for (Object[] o : result) {
 
                 Calendar beginTime = new GregorianCalendar();
-                beginTime.setTime(o[1] == null ? null : Date.valueOf(o[1].toString()));
+                beginTime.setTime(o[2] == null ? null : Date.valueOf(o[2].toString()));
                 Calendar endTime = new GregorianCalendar();
-                endTime.setTime(o[2] == null ? null : Date.valueOf(o[2].toString()));
+                endTime.setTime(o[3] == null ? null : Date.valueOf(o[3].toString()));
 
                 Lesson lesson = new Lesson(
-                        o[0] == null ? -1 : Long.parseLong(o[0].toString()),
+                        o[1] == null ? -1 : Long.parseLong(o[1].toString()),
                         beginTime,
                         endTime,
-                        o[3] == null ? null : o[3].toString(),
+                        o[4] == null ? null : o[4].toString(),
                         new Course(
-                                o[6] == null ? -1 : Long.parseLong(o[6].toString()),
-                                o[7] == null ? null : o[7].toString(),
+                                o[5] == null ? -1 : Long.parseLong(o[5].toString()),
                                 o[8] == null ? null : o[8].toString(),
                                 o[9] == null ? null : o[9].toString(),
-                                null,
                                 o[10] == null ? null : o[10].toString(),
-                                o[12] == null ? null : Integer.parseInt(o[12].toString()),
-                                o[13] == null ? null : Double.parseDouble(o[13].toString())
+                                null,
+                                o[11] == null ? null : o[11].toString(),
+                                o[13] == null ? null : Integer.parseInt(o[13].toString()),
+                                o[14] == null ? null : Double.parseDouble(o[14].toString())
                         )
                 );
 
