@@ -17,7 +17,7 @@
                 <h1>Selecteer een training en schrijf je in!</h1>
                 <hr/>                
                 <h:form id="userForm">
-                    <ui:fragment rendered="#{!authorizationBean.checkVisible(2)}">
+                    <ui:fragment rendered="#{!sessionBean.loggedIn}">
                         <div>
                             <h3>Vul je gegevens in</h3>
                             <hr/>

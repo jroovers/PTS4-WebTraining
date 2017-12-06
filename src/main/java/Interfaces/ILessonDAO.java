@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Interfaces;
 
 import Model.Lesson;
@@ -10,7 +5,7 @@ import java.util.List;
 
 /**
  *
- * @author Jorian
+ * @author Jorian, Ricardo
  */
 public interface ILessonDAO {
        
@@ -65,4 +60,12 @@ public interface ILessonDAO {
      * @param user_ID id of the user logged in
      */
     public long signUpUser(long lesson_ID, long user_ID);
+    
+    /**
+     * Signs an user to the Database on the lesson he/she selected.
+     * 
+     * @param email email from user
+     * @return 
+     */
+    public List<Lesson> getLessonsByUserEmail(String email);
 }

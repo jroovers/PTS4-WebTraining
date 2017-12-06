@@ -25,10 +25,17 @@ CREATE TABLE IF NOT EXISTS `Category` (
 /*!40000 ALTER TABLE `Category` ENABLE KEYS */;
 
 INSERT INTO `Category` (Name) VALUES
-	('Design'),
-	('Java'),
+	('UIX'),
+    ('Software Design'),
+    ('Java'),
+    ('C#'),
+	('Webapplicaties'),
+    ('Applicatiebeheer'),
+    ('BI'),
+    ('Deployment'),
+    ('Databases'),
 	('Office'),
-	('Sql');
+	('SQL');
 
 -- Dumping structure for table db_dev_infosupport.Category
 DROP TABLE IF EXISTS `UserGroup`;
@@ -44,10 +51,12 @@ CREATE TABLE IF NOT EXISTS `UserGroup` (
 /*!40000 ALTER TABLE `Category` ENABLE KEYS */;
 
 INSERT INTO `UserGroup` (Name) VALUES
-    ('Instroom 2017'),
+    ('MDWK Instroom 2017'),
     ('MDWK Basiskennis'),
     ('MDWK Nieuwe Medewerkers'),
-    ('MDWK Senior Medewerkers');
+    ('MDWK Senior Medewerkers'),
+    ('MDWK Unit Managers'),
+    ('MDWK Raad v Bestuur');
 
 -- Dumping structure for table db_dev_infosupport.Course
 DROP TABLE IF EXISTS `Course`;
@@ -82,9 +91,10 @@ DROP TABLE IF EXISTS `Course_Category`;
 CREATE TABLE IF NOT EXISTS `Course_Category` (
   `ID_Course` int(11) NOT NULL,
   `ID_Category` int(11) NOT NULL,
-  KEY `fk_Category_Cours` (`ID_Course`),
+  PRIMARY KEY (`ID_Course`, `ID_Category`),
+  KEY `fk_Category_Course` (`ID_Course`),
   KEY `fk_Category_Category` (`ID_Category`),
-  CONSTRAINT `fk_Category_Cours` FOREIGN KEY (`ID_Course`) REFERENCES `Course` (`ID_Course`) ON DELETE CASCADE,
+  CONSTRAINT `fk_Category_Course` FOREIGN KEY (`ID_Course`) REFERENCES `Course` (`ID_Course`) ON DELETE CASCADE,
   CONSTRAINT `fk_Category_Category` FOREIGN KEY (`ID_Category`) REFERENCES `Category` (`ID_Category`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -107,11 +117,12 @@ CREATE TABLE IF NOT EXISTS `Course_PriorKnowledge` (
 /*!40000 ALTER TABLE `Course_PriorKnowledge` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Course_PriorKnowledge` ENABLE KEYS */;
 
--- Dumping structure for table db_dev_infosupport.Course_TargetUsers
+-- Dumping structure for table db_dev_infosupport.Course_UserGroup
 DROP TABLE IF EXISTS `Course_UserGroup`;
 CREATE TABLE IF NOT EXISTS `Course_UserGroup` (
   `ID_Course` int(11) NOT NULL,
   `ID_UserGroup` int(11) NOT NULL,
+  PRIMARY KEY (`ID_Course`, `ID_UserGroup`),
   KEY `fk_TargerUsers_Course` (`ID_Course`),
   KEY `fk_TargerUsers_UserGroup` (`ID_UserGroup`),
   CONSTRAINT `fk_TargetUsers_Course` FOREIGN KEY (`ID_Course`) REFERENCES `Course` (`ID_Course`) ON DELETE CASCADE,
@@ -120,8 +131,8 @@ CREATE TABLE IF NOT EXISTS `Course_UserGroup` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dumping data for table db_dev_infosupport.Course_TargetUsers: ~0 rows (approximately)
-/*!40000 ALTER TABLE `Course_TargetUsers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Course_TargetUsers` ENABLE KEYS */;
+/*!40000 ALTER TABLE `Course_UserGroup` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Course_UserGroup` ENABLE KEYS */;
 
 -- Dumping structure for table db_dev_infosupport.Lesson
 DROP TABLE IF EXISTS `Lesson`;
@@ -131,9 +142,12 @@ CREATE TABLE IF NOT EXISTS `Lesson` (
   `EndTime` date NOT NULL,
   `Location` varchar(30) NOT NULL,
   `ID_Course` int(11) NOT NULL,
+  `Teacher_ID_User` int(11),
   PRIMARY KEY (`ID_Lesson`),
   KEY `fk_Lesson_ID_Course` (`ID_Course`),
-  CONSTRAINT `fk_Lesson_ID_Course` FOREIGN KEY (`ID_Course`) REFERENCES `Course` (`ID_Course`) ON DELETE CASCADE
+  KEY `fk_Lesson_Teacher_ID_User` (`Teacher_ID_User`),
+  CONSTRAINT `fk_Lesson_ID_Course` FOREIGN KEY (`ID_Course`) REFERENCES `Course` (`ID_Course`) ON DELETE CASCADE,
+  CONSTRAINT `fk_Lesson_Teacher_ID_User` FOREIGN KEY (`Teacher_ID_User`) REFERENCES `User` (`ID_User`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=188 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table db_dev_infosupport.Lesson: ~159 rows (approximately)
@@ -427,9 +441,10 @@ CREATE TABLE IF NOT EXISTS `UserType` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `UserType` (`ID_UserType`, `Name`) VALUES
-	(1, 'Guest'),
-	(2, 'Admin'),
-	(3, 'User');
+	(1, 'Medewerker Info Support'),
+	(2, 'Docent Info Support'),
+	(3, 'Business Unit Manager'),
+    (4, 'Medewerker Kenniscentrum');
 
 -- Dumping data for table db_dev_infosupport.UserType: ~0 rows (approximately)
 /*!40000 ALTER TABLE `UserType` DISABLE KEYS */;
@@ -456,9 +471,30 @@ CREATE TABLE IF NOT EXISTS `User` (
 INSERT INTO `User` (`ID_User`, `Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`,`ID_UserType`) VALUES
 	(1, 'Frank', 'franken', 'Frankster', 'frankisthebest', '001234', 'Frankster@TheG.com', 2),
 	(2, 'Bert', 'bertus','Bertster','bertisthebest','004321','BertusThebertustest@banana.com', 1),
-	(3, 'Kyle', 'bendover','Bender','BendingLoverxx','09000900','Kylethe****Lover@gmail.com', 3),
-	(4, 'Bart', 'nobendover','Appeltje','banaan','004312321','KyleTheWeab@msn.com', 4);
+	(3, 'Kyle', 'Raaij','Bender','Bender','09000900','KyleVanRaaij@gmail.com', 3),
+	(4, 'Bartel-Jaap', 'van Rundfunk','BJ','barteljaap','004312321','Barteljaap@msn.com', 4);
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
+
+DROP TABLE IF EXISTS `User_UserType`;
+CREATE TABLE IF NOT EXISTS `User_UserType` (
+  `ID_User` int(11) NOT NULL,
+  `ID_UserType` int(11) NOT NULL,
+  PRIMARY KEY (`ID_User`, `ID_UserType`),
+  KEY `fk_Roles_User` (`ID_User`),
+  KEY `fk_Roles_Authorization` (`ID_UserType`),
+  CONSTRAINT `fk_Roles_User` FOREIGN KEY (`ID_User`) REFERENCES `User` (`ID_User`) ON DELETE CASCADE,
+  CONSTRAINT `fk_Roles_Authorization` FOREIGN KEY (`ID_UserType`) REFERENCES `UserType` (`ID_UserType`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*!40000 ALTER TABLE `User_UserType` DISABLE KEYS */;
+INSERT INTO `User_UserType` (`ID_User`, `ID_UserType`) VALUES
+	(1, 1),
+    (2, 1),
+    (3, 1),
+    (3, 3),
+    (4, 1),
+    (4, 4);
+/*!40000 ALTER TABLE `User_UserType` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

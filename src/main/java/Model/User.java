@@ -5,9 +5,11 @@
  */
 package Model;
 
+import java.util.List;
+
 /**
  *
- * @author Jorian, Antonio
+ * @author Jorian, Antonio, Ricardo
  */
 public class User {
 
@@ -19,10 +21,11 @@ public class User {
     private String phoneNr;
     private String email;
     private int accesLevel;
-
+    private List<Integer> accesLevels;
 
     /**
      * Constructor for pulling users from database
+     *
      * @param userID
      * @param name
      * @param surname
@@ -30,9 +33,9 @@ public class User {
      * @param password
      * @param phoneNr
      * @param email
-     * @param accesLevel 
+     * @param accesLevel
      */
-    public User(long userID ,String name, String surname, String username, String password, String phoneNr, String email, int accesLevel){
+    public User(long userID, String name, String surname, String username, String password, String phoneNr, String email, int accesLevel) {
         this.userID = userID;
         this.name = name;
         this.surname = surname;
@@ -42,18 +45,19 @@ public class User {
         this.email = email;
         this.accesLevel = accesLevel;
     }
-    
+
     /**
      * Constructor for registering a new user
+     *
      * @param name
      * @param surname
      * @param username
      * @param password
      * @param phoneNr
      * @param email
-     * @param accesLevel 
+     * @param accesLevel
      */
-    public User(String name, String surname, String username, String password, String phoneNr, String email, int accesLevel){
+    public User(String name, String surname, String username, String password, String phoneNr, String email, int accesLevel) {
         this.name = name;
         this.surname = surname;
         this.username = username;
@@ -62,49 +66,96 @@ public class User {
         this.email = email;
         this.accesLevel = accesLevel;
     }
-    
+
     /**
      * Constructor to register a guest
+     *
      * @param name
      * @param surname
      * @param phoneNr
      * @param email
-     * @param accesLevel 
+     * @param accesLevel
      */
-    public User(String name, String surname, String phoneNr, String email, int accesLevel){
+    public User(String name, String surname, String phoneNr, String email, int accesLevel) {
         this.name = name;
         this.surname = surname;
         this.phoneNr = phoneNr;
         this.email = email;
         this.accesLevel = accesLevel;
     }
-    
+
      /**
-     * Constructor to get lesson registrations
+     * Constructor to get lesson teachers
+     *
      * @param name
      * @param surname
      * @param phoneNr
      * @param email
      */
-    public User(String name, String surname, String phoneNr, String email){
+    public User(long id, String name, String surname, String phoneNr, String email) {
+        this.userID = id;
         this.name = name;
         this.surname = surname;
         this.phoneNr = phoneNr;
         this.email = email;
     }
     
-         /**
+    /**
+     * Constructor to get lesson registrations
+     *
+     * @param name
+     * @param surname
+     * @param phoneNr
+     * @param email
+     */
+    public User(String name, String surname, String phoneNr, String email) {
+        this.name = name;
+        this.surname = surname;
+        this.phoneNr = phoneNr;
+        this.email = email;
+    }
+
+    /**
      * Constructor for Suppliers
+     *
      * @param username
      * @param phoneNr
      * @param accesLevel
      * @param email
      */
-    public User(String username, String phoneNr, String email, int accesLevel){
+    public User(String username, String phoneNr, String email, int accesLevel) {
         this.username = username;
         this.phoneNr = phoneNr;
         this.email = email;
         this.accesLevel = accesLevel;
+    }
+    
+    /**
+     * Constructor for Manage Users
+     * @param userID
+     * @param name
+     * @param surname
+     * @param username
+     * @param phoneNr
+     * @param email
+     * @param accesLevel 
+     */
+    public User(Long userID, String name, String surname, String username, String phoneNr, String email, int accesLevel) {
+        this.userID = userID;
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.phoneNr = phoneNr;
+        this.email = email;
+        this.accesLevel = accesLevel;
+    }
+    
+    public List<Integer> getAccesLevels() {
+        return accesLevels;
+    }
+
+    public void setAccesLevels(List<Integer> accesLevels) {
+        this.accesLevels = accesLevels;
     }
 
     public long getUserID() {
@@ -170,8 +221,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    
 
     public String add() {
         System.out.println(username + " " + username);
@@ -181,6 +230,10 @@ public class User {
         } else {
             return "test";
         }
+    }
+
+    public String getShortString() {
+        return this.name + " " + this.surname + " - " + this.email;
     }
 
 }

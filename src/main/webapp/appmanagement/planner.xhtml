@@ -5,9 +5,11 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
-    <f:metadata>
-        <f:event type="preRenderView" listener="#{authorizationBean.checkPermission(2)}"/>
-    </f:metadata>
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{authorizationBean.checkIfAdmin}"/>
+        </f:metadata>
+    </ui:define>
     <!-- Tabblad naam -->
     <ui:define name="title">Cursusplanner</ui:define>
     <!-- Content -->
@@ -22,11 +24,61 @@
                         <h:form>
                             <p:growl id="planner_growl"/>  
                             <div class="form-group">
-                                <p:outputLabel for="lbox_trainingselect" value="Kies een training die je wil plannen"/>
-                                <p:selectOneListbox id="lbox_trainingselect" styleClass="form-control" value="#{plannerBean.courseID}" required="true" requiredMessage="Kies een training" filter="true" filterMatchMode="contains">
-                                    <f:selectItems value="#{plannerBean.courses}" var="c"
-                                                   itemLabel="#{c.shortString}" itemValue="#{c.id}"/>
-                                </p:selectOneListbox>
+                                <p:outputLabel for="dt_courseselect" value="Kies een training die je wil plannen"/>
+                                <p:dataTable id="dt_courseselect"
+                                             var="course" 
+                                             value="#{plannerBean.courses}" 
+                                             filteredValue="#{plannerBean.filteredCourses}"
+                                             selectionMode="single" 
+                                             selection="#{plannerBean.selectedCourse}" 
+                                             rowKey="#{course.id}"
+                                             widgetVar="courseTable"
+                                             scrollable="true"
+                                             scrollHeight="200">
+                                    <p:ajax event="rowSelect" />
+                                    <f:facet name="header">
+                                        <p:outputPanel>
+                                            <h:outputText value="Zoeken: " />
+                                            <p:inputText id="globalFilter" onkeyup="PF('courseTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                                        </p:outputPanel>
+                                    </f:facet>
+
+                                    <p:column filterBy="#{course.code}" filterStyle="display:none" filterMatchMode="contains">
+                                        <h:outputText value="#{course.code}" />
+                                    </p:column>
+
+                                    <p:column filterBy="#{course.name}" filterStyle="display:none" filterMatchMode="contains">
+                                        <h:outputText value="#{course.name}" />
+                                    </p:column>
+                                </p:dataTable>
+                                <br/>
+                                <p:outputLabel for="dt_teacherselect" value="Kies een leraar voor de training"/>
+                                <p:dataTable id="dt_teacherselect"
+                                             var="user" 
+                                             value="#{plannerBean.teachers}" 
+                                             filteredValue="#{plannerBean.filteredTeachers}"
+                                             selectionMode="single" 
+                                             selection="#{plannerBean.selectedTeacher}" 
+                                             rowKey="#{user.userID}"
+                                             widgetVar="teacherTable"
+                                             scrollable="true"
+                                             scrollHeight="100">
+                                    <p:ajax event="rowSelect" />
+                                    <f:facet name="header">
+                                        <p:outputPanel>
+                                            <h:outputText value="Zoeken: " />
+                                            <p:inputText id="globalFilter" onkeyup="PF('teacherTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                                        </p:outputPanel>
+                                    </f:facet>
+
+                                    <p:column filterBy="#{user.name}" filterStyle="display:none" filterMatchMode="contains">
+                                        <h:outputText value="#{user.name}" />
+                                    </p:column>
+
+                                    <p:column filterBy="#{user.phoneNr}" filterStyle="display:none" filterMatchMode="contains">
+                                        <h:outputText value="#{user.phoneNr}" />
+                                    </p:column>
+                                </p:dataTable>
                             </div>
                             <div class="form-group">
                                 <p:outputLabel for="calendar" value="Kies een datum:" /><br/>
@@ -50,14 +102,44 @@
                         <h:form>
                             <div class="form-group">
                                 <p:growl id="lesson_growl" class=""/>  
-                                <p:outputLabel for="lbox_lessonselect" value="Kies een les die je wil wijzigen"/>
-                                <p:selectOneListbox id="lbox_lessonselect" styleClass="form-control" value="#{plannerBean.lessonID}" required="true" requiredMessage="Kies een les" filter="true" filterMatchMode="contains">
-                                    <f:selectItems value="#{plannerBean.lessons}" var="l"
-                                                   itemLabel="#{l.lessonString}" itemValue="#{l.id}"/>
-                                </p:selectOneListbox>
+
+                                <p:outputLabel for="dt_lessonselect" value="Kies een les die je wil wijzigen"/>
+                                <p:dataTable id="dt_lessonselect"
+                                             var="lesson" 
+                                             value="#{plannerBean.lessons}" 
+                                             filteredValue="#{plannerBean.filteredLessons}"
+                                             selectionMode="single" 
+                                             selection="#{plannerBean.selectedLesson}" 
+                                             widgetVar="lessonsTable"
+                                             rowKey="#{lesson.id}"
+                                             scrollable="true"
+                                             scrollHeight="300">
+                                    <p:ajax event="rowSelect"/>
+
+                                    <f:facet name="header">
+                                        <p:outputPanel>
+                                            <h:outputText value="Zoeken: " />
+                                            <p:inputText id="globalFilter" onkeyup="PF('lessonsTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                                        </p:outputPanel>
+                                    </f:facet>
+                                    <p:column filterBy="#{lesson.startTime}" filterStyle="display:none" filterMatchMode="contains">
+                                        <h:outputFormat value="{0, date, yyyy-MM-dd}">
+                                            <f:param value="#{lesson.startTime.time}" />
+                                        </h:outputFormat>
+                                    </p:column>
+
+                                    <p:column filterBy="#{lesson.location}" filterStyle="display:none" filterMatchMode="contains">
+                                        <h:outputText value="#{lesson.location}" />
+                                    </p:column>
+
+                                    <p:column filterBy="#{lesson.course.name}" filterStyle="display:none" filterMatchMode="contains">
+                                        <h:outputText value="#{lesson.course.name}" />
+                                    </p:column>
+                                </p:dataTable>
+
                             </div>
                             <div class="form-group">
-                                <p:commandButton value="Verwijderen" update="lesson_growl" action="#{plannerBean.deleteLesson()}" ajax="false"/>
+                                <p:commandButton value="Verwijderen" update="dt_lessonselect" action="#{plannerBean.deleteLesson()}" ajax="false"/>
                             </div>
                         </h:form>
                     </div>

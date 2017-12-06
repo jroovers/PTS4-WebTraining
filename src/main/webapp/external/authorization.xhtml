@@ -7,9 +7,34 @@
                 xmlns:p="http://primefaces.org/ui">
     
     <!-- Tabblad naam -->
-    <ui:define name="title">Courserooster</ui:define>
+    <ui:define name="title">Login</ui:define>
     <!-- Content -->
     <ui:define name="content">
+        <h:outputStylesheet library="style" name="Table.css" />
+        <div class="container">
+            <div class="mt-3">
+                <div class="col-6">
+                    <h1>Inloggen</h1>
+                    <hr/>
+                    <div>
+                        <h:form>
+                        <table>
+                            <tr>
+                                <th><p>Gebruikersnaam</p></th>
+                                <th><p:inputText id="username_authorization" value="#{authorizationBean.username}" style="width: 200%" a:placeholder="" required="Gebruikersnaam moet ingevuld zijn."></p:inputText></th>                                    
+                            </tr>
+                            <tr>
+                                <th><p>Wachtwoord</p></th>
+                                <th><p:inputText id="password_authorization" type="password" value="#{authorizationBean.password}" style="width: 200%" a:placeholder="" required="true" requiredMessage="Wachtwoord moet ingevuld zijn."></p:inputText></th>
+                            </tr>                              
+                        </table>
+                        <p:commandButton id="login_authorization" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-sign-in" value="Inloggen" action="#{authorizationBean.login()}"  />
+                        </h:form>
+                    </div>
+                </div>           
+            </div>
+        </div>
+        
         <div class="container">
             <div class="mt-3">
                 
@@ -18,41 +43,12 @@
                 <h:form>
                     <table>
                         <tr>
-                            <th><h:commandButton  value="Dummie Login" style="width: 250px" action="#{authorizationBean.logindummie()}"></h:commandButton></th>
-                            <th><h:commandButton  value="Dummie Logout" style="width: 250px" action="#{authorizationBean.logout()}" ></h:commandButton ></th>
+                            <th><h:commandButton  value="Dummie Login" style="width: 250px" action="#{authorizationBean.quickLogin()}"></h:commandButton></th>
+                            <th><h:commandButton  value="Dummie Logout" style="width: 250px" action="#{authorizationBean.quickLogout()}" ></h:commandButton ></th>
                         </tr>
                     </table>
-                </h:form>
-            <br></br>
-            <p><b>Gebruiker</b>  : Frankster<br></br>
-               <b>Wachtwoord</b> : frankisthebest<br></br>
-               <b>Level :</b> 2
-            </p>
-            <p><b>Gebruiker</b>  : Bertster<br></br>
-               <b>Wachtwoord</b> : bertisthebest <br></br>
-               <b>Level </b>: 1
-            </p>
-                <br></br><br></br>
-               
-            </div>             
-            <div>
-                <h3>Inloggen</h3>
-                <hr/>
-                <h:form>
-                <table>
-                    <tr>
-                        <th style="width:150px;">Gebruikersnaam</th>
-                        <th><h:inputText value="#{authorizationBean.username}" style="width: 200%" a:placeholder="" required="true" requiredMessage="Gebruikersnaam moet eerst ingevuld worden" ></h:inputText></th> 
-                    </tr>
-                    <tr>
-                        <th>Wachtwoord</th>
-
-                        <th><p:inputText type="password"  value="#{authorizationBean.password}" style="width: 200%" a:placeholder="" required="true" requiredMessage="Wachtwoord moet eerst ingevuld worden" ></p:inputText></th> 
-                    </tr>                             
-                </table> <br></br>
-                <h:commandButton  value="Login"  style="width: 250px" action="#{authorizationBean.login()}"></h:commandButton>
-                </h:form>
-            </div>
+                </h:form>  
+            </div>                
         </div>
     </ui:define>
 </ui:composition>
