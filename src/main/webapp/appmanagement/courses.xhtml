@@ -33,18 +33,17 @@
                 <h1>Cursusmanagement</h1><br></br>
                 <h3>Cursussen en trainingen</h3>
                 <div id="courses" class="row">
-                    <div class="col-12">
+                    <div class="col-6">
                         <h:form>
                             <p:growl id="growl" showDetail="false" sticky="false" globalOnly="true"/>
                             <p:commandButton id="new_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-plus" value="Nieuwe Training" action="#{coursesBean.onCreateNewItem()}"  />
                             <p:commandButton id="edit_training" widgetVar="edit_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-pencil" value="Bewerken" update="growl" action="#{coursesBean.onEditItem()}" />
                             <p:commandButton id="delete_training" widgetVar="delete_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-trash-o" value="Verwijderen" type="button" onclick="PF('deleteCourseConfirmation').show();" />
-                            <br/>
-                            <br/>
-                            <p:selectOneListbox id="select_training" value="#{coursesBean.selectedCode}" styleClass="form-control" filter="true" filterMatchMode="contains">
+                          
+                                <p:selectOneListbox id="select_training" value="#{coursesBean.selectedCode}" styleClass="form-control" filter="true" filterMatchMode="contains">
                                 <f:selectItems value="#{coursesBean.courses}" var="t"  itemValue="#{t.code}" itemLabel="#{t.name}"/>
                                 <f:ajax event="change" onevent="unlockbuttons" render="edit_training delete_training" />
-                            </p:selectOneListbox>
+                                </p:selectOneListbox>
                             <p:dialog header="Waarschuwing" widgetVar="deleteCourseConfirmation" modal="true" minHeight="200" minWidth="200" closeOnEscape="true">
                                 <h:outputText value="Weet je zeker dat je deze training wilt verwijderen?" />
                                 <hr/>
@@ -54,11 +53,11 @@
                         </h:form>
                     </div>
                 </div>
-
-                <hr/>
-                <h3>Categorieën</h3>
+            </div>
+                <div class="container-move">
                 <div id="categories" class="row">
-                    <div class="col-12">
+                    <h3>Categorieën</h3>
+                    <div class="col-6">
                         <h:form>
                             <div class="form-group row">
                                 <h:outputLabel for="categoryname" value="Categorie aanmaken" class="col-sm-3 col-form-label"/>
@@ -84,14 +83,15 @@
                             </div>
                             <p:dialog header="Waarschuwing" widgetVar="deleteCatConfirmation" modal="true" minHeight="200" minWidth="200" closeOnEscape="true">
                                 <h:outputText value="Weet je zeker dat je deze categorie wilt verwijderen?" />
-                                <hr/>
+                               
                                 <p:commandButton id="confirmdelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijderen" action="#{coursesBean.onDeleteCategory()}" icon="fa fa-trash-o" />
                                 <p:commandButton id="canceldelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nee toch niet" type="button" onclick="PF('deleteCatConfirmation').hide();" icon="fa fa-times" />
                             </p:dialog>
                         </h:form>
                     </div>
                 </div>
-                <hr/>
+                </div>
+        
                 <h3>Doelgroepen</h3>
                 <div id="targetusers" class="row">
                     <div class="col-12">
@@ -128,7 +128,6 @@
                     </div>
                 </div>
             </div>
-        </div>
         <script>
             window.onload = lockbuttons;
         </script>

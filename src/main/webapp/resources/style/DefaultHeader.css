@@ -1,0 +1,97 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 15-nov-2017, 14:46:14
+    Author     : Jowelle
+*/
+
+
+.DefaultHeader
+{
+    font-family: "proxima-nova","Helvetica Neue",Helvetica,Arial,sans-serif;
+    text-transform: uppercase;
+    font-size: 12px !important;
+    background-color: #363636 !important;
+    position: fixed;
+    z-index: 1030;
+    width: 100%;
+}
+
+ .affix 
+{
+    top: 20px;
+}
+
+.dropdown-item
+{
+    background-color: #363636 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.dropdown-item:hover
+{
+    color: #3ab0fd !important;
+}
+
+.nav-link:hover
+{
+    color: #3ab0fd !important;
+}
+
+.dropdown-menu
+{
+    background-color: #363636 !important;
+}
+
+.nav-item
+{
+    margin: 0 0 0 10px !important;
+}
+
+a
+{
+    color: #FFFFFF  !important;
+    font-weight: 700;
+    font-size: 12px !important;
+}
+
+ .navbar-custom
+ {
+   min-height: 0 !important;
+ }
+
+.navbar-brand 
+{
+    background: url(../resources/Image/InfoSupport-Logo.png);
+    background-repeat: no-repeat;
+    top: 8px;
+    height: 40px !important;
+    width: 130px;
+    background-size: contain;
+}
+
+.navbar-left
+{
+    padding-left: 8%;
+}
+.navbar-right
+{
+    padding-right: 13%;
+}
+
+.navbar-link
+{
+    color: #FFFFFF;
+}
+
+.navbar
+{
+    margin-bottom: 10px !important;
+}
+
+
+

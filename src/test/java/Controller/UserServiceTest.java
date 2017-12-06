@@ -7,11 +7,8 @@ package Controller;
 
 import Model.User;
 import java.util.List;
-import javax.ejb.embeddable.EJBContainer;
-import org.junit.After;
-import org.junit.AfterClass;
+import java.util.Map;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Ignore;
@@ -29,7 +26,7 @@ public class UserServiceTest {
     @Before
     public void setUp() {
         user1 = new User("Bert", "Vissers", "Bert123", "Bertjeee112", "0612345678", "Bertje123@gmail.com", 2);
-        userService = new UserService(); 
+        userService = new UserService();      
     }
     
     /**
@@ -83,6 +80,28 @@ public class UserServiceTest {
         userService.removeUser(user.getUserID());
         List<User> afterUsers = userService.getUsers();
         assertEquals(afterUsers.size(), beforeUsers.size());
+    }
+    
+        /**
+     * Test of getTeachers method, of class UserService.
+     */
+    @Test
+    public void testGetTeachers() throws Exception{
+        System.out.println("getUsers - Test");
+        
+        List<User> users = userService.getTeachers();
+        assertTrue(!users.isEmpty());
+    }
+    
+    /**
+     * Test of getAccountTypes method, of class UserService.
+     */
+    @Test
+    public void testGetAccountTypes() throws Exception{
+        System.out.println("getUsers - Test");
+        
+        Map<String, String> accountTypes = userService.getAccountTypes();
+        assertTrue(!accountTypes.isEmpty());
     }
     
 }

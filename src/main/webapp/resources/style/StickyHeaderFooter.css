@@ -35,10 +35,11 @@ body {
 /* Not required for template or sticky footer method. */
 
 #content .container, #content .container-fluid {
-  padding: 60px 15px 0;
+  padding: 0px 15px 0;
+  background-color: #dfebf5;
 }
 
-.footer > .container {
+.footer > .footer-container {
   padding-right: 15px;
   padding-left: 15px;
 }

@@ -5,9 +5,15 @@
  */
 package InfoSupportWeb.utility;
 
+import java.io.IOException;
 import java.sql.*;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 /**
@@ -20,21 +26,25 @@ public class Database {
 
     private static Database db;
     private BasicDataSource ds;
-
-    private static String driver = "com.mysql.cj.jdbc.Driver";
-    private static String url = "jdbc:mysql://77.174.23.144:3306/db_dev_infosupport";
-    private static String username = "infosupport";
-    private static String password = "q!p^Fxyg6l3N'@n'a!f&#Jn3Y.Kwh.3!:gy&EU/cE&$JWoa+Z#L7sGyGKG//|yiv";
+    static final Logger logger = Logger.getLogger(Database.class.getName());
 
     /**
      * Creates a new instance of Database
      */
     public Database() {
-        ds = new BasicDataSource();
-        ds.setDriverClassName(driver);
-        ds.setUrl(url);
-        ds.setUsername(username);
-        ds.setPassword(password);
+        Properties prop = new Properties();
+        try {
+            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            prop.load(ec.getResourceAsStream("/WEB-INF/config.properties"));
+
+            ds = new BasicDataSource();
+            ds.setDriverClassName(prop.getProperty("driver"));
+            ds.setUrl(prop.getProperty("url"));
+            ds.setUsername(prop.getProperty("username"));
+            ds.setPassword(prop.getProperty("password"));
+        } catch (IOException ex) {
+            logger.log(Level.WARNING, ex.toString());
+        }
     }
 
     public static Database getInstance() {
@@ -49,8 +59,8 @@ public class Database {
     public Connection getConnection() throws SQLException {
         return this.ds.getConnection();
     }
-    
-    public BasicDataSource getDataSource(){
+
+    public BasicDataSource getDataSource() {
         return this.ds;
     }
 }

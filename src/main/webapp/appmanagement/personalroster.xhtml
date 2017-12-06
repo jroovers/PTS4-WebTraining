@@ -18,6 +18,7 @@
     <ui:define name="content">
         <h:outputStylesheet library="style" name="personalRoster.css" />
         <div class="content">
+        <div class="container">
             <div class="calendar">
                 <h1>Cursussen</h1>
                 <h:form>
@@ -59,6 +60,7 @@
                     </p:panelGrid>
 
                     <br/>
+                    <col-3>
                     <h2>Aanmeldingen</h2>
                     <p:dataTable value = "#{personalRosterBean.selectedLesson.registrations}" 
                                  var ="registration"
@@ -72,8 +74,10 @@
                                 #{registration.email}
                         </p:column>
                     </p:dataTable>
+                    </col-3>
                 </h:form>    
             </div>
+        </div>
         </div>
     </ui:define>
 </ui:composition>
