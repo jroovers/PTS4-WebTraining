@@ -4,19 +4,21 @@
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:p="http://primefaces.org/ui" >
+
+
     <!-- Tabblad naam -->
     <ui:define name="title">Inschrijven</ui:define>
     <!-- Content -->
     <ui:define name="content">
-        <h:outputStylesheet library="style" name="Table.css" />
+        <h:outputStylesheet library="style" name="signup.css" />
         <div class="container">
-            <div class="mt-5">
-                <h1>Selecteer een training en schrijf je in!</h1>
-                <hr/>                
-                <h:form id="userForm">
+            <h1>Selecteer een training en schrijf je in!</h1>
+            <hr/> 
+            <div class="col-4">
+                <h2>Nieuwe les plannen</h2>
+                <hr/>
+                <h:form id = "userForm">
                     <ui:fragment rendered="#{!sessionBean.loggedIn}">
                         <div>
                             <h3>Vul je gegevens in</h3>
@@ -24,56 +26,97 @@
                             <table>
                                 <tr>
                                     <th><p>Voornaam</p></th>
-                                    <th><p:inputText id="name" value="#{signupBean.name}" style="width: 200%" a:placeholder="Bijv. John" required="true" requiredMessage="Naam moet eerst ingevuld worden"></p:inputText></th>                                    
+                                    <th><p:inputText id="name" value="#{signupBean.name}" a:placeholder="Bijv. John" required="true" requiredMessage="Naam moet eerst ingevuld worden"></p:inputText></th>                                    
                                 </tr>
                                 <tr>
                                     <th><p>Achternaam</p></th>
-                                    <th><p:inputText id="surname" value="#{signupBean.surname}" style="width: 200%" a:placeholder="Bijv. Doe" required="true" requiredMessage="Achternaam moet eerst ingevuld worden"></p:inputText></th>
+                                    <th><p:inputText id="surname" value="#{signupBean.surname}" a:placeholder="Bijv. Doe" required="true" requiredMessage="Achternaam moet eerst ingevuld worden"></p:inputText></th>
                                 </tr>
                                 <tr>
                                     <th><p>Email</p></th>
-                                    <th><p:inputText id="email" value="#{signupBean.email}" style="width: 200%" a:placeholder="Bijv. JohnDoe@gmail.com" required="true" requiredMessage="Email moet eerst ingevuld worden"></p:inputText></th>
+                                    <th><p:inputText id="email" value="#{signupBean.email}" a:placeholder="Bijv. JohnDoe@gmail.com" required="true" requiredMessage="Email moet eerst ingevuld worden"></p:inputText></th>
                                 </tr>
                                 <tr>
                                     <th><p>Telefoon nummer</p></th>
-                                    <th><p:inputText id="phonenr" value="#{signupBean.phonenr}" style="width: 200%" a:placeholder="Bijv. 0612345678" required="true" requiredMessage="Uw telefoonnummer moet eerst ingevuld worden"></p:inputText></th>
+                                    <th><p:inputText id="phonenr" value="#{signupBean.phonenr}" a:placeholder="Bijv. 0612345678" required="true" requiredMessage="Uw telefoonnummer moet eerst ingevuld worden"></p:inputText></th>
                                 </tr>                                
                             </table> 
                         </div>
                     </ui:fragment>
                     <br/>
-                    <div class="row" style="width: 800px">
-                        <div class="col-4">                         
-                            <p:growl id="planner_growl"/>  
-                            <div class="floating-box" style="float: left">
-                                <h3>Cursussen:</h3>
-                                <hr/>
-                                <p:outputLabel for="lbox_trainingselect" value="Kies een cursus"/>
-                                <p:selectOneListbox id="lbox_trainingselect" styleClass="form-control" value="#{signupBean.courseID}" required="false" 
-                                                    requiredMessage="Kies een training" filter="true" filterMatchMode="contains" onchange="submit()" style="margin-bottom: 20px;">
-                                    <f:valueChangeListener type="Listener.CourseValueListener" />
-                                    <f:selectItems value="#{signupBean.allCourses}" var="c"
-                                                   itemLabel="#{c.shortString}" itemValue="#{c.id}"/>
-                                </p:selectOneListbox>
-                            </div>
-                        </div>
-                        <div class="col-8">                            
-                            <p:growl id="lesson_growl" class=""/>  
-                            <div class="floating-box" style="float: left;">   
-                                <h3>Huidige geplande lessen:</h3>
-                                <hr/>
-                                <p:outputLabel for="lbox_lessonselect" value="Kies een les die je wil volgen"/>
-                                <p:selectOneListbox id="lbox_lessonselect" styleClass="form-control" value="#{signupBean.lessonID}" required="false" 
-                                                    requiredMessage="Kies een les" filter="true" filterMatchMode="contains" onchange="submit()">
-                                    <f:selectItems value="#{signupBean.allLessonsFromCourse}" var="c"
-                                                   itemLabel="#{c.lessonString}" itemValue="#{c.id}"/>
-                                </p:selectOneListbox>
-                                <div class="form-group">
-                                    <p:growl id="signup_growl" class=""/>
-                                    <p:commandButton value="Inschrijven" update="signup_growl" ajax="false" action="#{signupBean.signUp()}" style="float:right; margin-top: 10px; margin-bottom: 20px;"/>
-                                </div>
-                            </div>
+                    <div>
+                        <p:outputLabel for="dt_courseselect" value="Kies een training die je wil plannen"/>
+                        <p:dataTable id="dt_courseselect"
+                                     var="course" 
+                                     value="#{signupBean.courses}" 
+                                     filteredValue="#{signupBean.filteredCourses}"
+                                     selectionMode="single" 
+                                     selection="#{signupBean.selectedCourse}" 
+                                     rowKey="#{course.id}"
+                                     widgetVar="courseTable"
+                                     scrollable="true"
+                                     scrollHeight="200">
+                            <p:ajax event="rowSelect" update = "lesson_table"/>
+                            <f:facet name="header">
+                                <p:outputPanel>
+                                    <h:outputText value="Zoeken: " />
+                                    <p:inputText id="globalFilter" onkeyup="PF('courseTable').filter()" style="width:200px" placeholder="Enter keyword"/>
+                                </p:outputPanel>
+                            </f:facet>
 
+                            <p:column filterBy="#{course.code}" filterStyle="display:none" filterMatchMode="contains">
+                                <h:outputText value="#{course.code}" />
+                            </p:column>
+
+                            <p:column filterBy="#{course.name}" filterStyle="display:none" filterMatchMode="contains">
+                                <h:outputText value="#{course.name}" />
+                            </p:column>
+                        </p:dataTable>
+                        <br/>
+                    </div>
+                </h:form>
+            </div>
+            <div class="col-8">
+                <h2>Huidige geplande lessen:</h2>
+                <hr/>
+                <h:form id = "lesson_table">
+                    <div class="form-group">
+                        <p:outputLabel for="dt_lessonselect" value="Kies een les die je wil wijzigen"/>
+                        <p:dataTable id="dt_lessonselect"
+                                     var="lesson" 
+                                     value="#{signupBean.lessons}" 
+                                     filteredValue="#{signupBean.filteredLessons}"
+                                     selectionMode="single" 
+                                     selection="#{signupBean.selectedLesson}" 
+                                     widgetVar="lessonsTable"
+                                     rowKey="#{lesson.id}"
+                                     scrollable="true"
+                                     scrollHeight="300">
+                            <p:ajax event="rowSelect"/>
+
+                            <f:facet name="header">
+                                <p:outputPanel>
+                                    <h:outputText value="Zoeken: " />
+                                    <p:inputText id="globalFilter" onkeyup="PF('lessonsTable').filter()" style="width:200px" placeholder="Enter keyword"/>
+                                </p:outputPanel>
+                            </f:facet>
+                            <p:column filterBy="#{lesson.startTime}" filterStyle="display:none" filterMatchMode="contains">
+                                <h:outputFormat value="{0, date, yyyy-MM-dd}">
+                                    <f:param value="#{lesson.startTime.time}" />
+                                </h:outputFormat>
+                            </p:column>
+
+                            <p:column filterBy="#{lesson.location}" filterStyle="display:none" filterMatchMode="contains">
+                                <h:outputText value="#{lesson.location}" />
+                            </p:column>
+
+                            <p:column filterBy="#{lesson.course.name}" filterStyle="display:none" filterMatchMode="contains">
+                                <h:outputText value="#{lesson.course.name}" />
+                            </p:column>
+                        </p:dataTable>
+                        <div class="form-group">
+                            <p:growl id="signup_growl" class=""/>
+                            <p:commandButton value="Inschrijven" update="signup_growl" ajax="false" action="#{signupBean.signUp()}" style="float:right; margin-top: 10px; margin-bottom: 20px;"/>
                         </div>
                     </div>
                 </h:form>
@@ -81,5 +124,3 @@
         </div>
     </ui:define>
 </ui:composition>
-
-<!--update="signup_growl"-->

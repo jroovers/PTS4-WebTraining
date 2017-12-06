@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Pages;
 
 import Controller.CourseService;
@@ -12,6 +7,7 @@ import Model.Course;
 import Model.Lesson;
 import Model.User;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -37,19 +33,23 @@ public class SignupBean {
     private long courseID;
     private long lessonID;
     private Course selectedCourse;
+    private Lesson selectedLesson;
     private String name;
     private String surname;
     private String email;
     private String phonenr;
     private String courseCode;
     private List<Course> courses;
+    private List<Course> filteredCourses;
     private List<Lesson> lessons;
+    private List<Lesson> filteredLessons;
 
     /**
      * Creates a new instance of signupBean
      */
-    public SignupBean() {
-
+    @PostConstruct
+    public  void SignupBean() {
+        courses = cs.getAllCourses();
     }
 
     public String getName() {
@@ -114,6 +114,15 @@ public class SignupBean {
 
     public void setSelectedCourse(Course course) {
         this.selectedCourse = course;
+        setLessons(ls.getLessonsFromCourse(selectedCourse.getId()));
+    }
+
+    public Lesson getSelectedLesson() {
+        return selectedLesson;
+    }
+
+    public void setSelectedLesson(Lesson selectedLesson) {
+        this.selectedLesson = selectedLesson;
     }
 
     public String getCourseCode() {
@@ -124,9 +133,42 @@ public class SignupBean {
         this.courseCode = courseCode;
     }
 
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    public List<Course> getFilteredCourses() {
+        return filteredCourses;
+    }
+
+    public void setFilteredCourses(List<Course> filteredCourses) {
+        this.filteredCourses = filteredCourses;
+    }
+
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
+    }
+
+    public List<Lesson> getFilteredLessons() {
+        return filteredLessons;
+    }
+
+    public void setFilteredLessons(List<Lesson> filteredLessons) {
+        this.filteredLessons = filteredLessons;
+    }
+ 
+    
     public void signUp() {
         FacesContext context = FacesContext.getCurrentInstance();
-        long id = ls.signUpUser(lessonID, 1);
+        long id = ls.signUpUser(selectedLesson.getId(), 1);
         if (id != 0) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training opgeslagen", "!"));
             if (name != null) {
@@ -139,21 +181,12 @@ public class SignupBean {
         }
     }
 
-    public List<Course> getAllCourses() {
-        courses = cs.getAllCourses();
-        return courses;
-    }
-
     public void valueChanged(ValueChangeEvent e) {
         String code;
         code = e.getNewValue().toString();
         System.out.println(code);
     }
 
-    public List<Lesson> getAllLessonsFromCourse() {
-        lessons = ls.getLessonsFromCourse(courseID);
-        return lessons;
-    }
 
     public boolean checkUserDetails() {
         boolean detailsChecked = true;
