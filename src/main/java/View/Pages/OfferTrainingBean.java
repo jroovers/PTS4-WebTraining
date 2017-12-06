@@ -202,7 +202,7 @@ public class OfferTrainingBean
         //Add course
         if (!courseName.equals("") && !code.equals("")) {
 
-            if (!description.isEmpty() && !requiredKnowledge.isEmpty() && !cursusMaterial.isEmpty() && !timeInDays.isEmpty() && !cost.isEmpty() && !requiredKnowledge.isEmpty()) {
+            if (!description.isEmpty() && !requiredKnowledge.isEmpty() && !cursusMaterial.isEmpty() && !timeInDays.isEmpty() && !cost.isEmpty()) {
 
                 double nCost = 0;
                 int nTimeIndDays = 0;

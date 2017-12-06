@@ -7,96 +7,93 @@
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="metadata">
         <f:metadata>
-            <f:event type="preRenderView" listener="#{authorizationBean.checkIfAdmin}"/>
+            <!--<f:event type="preRenderView" listener="#{authorizationBean.checkIfAdmin}"/>-->
         </f:metadata>
     </ui:define>
     <!-- Tabblad naam -->
     <ui:define name="title">Courserooster</ui:define>
     <!-- Content -->
     <ui:define name="content">
-        <h:outputStylesheet library="style" name="ScheduleTable.css" />
+        
         <div class="container">
-            <div class="mt-3">
-                <div class="row">
-                    <h:form>
-                        <div class="row" style="width: 800px">
-                            <div class="col-4"> 
-                                <div class="floating-box" style="float: left">
-                                    <div>
-                                        <h1>Docenten</h1>
-                                        <hr/>
-                                        <p:growl id="account_growl" />
-                                        <p:selectOneListbox value="#{manageAccountBean.userID}" filter="true" valueChangeListener="#{manageAccountBean.valueChanged}" 
-                                                            filterMatchMode="contains" styleClass="form-control" required="false"> <!--onchange="submit()"--> 
-                                            <!--<f:valueChangeListener type="Listener.UserListener" />-->
-                                            <f:ajax listener="#{manageAccountBean.changeListener()}" />
-                                            <f:selectItems value="#{manageAccountBean.allUsers}" var="y"
-                                                           itemLabel="#{y.getShortString()}" itemValue="#{y.userID}" />
+        <h:form id="form" style="margin:100px">
+            <h1>Account Beheer</h1>
+            <hr/>
+            <p:growl id="msgs" showDetail="true"/>
 
-                                            <f:ajax render="ajaxName ajaxSurname ajaxUsername ajaxPhoneNr ajaxEmail ajaxAccountType ajaxUserID" />
+            <p:dataTable id="userDataTable" var="user" value="#{manageAccountBean.users}" 
+                         filteredValue="#{manageAccountBean.filteredUsers}" editable="true" editMode="cell" 
+                         widgetVar="cellUsers" rowKey="#{user.userID}" scrollable="true" scrollHeight="300">
+                    <p:ajax event="rowSelect"/>                 
+                <f:facet name="header">
+                    Aanpassen door te klikken
+                </f:facet>
 
-                                        </p:selectOneListbox>
-                                    </div>
-                                </div>
-                            </div> 
-                        </div>
-                        <div class="col-8">
-                            <div class="floating-box">
-                                <h1>Informatie</h1>
-                                <hr/>
-                                <!--<p:ajax process="@this" event="change" update="@form" partialSubmit="true" />-->  
-                                <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
-                                    <h:outputLabel for="ajaxName" value="Voornaam: " />
-                                    <p:inplace id="ajaxName" editor="true">
-                                        <p:inputText  value="#{manageAccountBean.name}" required="true" label="text" />
-                                    </p:inplace>  
+                <f:facet name="header">
+                    <p:outputPanel>
+                        <h:outputText value="Zoeken: " />
+                        <p:inputText id="globalFilter" onkeyup="PF('cellUsers').filter()" style="width:150px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+                </f:facet>
 
-                                    <h:outputLabel for="ajaxSurname" value="Achternaam: " />
-                                    <p:inplace id="ajaxSurname" editor="true">
-                                        <p:inputText  value="#{manageAccountBean.surname}" required="true" label="text" />
-                                    </p:inplace> 
+                <p:ajax event="cellEdit" listener="#{manageAccountBean.onCellEdit}" update=":form:msgs" />
 
-                                    <h:outputLabel for="ajaxUsername" value="Gebruikersnaam: " />
-                                    <p:inplace id="ajaxUsername" editor="true">
-                                        <p:inputText  value="#{manageAccountBean.username}" required="true" label="text"/>
-                                    </p:inplace> 
+                <p:column headerText="UserID">
+                    <p:column>
+                        <h:outputText value="#{user.userID}" />
+                    </p:column>
+                </p:column>
 
-                                    <h:outputLabel for="ajaxPhoneNr" value="Telefoon Nummer: " />
-                                    <p:inplace id="ajaxPhoneNr" editor="true">
-                                        <p:inputText  value="#{manageAccountBean.phonenr}" required="true" label="text"/>
-                                    </p:inplace> 
+                <p:column headerText="Naam">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{user.name}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{user.name}" style="width:96%" label="Naam"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
 
-                                    <h:outputLabel for="ajaxEmail" value="Email: " />
-                                    <p:inplace id="ajaxEmail" editor="true">
-                                        <p:inputText  value="#{manageAccountBean.email}" required="true" label="text"/>
-                                    </p:inplace>                                     
+                <p:column headerText="Achternaam">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{user.surname}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{user.surname}" style="width:96%" label="Achternaam"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
 
-                                    <h:outputLabel for="ajaxAccountType" value="Account Type:"/>
-                                    <p:inplace id="ajaxAccountType" >
-                                        <p:selectOneMenu value="#{manageAccountBean.accountType}">
-                                            <f:selectItems value="#{manageAccountBean.accountTypes}" />
-                                        </p:selectOneMenu> 
-                                    </p:inplace> 
+                <p:column headerText="Username">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{user.username}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{user.username}" style="width:96%" label="Username"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
 
-                                    <!--                                    <h:outputLabel for="ajaxUserID" value="UserID:" style="visibility: hidden;"/>
-                                                                        <p:inplace id="ajaxUserID" editor="true" style="visibility: hidden;">
-                                                                            <p:inputText  value="#{manageAccountBean.userID}" required="true" label="text" style="margin-left: 10px; visibility: hidden;" />
-                                                                        </p:inplace>   -->
-                                </h:panelGrid>
-                                <div>
-                                    <p:growl id="delete_growl" class=""/>
-                                    <p:commandButton styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-trash-o" value="Verwijderen" update="delete_growl" ajax="false" 
-                                                     action="#{manageAccountBean.deleteUser()}" immediate="true"/>
+                <p:column headerText="TelNr">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{user.phoneNr}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{user.phoneNr}" style="width:96%" label="TelNr"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
 
-                                    <p:growl id="edit_growl" class=""/>
-                                    <p:commandButton styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-pencil" value="Bewerken" update="edit_growl" ajax="false" 
-                                                     action="#{manageAccountBean.editUser()}" immediate="true"/>
-                                </div>
-                            </div>
-                        </div>
-                    </h:form>
-                </div>
-            </div>
+                <p:column headerText="Email">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{user.email}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{user.email}" style="width:96%" label="Email"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="AccessLevel">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{user.accesLevel}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{user.accesLevel}" style="width:96%" label="AccessLevel"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+            </p:dataTable>
+
+            <p:contextMenu for="userDataTable" widgetVar="cMenu">   
+                <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellUsers').showCellEditor();return false;"/>  
+                <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
+            </p:contextMenu> 
+
+        </h:form>
         </div>
     </ui:define>
 </ui:composition>

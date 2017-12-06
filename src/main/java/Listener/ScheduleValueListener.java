@@ -27,7 +27,7 @@ public class ScheduleValueListener implements ValueChangeListener {
         ScheduleBean scheduleBean = (ScheduleBean) facesContext.getApplication().createValueBinding("#{scheduleBean}").getValue(facesContext);
        // SaveIDBean saveIDBean= (SaveIDBean) facesContext.getApplication().createValueBinding("#{saveIDBean}").getValue(facesContext);
         
-        scheduleBean.setCourseID(Long.valueOf(scheduleBean.getCourseID()));
+        scheduleBean.setCourseID(scheduleBean.getCourseID());
         //saveIDBean.setLessonID(Long.valueOf(scheduleBean.getLessonID()));
     }
     

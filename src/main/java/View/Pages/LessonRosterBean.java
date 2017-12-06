@@ -35,7 +35,7 @@ public class LessonRosterBean implements Serializable
     private CourseService courseService;
     private LessonService lessonService;
     private Lesson selectedLesson;
-    public String email;
+    private String email;
 
     @PostConstruct
     public void init()

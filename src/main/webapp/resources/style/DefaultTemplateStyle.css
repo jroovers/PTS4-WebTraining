@@ -12,15 +12,58 @@ body
 {
     
 }
-
+.defaultContent
+{
+    background-color: #dfebf5;
+}
 #content
 {
     font-family: "proxima-nova","Helvetica Neue",Helvetica,Arial,sans-serif !important;
-    padding-top: 5% !important;
+    padding-top: 1% !important;
     padding-bottom: 4% !important;
     padding-left: 7% !important;
     padding-right: 7% !important;
     width: 100% !important;
     text-align: left !important;
     box-sizing: inherit !important;
+}
+
+.col-5
+{
+    background-color: #ffffff;
+}
+
+.col-6
+{
+    background-color: #ffffff;
+}
+
+.mt-3
+{
+   background-color: #ffffff; 
+}
+
+.container-move
+{
+    margin-top: 20%;
+    margin-left: 5% !important;
+}
+
+.container
+{
+    margin-top: 4%;
+    background-color: #ffffff !important;
+}
+
+.calendar 
+{
+    float: left;
+    width: 55%;
+    margin: 20px;
+    margin-bottom: 8% !important;
+}
+
+.move-listbox
+{
+    position: absolute;
 }
