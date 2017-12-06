@@ -1,15 +1,13 @@
 package View.Pages;
 
 import Controller.LessonService;
-import InfoSupportWeb.utility.AuthorizationUtils;
 import Model.Lesson;
 import View.Session.SessionBean;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
@@ -23,14 +21,14 @@ import org.primefaces.model.ScheduleModel;
  * @author Ricardo, Jeroen
  */
 @Named(value = "personalRosterBean")
-@RequestScoped
+@SessionScoped
 public class PersonalRosterBean implements Serializable {
 
     @Inject
     private SessionBean session;
 
     private ScheduleModel lessonSchedule;
-    private ScheduleEvent event = new DefaultScheduleEvent();
+    private ScheduleEvent event;
     private LessonService lessonService;
     private Lesson selectedLesson;
 
@@ -45,8 +43,6 @@ public class PersonalRosterBean implements Serializable {
      * Get the lessons from the database and add them to the calendar
      */
     private void RefreshLessons() {
-        HttpSession hs = AuthorizationUtils.getSession();
-
         long id = session.getUser().getUserID();
         lessonSchedule.clear();
         for (Lesson lesson : lessonService.GetLessonsAndRegistrationsByTeacher(id)) {
@@ -74,8 +70,8 @@ public class PersonalRosterBean implements Serializable {
         this.selectedLesson = selectedLesson;
     }
 
-    public void onEventSelect(SelectEvent selectEvent) {
+  public void onEventSelect(SelectEvent selectEvent) {
         event = (ScheduleEvent) selectEvent.getObject();
-        setSelectedLesson((Lesson) event.getData());
+        selectedLesson = (Lesson)event.getData();
     }
 }
