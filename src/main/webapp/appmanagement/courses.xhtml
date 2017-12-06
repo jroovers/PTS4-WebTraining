@@ -29,11 +29,11 @@
             }
         </script>
         <div class="container">
-            <div class="mt-3">
+            <div class="mt-3" Style="height:350px">
                 <h1>Cursusmanagement</h1><br></br>
                 <h3>Cursussen en trainingen</h3>
                 <div id="courses" class="row">
-                    <div class="col-6">
+                    <div class="col-12">
                         <h:form>
                             <p:growl id="growl" showDetail="false" sticky="false" globalOnly="true"/>
                             <p:commandButton id="new_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-plus" value="Nieuwe Training" action="#{coursesBean.onCreateNewItem()}"  />
@@ -54,10 +54,9 @@
                     </div>
                 </div>
             </div>
-                <div class="container-move">
-                <div id="categories" class="row">
+                <div>
                     <h3>Categorieën</h3>
-                    <div class="col-6">
+                    <div class="col-12">
                         <h:form>
                             <div class="form-group row">
                                 <h:outputLabel for="categoryname" value="Categorie aanmaken" class="col-sm-3 col-form-label"/>
@@ -90,7 +89,7 @@
                         </h:form>
                     </div>
                 </div>
-                </div>
+                
         
                 <h3>Doelgroepen</h3>
                 <div id="targetusers" class="row">
@@ -127,6 +126,9 @@
                         </h:form>
                     </div>
                 </div>
+
+                
+        
             </div>
         <script>
             window.onload = lockbuttons;
