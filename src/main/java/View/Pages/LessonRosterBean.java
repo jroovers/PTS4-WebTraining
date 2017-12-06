@@ -112,27 +112,6 @@ public class LessonRosterBean implements Serializable
         setSelectedLesson((Lesson) event.getData());
     }
 
-    public void onDateSelect(SelectEvent selectEvent)
-    {
-        event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
-    }
-
-    public void onEventMove(ScheduleEntryMoveEvent event)
-    {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event moved", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
-        addMessage(message);
-    }
-
-    public void onEventResize(ScheduleEntryResizeEvent event)
-    {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
-        addMessage(message);
-    }
-
-    private void addMessage(FacesMessage message)
-    {
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
 
     public String getEmail() {
         return email;

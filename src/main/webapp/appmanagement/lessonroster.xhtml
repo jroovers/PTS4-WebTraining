@@ -22,7 +22,7 @@
                     <div class="iets" style = "margin-bottom: 15px">
                     <label for="email">Email address :</label>
                     <p:inputText id="email" value="#{lessonRosterBean.email}" style="width: 30%" a:placeholder="Bijv. John@gmail.com" required="true" requiredMessage="Email moet eerst ingevuld worden"></p:inputText><br/>
-                    <p:commandButton value="Zoek Rooster" action="#{lessonRosterBean.onButtonClick()}" />
+                    <p:commandButton value="Zoek Rooster" action="#{lessonRosterBean.onButtonClick()}" update="schedule"/>
                     </div>
                     <h:panelGrid columnClasses="value">
                         <h3 style="margin-top: 0">Les Rooster Overzicht</h3>
