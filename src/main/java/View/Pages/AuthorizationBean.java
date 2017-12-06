@@ -65,7 +65,7 @@ public class AuthorizationBean {
      * modular and extensible (what if customer wants to add extra roles??)
      */
     public void checkIfManager() {
-        checkPermissionNew(session.isManager());
+        permissionCheckHelper(session.isManager());
     }
 
     /**
@@ -73,7 +73,7 @@ public class AuthorizationBean {
      * modular and extensible (what if customer wants to add extra roles??)
      */
     public void checkIfAdmin() {
-        checkPermissionNew(session.isAdmin());
+        permissionCheckHelper(session.isAdmin());
     }
 
     /**
@@ -81,7 +81,7 @@ public class AuthorizationBean {
      * modular and extensible (what if customer wants to add extra roles??)
      */
     public void checkIfTeacher() {
-        checkPermissionNew((session.isTeacher() || session.isAdmin()));
+        permissionCheckHelper((session.isTeacher() || session.isAdmin()));
     }
 
     /**
@@ -89,7 +89,7 @@ public class AuthorizationBean {
      *
      * @param value_to_check
      */
-    private void checkPermissionNew(boolean value_to_check) {
+    private void permissionCheckHelper(boolean value_to_check) {
         if (session.isLoggedIn()) {
             if (value_to_check) {
                 return;
@@ -117,6 +117,21 @@ public class AuthorizationBean {
             user = service.getUser(username);
             if (user.getPassword().equals(password)) {
                 session.setUser(user);
+                session.setLoggedIn(true);
+                for (Long level : user.getAccesLevels()) {
+                    if (level == 1L) {
+                        session.setEmployee(true);
+                    }
+                    if (level == 2L) {
+                        session.setTeacher(true);
+                    }
+                    if (level == 3L) {
+                        session.setManager(true);
+                    }
+                    if (level == 4L) {
+                        session.setAdmin(true);
+                    }
+                }
                 return "/index_templated.xhtml";
             }
         }
