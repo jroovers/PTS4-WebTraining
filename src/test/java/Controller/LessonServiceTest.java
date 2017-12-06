@@ -23,7 +23,7 @@ import org.junit.Ignore;
  *
  * @author Jorian
  */
-
+@Ignore
 public class LessonServiceTest {
     
     private Course c1;

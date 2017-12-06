@@ -19,7 +19,7 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class UserService {
-    
+
     public UserService() {
     }
 
@@ -27,7 +27,7 @@ public class UserService {
      * Persists a new User.
      *
      * @param user
-     * @return 
+     * @return
      */
     public boolean addUser(User user) {
         UserDAOUtils userDAOUtils = new UserDAOUtils();
@@ -64,12 +64,12 @@ public class UserService {
         UserDAOUtils userDAOUtils = new UserDAOUtils();
         return userDAOUtils.removeUserByID(user_ID);
     }
-    
+
     /**
      * Edits an existing user
-     * 
+     *
      * @param user
-     * @return 
+     * @return
      */
     public boolean editUser(User user) {
         UserDAOUtils userDAOUtils = new UserDAOUtils();
@@ -78,13 +78,19 @@ public class UserService {
 
     /**
      * Gets list of users registrated as teachers
-     * @return 
+     *
+     * @return
      */
     public List<User> getTeachers() {
         UserDAOUtils userDAOUtils = new UserDAOUtils();
         return userDAOUtils.getTeachers();
     }
-    
+
+    /**
+     * Gets a Map of accounttypes and what number they are bound too in the DB
+     *
+     * @return
+     */
     public Map<String, String> getAccountTypes() {
         UserDAOUtils userDAOUtils = new UserDAOUtils();
         return userDAOUtils.getAllAccountTypes();
