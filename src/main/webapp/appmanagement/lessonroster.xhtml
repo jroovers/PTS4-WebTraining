@@ -1,0 +1,81 @@
+<ui:composition template="../WEB-INF/template/defaultTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <!-- Tabblad naam -->
+    <ui:define name="title">Les Rooster Overzicht</ui:define>
+
+    <!-- Content -->
+    <ui:define name="content">
+        <h:outputStylesheet library="style" name="personalRoster.css" />
+        <div class="container">
+            
+           <h3 style="margin-left: 20px;" >Rooster</h3>
+            <div class="calendar">
+                <h:form>
+                    <p:growl id="messages" showDetail="true" />
+                    <div class="iets" style = "margin-bottom: 15px">
+                    <label for="email">Email address :</label>
+                    <p:inputText id="email" value="#{lessonRosterBean.email}" style="width: 30%" a:placeholder="Bijv. John@gmail.com" required="true" requiredMessage="Email moet eerst ingevuld worden"></p:inputText><br/>
+                    <p:commandButton value="Zoek Rooster" action="#{lessonRosterBean.onButtonClick()}" />
+                    </div>
+                    <h:panelGrid columnClasses="value">
+                        <h3 style="margin-top: 0">Les Rooster Overzicht</h3>
+                        <p:schedule id="schedule" 
+                                    value="#{lessonRosterBean.eventModel}" 
+                                    widgetVar="myschedule" 
+                                    timeZone="GMT+2" 
+                                    draggable="false">
+                            <p:ajax event="eventSelect" listener="#{lessonRosterBean.onEventSelect}" update="eventDetails"  />
+                        </p:schedule>
+                    </h:panelGrid>
+                </h:form>
+            </div>
+
+            <div class="eventData">
+                <h:form id="eventDetails" >
+                    <p:panelGrid columns="2" columnClasses="firstColumn, secondColumn">
+                        <p:outputLabel for="title" value="Cursus:" />
+                        <p:outputLabel id="title" value="#{lessonRosterBean.selectedLesson.course.name}" />
+
+                        <p:outputLabel value="Begindatum:" />
+                        <h:outputFormat value="{0, date, yyyy-MM-dd}">
+                            <f:param value="#{lessonRosterBean.selectedLesson.startTime.time}" />
+                        </h:outputFormat>
+
+                        <p:outputLabel value="Einddatum:" />
+                        <h:outputFormat value="{0, date, yyyy-MM-dd}">
+                            <f:param value="#{lessonRosterBean.selectedLesson.endTime.time}" />
+                        </h:outputFormat>
+
+                        <p:outputLabel for="location:" value="Locatie" />
+                        <p:outputLabel id="location" value="#{lessonRosterBean.selectedLesson.location}"/>
+
+                        <p:outputLabel for="description:" value="Beschrijving" />
+                        <p:outputLabel id="description" value="#{lessonRosterBean.selectedLesson.course.description}"/>
+                    </p:panelGrid>
+
+                    <h:dataTable value = "#{lessonRosterBean.selectedLesson.registrations}" var ="registration"
+                                 styleClass = "registrationTable"
+                                 headerClass = "registrationTableHeader"
+                                 rowClasses = "registrationTableOddRow,registrationTableEvenRow"
+                                 columnClasses="cName,cEmail">
+                        <h:column>    				
+                            <f:facet name = "header">Name</f:facet>    				
+                                #{registration.name} #{registration.surname}
+                        </h:column>
+                        <h:column>
+                            <f:facet name = "header">Email</f:facet>
+                                #{registration.email}
+                        </h:column>
+                    </h:dataTable>
+                </h:form>    
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
