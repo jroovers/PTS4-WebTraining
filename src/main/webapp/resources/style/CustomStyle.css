@@ -50,18 +50,11 @@ and open the template in the editor.
     border-radius: 0;
 }
 
+/* Fixes selection arrow on selectboxes */
 .ui-selectonemenu .ui-selectonemenu-trigger {
     width: auto;
 }
-
-.ui-selectonelistbox {
+/* Fixes filter box length on selectonemenus */
+.ui-selectlistbox-filter.ui-inputfield{
     width: 100%;
-    border: 0 !important;
-    box-shadow: none !important;
-}
-
-.ui-selectonelistbox  .ui-icon-search {
-    right: auto !important;
-    left: 85% !important;
-    transform: translateX(-150%);
 }
