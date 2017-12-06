@@ -21,7 +21,7 @@ public class User {
     private String phoneNr;
     private String email;
     private int accesLevel;
-    private List<Integer> accesLevels;
+    private List<Long> accesLevels;
 
     /**
      * Constructor for pulling users from database
@@ -150,11 +150,11 @@ public class User {
         this.accesLevel = accesLevel;
     }
     
-    public List<Integer> getAccesLevels() {
+    public List<Long> getAccesLevels() {
         return accesLevels;
     }
 
-    public void setAccesLevels(List<Integer> accesLevels) {
+    public void setAccesLevels(List<Long> accesLevels) {
         this.accesLevels = accesLevels;
     }
 

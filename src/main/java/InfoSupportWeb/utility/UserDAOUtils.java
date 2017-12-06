@@ -83,6 +83,7 @@ public class UserDAOUtils implements IUserDAO {
                         o[6] == null ? null : o[6].toString(), // email
                         o[7] == null ? null : Integer.parseInt(o[7].toString()) // accessLevel
                 );
+                user.setAccesLevels(getUserTypesByUserID(user.getUserID()));
             }
         } catch (SQLException ex_sql) {
             System.out.println("SQL Exception code " + ex_sql.getErrorCode());
@@ -186,7 +187,7 @@ public class UserDAOUtils implements IUserDAO {
         ArrayListHandler alh = new ArrayListHandler();
         List<Long> usertypes = new ArrayList<>();
         try {
-            List<Object[]> result = run.query(QUERY_GET_USER_USERTYPES, params, alh);
+            List<Object[]> result = run.query(QUERY_GET_USER_USERTYPES, alh, params);
             for (Object[] o : result) {
                 usertypes.add(Long.parseLong(o[0].toString()));
             }
