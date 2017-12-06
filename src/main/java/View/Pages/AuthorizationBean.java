@@ -45,7 +45,7 @@ public class AuthorizationBean {
     public String quickLogin() {
         session.setAllBools(true);
         session.setUser(service.getUser("Frankster"));
-        return "/index_templated.xhtml";
+        return "/index_templated.xhtml?faces-redirect=true";
     }
 
     /**
@@ -132,10 +132,10 @@ public class AuthorizationBean {
                         session.setAdmin(true);
                     }
                 }
-                return "/index_templated.xhtml";
+                return "/index_templated.xhtml?faces-redirect=true";
             }
         }
-        return "/authorization.xhtml";
+        return "/authorization.xhtml?faces-redirect=true";
     }
 
     public String getUsername() {

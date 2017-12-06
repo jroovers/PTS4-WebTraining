@@ -17,6 +17,7 @@ import org.junit.Ignore;
  *
  * @author Mijic
  */
+@Ignore
 public class UserServiceTest {
     
     private User user1;
