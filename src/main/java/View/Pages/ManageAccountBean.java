@@ -82,10 +82,10 @@ public class ManageAccountBean implements Serializable {
                 user.setEmail(newValue.toString());
                 us.editUser(user);
                 break;
-            case "AccessLevel":
-                user.setAccesLevel(Integer.valueOf(newValue.toString()));
-                us.editUser(user);
-                break;
+//            case "AccessLevel":
+//                user.setAccesLevel(Integer.valueOf(newValue.toString()));
+//                us.editUser(user);
+//                break;
             default:
                 break;
         }
