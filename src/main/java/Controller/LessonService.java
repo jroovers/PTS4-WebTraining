@@ -16,10 +16,6 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class LessonService {
-        
-    public LessonService() {
-        
-    }
 
     /**
      * Adds a lesson to the database.

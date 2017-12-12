@@ -37,7 +37,7 @@ public class LocationDAOUtils implements ILocationDAO {
                 locations.add(o[1] == null ? null : o[1].toString());
             }
         } catch (SQLException ex_sql) {
-            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.out.println("SQL Exception code: " + ex_sql.getErrorCode());
             System.out.println(ex_sql.getMessage());
         }
         return locations;

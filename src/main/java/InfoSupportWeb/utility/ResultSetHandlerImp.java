@@ -17,8 +17,6 @@ import org.apache.commons.dbutils.ResultSetHandler;
  */
 public class ResultSetHandlerImp implements ResultSetHandler<Object[]> {
 
-    public ResultSetHandlerImp() {
-    }
 
     @Override
     public Object[] handle(ResultSet rs) throws SQLException {

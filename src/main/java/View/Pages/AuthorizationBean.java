@@ -33,6 +33,8 @@ public class AuthorizationBean {
     private String username;
     private String password;
 
+    private static final String RETURNPAGE = "/index_templated.xhtml?faces-redirect=true";
+    
     public AuthorizationBean() {
         username = "";
     }
@@ -45,7 +47,7 @@ public class AuthorizationBean {
     public String quickLogin() {
         session.setAllBools(true);
         session.setUser(service.getUser("Frankster"));
-        return "/index_templated.xhtml?faces-redirect=true";
+        return RETURNPAGE;
     }
 
     /**
@@ -57,7 +59,7 @@ public class AuthorizationBean {
     public String quickLogout() {
         session.logOff();
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "/index_templated.xhtml?faces-redirect=true";
+        return RETURNPAGE;
     }
 
     /**
@@ -132,7 +134,7 @@ public class AuthorizationBean {
                         session.setAdmin(true);
                     }
                 }
-                return "/index_templated.xhtml?faces-redirect=true";
+                return RETURNPAGE;
             }
         }
         return "/authorization.xhtml?faces-redirect=true";

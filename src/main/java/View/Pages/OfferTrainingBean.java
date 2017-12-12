@@ -27,9 +27,6 @@ import javax.inject.Named;
 @RequestScoped
 public class OfferTrainingBean 
 {
-
-    public OfferTrainingBean() {
-    }    
     
     @Inject
     CourseService cs;

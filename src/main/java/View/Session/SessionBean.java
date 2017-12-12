@@ -29,12 +29,6 @@ public class SessionBean implements Serializable {
     private boolean manager;
     private boolean admin;
 
-    /**
-     * Creates a new instance of sessionBean
-     */
-    public SessionBean() {
-    }
-
     public boolean isLoggedIn() {
         return loggedIn;
     }

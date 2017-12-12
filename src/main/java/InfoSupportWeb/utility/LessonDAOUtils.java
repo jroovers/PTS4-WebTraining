@@ -38,10 +38,8 @@ public class LessonDAOUtils implements ILessonDAO {
     static final String QUERY_SIGNUP_USER_TO_LESSON = "INSERT INTO Lesson_Registration(ID_Lesson, ID_User) VALUES (?,?);";
     static final String QUERY_SIGNUP_TEACHER_TO_LESSON = "INSERT INTO Lesson_Teacher(ID_Lesson,ID_User) VALUES (?,?);";
 
-    public LessonDAOUtils() {
-
-    }
-
+    private static final String SQLERROR = "SQL Exception code ";
+    
     @Override
     public List<Lesson> getLessons() {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
@@ -76,7 +74,7 @@ public class LessonDAOUtils implements ILessonDAO {
                 lessons.add(lesson);
             }
         } catch (SQLException ex_sql) {
-            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.out.println(SQLERROR + ex_sql.getErrorCode());
             System.out.println(ex_sql.getMessage());
         }
         return lessons;
@@ -166,7 +164,7 @@ public class LessonDAOUtils implements ILessonDAO {
                 lessons.add(lesson);
             }
         } catch (SQLException ex_sql) {
-            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.out.println(SQLERROR + ex_sql.getErrorCode());
             System.out.println(ex_sql.getMessage());
         }
         return lessons;
@@ -208,7 +206,7 @@ public class LessonDAOUtils implements ILessonDAO {
                 lessons.add(lesson);
             }
         } catch (SQLException ex_sql) {
-            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.out.println(SQLERROR + ex_sql.getErrorCode());
             System.out.println(ex_sql.getMessage());
         }
         return lessons;
@@ -250,7 +248,7 @@ public class LessonDAOUtils implements ILessonDAO {
                 lessons.add(lesson);
             }
         } catch (SQLException ex_sql) {
-            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.out.println(SQLERROR + ex_sql.getErrorCode());
             System.out.println(ex_sql.getMessage());
         }
         return lessons;
@@ -275,7 +273,7 @@ public class LessonDAOUtils implements ILessonDAO {
                 users.add(u);
             }
         } catch (SQLException ex_sql) {
-            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.out.println(SQLERROR + ex_sql.getErrorCode());
             System.out.println(ex_sql.getMessage());
         } catch (Exception e) {
             System.out.println(e);

@@ -26,11 +26,6 @@ public class SaveIDBean
     {
         this.lessonID = l;
     }
-    
-    public SaveIDBean() 
-    {
-        
-    }
 
     public long getLessonID() 
     {

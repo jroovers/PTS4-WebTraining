@@ -20,9 +20,6 @@ import javax.ejb.Stateless;
 @Stateless
 public class UserService {
 
-    public UserService() {
-    }
-
     /**
      * Persists a new User.
      *

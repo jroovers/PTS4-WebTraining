@@ -65,15 +65,13 @@ public class CoursesBean implements Serializable {
 
     private List<Category> selectedCourseCategories;
     private List<UserGroup> selectedCourseUsergroups;
+    
+    private final static String REDIRECTCOURSE = "courses?faces-redirect=true";
+    private final static String REDIRECTEDITCOURSE = "editcourse?faces-redirect=true";
+    private final static String EDITCOURSE = "editcourse";
 
     @Inject
     private Conversation conversation;
-
-    /**
-     * Creates a new instance of coursesBean
-     */
-    public CoursesBean() {
-    }
 
     private void resetConversation() {
         endConversation();
@@ -109,7 +107,7 @@ public class CoursesBean implements Serializable {
         keywords = "";
         hasSelectedCourse = false;
         endConversation();
-        return "editcourse?faces-redirect=true";
+        return REDIRECTEDITCOURSE;
     }
 
     /**
@@ -122,7 +120,7 @@ public class CoursesBean implements Serializable {
             resetConversation();
             setCourseData();
             hasSelectedCourse = true;
-            return "editcourse?faces-redirect=true";
+            return REDIRECTEDITCOURSE;
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Kies eerst een cursus", ""));
@@ -147,12 +145,12 @@ public class CoursesBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.getExternalContext().getFlash().setKeepMessages(true);
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Verwijderd", ""));
-            return "courses?faces-redirect=true";
+            return REDIRECTCOURSE;
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
             context.getExternalContext().getFlash().setKeepMessages(true);
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Kies eerst een cursus", ""));
-            return "courses?faces-redirect=true";
+            return REDIRECTCOURSE;
         }
     }
 
@@ -178,7 +176,7 @@ public class CoursesBean implements Serializable {
         processCourseEdit();
         endConversation();
         showSaveMessage();
-        return "courses?faces-redirect=true";
+        return REDIRECTCOURSE;
     }
 
     public String quickUpdateCourse() {
@@ -186,7 +184,7 @@ public class CoursesBean implements Serializable {
         showSaveMessage();
         startConversation();
         hasSelectedCourse = true;
-        return "editcourse?faces-redirect=true";
+        return REDIRECTEDITCOURSE;
     }
 
     /**
@@ -338,7 +336,7 @@ public class CoursesBean implements Serializable {
     public String onCreateNewCategory() {
         if (!newCatName.isEmpty()) {
             catService.addCategory(newCatName);
-            return "courses?faces-redirect=true";
+            return REDIRECTCOURSE;
         } else {
             return null;
         }
@@ -349,7 +347,7 @@ public class CoursesBean implements Serializable {
             Category selectedItem = new Category();
             selectedItem.setId(Long.parseLong(selectedCat));
             catService.removeCategory(selectedItem);
-            return "courses?faces-redirect=true";
+            return REDIRECTCOURSE;
         } else {
             return null;
         }
@@ -358,7 +356,7 @@ public class CoursesBean implements Serializable {
     public String onCreateNewUserGroup() {
         if (!newUserGroupName.isEmpty()) {
             groupService.addUserGroup(newUserGroupName);
-            return "courses?faces-redirect=true";
+            return REDIRECTCOURSE;
         } else {
             return null;
         }
@@ -369,7 +367,7 @@ public class CoursesBean implements Serializable {
             UserGroup selectedItem = new UserGroup();
             selectedItem.setId(Long.parseLong(selectedUserGroup));
             groupService.removeUserGroup(selectedItem);
-            return "courses?faces-redirect=true";
+            return REDIRECTCOURSE;
         } else {
             return null;
         }
@@ -377,27 +375,27 @@ public class CoursesBean implements Serializable {
 
     public String onAddCategoryToCourse() {
         catService.addCategoryToCourse(Long.parseLong(selectedCatToAdd), course.getId());
-        return "editcourse";
+        return EDITCOURSE;
     }
 
     public String onAddUserGroupToCourse() {
         groupService.addUserGroupToCourse(Long.parseLong(selectedGroupToAdd), course.getId());
-        return "editcourse";
+        return EDITCOURSE;
     }
 
     public String onRemoveCategoryFromCourse() {
         catService.removeCategoryFromCourse(Long.parseLong(selectedCatToRemove), course.getId());
-        return "editcourse";
+        return EDITCOURSE;
     }
 
     public String onRemoveUserGroupFromCourse() {
         groupService.removeUserGroupFromCourse(Long.parseLong(selectedGroupToRemove), course.getId());
-        return "editcourse";
+        return EDITCOURSE;
     }
 
     public String onCancelEdit() {
         endConversation();
-        return "courses?faces-redirect=true";
+        return REDIRECTCOURSE;
     }
 
     /**

@@ -33,10 +33,9 @@ public class UserDAOUtils implements IUserDAO {
     static final String QUERY_GET_USER_USERTYPES = "SELECT ut.ID_UserType FROM User_UserType ut, User u WHERE u.ID_User = ut.ID_User AND u.ID_User = ?";
     static final String QUERY_EDIT_ACCES_LEVEL = "UPDATE User_UserType SET ID_UserType = ? WHERE ID_User = ? AND ID_UserType = ?";
 
-    public UserDAOUtils() {
-
-    }
-
+    private static final String SQLERROR = "SQL Exception code ";
+    private static final String USERFROMDBERROR = "Failed to get users from database";
+    
     @Override
     public List<User> getAllUsers() {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
@@ -59,8 +58,8 @@ public class UserDAOUtils implements IUserDAO {
                 users.add(u);
             }
         } catch (SQLException ex_sql) {
-            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
-            System.err.println("Failed to get users from database");
+            System.out.println(SQLERROR + ex_sql.getErrorCode());
+            System.err.println(USERFROMDBERROR);
             System.out.println(ex_sql.getMessage());
         }
         return users;
@@ -87,8 +86,8 @@ public class UserDAOUtils implements IUserDAO {
                 user.setAccesLevels(getUserTypesByUserID(user.getUserID()));
             }
         } catch (SQLException ex_sql) {
-            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
-            System.err.println("Failed to get user from database");
+            System.out.println(SQLERROR + ex_sql.getErrorCode());
+            System.err.println(USERFROMDBERROR);
             System.out.println(ex_sql.getMessage());
         }
         return user;
@@ -157,7 +156,7 @@ public class UserDAOUtils implements IUserDAO {
                 users.add(user);
             }
         } catch (SQLException ex_sql) {
-            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.out.println(SQLERROR + ex_sql.getErrorCode());
             System.out.println(ex_sql.getMessage());
         }
         return users;
@@ -174,8 +173,8 @@ public class UserDAOUtils implements IUserDAO {
                 accountTypes.put(o[0].toString(), o[1].toString());
             }
         } catch (SQLException ex_sql) {
-            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
-            System.err.println("Failed to get users from database");
+            System.out.println(SQLERROR + ex_sql.getErrorCode());
+            System.err.println(USERFROMDBERROR);
             System.out.println(ex_sql.getMessage());
         }
         return accountTypes;
@@ -193,7 +192,7 @@ public class UserDAOUtils implements IUserDAO {
                 usertypes.add(Long.parseLong(o[0].toString()));
             }
         } catch (SQLException ex_sql) {
-            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
+            System.out.println(SQLERROR + ex_sql.getErrorCode());
             System.err.println("Failed to get users from database");
             System.out.println(ex_sql.getMessage());
         }
