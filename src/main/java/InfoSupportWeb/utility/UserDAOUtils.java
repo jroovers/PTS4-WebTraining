@@ -31,6 +31,7 @@ public class UserDAOUtils implements IUserDAO {
     static final String QUERY_UPDATE_USER = "UPDATE User SET Name = ?, Surname = ?, Username = ?, PhoneNr = ?, Email = ?, ID_UserType = ? WHERE ID_User = ?;";
     static final String QUERY_GET_ALL_USERTYPES = "SELECT Name, ID_UserType FROM UserType";
     static final String QUERY_GET_USER_USERTYPES = "SELECT ut.ID_UserType FROM User_UserType ut, User u WHERE u.ID_User = ut.ID_User AND u.ID_User = ?";
+    static final String QUERY_EDIT_ACCES_LEVEL = "UPDATE User_UserType SET ID_UserType = ? WHERE ID_User = ? AND ID_UserType = ?";
 
     public UserDAOUtils() {
 
@@ -197,5 +198,19 @@ public class UserDAOUtils implements IUserDAO {
             System.out.println(ex_sql.getMessage());
         }
         return usertypes;
+    }
+    
+    @Override
+    public boolean editAccountType(long user_id, int acces_level, int old_acces_level) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        Object[] params = new Object[]{user_id, acces_level, old_acces_level};
+        try {
+            run.update(QUERY_EDIT_ACCES_LEVEL, params);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Failed to edit accountType in database");
+            return false;
+        }
     }
 }
