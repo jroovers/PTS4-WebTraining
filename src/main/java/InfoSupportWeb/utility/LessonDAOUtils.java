@@ -5,7 +5,6 @@
  */
 package InfoSupportWeb.utility;
 
-import static InfoSupportWeb.utility.CourseDAOUtils.QUERY_INSERT_COURSE;
 import Interfaces.ILessonDAO;
 import Model.Course;
 import Model.Lesson;
@@ -38,7 +37,9 @@ public class LessonDAOUtils implements ILessonDAO {
     static final String QUERY_SIGNUP_USER_TO_LESSON = "INSERT INTO Lesson_Registration(ID_Lesson, ID_User) VALUES (?,?);";
     static final String QUERY_SIGNUP_TEACHER_TO_LESSON = "INSERT INTO Lesson_Teacher(ID_Lesson,ID_User) VALUES (?,?);";
 
+    //Error handling
     private static final String SQLERROR = "SQL Exception code ";
+    private final static Logger LOGGER = Logger.getLogger(LessonDAOUtils.class.getName());
     
     @Override
     public List<Lesson> getLessons() {
@@ -74,8 +75,8 @@ public class LessonDAOUtils implements ILessonDAO {
                 lessons.add(lesson);
             }
         } catch (SQLException ex_sql) {
-            System.out.println(SQLERROR + ex_sql.getErrorCode());
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);            
         }
         return lessons;
     }
@@ -90,13 +91,11 @@ public class LessonDAOUtils implements ILessonDAO {
             long id = Long.parseLong(result[0].toString());
 
             lesson.setId(id);
-                       
-            System.out.println("SQL Success, output:");
-            System.out.println(id);
+            
+            LOGGER.log(Level.INFO, "SQL Succes, output: ", id);
             return lesson;
         } catch (SQLException ex) {
-            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Failed to add lesson to db");
+            LOGGER.log(Level.SEVERE, "Failed to add lesson to DB - errorCode: " + ex.getErrorCode(), ex);
             return null;
         }
     }
@@ -109,8 +108,7 @@ public class LessonDAOUtils implements ILessonDAO {
             run.update(QUERY_UPDATE_LESSON, params);
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Failed to edit lesson in db");
+            LOGGER.log(Level.SEVERE, "Failed to edit lesson in DB - errorCode: " + ex.getErrorCode(), ex);
             return false;
         }
     }
@@ -124,8 +122,7 @@ public class LessonDAOUtils implements ILessonDAO {
             run.execute(QUERY_REMOVE_LESSON, rsh, params);
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Failed to remove lesson from db");
+            LOGGER.log(Level.SEVERE, "Failed to remove lesson from DB - errorCode: " + ex.getErrorCode(), ex);
             return false;
         }
     }
@@ -164,8 +161,8 @@ public class LessonDAOUtils implements ILessonDAO {
                 lessons.add(lesson);
             }
         } catch (SQLException ex_sql) {
-            System.out.println(SQLERROR + ex_sql.getErrorCode());
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
         }
         return lessons;
     }
@@ -206,8 +203,8 @@ public class LessonDAOUtils implements ILessonDAO {
                 lessons.add(lesson);
             }
         } catch (SQLException ex_sql) {
-            System.out.println(SQLERROR + ex_sql.getErrorCode());
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
         }
         return lessons;
     }
@@ -248,8 +245,8 @@ public class LessonDAOUtils implements ILessonDAO {
                 lessons.add(lesson);
             }
         } catch (SQLException ex_sql) {
-            System.out.println(SQLERROR + ex_sql.getErrorCode());
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
         }
         return lessons;
     }
@@ -273,10 +270,10 @@ public class LessonDAOUtils implements ILessonDAO {
                 users.add(u);
             }
         } catch (SQLException ex_sql) {
-            System.out.println(SQLERROR + ex_sql.getErrorCode());
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
         } catch (Exception e) {
-            System.out.println(e);
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
         return users;
     }
@@ -289,11 +286,10 @@ public class LessonDAOUtils implements ILessonDAO {
         try {
             Object[] result = run.insert(QUERY_SIGNUP_USER_TO_LESSON, rsh, params);
 
-            System.out.println("SQL Success");
+            LOGGER.log(Level.INFO, "SQL Succes");
             return 1;
         } catch (SQLException ex) {
-            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Failed to add lesson to db");
+            LOGGER.log(Level.SEVERE, "Failed to sign up User in DB - errorCode: " + ex.getErrorCode(), ex);
             return 0;
         }
     }

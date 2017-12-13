@@ -27,8 +27,10 @@ public class CourseDAOUtils implements ICourseDAO {
             + "(?,?,?,?,?,?,?,?)";
     static final String QUERY_UPDATE_COURSE = "UPDATE Course SET Code = ?, Name = ?, Description = ?, CourseMaterials = ?, KeyWords = ?, Duration = ?, Cost = ?, Supplier = ? WHERE ID_Course = ?";
     static final String QUERY_REMOVE_COURSE = "DELETE FROM Course WHERE ID_Course = ?";
-
     
+    //Error handling
+    private static final String SQLERROR = "SQL Exception code ";
+    private final static Logger LOGGER = Logger.getLogger(CourseDAOUtils.class.getName());
 
     @Override
     public List<Course> getCourses() {
@@ -55,8 +57,8 @@ public class CourseDAOUtils implements ICourseDAO {
                 courses.add(course);
             }
         } catch (SQLException ex_sql) {
-            System.out.println("SQL Exception code " + ex_sql.getErrorCode());
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
         }
         return courses;
     }
@@ -80,12 +82,11 @@ public class CourseDAOUtils implements ICourseDAO {
             long id = Long.parseLong(result[0].toString());
 
             course.setId(id);
-            System.out.println("SQL Success, output:");
-            System.out.println(id);
+            LOGGER.log(Level.INFO, "SQL Succes, output{0} ", id);
             return course;
         } catch (SQLException ex) {
-            Logger.getLogger(CourseDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Failed to add course to db");
+            LOGGER.log(Level.SEVERE, SQLERROR + ex.getErrorCode(), ex);
+            LOGGER.log(Level.SEVERE, "Failed to add course to DB", ex);
             return null;
         }
     }
@@ -101,8 +102,8 @@ public class CourseDAOUtils implements ICourseDAO {
             run.update(QUERY_UPDATE_COURSE, params);
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Failed to edit course in db");
+            LOGGER.log(Level.SEVERE, SQLERROR + ex.getErrorCode(), ex);
+            LOGGER.log(Level.SEVERE, "Failed to edit course in DB", ex);
             return false;
         }
     }
@@ -116,8 +117,8 @@ public class CourseDAOUtils implements ICourseDAO {
             run.execute(QUERY_REMOVE_COURSE, rsh, params);
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Failed to remove course from db");
+            LOGGER.log(Level.SEVERE, SQLERROR + ex.getErrorCode(), ex);
+            LOGGER.log(Level.SEVERE, "Failed to remove course from DB", ex);
             return false;
         }
     }

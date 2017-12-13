@@ -33,6 +33,8 @@ public class UserDAOUtils implements IUserDAO {
     static final String QUERY_GET_USER_USERTYPES = "SELECT ut.ID_UserType FROM User_UserType ut, User u WHERE u.ID_User = ut.ID_User AND u.ID_User = ?";
     static final String QUERY_EDIT_ACCES_LEVEL = "UPDATE User_UserType SET ID_UserType = ? WHERE ID_User = ? AND ID_UserType = ?";
 
+    //Error handling
+    private final static Logger LOGGER = Logger.getLogger(UserDAOUtils.class.getName());
     private static final String SQLERROR = "SQL Exception code ";
     private static final String USERFROMDBERROR = "Failed to get users from database";
     
@@ -58,9 +60,9 @@ public class UserDAOUtils implements IUserDAO {
                 users.add(u);
             }
         } catch (SQLException ex_sql) {
-            System.out.println(SQLERROR + ex_sql.getErrorCode());
-            System.err.println(USERFROMDBERROR);
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, USERFROMDBERROR);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
         }
         return users;
     }
@@ -86,9 +88,9 @@ public class UserDAOUtils implements IUserDAO {
                 user.setAccesLevels(getUserTypesByUserID(user.getUserID()));
             }
         } catch (SQLException ex_sql) {
-            System.out.println(SQLERROR + ex_sql.getErrorCode());
-            System.err.println(USERFROMDBERROR);
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, USERFROMDBERROR);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
         }
         return user;
     }
@@ -103,8 +105,7 @@ public class UserDAOUtils implements IUserDAO {
             run.insert(QUERY_INSERT_USER, rsh, params);
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Failed to add User to db");
+            LOGGER.log(Level.SEVERE, "Failed to add User in DB - errorCode: " + ex.getErrorCode(), ex);
             return false;
         }
     }
@@ -118,8 +119,7 @@ public class UserDAOUtils implements IUserDAO {
             run.execute(QUERY_REMOVE_USER, rsh, params);
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Failed to remove user from db");
+            LOGGER.log(Level.SEVERE, "Failed to remove user from DB - errorCode: " + ex.getErrorCode(), ex);
             return false;
         }
     }
@@ -132,8 +132,7 @@ public class UserDAOUtils implements IUserDAO {
             run.update(QUERY_UPDATE_USER, params);
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Failed to edit lesson in db");
+            LOGGER.log(Level.SEVERE, "Failed to edit lesson in DB - errorCode: " + ex.getErrorCode(), ex);
             return false;
         }
     }
@@ -156,8 +155,8 @@ public class UserDAOUtils implements IUserDAO {
                 users.add(user);
             }
         } catch (SQLException ex_sql) {
-            System.out.println(SQLERROR + ex_sql.getErrorCode());
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
         }
         return users;
     }
@@ -173,9 +172,9 @@ public class UserDAOUtils implements IUserDAO {
                 accountTypes.put(o[0].toString(), o[1].toString());
             }
         } catch (SQLException ex_sql) {
-            System.out.println(SQLERROR + ex_sql.getErrorCode());
-            System.err.println(USERFROMDBERROR);
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, USERFROMDBERROR);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
         }
         return accountTypes;
     }
@@ -192,9 +191,9 @@ public class UserDAOUtils implements IUserDAO {
                 usertypes.add(Long.parseLong(o[0].toString()));
             }
         } catch (SQLException ex_sql) {
-            System.out.println(SQLERROR + ex_sql.getErrorCode());
-            System.err.println("Failed to get users from database");
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, "Failed to get users from DB");
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
         }
         return usertypes;
     }
@@ -207,8 +206,7 @@ public class UserDAOUtils implements IUserDAO {
             run.update(QUERY_EDIT_ACCES_LEVEL, params);
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Failed to edit accountType in database");
+            LOGGER.log(Level.SEVERE, "Failed to add edit AccountType in DB - errorCode: " + ex.getErrorCode(), ex);
             return false;
         }
     }

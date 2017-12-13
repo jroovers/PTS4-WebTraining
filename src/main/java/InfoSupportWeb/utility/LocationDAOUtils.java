@@ -24,6 +24,10 @@ public class LocationDAOUtils implements ILocationDAO {
     static final String QUERY_INSERT_LOCATION = "INSERT INTO Location" + "(Name) VALUES" + "(?)";
     static final String QUERY_REMOVE_LOCATION = "DELETE FROM Location WHERE Name = ?";
 
+    //Error handling
+    private static final String SQLERROR = "SQL Exception code ";
+    private final static Logger LOGGER = Logger.getLogger(LocationDAOUtils.class.getName());
+
     @Override
     public List<String> getLocations() {
 
@@ -33,12 +37,12 @@ public class LocationDAOUtils implements ILocationDAO {
         try {
             List<Object[]> result = run.query(QUERY_GET_LOCATIONS, alh);
             for (Object[] o : result) {
-                
+
                 locations.add(o[1] == null ? null : o[1].toString());
             }
         } catch (SQLException ex_sql) {
-            System.out.println("SQL Exception code: " + ex_sql.getErrorCode());
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
         }
         return locations;
     }
@@ -52,10 +56,10 @@ public class LocationDAOUtils implements ILocationDAO {
             run.insert(QUERY_INSERT_LOCATION, rsh, params);
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(CourseDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Failed to add location to db");
+            LOGGER.log(Level.SEVERE, "Failed to add location in DB - errorCode: " + ex.getErrorCode(), ex);
             return false;
-        }}
+        }
+    }
 
     @Override
     public boolean removeLocation(String locationName) {
@@ -66,9 +70,9 @@ public class LocationDAOUtils implements ILocationDAO {
             run.execute(QUERY_REMOVE_LOCATION, rsh, params);
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(LessonDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Failed to remove location from db");
+            LOGGER.log(Level.SEVERE, "Failed to remove location from DB - errorCode: " + ex.getErrorCode(), ex);
             return false;
-        }}
+        }
+    }
 
 }
