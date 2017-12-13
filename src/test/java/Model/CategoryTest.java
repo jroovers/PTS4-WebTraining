@@ -22,6 +22,7 @@ public class CategoryTest {
     Category cat1;  // ID : 25, Description : Javascript.
     Category cat2;  // ID : 0, Description : PHP.
     Category cat3;  // ID : -1, Description : HTML.
+    Category cat4;  // ID : -1, Description : HTML.
     
     public CategoryTest() {
     }
@@ -39,6 +40,7 @@ public class CategoryTest {
         cat1 = new Category(25,"Javascript");
         cat2 = new Category("PHP");
         cat3 = new Category(-1, "HTML");
+        cat4 = new Category();
     }
     
     @After
