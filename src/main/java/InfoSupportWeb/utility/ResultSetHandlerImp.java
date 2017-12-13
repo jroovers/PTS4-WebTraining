@@ -8,7 +8,9 @@ package InfoSupportWeb.utility;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Collections;
 import org.apache.commons.dbutils.ResultSetHandler;
+import org.apache.commons.lang.ArrayUtils;
 
 /**
  *
@@ -22,7 +24,7 @@ public class ResultSetHandlerImp implements ResultSetHandler<Object[]> {
     public Object[] handle(ResultSet rs) throws SQLException {
         {
             if (!rs.next()) {
-                return null;
+                return ArrayUtils.EMPTY_STRING_ARRAY;
             }
 
             ResultSetMetaData meta = rs.getMetaData();
