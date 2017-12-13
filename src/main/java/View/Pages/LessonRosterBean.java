@@ -43,7 +43,7 @@ public class LessonRosterBean implements Serializable
     }
 
     public void onButtonClick(){
-        if(email.isEmpty() || email == null){
+        if(email.isEmpty()){
             return;
         }        
         RefreshLessons();

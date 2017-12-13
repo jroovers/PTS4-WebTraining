@@ -35,7 +35,7 @@ public class AuthorizationBean {
     private String username;
     private String password;
 
-    private static final String RETURNPAGE = "/index_templated.xhtml?faces-redirect=true";
+    private static final String RETURNPAGE = "/index.xhtml?faces-redirect=true";
     
     public AuthorizationBean() {
         username = "";
