@@ -8,6 +8,8 @@ package Controller;
 import Model.User;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -34,7 +36,7 @@ public class UserServiceTest {
      */
     @Test
     public void testAddUser() throws Exception {
-        System.out.println("addUser - Test");
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "addUser - Test: ");   
         
         boolean result = userService.addUser(user1);
         assertEquals(result, true);
@@ -47,7 +49,7 @@ public class UserServiceTest {
      */
     @Test
     public void testGetUsers() throws Exception {
-        System.out.println("getUsers - Test");
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "getUsers - Test: "); 
         
         List<User> users = userService.getUsers();
         assertTrue(!users.isEmpty());
@@ -58,10 +60,10 @@ public class UserServiceTest {
      */
     @Test
     public void testGetUser() throws Exception {
-        System.out.println("getUser - Test");
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "getUser - Test: "); 
         
-        User user = userService.getUser("Bertster");
-        System.out.println(user.getName());
+        User user = userService.getUser("Bertster");        
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, user.getName()); 
         assertEquals("bertus", user.getSurname());
     }
 
@@ -70,7 +72,7 @@ public class UserServiceTest {
      */
     @Test
     public void testRemoveUser() throws Exception {
-        System.out.println("removeUser - Test"); 
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "removeUser - Test: "); 
         
         List<User> beforeUsers = userService.getUsers();
         boolean result = userService.addUser(user1);
@@ -87,7 +89,7 @@ public class UserServiceTest {
      */
     @Test
     public void testGetTeachers() throws Exception{
-        System.out.println("getUsers - Test");
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "getTeachers - Test: "); 
         
         List<User> users = userService.getTeachers();
         assertTrue(!users.isEmpty());
@@ -98,7 +100,7 @@ public class UserServiceTest {
      */
     @Test
     public void testGetAccountTypes() throws Exception{
-        System.out.println("getUsers - Test");
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "getUsers - Test: "); 
         
         Map<String, String> accountTypes = userService.getAccountTypes();
         assertTrue(!accountTypes.isEmpty());

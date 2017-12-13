@@ -6,6 +6,8 @@
 package Model;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -223,7 +225,7 @@ public class User {
     }
 
     public String add() {
-        System.out.println(username + " " + username);
+        Logger.getLogger(User.class.getName()).log(Level.INFO, username + " " + username);
 
         if (!"1".equals(username)) {
             return "failurePage";

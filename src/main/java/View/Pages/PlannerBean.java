@@ -4,6 +4,7 @@ import Controller.CourseService;
 import Controller.LessonService;
 import Controller.LocationService;
 import Controller.UserService;
+import InfoSupportWeb.utility.LessonDAOUtils;
 import Model.Course;
 import Model.Lesson;
 import Model.User;
@@ -14,6 +15,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -164,7 +167,7 @@ public class PlannerBean {
     }
 
     public String submitLesson() {
-        System.out.println(selectedCourse.getShortString());
+        Logger.getLogger(PlannerBean.class.getName()).log(Level.INFO, selectedCourse.getShortString());
         GregorianCalendar starttime = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
         starttime.setTime(startDate);
         starttime.add(Calendar.HOUR_OF_DAY, 12);

@@ -9,6 +9,8 @@ import Controller.UserService;
 import Model.User;
 import View.Session.SessionBean;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
@@ -101,8 +103,7 @@ public class AuthorizationBean {
         try {
             context.redirect("/InfoSupportWeb/external/authorization.xhtml");
         } catch (IOException ex) {
-            System.out.println("IOEXCEPTION@AuthorizationBean.CheckPermissionNew:");
-            System.out.println(ex.getMessage());
+            Logger.getLogger(AuthorizationBean.class.getName()).log(Level.INFO, "IOEXCEPTION@AuthorizationBean.CheckPermissionNew:" + ex.getMessage(), ex); 
         }
     }
 
