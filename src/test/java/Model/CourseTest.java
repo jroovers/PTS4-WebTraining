@@ -12,9 +12,11 @@ import org.junit.Before;
 public class CourseTest {
 
     private Course course;
+    private Course course2;
 
     @Before
     public void CreateTestCourse() {
+        course2 = new Course();
         course = new Course(
                 1,
                 "001",
@@ -179,6 +181,21 @@ public class CourseTest {
         //assert
         Assert.assertArrayEquals(expPriorKnowledge, priorKnowledge);
     }
+    
+    /**
+     * Test of setPriorKnowledge method, of class Course.
+     */
+    @Test
+    public void testSetPriorKnowledge2() {
+        //arrange
+        String[] priorKnowledge;
+        String[] expPriorKnowledge = new String[]{"Niet geladen"};
+
+        priorKnowledge = course2.getPriorKnowledge();
+
+        //assert
+        Assert.assertArrayEquals(expPriorKnowledge, priorKnowledge);
+    }
 
     /**
      * Test of getCourseMaterialsmethod, of class Course.
@@ -202,9 +219,9 @@ public class CourseTest {
         String courseMaterials;
         String expCourseMaterials = "Meel, Pan";
         //act
-        course.setDescription(expCourseMaterials);
+        course.setCourseMaterials(expCourseMaterials);
 
-        courseMaterials = course.getDescription();
+        courseMaterials = course.getCourseMaterials();
 
         //assert
         assertEquals(expCourseMaterials, courseMaterials);
@@ -282,6 +299,28 @@ public class CourseTest {
         //assert
         assertEquals(cost, result, 0.05);
     }
+    
+    /**
+     * Test of getSupplier, of class Course.
+     */
+    @Test
+    public void testGetSupplier() {
+        course.setSupplier("PostNL");
+        String result = course.getSupplier();
+        
+        assertEquals("PostNL", result);
+    }
+    
+    /**
+     * Test of getSupplier, of class Course.
+     */
+    @Test
+    public void testSetSupplier() {
+        course.setSupplier("PostNL");
+        String result = course.getSupplier();
+        
+        assertEquals("PostNL", result);
+    }
 
     /**
      * Test of setCost method, of class Course.
@@ -299,7 +338,23 @@ public class CourseTest {
         //assert
         assertEquals(expCost, cost, 0.05);
     }
-
+    
+    /**
+     * Test of getShortString method, of class Course.
+     */
+    @Test
+    public void testGetShortString() {    
+        Assert.assertNotNull(course.getShortString());
+    }
+    
+    /**
+     * Test of getLongString method, of class Course.
+     */
+    @Test
+    public void testGetLongString() {    
+        Assert.assertNotNull(course.getLongString());
+    }
+    
     @Test
     public void testConstructor1() {
         //arrange
