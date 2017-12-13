@@ -5,6 +5,8 @@
  */
 package Model;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,10 +21,12 @@ import static org.junit.Assert.*;
 public class UserTest {
 
     private User user;
+    private User user2;
 
     @Before
     public void CreateTestUser() {
         user = new User(1, "Frank", "franken", "Frankster", "frankisthebest", "001234", "Frankster@TheG.com", 2);
+        user2 = new User("Dennis123", "06248957", "dennis@hotmail.com", 1);
     }
 
     /**
@@ -77,6 +81,26 @@ public class UserTest {
         int result = user.getAccesLevel();
         //assert
         assertEquals(newLVL, result);
+    }
+    
+        /**
+     * Test of getAccesLVLs method, of class User.
+     */
+    @Test
+    public void testGetAccesLVLs() {
+        //arange
+        Long expLVL1 = 1L;
+        Long expLVL2 = 2L;
+        List<Long> newAccesLVLs = new ArrayList<>();
+        newAccesLVLs.add(expLVL1);
+        newAccesLVLs.add(expLVL2);
+        user.setAccesLevels(newAccesLVLs);
+        
+        //act
+        List<Long> result = user.getAccesLevels();
+        
+        //assert
+        assertEquals(2, result.size());
     }
 
     /**
@@ -246,5 +270,17 @@ public class UserTest {
         String result = user.getEmail();
         //assert
         assertEquals(newEmail, result);
+    }
+    
+    /**
+     * Test of getShortString method, of class User.
+     */
+    @Test
+    public void testGetShortString(){              
+        //act     
+        String expShortString = "Frank franken - Frankster@TheG.com";
+        String result = user.getShortString();        
+        //assert
+        assertEquals(expShortString, result);
     }
 }
