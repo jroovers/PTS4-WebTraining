@@ -70,11 +70,11 @@ public class CourseDAOUtils implements ICourseDAO {
         } else {
             keyWords = "";
         }
-
+try {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
         Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), keyWords, course.getDurationInDays(), course.getCost(), course.getSupplier()};
-        try {
+        
             Object[] result = run.insert(QUERY_INSERT_COURSE, rsh, params);
 
             long id = Long.parseLong(result[0].toString());
@@ -83,7 +83,7 @@ public class CourseDAOUtils implements ICourseDAO {
             System.out.println("SQL Success, output:");
             System.out.println(id);
             return course;
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(CourseDAOUtils.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Failed to add course to db");
             return null;

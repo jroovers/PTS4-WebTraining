@@ -10,8 +10,10 @@ import Model.User;
 import Interfaces.IUserDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.dbutils.QueryRunner;
@@ -52,9 +54,9 @@ public class UserDAOUtils implements IUserDAO {
                         o[3] == null ? null : o[3].toString(), // username
                         o[4] == null ? null : o[4].toString(), // Password
                         o[5] == null ? null : o[5].toString(), // phoneNr
-                        o[6] == null ? null : o[6].toString(), // email
-                        o[7] == null ? null : Integer.parseInt(o[7].toString()) // accessLevel
+                        o[6] == null ? null : o[6].toString()  // email
                 );
+                u.setAccesLevels(getUserTypesByUserID(u.getUserID()));
                 users.add(u);
             }
         } catch (SQLException ex_sql) {
@@ -80,8 +82,7 @@ public class UserDAOUtils implements IUserDAO {
                         o[3] == null ? null : o[3].toString(), // username
                         o[4] == null ? null : o[4].toString(), // Password
                         o[5] == null ? null : o[5].toString(), // phoneNr
-                        o[6] == null ? null : o[6].toString(), // email
-                        o[7] == null ? null : Integer.parseInt(o[7].toString()) // accessLevel
+                        o[6] == null ? null : o[6].toString()  // email
                 );
                 user.setAccesLevels(getUserTypesByUserID(user.getUserID()));
             }
@@ -97,8 +98,8 @@ public class UserDAOUtils implements IUserDAO {
     public boolean addUser(User user) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
-        //`Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`,`ID_UserType`
-        Object[] params = new Object[]{user.getName(), user.getSurname(), user.getUsername(), user.getPassword(), user.getPhoneNr(), user.getEmail(), user.getAccesLevel()};
+        //`Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`
+        Object[] params = new Object[]{user.getName(), user.getSurname(), user.getUsername(), user.getPassword(), user.getPhoneNr(), user.getEmail()};
         try {
             run.insert(QUERY_INSERT_USER, rsh, params);
             return true;
@@ -127,7 +128,7 @@ public class UserDAOUtils implements IUserDAO {
     @Override
     public boolean editUser(User user) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
-        Object[] params = new Object[]{user.getName(), user.getSurname(), user.getUsername(), user.getPhoneNr(), user.getEmail(), user.getAccesLevel(), user.getUserID()};
+        Object[] params = new Object[]{user.getName(), user.getSurname(), user.getUsername(), user.getPhoneNr(), user.getEmail(), user.getUserID()};
         try {
             run.update(QUERY_UPDATE_USER, params);
             return true;
@@ -181,11 +182,11 @@ public class UserDAOUtils implements IUserDAO {
     }
 
     @Override
-    public List<Long> getUserTypesByUserID(long ID_user) {
+    public Set<Long> getUserTypesByUserID(long ID_user) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         Object[] params = new Object[]{ID_user};
         ArrayListHandler alh = new ArrayListHandler();
-        List<Long> usertypes = new ArrayList<>();
+        Set<Long> usertypes = new HashSet<>();
         try {
             List<Object[]> result = run.query(QUERY_GET_USER_USERTYPES, alh, params);
             for (Object[] o : result) {
@@ -200,7 +201,7 @@ public class UserDAOUtils implements IUserDAO {
     }
     
     @Override
-    public boolean editAccountType(long user_id, int acces_level, int old_acces_level) {
+    public boolean editAccountType(User user) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         Object[] params = new Object[]{user_id, acces_level, old_acces_level};
         try {

@@ -172,7 +172,8 @@ public class SignupBean {
         if (id != 0) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training opgeslagen", "!"));
             if (name != null) {
-                User user = new User(name, surname, phonenr, email, 1);
+                User user = new User(name, surname, phonenr, email);
+                user.addAccessLevel(1);
                 us.addUser(user);
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training en data opgeslagen", "!"));
             }

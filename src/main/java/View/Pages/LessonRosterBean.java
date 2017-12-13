@@ -3,6 +3,7 @@ package View.Pages;
 import Controller.CourseService;
 import Controller.LessonService;
 import Model.Lesson;
+import View.Session.SessionBean;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -11,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
@@ -28,7 +30,6 @@ public class LessonRosterBean implements Serializable
 
     private transient ScheduleEvent event = new DefaultScheduleEvent();
 
-    private transient CourseService courseService;
     private transient LessonService lessonService;
     private transient Lesson selectedLesson;
     private String email;
@@ -36,10 +37,10 @@ public class LessonRosterBean implements Serializable
     @PostConstruct
     public void init()
     {
-        courseService = new CourseService();
         lessonService = new LessonService();
         lessonSchedule = new DefaultScheduleModel();
-//        RefreshLessons();
+
+        RefreshLessons();
     }
 
     public void onButtonClick(){

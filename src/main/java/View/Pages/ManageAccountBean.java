@@ -21,7 +21,6 @@ import org.primefaces.component.datatable.DataTable;
 public class ManageAccountBean implements Serializable {
 
     private transient List<User> users;
-    private transient List<User> filteredUsers;
     private Map<String, String> accountTypes;
 
     @Inject
@@ -37,21 +36,13 @@ public class ManageAccountBean implements Serializable {
         return users;
     }
 
-    public List<User> getFilteredUsers() {
-        return filteredUsers;
-    }
-    
     public Map<String, String> getAccountTypes() {
         accountTypes = us.getAccountTypes();
         return accountTypes;
     }
-    
+
     public void setAccountTypes(Map<String, String> accountTypes) {
         this.accountTypes = accountTypes;
-    }
-
-    public void setFilteredUsers(List<User> filteredUsers) {
-        this.filteredUsers = filteredUsers;
     }
 
     public void onRowEdit(RowEditEvent event) {
@@ -95,13 +86,6 @@ public class ManageAccountBean implements Serializable {
                 user.setEmail(newValue.toString());
                 us.editUser(user);
                 break;
-//            case "AccessLevel":
-//                accountTypes = getAccountTypes();
-//                int accesLevel = Integer.valueOf(accountTypes.get(newValue.toString()));        
-//                int oldAccesLevel = Integer.valueOf(accountTypes.get(oldValue.toString()));                  
-//                user.setAccesLevel(accesLevel);
-//                us.editAccountType(user.getUserID(), accesLevel, oldAccesLevel);
-//                break;
             default:
                 break;
         }
@@ -110,6 +94,11 @@ public class ManageAccountBean implements Serializable {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Gebruiker aangepast", "Oud: " + oldValue + ", Nieuw:" + newValue);
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
+    }
+    
+    public void onCheckBoxEdit(User user){
+        System.out.println("checkbox");
+        us.editAccountType(user);
     }
 
 }

@@ -182,7 +182,8 @@ public class OfferTrainingBean
     public void addCourseAndUser() 
     {
         //Add user
-        User user = new User(userName, phonenr, email,4);
+        User user = new User(userName, phonenr, email);
+        user.addAccessLevel(4); //medewerker kenniscentrum rights
         us.addUser(user);
         FacesContext context = FacesContext.getCurrentInstance();
         

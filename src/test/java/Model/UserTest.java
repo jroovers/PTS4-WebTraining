@@ -22,7 +22,8 @@ public class UserTest {
 
     @Before
     public void CreateTestUser() {
-        user = new User(1, "Frank", "franken", "Frankster", "frankisthebest", "001234", "Frankster@TheG.com", 2);
+        user = new User(1, "Frank", "franken", "Frankster", "frankisthebest", "001234", "Frankster@TheG.com");
+        user.addAccessLevel(2);
     }
 
     /**
@@ -58,11 +59,11 @@ public class UserTest {
     @Test
     public void testGetAccesLVL() {
         //arange
-        int expLVL = 2;
+        long expLVL = 2;
         //act
-        int result = user.getAccesLevel();
+        boolean result = user.getAccesLevels().contains(expLVL);
         //assert
-        assertEquals(expLVL, result);
+        assertEquals(true, result);
     }
 
     /**
@@ -71,12 +72,12 @@ public class UserTest {
     @Test
     public void testSetAccesLVL() {
         //arange
-        int newLVL = 1;
+        long newLVL = 1;
         //act
-        user.setAccesLevel(newLVL);
-        int result = user.getAccesLevel();
+        user.addAccessLevel(newLVL);
+        boolean result = user.getAccesLevels().contains(newLVL);
         //assert
-        assertEquals(newLVL, result);
+        assertEquals(true, result);
     }
 
     /**

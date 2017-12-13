@@ -101,8 +101,8 @@ public class UserService {
      * @param old_acces_level
      * @return Check if account type of given user is editted or not
      */
-    public boolean editAccountType(long user_id, int acces_level, int old_acces_level) {
+    public boolean editAccountType(User user) {
         UserDAOUtils userDAOUtils = new UserDAOUtils();
-        return userDAOUtils.editAccountType(user_id, acces_level, old_acces_level);
+        return userDAOUtils.editAccountType(user);
     }
 }

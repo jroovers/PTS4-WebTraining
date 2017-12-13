@@ -52,8 +52,8 @@ public class LessonServiceTest {
         c1.setId(2);
         l1 = new Lesson(c1);
         l2 = new Lesson(c1);
-        u1 = new User("Frank", "franken", "001234", "Frankster@TheG.com", 2);
-        u2 = new User("Bert", "bertus", "004321", "BertusThebertustest@banana.com", 1);
+        u1 = new User("Frank", "franken", "001234", "Frankster@TheG.com");
+        u2 = new User("Bert", "bertus", "004321", "BertusThebertustest@banana.com");
         
         lessonService = new LessonService();
         location = "eindhoven";

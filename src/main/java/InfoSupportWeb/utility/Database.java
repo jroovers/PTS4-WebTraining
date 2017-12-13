@@ -42,7 +42,7 @@ public class Database {
             ds.setUrl(prop.getProperty("url"));
             ds.setUsername(prop.getProperty("username"));
             ds.setPassword(prop.getProperty("password"));
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             logger.log(Level.WARNING, ex.toString());
         }
     }

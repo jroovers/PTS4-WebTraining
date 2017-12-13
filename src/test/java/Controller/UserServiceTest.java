@@ -25,7 +25,7 @@ public class UserServiceTest {
     
     @Before
     public void setUp() {
-        user1 = new User("Bert", "Vissers", "Bert123", "Bertjeee112", "0612345678", "Bertje123@gmail.com", 2);
+        user1 = new User("Bert", "Vissers", "Bert123", "Bertjeee112", "0612345678", "Bertje123@gmail.com");
         userService = new UserService();      
     }
     
