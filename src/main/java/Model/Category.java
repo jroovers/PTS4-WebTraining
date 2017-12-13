@@ -23,7 +23,8 @@ public class Category {
     }
 
     public Category(long id, String name) {
-        this.id = id;
+        
+        this.id = Math.max(0, id);
         this.name = name;
     }
 
@@ -32,7 +33,7 @@ public class Category {
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.id = Math.max(0, id);
     }
 
     public String getName() {
@@ -40,6 +41,8 @@ public class Category {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if(!name.equals("")){
+            this.name = name;
+        }
     }
 }
