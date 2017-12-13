@@ -6,6 +6,7 @@
 package InfoSupportWeb.utility;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -26,26 +27,26 @@ public class Database {
 
     private static Database db;
     private BasicDataSource ds;
-    static final Logger logger = Logger.getLogger(Database.class.getName());
+    static final Logger LOGGER = Logger.getLogger(Database.class.getName());
 
     /**
      * Creates a new instance of Database
      */
     public Database() {
+        String filePath = "config.properties";
         Properties prop = new Properties();
-        try {
-            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-            prop.load(ec.getResourceAsStream("/WEB-INF/config.properties"));
-
+        try (final InputStream stream = this.getClass().getClassLoader().getResourceAsStream(filePath)) {
+            prop.load(stream);
             ds = new BasicDataSource();
             ds.setDriverClassName(prop.getProperty("driver"));
             ds.setUrl(prop.getProperty("url"));
             ds.setUsername(prop.getProperty("username"));
             ds.setPassword(prop.getProperty("password"));
         } catch (IOException ex) {
-            logger.log(Level.WARNING, ex.toString());
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 
     public static Database getInstance() {
         if (db == null) {

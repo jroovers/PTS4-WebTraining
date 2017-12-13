@@ -20,7 +20,6 @@ import org.junit.Ignore;
  *
  * @author Jorian
  */
-@Ignore
 public class CourseServiceTest {
 
     CourseService courseService = new CourseService();

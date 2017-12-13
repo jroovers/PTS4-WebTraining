@@ -86,7 +86,7 @@ public class User {
         this.accesLevel = accesLevel;
     }
 
-     /**
+    /**
      * Constructor to get lesson teachers
      *
      * @param name
@@ -101,7 +101,7 @@ public class User {
         this.phoneNr = phoneNr;
         this.email = email;
     }
-    
+
     /**
      * Constructor to get lesson registrations
      *
@@ -131,16 +131,17 @@ public class User {
         this.email = email;
         this.accesLevel = accesLevel;
     }
-    
+
     /**
      * Constructor for Manage Users
+     *
      * @param userID
      * @param name
      * @param surname
      * @param username
      * @param phoneNr
      * @param email
-     * @param accesLevel 
+     * @param accesLevel
      */
     public User(Long userID, String name, String surname, String username, String phoneNr, String email, int accesLevel) {
         this.userID = userID;
@@ -151,7 +152,7 @@ public class User {
         this.email = email;
         this.accesLevel = accesLevel;
     }
-    
+
     public List<Long> getAccesLevels() {
         return accesLevels;
     }
@@ -225,8 +226,6 @@ public class User {
     }
 
     public String add() {
-        Logger.getLogger(User.class.getName()).log(Level.INFO, username + " " + username);
-
         if (!"1".equals(username)) {
             return "failurePage";
         } else {

@@ -7,14 +7,14 @@
 package View.Pages;
 
 import Controller.CourseService;
-import Controller.LessonService;
 import Controller.UserService;
 import Model.Course;
 import Model.User;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -209,16 +209,17 @@ public class OfferTrainingBean
                     nTimeIndDays = Integer.parseInt(timeInDays);
                     nCost = Double.parseDouble(cost);
                 } catch (NumberFormatException ex) {
+                    Logger.getLogger(AuthorizationBean.class.getName()).fine(ex.toString());
                 }
 
-                Course course = new Course(this.code, this.courseName);
-                course.setCost(nCost);
-                course.setCourseMaterials(cursusMaterial);
-                course.setDescription(description);
-                course.setDurationInDays(nTimeIndDays);
-                course.setPriorKnowledge(nRequiredKnowledge);
-                course.setSupplier(userName);
-                cs.addCourse(course);
+                Course addCourse = new Course(this.code, this.courseName);
+                addCourse.setCost(nCost);
+                addCourse.setCourseMaterials(cursusMaterial);
+                addCourse.setDescription(description);
+                addCourse.setDurationInDays(nTimeIndDays);
+                addCourse.setPriorKnowledge(nRequiredKnowledge);
+                addCourse.setSupplier(userName);
+                cs.addCourse(addCourse);
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training is toegevoegd", "!"));
             } else {
                 cs.addCourse(code, userName);
