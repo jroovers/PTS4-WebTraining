@@ -56,11 +56,15 @@ a
 {
     color: #FFFFFF  !important;
     font-weight: 700;
-    font-size: 12px !important;
+    font-size: 13px !important;
+    text-transform: uppercase;
 }
+
+
 
  .navbar-custom
  {
+     background-color: #363636;
    min-height: 0 !important;
  }
 
