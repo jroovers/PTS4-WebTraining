@@ -36,7 +36,7 @@ public class AuthorizationBean {
     private String password;
 
     private static final String RETURNPAGE = "/index.xhtml?faces-redirect=true";
-    
+
     public AuthorizationBean() {
         username = "";
     }
@@ -94,16 +94,14 @@ public class AuthorizationBean {
      * @param value_to_check
      */
     private void permissionCheckHelper(boolean value_to_check) {
-        if (session.isLoggedIn()) {
-            if (value_to_check) {
-                return;
-            }
+        if (session.isLoggedIn() && value_to_check) {
+            return;
         }
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
         try {
             context.redirect("/InfoSupportWeb/external/authorization.xhtml");
         } catch (IOException ex) {
-            Logger.getLogger(AuthorizationBean.class.getName()).log(Level.INFO, "IOEXCEPTION@AuthorizationBean.CheckPermissionNew:" + ex.getMessage(), ex); 
+            Logger.getLogger(AuthorizationBean.class.getName()).log(Level.INFO, "IOEXCEPTION@AuthorizationBean.CheckPermissionNew:" + ex.getMessage(), ex);
         }
     }
 
