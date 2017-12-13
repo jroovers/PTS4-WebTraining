@@ -287,14 +287,14 @@ public class CoursesBean implements Serializable {
                     return false;
                 }
 
-                Course course = new Course(this.code, this.name);
-                course.setCost(nCost);
-                course.setCourseMaterials(cursusMaterial);
-                course.setDescription(description);
-                course.setDurationInDays(nTimeIndDays);
-                course.setPriorKnowledge(nRequiredKnowledge);
-                course.setKeyWords(nKeywords);
-                this.course = courseService.addCourse(course);
+                Course newCourse = new Course(this.code, this.name);
+                newCourse.setCost(nCost);
+                newCourse.setCourseMaterials(cursusMaterial);
+                newCourse.setDescription(description);
+                newCourse.setDurationInDays(nTimeIndDays);
+                newCourse.setPriorKnowledge(nRequiredKnowledge);
+                newCourse.setKeyWords(nKeywords);
+                this.course = courseService.addCourse(newCourse);
 
                 return true;
             } else {
