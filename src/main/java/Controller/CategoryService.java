@@ -18,8 +18,6 @@ import javax.ejb.Stateless;
 @Stateless
 public class CategoryService {
 
-    public CategoryService() {
-    }
 
     public boolean addCategory(String name) {
         CategoryDAODbUtilsImpl CategoryDAO = new CategoryDAODbUtilsImpl();

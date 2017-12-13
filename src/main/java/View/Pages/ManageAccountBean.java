@@ -11,6 +11,8 @@ import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 import Controller.UserService;
 import Model.User;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.inject.Inject;
 import org.primefaces.component.datatable.DataTable;
 
@@ -18,8 +20,9 @@ import org.primefaces.component.datatable.DataTable;
 @ViewScoped
 public class ManageAccountBean implements Serializable {
 
-    private List<User> users;
-    private List<User> filteredUsers;
+    private transient List<User> users;
+    private transient List<User> filteredUsers;
+    private Map<String, String> accountTypes;
 
     @Inject
     UserService us;
@@ -27,6 +30,7 @@ public class ManageAccountBean implements Serializable {
     @PostConstruct
     public void init() {
         users = us.getUsers();
+        accountTypes = new LinkedHashMap<>();
     }
 
     public List<User> getUsers() {
@@ -36,11 +40,20 @@ public class ManageAccountBean implements Serializable {
     public List<User> getFilteredUsers() {
         return filteredUsers;
     }
+    
+    public Map<String, String> getAccountTypes() {
+        accountTypes = us.getAccountTypes();
+        return accountTypes;
+    }
+    
+    public void setAccountTypes(Map<String, String> accountTypes) {
+        this.accountTypes = accountTypes;
+    }
 
     public void setFilteredUsers(List<User> filteredUsers) {
         this.filteredUsers = filteredUsers;
     }
-    
+
     public void onRowEdit(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("User Editted", Long.toString(((User) event.getObject()).getUserID()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -83,8 +96,11 @@ public class ManageAccountBean implements Serializable {
                 us.editUser(user);
                 break;
 //            case "AccessLevel":
-//                user.setAccesLevel(Integer.valueOf(newValue.toString()));
-//                us.editUser(user);
+//                accountTypes = getAccountTypes();
+//                int accesLevel = Integer.valueOf(accountTypes.get(newValue.toString()));        
+//                int oldAccesLevel = Integer.valueOf(accountTypes.get(oldValue.toString()));                  
+//                user.setAccesLevel(accesLevel);
+//                us.editAccountType(user.getUserID(), accesLevel, oldAccesLevel);
 //                break;
             default:
                 break;

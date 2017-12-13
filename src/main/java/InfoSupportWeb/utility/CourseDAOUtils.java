@@ -28,9 +28,7 @@ public class CourseDAOUtils implements ICourseDAO {
     static final String QUERY_UPDATE_COURSE = "UPDATE Course SET Code = ?, Name = ?, Description = ?, CourseMaterials = ?, KeyWords = ?, Duration = ?, Cost = ?, Supplier = ? WHERE ID_Course = ?";
     static final String QUERY_REMOVE_COURSE = "DELETE FROM Course WHERE ID_Course = ?";
 
-    public CourseDAOUtils() {
-
-    }
+    
 
     @Override
     public List<Course> getCourses() {

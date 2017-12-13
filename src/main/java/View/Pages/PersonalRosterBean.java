@@ -27,10 +27,10 @@ public class PersonalRosterBean implements Serializable {
     @Inject
     private SessionBean session;
 
-    private ScheduleModel lessonSchedule;
-    private ScheduleEvent event;
-    private LessonService lessonService;
-    private Lesson selectedLesson;
+    private transient ScheduleModel lessonSchedule;
+    private transient ScheduleEvent event;
+    private transient LessonService lessonService;
+    private transient Lesson selectedLesson;
 
     @PostConstruct
     public void init() {

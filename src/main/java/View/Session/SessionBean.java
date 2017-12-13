@@ -18,7 +18,7 @@ import javax.enterprise.context.SessionScoped;
 @SessionScoped
 public class SessionBean implements Serializable {
 
-    private User user;
+    private transient User user;
     /**
      * Dirty solution for acces management; Ideally these booleans are
      * incorperated into the User object and loaded whenever an user is loaded.
@@ -28,12 +28,6 @@ public class SessionBean implements Serializable {
     private boolean teacher;
     private boolean manager;
     private boolean admin;
-
-    /**
-     * Creates a new instance of sessionBean
-     */
-    public SessionBean() {
-    }
 
     public boolean isLoggedIn() {
         return loggedIn;

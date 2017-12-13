@@ -76,4 +76,14 @@ public interface IUserDAO {
      * @return list of teachers from database
      */
     public List<User> getTeachers();
+    
+    /**
+     * Edits an existing AccountType of an existing User
+     *    
+     * @param user_id
+     * @param acces_level
+     * @param old_acces_level
+     * @return Check if accountType is editted or not
+     */
+    public boolean editAccountType(long user_id, int acces_level, int old_acces_level);
 }

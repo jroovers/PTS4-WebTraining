@@ -4,7 +4,6 @@ import Controller.CourseService;
 import Controller.LessonService;
 import Model.Lesson;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -13,9 +12,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
-
-import org.primefaces.event.ScheduleEntryMoveEvent;
-import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
@@ -28,13 +24,13 @@ import org.primefaces.model.ScheduleModel;
 public class LessonRosterBean implements Serializable
 {
 
-    private ScheduleModel lessonSchedule;
+    private transient ScheduleModel lessonSchedule;
 
-    private ScheduleEvent event = new DefaultScheduleEvent();
+    private transient ScheduleEvent event = new DefaultScheduleEvent();
 
-    private CourseService courseService;
-    private LessonService lessonService;
-    private Lesson selectedLesson;
+    private transient CourseService courseService;
+    private transient LessonService lessonService;
+    private transient Lesson selectedLesson;
     private String email;
 
     @PostConstruct

@@ -52,12 +52,6 @@ public class PlannerBean {
     private List<String> locations;
     private Date startDate;
 
-    /**
-     * Creates a new instance of plannerBean
-     */
-    public PlannerBean() {
-    }
-
     @PostConstruct
     public void init() {
         if (courses == null) {

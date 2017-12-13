@@ -17,9 +17,6 @@ import javax.ejb.Stateless;
 @Stateless
 public class CourseService {
 
-    public CourseService() {
-    }
-
     /**
      * Persists a new course with just the bare minimals.
      *

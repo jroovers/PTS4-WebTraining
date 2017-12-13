@@ -16,10 +16,6 @@ import javax.ejb.Stateless;
 @Stateless
 public class LocationService {
 
-    public LocationService() {
-
-    }
-
     /**
      * Adds a new location to the system
      *

@@ -18,9 +18,6 @@ import javax.ejb.Stateless;
 @Stateless
 public class UserGroupService {
 
-    public UserGroupService() {
-    }
-
     public boolean addUserGroup(String name) {
         UserGroupDAODbUtilsImpl UserGroupDAO = new UserGroupDAODbUtilsImpl();
         return UserGroupDAO.addUserGroup(name);
