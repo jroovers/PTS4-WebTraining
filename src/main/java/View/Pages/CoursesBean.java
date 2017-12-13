@@ -47,8 +47,8 @@ public class CoursesBean implements Serializable {
     private String location;            // value in the "location" texfield
     private String keywords;            // value in the keywords texfield
 
-    private List<Course> courses;       // List of courses
-    private Course course;              // Current course  
+    private transient List<Course> courses;       // List of courses
+    private transient Course course;    // Current course  
 
     private String selectedCode;        // Selected item in SelectOneMenu
     private boolean hasSelectedCourse;  // Determines if a group is selected
@@ -63,8 +63,8 @@ public class CoursesBean implements Serializable {
     private String selectedGroupToAdd;   // Long value (as string) of category to add to course
     private String selectedGroupToRemove;// Long value (as string) of category to add to course
 
-    private List<Category> selectedCourseCategories;
-    private List<UserGroup> selectedCourseUsergroups;
+    private transient List<Category> selectedCourseCategories;
+    private transient List<UserGroup> selectedCourseUsergroups;
     
     private final static String REDIRECTCOURSE = "courses?faces-redirect=true";
     private final static String REDIRECTEDITCOURSE = "editcourse?faces-redirect=true";

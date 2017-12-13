@@ -20,8 +20,8 @@ import org.primefaces.component.datatable.DataTable;
 @ViewScoped
 public class ManageAccountBean implements Serializable {
 
-    private List<User> users;
-    private List<User> filteredUsers;
+    private transient List<User> users;
+    private transient List<User> filteredUsers;
     private Map<String, String> accountTypes;
 
     @Inject
