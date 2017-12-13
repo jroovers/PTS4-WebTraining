@@ -16,8 +16,6 @@ public class Lesson {
     private String location;
     private Course course;
     private User teacher;
-    //private list cursists ?
-    //SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     private Collection<User> registrations;
 

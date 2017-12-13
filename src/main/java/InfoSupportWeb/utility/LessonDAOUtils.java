@@ -284,7 +284,7 @@ public class LessonDAOUtils implements ILessonDAO {
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
         Object[] params = new Object[]{lesson_ID, user_ID};
         try {
-            Object[] result = run.insert(QUERY_SIGNUP_USER_TO_LESSON, rsh, params);
+            run.insert(QUERY_SIGNUP_USER_TO_LESSON, rsh, params);
 
             LOGGER.log(Level.INFO, "SQL Succes");
             return 1;
