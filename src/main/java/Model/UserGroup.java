@@ -31,6 +31,10 @@ public class UserGroup {
         return id;
     }
 
+    /**
+     * Set the ID of this usergroup
+     * @param id long indentifier value, minimum 0 and maximum 2^64-1
+     */
     public void setId(long id) {
         this.id = id;
     }
