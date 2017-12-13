@@ -82,7 +82,7 @@ public class CourseDAOUtils implements ICourseDAO {
             long id = Long.parseLong(result[0].toString());
 
             course.setId(id);
-            LOGGER.log(Level.INFO, "SQL Succes, output{0} ", id);
+            LOGGER.log(Level.FINE, "SQL Succes, output: {0}", id);
             return course;
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, SQLERROR + ex.getErrorCode(), ex);

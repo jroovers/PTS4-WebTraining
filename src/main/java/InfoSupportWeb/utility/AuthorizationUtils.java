@@ -15,6 +15,13 @@ import javax.servlet.http.HttpSession;
  */
 public class AuthorizationUtils {
     
+    /**
+     * Empty constructor
+     */
+    private AuthorizationUtils(){
+        
+    }
+    
     public static HttpSession getSession(){
         return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
     }
