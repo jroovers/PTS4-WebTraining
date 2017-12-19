@@ -67,7 +67,7 @@ public class CoursesBean implements Serializable {
 
     private transient List<Category> selectedCourseCategories;
     private transient List<UserGroup> selectedCourseUsergroups;
-    
+
     private final static String REDIRECTCOURSE = "courses?faces-redirect=true";
     private final static String REDIRECTEDITCOURSE = "editcourse?faces-redirect=true";
     private final static String EDITCOURSE = "editcourse";
@@ -484,14 +484,9 @@ public class CoursesBean implements Serializable {
      */
     public String splitStringList(String[] list) {
         String value = "";
-      //  boolean first = true;
+
         for (String s : list) {
-//            if (!first) {
-                value = value + ", ";
-//            } else {
-//                s:
-//                value = s;
-//            }
+            value = value + ", ";
         }
         return value;
     }

@@ -226,8 +226,6 @@ public class User {
     }
 
     public String add() {
-        Logger.getLogger(User.class.getName()).log(Level.INFO, username + " " + username);
-
         if (!"1".equals(username)) {
             return "failurePage";
         } else {

@@ -20,7 +20,6 @@ import org.junit.Ignore;
  *
  * @author Jorian
  */
-@Ignore
 public class CourseServiceTest {
 
     CourseService courseService = new CourseService();
@@ -70,7 +69,7 @@ public class CourseServiceTest {
      */
     @Test
     public void testAddCourse_Course() throws Exception {
-        Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "addCourse");          
+        Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "addCourse with an object Course");          
         Course expResult = c2;
         Course result = courseService.addCourse(c1);
         assertEquals(expResult.getCode(), result.getCode());
@@ -85,6 +84,27 @@ public class CourseServiceTest {
         courseService.removeCourse(result.getId());
     }
 
+    /**
+     * Test of addCourse method, of class CourseService.
+     */
+    @Test
+    public void testAddCourse_CodeName() throws Exception {
+        Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "addCourse with propertys Code and Name");          
+        
+        Course result = courseService.addCourse("012458", "Testing the course add method");
+        Course expResult = new Course("012458", "Testing the course add method");
+        assertEquals("1- ", expResult.getCode(), result.getCode());
+        assertEquals("2- ", expResult.getName(), result.getName());
+//        assertEquals(expResult.getDescription(), result.getDescription());
+//        Assert.assertArrayEquals(expResult.getPriorKnowledge(), result.getPriorKnowledge());
+//        assertEquals(expResult.getCourseMaterials(), result.getCourseMaterials());
+//        Assert.assertArrayEquals(expResult.getKeyWords(), result.getKeyWords());
+//        assertEquals(expResult.getDurationInDays(), result.getDurationInDays());
+//        assertEquals(expResult.getCost(), result.getCost(), 0.00);
+        
+        courseService.removeCourse(result.getId());
+    }
+    
     /**
      * Test of getAllCourses method, of class CourseService.
      */

@@ -1,6 +1,8 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import org.junit.Before;
@@ -16,6 +18,7 @@ public class LessonTest
 
     Lesson lesson;
     Course course;
+    Collection<User> registrations;
 
     @Before
     public void setUp()
@@ -23,6 +26,7 @@ public class LessonTest
         course = new Course("banaan", "appel");
         course.setId(2);
         lesson = new Lesson(course);
+        registrations = new ArrayList<>();
     }
 
     /**
@@ -153,6 +157,25 @@ public class LessonTest
         lesson.setCourse(course);
         String expResult = "11-dec-2017 - Eindhoven - appel";
         String result = lesson.getLessonString();
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getRegistration method, of class Lesson.
+     */
+    @Test
+    public void testGetRegistration() {
+        //arrange
+        User user = new User("Cas", "Beerken", "0628953712", "Cas@hotmail.com");
+        registrations.add(user);        
+        
+        //act
+        lesson.setRegistrations(registrations);
+        Collection<User> users = lesson.getRegistrations();
+        int expResult = 1;
+        int result = users.size();
+        
+        //assert
         assertEquals(expResult, result);
     }
 }
