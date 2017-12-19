@@ -15,12 +15,74 @@ html {
   min-height: 100%;
 }
 
-body {
+.footer-body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  padding-top: 2%;
+  vertical-align: middle;
+}
+
+.col-4
+{
+    float:left;
+}
+.footer-body h3
+{
+    font-weight: bold;
+}
+
+.footer strong
+{
+    font-weight: bold;
+}
+
+.menu-socialmedia
+{
+    padding-left: 0;
+    word-spacing: 10px;
+}
+
+.quick-links .btn
+{
+    border-color: #fff;
+    border-width: 2px;
+    background-color: transparent;
+    font-weight: bold;
+    color: #fff;
+}
+
+.menu-overig li a
+{
+    font-weight: normal;
+    text-transform: capitalize;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+.menu-overig li
+{
+    font-style: normal !important;
+    list-style-type: none;
+    line-height: 30px;
+    margin-left: 0;
+}
+.quick-links .btn :hover
+{
+    border-color: red;
+    background-color: red;
+}
+
+.menu-socialmedia:hover
+{
+    color: red;
 }
 .footer {
   position: absolute;
+  font-family: "proxima-nova","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 100;
+  color: #fff;
+  list-style-type: none;
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
@@ -37,6 +99,13 @@ body {
     height: 100%;
     width: 100%;
     background-size: 20% 50%;
+}
+
+address
+{
+    margin-bottom: 22px !important;
+    font-style: normal !important;
+    line-height: 1.428571429 !important;
 }
 
 
@@ -57,5 +126,3 @@ body {
 code {
   font-size: 80%;
 }
-
-

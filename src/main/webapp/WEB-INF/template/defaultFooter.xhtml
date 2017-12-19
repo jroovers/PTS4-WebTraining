@@ -1,9 +1,51 @@
 <ui:composition
     xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <h:outputStylesheet library="style" name="footerStyle.css" />
+    </h:head>
     <footer class="footer">
-        <div class="footer-container footer-image footer">
-            <span class="text-muted">WORK IN PROGRESS Groep4?. Dit project is in ontwikkeling en alle getoonde beelden en data zijn aan verandering onderhevig.</span>
+        <div class="footer-container footer-image footer footer-body">
+            <div class="col-4">
+                <h3>Contact</h3>
+                <address>
+                <li>Hoofdkantoor NL</li>
+                <li>Kruisboog 42</li>
+                <li>3905 TG Veenendaal</li>
+                <li>
+                    <strong>NL</strong>
+                    +31 318 552020
+                </li>
+                <li>
+                    <strong>BE</strong>
+                    +32 15 286370
+                </li>
+                </address>
+                <div class="quick-links">
+                    <a href="tel:+31318552020" class="btn" role="button" aria-pressed="true">CALL</a>
+                    <a href="mailto:info@infosupport.com" class="btn" role="button" aria-pressed="true">MAIL</a>
+                    <a href="https://goo.gl/maps/pAC7cBXL32u" target="_blank" class="btn" role="button" aria-pressed="true">DIRECTIONS</a>
+                </div>
+            </div> 
+            <div class="col-4">
+                <h3>Volg ons op</h3>
+                <ul class="menu-socialmedia">
+                    <a href="https://twitter.com/infosupportbv"><span class="fa fa-twitter-square fa-3x"></span></a>
+                    <a href="https://www.facebook.com/InfoSupportBV"><span class="fa fa-facebook-square fa-3x"></span></a>
+                    <a href="https://www.linkedin.com/company/info-support"><span class="fa fa-linkedin-square fa-3x"></span></a>
+                    <a href="https://www.youtube.com/user/InfoSupportfilms"><span class="fa fa-youtube-square fa-3x"></span></a>
+                </ul>
+            </div>
+            <div class="col-4">
+                <h3>Overig</h3>
+                <ul class="menu-overig">
+                    <li><a href="https://www.infosupport.com/disclaimer/">Disclaimer</a></li>
+                    <li><a href="https://www.infosupport.com/algemene-voorwaarden-en-zakelijke-gegevens/">Algemene voorwaarden</a></li>
+                    <li><a href="https://webmail.thecloudwarehouse.net/OWA/auth/logon.aspx">ISHBS Webmail</a></li>
+                    <li> <a href="https://mobile.infosupport.com">Extranet</a></li>
+                </ul>
+            </div>
         </div>
-    </footer>
+    </footer> 
 </ui:composition>
