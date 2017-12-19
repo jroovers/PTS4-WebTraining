@@ -1,6 +1,6 @@
 package View.Pages;
 
-import Model.Registration;
+import Model.Enrollment;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -13,8 +13,9 @@ import javax.enterprise.context.RequestScoped;
 @RequestScoped
 public class ApprovalBean {
 
-    private Registration selectedReqistration;
-    private List<Registration> allRegistrations;
+    private Enrollment selectedEnrollment;
+    private List<Enrollment> allEnrollments;
+    private List<Enrollment> filteredEnrollments;
 
     /**
      * Creates a new instance of ApprovalBean
@@ -22,21 +23,54 @@ public class ApprovalBean {
     public ApprovalBean() {
     }
 
-    public Registration getSelectedReqistration() {
-        return selectedReqistration;
+    /**
+     * TODO
+     *
+     * @return
+     */
+    public String onAcceptEnrollment() {
+        return null;
     }
 
-    public void setSelectedReqistration(Registration selectedReqistration) {
-        this.selectedReqistration = selectedReqistration;
+    /**
+     * TODO
+     *
+     * @return
+     */
+    public String onRejectEnrollment() {
+        return null;
     }
 
-    public List<Registration> getAllRegistrations() {
-        return allRegistrations;
+    /**
+     *
+     * @return
+     */
+    public String onDeleteEnrollment() {
+        return null;
     }
 
-    public void setAllRegistrations(List<Registration> allRegistrations) {
-        this.allRegistrations = allRegistrations;
+    public Enrollment getSelectedEnrollment() {
+        return selectedEnrollment;
     }
 
-    
+    public void setSelectedEnrollment(Enrollment selectedEnrollment) {
+        this.selectedEnrollment = selectedEnrollment;
+    }
+
+    public List<Enrollment> getAllEnrollments() {
+        return allEnrollments;
+    }
+
+    public void setAllEnrollments(List<Enrollment> allEnrollments) {
+        this.allEnrollments = allEnrollments;
+    }
+
+    public List<Enrollment> getFilteredEnrollments() {
+        return filteredEnrollments;
+    }
+
+    public void setFilteredEnrollments(List<Enrollment> filteredEnrollments) {
+        this.filteredEnrollments = filteredEnrollments;
+    }
+
 }

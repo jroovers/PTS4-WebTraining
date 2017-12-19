@@ -26,17 +26,57 @@
                     <div class="col-12">
                         <h:form>
                             <p:growl id="growl" showDetail="false" sticky="false" globalOnly="true"/>
-                            <p:commandButton id="accept_request" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa  fa-check " value="Akkoord" />
-                            <p:commandButton id="reject_request" widgetVar="edit_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-ban" value="Weigeren" update="growl" />
+                            <p:commandButton id="accept_request" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa  fa-check " value="Akkoord" action="#{approvalBean.onAcceptEnrollment()}"/>
+                            <p:commandButton id="reject_request" widgetVar="edit_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-ban" value="Weigeren" update="growl" action="#{approvalBean.onRejectEnrollment()}"/>
                             <p:commandButton id="delete_request" widgetVar="delete_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-trash-o" value="Verwijderen" type="button" onclick="PF('deleteRequestConfirmation').show();" />
-                            <p:selectOneListbox id="select_request" styleClass="form-control" filter="true" filterMatchMode="contains">
-                             
-                            </p:selectOneListbox>
+
+
+                            <p:dataTable id="dt_enrollment"
+                                         var="enrollment" 
+                                         value="#{approvalBean.allEnrollments}" 
+                                         filteredValue="#{approvalBean.filteredEnrollments}"
+                                         selectionMode="single" 
+                                         selection="#{approvalBean.selectedEnrollment}" 
+                                         widgetVar="enrollmentTable"
+                                         rowKey="#{enrollment.id}"
+                                         scrollable="true"
+                                         scrollHeight="300">
+                                <p:ajax event="rowSelect"/>
+                                <f:facet name="header">
+                                    <p:outputPanel>
+                                        <h:outputText value="Zoeken: " />
+                                        <p:inputText id="globalFilter" onkeyup="PF('enrollmentTable').filter()" style="width:200px" placeholder="Enter keyword"/>
+                                    </p:outputPanel>
+                                </f:facet>
+                                <p:column headerText="Inschrijfdatum" filterBy="#{enrollment.signupTime}" filterStyle="display:none" filterMatchMode="contains">
+                                    <h:outputFormat value="{0, date, yyyy-MM-dd}">
+                                        <f:param value="#{lesson.signupTime.time}" />
+                                    </h:outputFormat>
+                                </p:column>
+                                <!-- -->
+                                <p:column headerText="Medewerker" filterBy="#{enrollment.student.toString}" filterStyle="display:none" filterMatchMode="contains">
+                                    <h:outputText value="#{enrollment.student.toString}" />
+                                </p:column>
+                                <!-- -->
+                                <p:column headerText="Training" filterBy="#{lesson.course.name}" filterStyle="display:none" filterMatchMode="contains">
+                                    <h:outputText value="#{lesson.course.name}" />
+                                </p:column>
+                                <!-- -->
+                                <p:column headerText="Manager" filterBy="#{enrollment.manager.name}" filterStyle="display:none" filterMatchMode="contains">
+                                    <h:outputText value="#{enrollment.manager.name}" />
+                                </p:column>
+                                <!-- -->
+                                <p:column headerText="Accordatie" filterBy="#{enrollment.status}" filterStyle="display:none" filterMatchMode="contains">
+                                    <h:outputText value="#{enrollment.status}" />
+                                </p:column>
+                            </p:dataTable>
+
+
                             <p:dialog header="Waarschuwing" widgetVar="deleteRequestConfirmation" modal="true" minHeight="200" minWidth="200" closeOnEscape="true">
                                 <h:outputText value="Weet je zeker dat je deze inschrijving wilt verwijderen?" />
                                 <h:outputText value="Normaal gesproken wordt een inschrijving alleen geaccepteerd of geweigerd!"/>
                                 <hr/>
-                                <p:commandButton id="confirmdelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijderen" icon="fa fa-trash-o" />
+                                <p:commandButton id="confirmdelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijderen" icon="fa fa-trash-o" action="#{approvalBean.onDeleteEnrollment()}"/>
                                 <p:commandButton id="canceldelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nee toch niet" type="button" onclick="PF('deleteCourseConfirmation').hide();" icon="fa fa-times" />
                             </p:dialog>
                         </h:form>
