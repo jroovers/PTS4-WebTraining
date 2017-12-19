@@ -237,4 +237,9 @@ public class User {
         return this.name + " " + this.surname + " - " + this.email;
     }
 
+    @Override
+    public String toString() {
+        return surname + ", " + name;
+    }
+
 }
