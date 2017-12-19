@@ -70,4 +70,12 @@ public interface ICategoryDAO {
      * @return List of categories (empty if no categories)
      */
     public List<Category> getCategoriesByCourse(long course_id);
+    
+    /**
+     * Removes a category from the DB by checking the name
+     * 
+     * @param name, is the name of the category
+     * @return succesfull
+     */
+    public boolean removeCategory_byName(String name);
 }

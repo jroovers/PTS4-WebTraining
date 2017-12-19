@@ -38,6 +38,11 @@ public class CategoryService {
         CategoryDAODbUtilsImpl CategoryDAO = new CategoryDAODbUtilsImpl();
         return CategoryDAO.removeCategory(category);
     }
+    
+    public boolean removeCategory_byName(String name) {
+        CategoryDAODbUtilsImpl CategoryDAO = new CategoryDAODbUtilsImpl();
+        return CategoryDAO.removeCategory_byName(name);
+    }
 
     public List<Category> getCategoriesFromCourse(Course c) {
         return getCategoriesFromCourse(c.getId());

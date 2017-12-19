@@ -225,13 +225,13 @@ public class User {
         this.email = email;
     }
 
-    public String add() {
-        if (!"1".equals(username)) {
-            return "failurePage";
-        } else {
-            return "test";
-        }
-    }
+//    public String addMethod() {
+//        if (!"1".equals(username)) {
+//            return "failurePage";
+//        } else {
+//            return "test";
+//        }
+//    }
 
     public String getShortString() {
         return this.name + " " + this.surname + " - " + this.email;
