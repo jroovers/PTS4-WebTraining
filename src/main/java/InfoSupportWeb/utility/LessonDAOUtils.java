@@ -5,7 +5,7 @@
  */
 package InfoSupportWeb.utility;
 
-import Interfaces.ILessonDAO;
+import Persistance.Interfaces.ILessonDAO;
 import Model.Course;
 import Model.Lesson;
 import Model.User;

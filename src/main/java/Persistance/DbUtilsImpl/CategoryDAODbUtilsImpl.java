@@ -74,20 +74,6 @@ public class CategoryDAODbUtilsImpl implements ICategoryDAO {
     }
 
     @Override
-    public boolean updateCategory(Category category) {
-        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());        
-        Object[] params = new Object[]{category.getName(), category.getId()};
-        try {
-            run.update(QUERY_UPDATE_CATEGORY, params);
-            return true;
-        } catch (SQLException ex_sql) {
-            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
-            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
-            return false;
-        }
-    }
-
-    @Override
     public boolean removeCategory(Category category) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();

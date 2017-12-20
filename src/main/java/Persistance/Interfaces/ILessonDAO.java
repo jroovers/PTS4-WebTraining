@@ -1,4 +1,4 @@
-package Interfaces;
+package Persistance.Interfaces;
 
 import Model.Lesson;
 import java.util.List;

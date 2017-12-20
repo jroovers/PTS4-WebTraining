@@ -23,14 +23,6 @@ public interface ICategoryDAO {
     public boolean addCategory(String name);
 
     /**
-     * updates a existing category
-     *
-     * @param category category with id AND name set
-     * @return true if succesful
-     */
-    public boolean updateCategory(Category category);
-
-    /**
      * Returns a list with all categories
      *
      * @return list with categories, empty list if error or no found

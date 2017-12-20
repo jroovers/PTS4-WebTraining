@@ -24,11 +24,6 @@ public class CategoryService {
         return CategoryDAO.addCategory(name);
     }
 
-    public boolean updateCategory(Category category) {
-        CategoryDAODbUtilsImpl CategoryDAO = new CategoryDAODbUtilsImpl();
-        return CategoryDAO.updateCategory(category);
-    }
-
     public List<Category> getAllCategories() {
         CategoryDAODbUtilsImpl CategoryDAO = new CategoryDAODbUtilsImpl();
         return CategoryDAO.getAllCategories();
@@ -53,19 +48,11 @@ public class CategoryService {
         return CategoryDAO.getCategoriesByCourse(course_id);
     }
 
-    public boolean addCategoryToCourse(Category category, Course course) {
-        return addCategoryToCourse(category.getId(), course.getId());
-    }
-
     public boolean addCategoryToCourse(long category_id, long course_id) {
         CategoryDAODbUtilsImpl CategoryDAO = new CategoryDAODbUtilsImpl();
         return CategoryDAO.addCategoryToCourse(category_id, course_id);
     }
-
-    public boolean removeCategoryFromCourse(Category category, Course course) {
-        return removeCategoryFromCourse(category.getId(), course.getId());
-    }
-
+    
     public boolean removeCategoryFromCourse(long category_id, long course_id) {
         CategoryDAODbUtilsImpl CategoryDAO = new CategoryDAODbUtilsImpl();
         return CategoryDAO.removeCategoryFromCourse(category_id, course_id);

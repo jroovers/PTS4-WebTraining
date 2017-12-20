@@ -10,10 +10,8 @@ import Model.Course;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.embeddable.EJBContainer;
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -65,7 +63,7 @@ public class CategoryServiceTest {
      */
     @Test
     public void testAddCategory() throws Exception {
-        Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "addCategory with the name of the Category as string");
+        Logger.getLogger(CategoryServiceTest.class.getName()).log(Level.INFO, "addCategory with the name of the Category as string");
         List<Category> categories = categoryService.getAllCategories();
         boolean result = categoryService.addCategory("Test2");
         List<Category> expCategories = categoryService.getAllCategories();
@@ -79,15 +77,15 @@ public class CategoryServiceTest {
      *
      * @throws java.lang.Exception
      */
-    @Test
-    public void testUpdateCategory() throws Exception {
-        Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "updateCategory with an object Category");
-        Category c3 = new Category(7, "ASP.NET");
-        Category c4 = new Category(7, "BI");
-        boolean result = categoryService.updateCategory(c3);
-        assertEquals("1 - ", true, result);
-        categoryService.updateCategory(c4);
-    }
+//    @Test
+//    public void testUpdateCategory() throws Exception {
+//        Logger.getLogger(CategoryServiceTest.class.getName()).log(Level.INFO, "updateCategory with an object Category");
+//        Category c3 = new Category(7, "ASP.NET");
+//        Category c4 = new Category(7, "BI");
+//        boolean result = categoryService.updateCategory(c3);
+//        assertEquals("1 - ", true, result);
+//        categoryService.updateCategory(c4);
+//    }
 
     /**
      * Test of getAllCategories method, of class CategoryService.
@@ -96,7 +94,7 @@ public class CategoryServiceTest {
      */
     @Test
     public void testGetAllCategories() throws Exception {
-        Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "getAllCategories with no parameters");
+        Logger.getLogger(CategoryServiceTest.class.getName()).log(Level.INFO, "getAllCategories with no parameters");
         List<Category> categories = categoryService.getAllCategories();
         assertNotNull(categories.size());
     }
@@ -108,7 +106,7 @@ public class CategoryServiceTest {
      */
     @Test
     public void testRemoveCategory() throws Exception {
-        Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "removeCategory with no parameters");
+        Logger.getLogger(CategoryServiceTest.class.getName()).log(Level.INFO, "removeCategory with no parameters");
         boolean result = categoryService.addCategory("Test1");
         List<Category> expCategories = categoryService.getAllCategories();
         assertEquals(true, result);
@@ -132,7 +130,7 @@ public class CategoryServiceTest {
      */
     @Test
     public void testGetCategoriesFromCourse_Course() throws Exception {
-        Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "getCategoriesFromCourse_Course with a course object");
+        Logger.getLogger(CategoryServiceTest.class.getName()).log(Level.INFO, "getCategoriesFromCourse_Course with a course object");
         List<Category> categories = categoryService.getCategoriesFromCourse(course);
         assertNotNull(categories.size());        
     }
@@ -142,7 +140,7 @@ public class CategoryServiceTest {
      */
     @Test
     public void testGetCategoriesFromCourse_long() throws Exception {
-        Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "getCategoriesFromCourse_Long with a Long");
+        Logger.getLogger(CategoryServiceTest.class.getName()).log(Level.INFO, "getCategoriesFromCourse_Long with a Long");
         List<Category> categories = categoryService.getCategoriesFromCourse(1L);
         assertNotNull(categories.size());
     }
@@ -150,20 +148,20 @@ public class CategoryServiceTest {
     /**
      * Test of addCategoryToCourse method, of class CategoryService.
      */
-    @Test
-    public void testAddCategoryToCourse_Category_Course() throws Exception {
-        Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "addCategoryToCourse_Category_Course with the name of the Category as string");
-        boolean result = categoryService.addCategoryToCourse(c1, course);        
-        assertEquals(true, result);
-        categoryService.removeCategoryFromCourse(c1, course);
-    }
+//    @Test
+//    public void testAddCategoryToCourse_Category_Course() throws Exception {
+//        Logger.getLogger(CategoryServiceTest.class.getName()).log(Level.INFO, "addCategoryToCourse_Category_Course with the name of the Category as string");
+//        boolean result = categoryService.addCategoryToCourse(c1, course);        
+//        assertEquals(true, result);
+//        categoryService.removeCategoryFromCourse(c1, course);
+//    }
 
     /**
      * Test of addCategoryToCourse method, of class CategoryService.
      */
     @Test
     public void testAddCategoryToCourse_long_long() throws Exception {
-        Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "addCategoryToCourse_Category_Course with the name of the Category as string");
+        Logger.getLogger(CategoryServiceTest.class.getName()).log(Level.INFO, "addCategoryToCourse_Category_Course with the name of the Category as string");
         boolean result = categoryService.addCategoryToCourse(1L, 119L);        
         assertEquals(true, result);
         categoryService.removeCategoryFromCourse(1L, 119L);
