@@ -11,7 +11,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping structure for table db_test_infosupport.Category
+-- Dumping structure for table db_dev_infosupport.Category
 DROP TABLE IF EXISTS `Category`;
 CREATE TABLE IF NOT EXISTS `Category` (
   `ID_Category` int(11) NOT NULL AUTO_INCREMENT,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `Category` (
   UNIQUE KEY `Course_Category_UNIQUE` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table db_test_infosupport.Category: ~0 rows (approximately)
+-- Dumping data for table db_dev_infosupport.Category: ~0 rows (approximately)
 /*!40000 ALTER TABLE `Category` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Category` ENABLE KEYS */;
 
@@ -37,7 +37,7 @@ INSERT INTO `Category` (Name) VALUES
 	('Office'),
 	('SQL');
 
--- Dumping structure for table db_test_infosupport.Category
+-- Dumping structure for table db_dev_infosupport.Category
 DROP TABLE IF EXISTS `UserGroup`;
 CREATE TABLE IF NOT EXISTS `UserGroup` (
   `ID_UserGroup` int(11) NOT NULL AUTO_INCREMENT,
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `UserGroup` (
   UNIQUE KEY `UserGroup_UNIQUE` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table db_test_infosupport.Category: ~0 rows (approximately)
+-- Dumping data for table db_dev_infosupport.Category: ~0 rows (approximately)
 /*!40000 ALTER TABLE `Category` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Category` ENABLE KEYS */;
 
@@ -58,7 +58,7 @@ INSERT INTO `UserGroup` (Name) VALUES
     ('MDWK Unit Managers'),
     ('MDWK Raad v Bestuur');
 
--- Dumping structure for table db_test_infosupport.Course
+-- Dumping structure for table db_dev_infosupport.Course
 DROP TABLE IF EXISTS `Course`;
 CREATE TABLE IF NOT EXISTS `Course` (
   `ID_Course` int(11) NOT NULL AUTO_INCREMENT,
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `Course` (
   PRIMARY KEY (`ID_Course`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table db_test_infosupport.Course: ~8 rows (approximately)
+-- Dumping data for table db_dev_infosupport.Course: ~8 rows (approximately)
 /*!40000 ALTER TABLE `Course` DISABLE KEYS */;
 INSERT INTO `Course` (`ID_Course`, `Code`, `Name`, `Description`, `CourseMaterials`, `KeyWords`, `Duration`, `Cost`, `Supplier`) VALUES
 	(1, '00322', 'Onderzoek', 'Workshop Onderzoek', 'Presentatie', '[]', 2, 90, 'InfoSupport'),
@@ -86,7 +86,7 @@ INSERT INTO `Course` (`ID_Course`, `Code`, `Name`, `Description`, `CourseMateria
 	(8, 'UnitTest1', 'name', 'textDescription', 'courseMaterials', 'Jemam,Jepap,', 3, 1, 'ExterneLeverancierNaam');
 /*!40000 ALTER TABLE `Course` ENABLE KEYS */;
 
--- Dumping structure for table db_test_infosupport.Course_Category
+-- Dumping structure for table db_dev_infosupport.Course_Category
 DROP TABLE IF EXISTS `Course_Category`;
 CREATE TABLE IF NOT EXISTS `Course_Category` (
   `ID_Course` int(11) NOT NULL,
@@ -98,11 +98,11 @@ CREATE TABLE IF NOT EXISTS `Course_Category` (
   CONSTRAINT `fk_Category_Category` FOREIGN KEY (`ID_Category`) REFERENCES `Category` (`ID_Category`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table db_test_infosupport.Course_Category: ~0 rows (approximately)
+-- Dumping data for table db_dev_infosupport.Course_Category: ~0 rows (approximately)
 /*!40000 ALTER TABLE `Course_Category` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Course_Category` ENABLE KEYS */;
 
--- Dumping structure for table db_test_infosupport.Course_PriorKnowledge
+-- Dumping structure for table db_dev_infosupport.Course_PriorKnowledge
 DROP TABLE IF EXISTS `Course_PriorKnowledge`;
 CREATE TABLE IF NOT EXISTS `Course_PriorKnowledge` (
   `ID_Course` int(11) NOT NULL,
@@ -113,11 +113,11 @@ CREATE TABLE IF NOT EXISTS `Course_PriorKnowledge` (
   CONSTRAINT `fk_PriorKnowledge_PreCourse` FOREIGN KEY (`PriorCourse`) REFERENCES `Course` (`ID_Course`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table db_test_infosupport.Course_PriorKnowledge: ~0 rows (approximately)
+-- Dumping data for table db_dev_infosupport.Course_PriorKnowledge: ~0 rows (approximately)
 /*!40000 ALTER TABLE `Course_PriorKnowledge` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Course_PriorKnowledge` ENABLE KEYS */;
 
--- Dumping structure for table db_test_infosupport.Course_UserGroup
+-- Dumping structure for table db_dev_infosupport.Course_UserGroup
 DROP TABLE IF EXISTS `Course_UserGroup`;
 CREATE TABLE IF NOT EXISTS `Course_UserGroup` (
   `ID_Course` int(11) NOT NULL,
@@ -130,11 +130,11 @@ CREATE TABLE IF NOT EXISTS `Course_UserGroup` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table db_test_infosupport.Course_TargetUsers: ~0 rows (approximately)
+-- Dumping data for table db_dev_infosupport.Course_TargetUsers: ~0 rows (approximately)
 /*!40000 ALTER TABLE `Course_UserGroup` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Course_UserGroup` ENABLE KEYS */;
 
--- Dumping structure for table db_test_infosupport.Lesson
+-- Dumping structure for table db_dev_infosupport.Lesson
 DROP TABLE IF EXISTS `Lesson`;
 CREATE TABLE IF NOT EXISTS `Lesson` (
   `ID_Lesson` int(11) NOT NULL AUTO_INCREMENT,
@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `Lesson` (
   CONSTRAINT `fk_Lesson_Teacher_ID_User` FOREIGN KEY (`Teacher_ID_User`) REFERENCES `User` (`ID_User`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table db_test_infosupport.Lesson: ~159 rows (approximately)
+-- Dumping data for table db_dev_infosupport.Lesson: ~159 rows (approximately)
 /*!40000 ALTER TABLE `Lesson` DISABLE KEYS */;
 INSERT INTO `Lesson` (`ID_Lesson`, `StartTime`, `EndTime`, `Location`, `ID_Course`,`Teacher_ID_User`) VALUES
 	(1, '2017-09-20', '2017-09-20', 'Venray', 1,1),
@@ -167,7 +167,7 @@ INSERT INTO `Lesson` (`ID_Lesson`, `StartTime`, `EndTime`, `Location`, `ID_Cours
 	(12, '2017-10-25', '2017-10-25', 'eindhoven', 8,5);
 /*!40000 ALTER TABLE `Lesson` ENABLE KEYS */;
 
--- Dumping structure for table db_test_infosupport.Lesson_Registration
+-- Dumping structure for table db_dev_infosupport.Lesson_Registration
 DROP TABLE IF EXISTS `Lesson_Registration`;
 CREATE TABLE IF NOT EXISTS `Lesson_Registration` (
   `ID_Lesson` int(11) NOT NULL,
@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `Lesson_Registration` (
   CONSTRAINT `fk_Registration_Registration` FOREIGN KEY (`ID_User`) REFERENCES `Registration` (`ID_User`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table db_test_infosupport.Lesson_Registration: ~20 rows (approximately)
+-- Dumping data for table db_dev_infosupport.Lesson_Registration: ~20 rows (approximately)
 /*!40000 ALTER TABLE `Lesson_Registration` DISABLE KEYS */;
 INSERT INTO `Lesson_Registration` (`ID_Lesson`, `ID_User`) VALUES
 	(1, 1),
@@ -201,7 +201,7 @@ INSERT INTO `Lesson_Registration` (`ID_Lesson`, `ID_User`) VALUES
 	(12, 1);
 /*!40000 ALTER TABLE `Lesson_Registration` ENABLE KEYS */;
 
--- Dumping structure for table db_test_infosupport.Location
+-- Dumping structure for table db_dev_infosupport.Location
 DROP TABLE IF EXISTS `Location`;
 CREATE TABLE IF NOT EXISTS `Location` (
   `ID_Location` int(11) NOT NULL AUTO_INCREMENT,
@@ -210,14 +210,14 @@ CREATE TABLE IF NOT EXISTS `Location` (
   UNIQUE KEY `Location_UNIQUE` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table db_test_infosupport.Location: ~2 rows (approximately)
+-- Dumping data for table db_dev_infosupport.Location: ~2 rows (approximately)
 /*!40000 ALTER TABLE `Location` DISABLE KEYS */;
 INSERT INTO `Location` (`ID_Location`, `Name`) VALUES
 	(1, 'Utrecht'),
 	(2, 'Veenendaal');
 /*!40000 ALTER TABLE `Location` ENABLE KEYS */;
 
--- Dumping structure for table db_test_infosupport.Registration
+-- Dumping structure for table db_dev_infosupport.Registration
 DROP TABLE IF EXISTS `Registration`;
 CREATE TABLE IF NOT EXISTS `Registration` (
   `ID_User` int(11) NOT NULL AUTO_INCREMENT,
@@ -228,13 +228,13 @@ CREATE TABLE IF NOT EXISTS `Registration` (
   PRIMARY KEY (`ID_User`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table db_test_infosupport.Registration: ~1 rows (approximately)
+-- Dumping data for table db_dev_infosupport.Registration: ~1 rows (approximately)
 /*!40000 ALTER TABLE `Registration` DISABLE KEYS */;
 INSERT INTO `Registration` (`ID_User`, `FirstName`, `LastName`, `Email`, `PhoneNumber`) VALUES
 	(1, 'Frank', 'Frenken', 'Frank@Frenken.fankie', 623946734);
 /*!40000 ALTER TABLE `Registration` ENABLE KEYS */;
 
--- Dumping structure for table db_test_infosupport.UserType
+-- Dumping structure for table db_dev_infosupport.UserType
 DROP TABLE IF EXISTS `UserType`;
 CREATE TABLE IF NOT EXISTS `UserType` (
   `ID_UserType` int(11) NOT NULL AUTO_INCREMENT,
@@ -249,11 +249,11 @@ INSERT INTO `UserType` (`ID_UserType`, `Name`) VALUES
 	(3, 'Business Unit Manager'),
     (4, 'Medewerker Kenniscentrum');
 
--- Dumping data for table db_test_infosupport.UserType: ~0 rows (approximately)
+-- Dumping data for table db_dev_infosupport.UserType: ~0 rows (approximately)
 /*!40000 ALTER TABLE `UserType` DISABLE KEYS */;
 /*!40000 ALTER TABLE `UserType` ENABLE KEYS */;
 
--- Dumping structure for table db_test_infosupport.User
+-- Dumping structure for table db_dev_infosupport.User
 DROP TABLE IF EXISTS `User`;
 CREATE TABLE IF NOT EXISTS `User` (
   `ID_User` int(11) NOT NULL AUTO_INCREMENT,
@@ -266,7 +266,7 @@ CREATE TABLE IF NOT EXISTS `User` (
   PRIMARY KEY (`ID_User`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table db_test_infosupport.User: ~2 rows (approximately)
+-- Dumping data for table db_dev_infosupport.User: ~2 rows (approximately)
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
 INSERT INTO `User` (`ID_User`, `Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`) VALUES
 	(1, 'Frank', 'franken', 'Frankster', 'frankisthebest', '001234', 'Frankster@TheG.com'),
