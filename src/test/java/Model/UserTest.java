@@ -6,7 +6,9 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -25,8 +27,8 @@ public class UserTest {
 
     @Before
     public void CreateTestUser() {
-        user = new User(1, "Frank", "franken", "Frankster", "frankisthebest", "001234", "Frankster@TheG.com", 2);
-        user2 = new User("Dennis123", "06248957", "dennis@hotmail.com", 1);
+        user = new User(1, "Frank", "franken", "Frankster", "frankisthebest", "001234", "Frankster@TheG.com");
+        user.addAccessLevel(2);
     }
 
     /**
@@ -62,11 +64,11 @@ public class UserTest {
     @Test
     public void testGetAccesLVL() {
         //arange
-        int expLVL = 2;
+        long expLVL = 2;
         //act
-        int result = user.getAccesLevel();
+        boolean result = user.getAccessLevels().contains(expLVL);
         //assert
-        assertEquals(expLVL, result);
+        assertEquals(true, result);
     }
 
     /**
@@ -75,12 +77,12 @@ public class UserTest {
     @Test
     public void testSetAccesLVL() {
         //arange
-        int newLVL = 1;
+        long newLVL = 1;
         //act
-        user.setAccesLevel(newLVL);
-        int result = user.getAccesLevel();
+        user.addAccessLevel(newLVL);
+        boolean result = user.getAccessLevels().contains(newLVL);
         //assert
-        assertEquals(newLVL, result);
+        assertEquals(true, result);
     }
     
         /**
@@ -91,13 +93,13 @@ public class UserTest {
         //arange
         Long expLVL1 = 1L;
         Long expLVL2 = 2L;
-        List<Long> newAccesLVLs = new ArrayList<>();
+        Set<Long> newAccesLVLs = new HashSet<>();
         newAccesLVLs.add(expLVL1);
         newAccesLVLs.add(expLVL2);
-        user.setAccesLevels(newAccesLVLs);
+        user.setAccessLevels(newAccesLVLs);
         
         //act
-        List<Long> result = user.getAccesLevels();
+        Set<Long> result = user.getAccessLevels();
         
         //assert
         assertEquals(2, result.size());

@@ -8,6 +8,7 @@ package Persistance.Interfaces;
 import Model.User;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -68,7 +69,7 @@ public interface IUserDAO {
      * @param ID_user user to check accounttypes of
      * @return list of usertype ID's.
      */
-    public List<Long> getUserTypesByUserID(long ID_user);
+    public Set<Long> getUserTypesByUserID(long ID_user);
 
     /**
      * gets list of teachers from database
@@ -85,5 +86,5 @@ public interface IUserDAO {
      * @param old_acces_level
      * @return Check if accountType is editted or not
      */
-    public boolean editAccountType(long user_id, int acces_level, int old_acces_level);
+    public boolean editAccountType(User user);
 }

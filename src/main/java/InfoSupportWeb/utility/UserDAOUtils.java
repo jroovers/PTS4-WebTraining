@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package InfoSupportWeb.utility;
 
 import java.util.List;
@@ -10,8 +5,10 @@ import Model.User;
 import Persistance.Interfaces.IUserDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.dbutils.QueryRunner;
@@ -25,19 +22,21 @@ public class UserDAOUtils implements IUserDAO {
 
     static final String QUERY_GET_USER = "SELECT * FROM User where Username = ?";
     static final String QUERY_GET_USERS = "SELECT * FROM User";
-    static final String QUERY_GET_USERS_WITH_PERMISSION_ID = "SELECT Distinct User.* FROM User, User_UserType, UserType WHERE User.ID_User = User_UserType.ID_User AND User_UserType.ID_UserType = ?";
-    static final String QUERY_INSERT_USER = "INSERT INTO User(`Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`,`ID_UserType`) VALUES(?,?,?,?,?,?,?)";
+    static final String QUERY_GET_USERS_WITH_PERMISSION_ID = "SELECT distinct u.* FROM User u , User_UserType ut WHERE u.ID_User = ut.ID_User AND ut.ID_UserType = ?";
+    static final String QUERY_INSERT_USER = "INSERT INTO User(`Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`) VALUES(?,?,?,?,?,?)";
     static final String QUERY_REMOVE_USER = "DELETE FROM User WHERE ID_User = ?";
-    static final String QUERY_UPDATE_USER = "UPDATE User SET Name = ?, Surname = ?, Username = ?, PhoneNr = ?, Email = ?, ID_UserType = ? WHERE ID_User = ?;";
+    static final String QUERY_UPDATE_USER = "UPDATE User SET Name = ?, Surname = ?, Username = ?, PhoneNr = ?, Email = ? WHERE ID_User = ?;";
     static final String QUERY_GET_ALL_USERTYPES = "SELECT Name, ID_UserType FROM UserType";
     static final String QUERY_GET_USER_USERTYPES = "SELECT ut.ID_UserType FROM User_UserType ut, User u WHERE u.ID_User = ut.ID_User AND u.ID_User = ?";
     static final String QUERY_EDIT_ACCES_LEVEL = "UPDATE User_UserType SET ID_UserType = ? WHERE ID_User = ? AND ID_UserType = ?";
+    static final String QUERY_DELETE_USER_USERTYPE = "DELETE FROM User_UserType WHERE User_UserType.ID_User =?";
+    static final String QUERY_ADD_USER_USERTYPE = "INSERT INTO User_UserType(`ID_User`,`ID_UserType`)VALUES(?,?)";
 
     //Error handling
     private final static Logger LOGGER = Logger.getLogger(UserDAOUtils.class.getName());
     private static final String SQLERROR = "SQL Exception code ";
     private static final String USERFROMDBERROR = "Failed to get users from database";
-    
+
     @Override
     public List<User> getAllUsers() {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
@@ -54,9 +53,9 @@ public class UserDAOUtils implements IUserDAO {
                         o[3] == null ? null : o[3].toString(), // username
                         o[4] == null ? null : o[4].toString(), // Password
                         o[5] == null ? null : o[5].toString(), // phoneNr
-                        o[6] == null ? null : o[6].toString(), // email
-                        o[7] == null ? null : Integer.parseInt(o[7].toString()) // accessLevel
+                        o[6] == null ? null : o[6].toString() // email
                 );
+                u.setAccessLevels(getUserTypesByUserID(u.getUserID()));
                 users.add(u);
             }
         } catch (SQLException ex_sql) {
@@ -82,10 +81,9 @@ public class UserDAOUtils implements IUserDAO {
                         o[3] == null ? null : o[3].toString(), // username
                         o[4] == null ? null : o[4].toString(), // Password
                         o[5] == null ? null : o[5].toString(), // phoneNr
-                        o[6] == null ? null : o[6].toString(), // email
-                        o[7] == null ? null : Integer.parseInt(o[7].toString()) // accessLevel
+                        o[6] == null ? null : o[6].toString() // email
                 );
-                user.setAccesLevels(getUserTypesByUserID(user.getUserID()));
+                user.setAccessLevels(getUserTypesByUserID(user.getUserID()));
             }
         } catch (SQLException ex_sql) {
             LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
@@ -99,8 +97,8 @@ public class UserDAOUtils implements IUserDAO {
     public boolean addUser(User user) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
-        //`Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`,`ID_UserType`
-        Object[] params = new Object[]{user.getName(), user.getSurname(), user.getUsername(), user.getPassword(), user.getPhoneNr(), user.getEmail(), user.getAccesLevel()};
+        //`Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`
+        Object[] params = new Object[]{user.getName(), user.getSurname(), user.getUsername(), user.getPassword(), user.getPhoneNr(), user.getEmail()};
         try {
             run.insert(QUERY_INSERT_USER, rsh, params);
             return true;
@@ -127,7 +125,7 @@ public class UserDAOUtils implements IUserDAO {
     @Override
     public boolean editUser(User user) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
-        Object[] params = new Object[]{user.getName(), user.getSurname(), user.getUsername(), user.getPhoneNr(), user.getEmail(), user.getAccesLevel(), user.getUserID()};
+        Object[] params = new Object[]{user.getName(), user.getSurname(), user.getUsername(), user.getPhoneNr(), user.getEmail(), user.getUserID()};
         try {
             run.update(QUERY_UPDATE_USER, params);
             return true;
@@ -180,11 +178,11 @@ public class UserDAOUtils implements IUserDAO {
     }
 
     @Override
-    public List<Long> getUserTypesByUserID(long ID_user) {
+    public Set<Long> getUserTypesByUserID(long ID_user) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         Object[] params = new Object[]{ID_user};
         ArrayListHandler alh = new ArrayListHandler();
-        List<Long> usertypes = new ArrayList<>();
+        Set<Long> usertypes = new HashSet<>();
         try {
             List<Object[]> result = run.query(QUERY_GET_USER_USERTYPES, alh, params);
             for (Object[] o : result) {
@@ -197,17 +195,32 @@ public class UserDAOUtils implements IUserDAO {
         }
         return usertypes;
     }
-    
+
     @Override
-    public boolean editAccountType(long user_id, int acces_level, int old_acces_level) {
+    public boolean editAccountType(User user) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
-        Object[] params = new Object[]{user_id, acces_level, old_acces_level};
+        ResultSetHandlerImp rsh = new ResultSetHandlerImp();
+        Object[] params = new Object[]{user.getUserID()};
         try {
-            run.update(QUERY_EDIT_ACCES_LEVEL, params);
-            return true;
+            run.execute(QUERY_DELETE_USER_USERTYPE, rsh, params);
         } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, "Failed to add edit AccountType in DB - errorCode: " + ex.getErrorCode(), ex);
+            LOGGER.log(Level.SEVERE, "Failed to remove user from DB - errorCode: " + ex.getErrorCode(), ex);
             return false;
         }
+
+        //add new userpermissions
+        for (long level : user.getAccessLevels()) {
+            run = new QueryRunner(Database.getInstance().getDataSource());
+            rsh = new ResultSetHandlerImp();
+            params = new Object[]{user.getUserID(),level};
+            try {
+                run.execute(QUERY_ADD_USER_USERTYPE, rsh, params);
+            } catch (SQLException ex) {
+                LOGGER.log(Level.SEVERE, "Failed to remove user from DB - errorCode: " + ex.getErrorCode(), ex);
+                return false;
+            }
+        }
+        
+        return true;
     }
 }

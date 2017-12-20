@@ -27,7 +27,7 @@ public class CourseDAOUtils implements ICourseDAO {
             + "(?,?,?,?,?,?,?,?)";
     static final String QUERY_UPDATE_COURSE = "UPDATE Course SET Code = ?, Name = ?, Description = ?, CourseMaterials = ?, KeyWords = ?, Duration = ?, Cost = ?, Supplier = ? WHERE ID_Course = ?";
     static final String QUERY_REMOVE_COURSE = "DELETE FROM Course WHERE ID_Course = ?";
-    
+
     //Error handling
     private static final String SQLERROR = "SQL Exception code ";
     private final static Logger LOGGER = Logger.getLogger(CourseDAOUtils.class.getName());
@@ -72,11 +72,11 @@ public class CourseDAOUtils implements ICourseDAO {
         } else {
             keyWords = "";
         }
-
-        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
-        ResultSetHandlerImp rsh = new ResultSetHandlerImp();
-        Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), keyWords, course.getDurationInDays(), course.getCost(), course.getSupplier()};
         try {
+            QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+            ResultSetHandlerImp rsh = new ResultSetHandlerImp();
+            Object[] params = new Object[]{course.getCode(), course.getName(), course.getDescription(), course.getCourseMaterials(), keyWords, course.getDurationInDays(), course.getCost(), course.getSupplier()};
+
             Object[] result = run.insert(QUERY_INSERT_COURSE, rsh, params);
 
             long id = Long.parseLong(result[0].toString());
@@ -134,5 +134,4 @@ public class CourseDAOUtils implements ICourseDAO {
         }
         return keyWords.toString();
     }
-
 }

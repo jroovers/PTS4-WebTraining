@@ -99,7 +99,7 @@ public class UserGroupServiceTest {
     @Test
     public void testGetUserGroupsFromCourse_long() throws Exception {
         Logger.getLogger(UserGroupServiceTest.class.getName()).log(Level.INFO, "getUserGroupsFromCourse_long test");
-        List<UserGroup> userGroups = us.getUserGroupsFromCourse(119L);
+        List<UserGroup> userGroups = us.getUserGroupsFromCourse(1L);
         assertNotNull(userGroups.size());
     }
 
@@ -120,9 +120,9 @@ public class UserGroupServiceTest {
     @Test
     public void testAddUserGroupToCourse_long_long() throws Exception {
         Logger.getLogger(UserGroupServiceTest.class.getName()).log(Level.INFO, "addUserGroupToCourse_long_long test");
-        boolean result = us.addUserGroupToCourse(1L, 119L);
+        boolean result = us.addUserGroupToCourse(1L, 1L);
         assertEquals(true, result);
-        us.removeUserGroupFromCourse(1L, 119L);
+        us.removeUserGroupFromCourse(1L, 1L);
     }
 
     /**
@@ -142,9 +142,9 @@ public class UserGroupServiceTest {
     @Test
     public void testRemoveUserGroupFromCourse_long_long() throws Exception {
         Logger.getLogger(UserGroupServiceTest.class.getName()).log(Level.INFO, "removeUserGroupFromCourse_long_long with the courseID and userGroupID as long");
-        boolean result = us.addUserGroupToCourse(1L, 119L);
+        boolean result = us.addUserGroupToCourse(1L, 1L);
         assertEquals(true, result);
-        us.removeUserGroupFromCourse(1L, 119L);
+        us.removeUserGroupFromCourse(1L, 1L);
     }
 
 }

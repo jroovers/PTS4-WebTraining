@@ -14,86 +14,99 @@
     <ui:define name="title">Courserooster</ui:define>
     <!-- Content -->
     <ui:define name="content">
-        
+
         <div class="container">
-        <h:form id="form">
-            <h1>Account Beheer</h1>
-            <hr/>
-            <p:growl id="msgs" showDetail="true"/>
+            <h:form id="form">
+                <h1>Account Beheer</h1>
+                <hr/>
+                <p:growl id="msgs" showDetail="true"/>
 
-            <p:dataTable id="userDataTable" var="user" value="#{manageAccountBean.users}" 
-                         filteredValue="#{manageAccountBean.filteredUsers}" editable="true" editMode="cell" 
-                         widgetVar="cellUsers" rowKey="#{user.userID}" scrollable="true" scrollHeight="300">
+                <p:dataTable id="userDataTable" var="user" value="#{manageAccountBean.users}" 
+                             editable="true" editMode="cell" 
+                             widgetVar="cellUsers" rowKey="#{user.userID}" scrollable="true" scrollHeight="300">
                     <p:ajax event="rowSelect"/>                 
-                <f:facet name="header">
-                    Aanpassen door te klikken
-                </f:facet>
-
-<!--                <f:facet name="header">
-                    <p:outputPanel>
-                        <h:outputText value="Zoeken: " />
-                        <p:inputText id="globalFilter" onkeyup="PF('cellUsers').filter()" style="width:150px" placeholder="Enter keyword"/>
-                    </p:outputPanel>
-                </f:facet>-->
-
-                <p:ajax event="cellEdit" listener="#{manageAccountBean.onCellEdit}" update=":form:msgs" />
-
-                <p:column headerText="UserID">
-                    <p:column>
-                        <h:outputText value="#{user.userID}" />
+                    <f:facet name="header">
+                        Aanpassen door te klikken
+                    </f:facet>
+                    <p:ajax event="cellEdit" listener="#{manageAccountBean.onCellEdit}" update=":form:msgs" />
+                    <p:column headerText="ID" style="width:50px">
+                        <p:column>
+                            <h:outputText value="#{user.userID}" />
+                        </p:column>
                     </p:column>
-                </p:column>
 
-                <p:column headerText="Naam">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{user.name}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{user.name}" style="width:96%" label="Naam"/></f:facet>
-                    </p:cellEditor>
-                </p:column>
+                    <p:column headerText="Naam">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{user.name}" /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{user.name}" style="width:96%" label="Naam"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
 
-                <p:column headerText="Achternaam">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{user.surname}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{user.surname}" style="width:96%" label="Achternaam"/></f:facet>
-                    </p:cellEditor>
-                </p:column>
+                    <p:column headerText="Achternaam">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{user.surname}" /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{user.surname}" style="width:96%" label="Achternaam"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
 
-                <p:column headerText="Username">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{user.username}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{user.username}" style="width:96%" label="Username"/></f:facet>
-                    </p:cellEditor>
-                </p:column>
+                    <p:column headerText="Username">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{user.username}" /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{user.username}" style="width:96%" label="Username"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
 
-                <p:column headerText="TelNr">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{user.phoneNr}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{user.phoneNr}" style="width:96%" label="TelNr"/></f:facet>
-                    </p:cellEditor>
-                </p:column>
+                    <p:column headerText="TelNr">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{user.phoneNr}" /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{user.phoneNr}" style="width:96%" label="TelNr"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
 
-                <p:column headerText="Email">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{user.email}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{user.email}" style="width:96%" label="Email"/></f:facet>
-                    </p:cellEditor>
-                </p:column>
+                    <p:column headerText="Email">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{user.email}" /></f:facet>
+                            <f:facet name="input"><p:inputText value="#{user.email}" style="width:96%" label="Email"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
 
-<!--                <p:column headerText="AccessLevel">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{user.accesLevel}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{user.accesLevel}" style="width:96%" label="AccessLevel"/></f:facet>
-                    </p:cellEditor>
-                </p:column>-->
+                    <p:column style="width:150px" >
+                        <f:facet name="header">
+                            <h:outputText value="Access"/>
+                            <h:outputLink id="track" value="#">
+                                <i style="color:black;" class="fa fa-question-circle" aria-hidden="true"/>
+                            </h:outputLink>
+                            <p:tooltip id="toolTipTrack" for="track" trackMouse="true" > 
+                                1 = Medewerker Infosupport <br/> 
+                                2 = Docent Infosupport <br/> 
+                                3 = Business Unit Manager <br/> 
+                                4 = Medewerker Kenniscentrum
+                            </p:tooltip>
+                        </f:facet>
+                        1 <h:selectBooleanCheckbox value="#{manageAccountBean.permissions.get(user)[0]}" >
+                            <p:ajax event="valueChange"  listener="#{manageAccountBean.onCheckBoxEdit(user)}" />
+                        </h:selectBooleanCheckbox>
 
-            </p:dataTable>
+                        2 <h:selectBooleanCheckbox value="#{manageAccountBean.permissions.get(user)[1]}" >
+                            <p:ajax  event="valueChange"  listener="#{manageAccountBean.onCheckBoxEdit(user)}" />
+                        </h:selectBooleanCheckbox>
 
-            <p:contextMenu for="userDataTable" widgetVar="cMenu">   
-                <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellUsers').showCellEditor();return false;"/>  
-                <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
-            </p:contextMenu> 
+                        3 <h:selectBooleanCheckbox value="#{manageAccountBean.permissions.get(user)[2]}" >
+                            <p:ajax event="valueChange"  listener="#{manageAccountBean.onCheckBoxEdit(user)}" />
+                        </h:selectBooleanCheckbox>
 
-        </h:form>
+                        4 <h:selectBooleanCheckbox value="#{manageAccountBean.permissions.get(user)[3]}" >
+                            <p:ajax  event="valueChange"  listener="#{manageAccountBean.onCheckBoxEdit(user)}" />
+                        </h:selectBooleanCheckbox>
+                    </p:column>
+                </p:dataTable>
+
+                <p:contextMenu for="userDataTable" widgetVar="cMenu">   
+                    <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellUsers').showCellEditor();return false;"/>  
+                    <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
+                </p:contextMenu> 
+
+            </h:form>
         </div>
     </ui:define>
 </ui:composition>
