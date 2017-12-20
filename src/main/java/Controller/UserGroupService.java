@@ -28,14 +28,14 @@ public class UserGroupService {
         return UserGroupDAO.getAllUserGroups();
     }
 
-    public boolean updateUserGroup(UserGroup to_change) {
-        UserGroupDAODbUtilsImpl UserGroupDAO = new UserGroupDAODbUtilsImpl();
-        return UserGroupDAO.updateUserGroup(to_change);
-    }
-
     public boolean removeUserGroup(UserGroup to_delete) {
         UserGroupDAODbUtilsImpl UserGroupDAO = new UserGroupDAODbUtilsImpl();
         return UserGroupDAO.removeUseGroup(to_delete);
+    }
+
+    public boolean removeUserGroup_ByName(String name) {
+        UserGroupDAODbUtilsImpl UserGroupDAO = new UserGroupDAODbUtilsImpl();
+        return UserGroupDAO.removeUseGroup_ByName(name);
     }
 
     public List<UserGroup> getUserGroupsFromCourse(Course course) {
@@ -47,19 +47,11 @@ public class UserGroupService {
         return UserGroupDAO.getUsergroupsByCourse(course_id);
     }
 
-    public boolean addUserGroupToCourse(UserGroup userGroup, Course course) {
-        return addUserGroupToCourse(userGroup.getId(), course.getId());
-    }
-
     public boolean addUserGroupToCourse(long userGroup_id, long course_id) {
         UserGroupDAODbUtilsImpl UserGroupDAO = new UserGroupDAODbUtilsImpl();
         return UserGroupDAO.addUsergroupToCourse(userGroup_id, course_id);
     }
-
-    public boolean removeUserGroupFromCourse(UserGroup userGroup, Course course) {
-        return removeUserGroupFromCourse(userGroup.getId(), course.getId());
-    }
-
+    
     public boolean removeUserGroupFromCourse(long userGroup_id, long course_id) {
         UserGroupDAODbUtilsImpl UserGroupDAO = new UserGroupDAODbUtilsImpl();
         return UserGroupDAO.removeUsergroupFromCourse(userGroup_id, course_id);

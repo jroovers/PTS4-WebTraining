@@ -6,6 +6,7 @@ import Controller.UserService;
 import Model.Course;
 import Model.Lesson;
 import Model.User;
+import View.Session.SessionBean;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,8 @@ public class SignupBean {
     LessonService ls;
     @Inject
     UserService us;
+    @Inject
+    private SessionBean session;
 
     private long courseID;
     private long lessonID;
@@ -50,7 +53,7 @@ public class SignupBean {
      * Creates a new instance of signupBean
      */
     @PostConstruct
-    public  void SignupBean() {
+    public void SignupBean() {
         courses = cs.getAllCourses();
     }
 
@@ -166,19 +169,22 @@ public class SignupBean {
     public void setFilteredLessons(List<Lesson> filteredLessons) {
         this.filteredLessons = filteredLessons;
     }
- 
-    
+
     public void signUp() {
         FacesContext context = FacesContext.getCurrentInstance();
-        long id = ls.signUpUser(selectedLesson.getId(), 1);
-        if (id != 0) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training opgeslagen", "!"));
-            if (name != null) {
-                User user = new User(name, surname, phonenr, email, 1);
-                us.addUser(user);
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training en data opgeslagen", "!"));
+        try {
+            if (session.isLoggedIn()) {
+                ls.signUpUser(selectedLesson.getId(), session.getUser().getUserID());
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training opgeslagen", "!"));
+            } else {
+                if (!name.isEmpty() && !surname.isEmpty() && !phonenr.isEmpty() && !email.isEmpty()) {
+                    User user = new User(name, surname, phonenr, email);
+                    user.addAccessLevel(1);
+                    us.addUser(user);
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training en data opgeslagen", "!"));
+                }
             }
-        } else {
+        } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Training niet opgeslagen!", "Er is iets fouts gegaan! Probeer het later opnieuw"));
         }
     }
@@ -186,9 +192,8 @@ public class SignupBean {
     public void valueChanged(ValueChangeEvent e) {
         String code;
         code = e.getNewValue().toString();
-        Logger.getLogger(SignupBean.class.getName()).log(Level.INFO, code);     
+        Logger.getLogger(SignupBean.class.getName()).log(Level.INFO, code);
     }
-
 
     public boolean checkUserDetails() {
         boolean detailsChecked = true;

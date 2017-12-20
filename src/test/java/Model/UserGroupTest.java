@@ -62,7 +62,7 @@ public class UserGroupTest {
         long expResult2 = 0L;
         long result2 = instanceName.getId();
         assertEquals(expResult2, result2);
-        // happy flow on a instance which has its id set
+        // happy flow on an instance which has its id set
         long expResult3 = expectedId;
         long result3 = instanceIdName.getId();
         assertEquals(expResult3, result3);

@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,8 +18,7 @@ public class User {
     private String password;
     private String phoneNr;
     private String email;
-    private int accesLevel;
-    private List<Long> accesLevels;
+    private Set<Long> accessLevels = new HashSet<>();
 
     /**
      * Constructor for pulling users from database
@@ -37,7 +32,7 @@ public class User {
      * @param email
      * @param accesLevel
      */
-    public User(long userID, String name, String surname, String username, String password, String phoneNr, String email, int accesLevel) {
+    public User(long userID, String name, String surname, String username, String password, String phoneNr, String email) {
         this.userID = userID;
         this.name = name;
         this.surname = surname;
@@ -45,7 +40,6 @@ public class User {
         this.password = password;
         this.phoneNr = phoneNr;
         this.email = email;
-        this.accesLevel = accesLevel;
     }
 
     /**
@@ -59,31 +53,28 @@ public class User {
      * @param email
      * @param accesLevel
      */
-    public User(String name, String surname, String username, String password, String phoneNr, String email, int accesLevel) {
+    public User(String name, String surname, String username, String password, String phoneNr, String email) {
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.password = password;
         this.phoneNr = phoneNr;
         this.email = email;
-        this.accesLevel = accesLevel;
     }
 
     /**
-     * Constructor to register a guest
+     * Constructor to register a guest and get lesson registrations
      *
      * @param name
      * @param surname
      * @param phoneNr
      * @param email
-     * @param accesLevel
      */
-    public User(String name, String surname, String phoneNr, String email, int accesLevel) {
+    public User(String name, String surname, String phoneNr, String email) {
         this.name = name;
         this.surname = surname;
         this.phoneNr = phoneNr;
         this.email = email;
-        this.accesLevel = accesLevel;
     }
 
     /**
@@ -103,21 +94,6 @@ public class User {
     }
 
     /**
-     * Constructor to get lesson registrations
-     *
-     * @param name
-     * @param surname
-     * @param phoneNr
-     * @param email
-     */
-    public User(String name, String surname, String phoneNr, String email) {
-        this.name = name;
-        this.surname = surname;
-        this.phoneNr = phoneNr;
-        this.email = email;
-    }
-
-    /**
      * Constructor for Suppliers
      *
      * @param username
@@ -125,11 +101,10 @@ public class User {
      * @param accesLevel
      * @param email
      */
-    public User(String username, String phoneNr, String email, int accesLevel) {
+    public User(String username, String phoneNr, String email) {
         this.username = username;
         this.phoneNr = phoneNr;
         this.email = email;
-        this.accesLevel = accesLevel;
     }
 
     /**
@@ -141,24 +116,26 @@ public class User {
      * @param username
      * @param phoneNr
      * @param email
-     * @param accesLevel
      */
-    public User(Long userID, String name, String surname, String username, String phoneNr, String email, int accesLevel) {
+    public User(Long userID, String name, String surname, String username, String phoneNr, String email) {
         this.userID = userID;
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.phoneNr = phoneNr;
         this.email = email;
-        this.accesLevel = accesLevel;
     }
 
-    public List<Long> getAccesLevels() {
-        return accesLevels;
+    public Set<Long> getAccessLevels() {
+        return accessLevels;
     }
 
-    public void setAccesLevels(List<Long> accesLevels) {
-        this.accesLevels = accesLevels;
+    public void setAccessLevels(Set<Long> accessLevels) {
+        this.accessLevels = accessLevels;
+    }
+    
+    public void addAccessLevel(long accessLevel) {
+        this.accessLevels.add(accessLevel);
     }
 
     public long getUserID() {
@@ -167,14 +144,6 @@ public class User {
 
     public void setUserID(long userID) {
         this.userID = userID;
-    }
-
-    public int getAccesLevel() {
-        return accesLevel;
-    }
-
-    public void setAccesLevel(int accesLevel) {
-        this.accesLevel = accesLevel;
     }
 
     public String getUsername() {
@@ -223,14 +192,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String add() {
-        if (!"1".equals(username)) {
-            return "failurePage";
-        } else {
-            return "test";
-        }
     }
 
     public String getShortString() {

@@ -2,6 +2,7 @@ package View.Pages;
 
 import Controller.LessonService;
 import Model.Lesson;
+import View.Session.SessionBean;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -33,6 +34,8 @@ public class LessonRosterBean implements Serializable {
     public void init() {
         lessonService = new LessonService();
         lessonSchedule = new DefaultScheduleModel();
+
+        RefreshLessons();
     }
 
     public void onButtonClick() {

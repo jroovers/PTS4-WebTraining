@@ -5,7 +5,7 @@
  */
 package InfoSupportWeb.utility;
 
-import Interfaces.ILocationDAO;
+import Persistance.Interfaces.ILocationDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

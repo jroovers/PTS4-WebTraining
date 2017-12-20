@@ -27,8 +27,9 @@ public class UserServiceTest {
 
     @Before
     public void setUp() {
-        user1 = new User("Bert", "Vissers", "Bert123", "Bertjeee112", "0612345678", "Bert@gmail.com", 2);
-        user2 = new User(2L, "Bert", "Vissers", "Bertster", "bertisthebest", "004321", "Bert@hotmail.com", 1);
+        user1 = new User(1L,"Bert", "Vissers", "Bert123", "Bertjeee112", "0612345678", "Bertje123@gmail.com");
+        user2 = new User(2L, "Bert", "Vissers", "Bertster", "bertisthebest", "004321", "Bert@hotmail.com");
+
         userService = new UserService();
     }
 
@@ -117,8 +118,7 @@ public class UserServiceTest {
         boolean result = userService.editUser(user2);
         assertEquals(expResult, result);
     }
-    
-    
+
     /**
      * Test of editAccountType method, of class UserService.
      */
@@ -126,9 +126,8 @@ public class UserServiceTest {
     public void testEditAcocuntType() throws Exception {
         Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "editAccountType: ");
         boolean expResult = true;
-        boolean result = userService.editAccountType(user2.getUserID(), 3, user2.getAccesLevel());
+        boolean result = userService.editAccountType(user2);
         assertEquals(expResult, result);
     }
-
 
 }
