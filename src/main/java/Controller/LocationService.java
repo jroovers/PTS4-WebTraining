@@ -44,7 +44,8 @@ public class LocationService {
      * @return
      */
     public boolean removeLocation(String location) {
-        throw new UnsupportedOperationException("not yet implemented");
+        LocationDAOUtils locationDAOUtils = new LocationDAOUtils();
+        return locationDAOUtils.removeLocation(location);
     }
 
 }

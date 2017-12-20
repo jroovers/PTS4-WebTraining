@@ -14,7 +14,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 
 /**
  *
@@ -31,8 +30,8 @@ public class CourseServiceTest {
     public void setUp() {
         String[] testArray = new String[2];
         String testSupplier = "InfoSupport";
-        testArray[0] = "Jemam";
-        testArray[1] = "Jepap";
+        testArray[0] = "testcase1";
+        testArray[1] = "testcase2";
         c1 = new Course(33, "UnitTest1", "name", "textDescription", testArray, "courseMaterials", testArray, 3, 1.1);
         c2 = new Course(33, "UnitTest1", "name", "textDescription", testArray, "courseMaterials", testArray, 3, 1.1);
         c1.setSupplier(testSupplier);

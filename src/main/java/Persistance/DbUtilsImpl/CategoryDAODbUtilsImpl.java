@@ -27,7 +27,8 @@ public class CategoryDAODbUtilsImpl implements ICategoryDAO {
     static final String QUERY_SELECT_ALLCATEGORIES = "SELECT * FROM Category ORDER BY Name";
     static final String QUERY_UPDATE_CATEGORY = "UPDATE Category SET Name = ? WHERE ID_Category = ?";
     static final String QUERY_DELETE_CATEGORY = "DELETE FROM Category WHERE ID_Category = ?";
-
+    static final String QUERY_DELETE_CATEGORY_BY_NAME = "DELETE FROM Category WHERE Name = ?";
+    
     static final String QUERY_INSERT_COURSECATEGORY = "INSERT INTO Course_Category(ID_Course, ID_Category) VALUES (?, ?)";
     static final String QUERY_DELETE_COURSECATEGORY = "DELETE FROM Course_Category WHERE ID_Course = ? AND ID_Category = ?";
     static final String QUERY_SELECT_CATEGORIESBYCOURSE = "SELECT cat.* FROM Category cat, Course_Category cc WHERE cat.ID_Category = cc.ID_Category AND cc.ID_Course = ? ORDER BY cat.Name";
@@ -73,12 +74,12 @@ public class CategoryDAODbUtilsImpl implements ICategoryDAO {
     }
 
     @Override
-    public boolean updateCategory(Category category) {
+    public boolean removeCategory(Category category) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
-        Object[] params = new Object[]{category.getName(), category.getId()};
+        Object[] params = new Object[]{category.getId()};
         try {
-            run.update(QUERY_UPDATE_CATEGORY, rsh, params);
+            run.execute(QUERY_DELETE_CATEGORY, rsh, params);
             return true;
         } catch (SQLException ex_sql) {
             LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
@@ -86,14 +87,14 @@ public class CategoryDAODbUtilsImpl implements ICategoryDAO {
             return false;
         }
     }
-
+    
     @Override
-    public boolean removeCategory(Category category) {
+    public boolean removeCategory_byName(String name) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
-        Object[] params = new Object[]{category.getId()};
+        Object[] params = new Object[]{name};
         try {
-            run.execute(QUERY_DELETE_CATEGORY, rsh, params);
+            run.execute(QUERY_DELETE_CATEGORY_BY_NAME, rsh, params);
             return true;
         } catch (SQLException ex_sql) {
             LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);

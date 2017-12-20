@@ -28,6 +28,7 @@ public class UserGroupDAODbUtilsImpl implements IUserGroupDAO {
     static final String QUERY_SELECT_ALLUSERGROUPS = "SELECT * FROM UserGroup ORDER BY Name";
     static final String QUERY_UPDATE_USERGROUP = "UPDATE UserGroup SET Name = ? WHERE ID_UserGroup = ?";
     static final String QUERY_DELETE_USERGROUP = "DELETE FROM UserGroup WHERE ID_UserGroup = ?";
+    static final String QUERY_DELETE_USERGROUP_BY_NAME = "DELETE FROM UserGroup WHERE Name = ?";
 
     static final String QUERY_INSERT_COURSEUSERGROUP = "INSERT INTO Course_UserGroup(ID_Course, ID_UserGroup) VALUES (?, ?)";
     static final String QUERY_DELETE_COURSEUSERGROUP = "DELETE FROM Course_UserGroup WHERE ID_Course = ? AND ID_UserGroup = ?";
@@ -44,21 +45,6 @@ public class UserGroupDAODbUtilsImpl implements IUserGroupDAO {
         Object[] params = new Object[]{name};
         try {
             run.insert(QUERY_INSERT_USERGROUP, rsh, params);
-            return true;
-        } catch (SQLException ex_sql) {
-            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
-            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
-            return false;
-        }
-    }
-
-    @Override
-    public boolean updateUserGroup(UserGroup group) {
-        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
-        ResultSetHandlerImp rsh = new ResultSetHandlerImp();
-        Object[] params = new Object[]{group.getName(), group.getId()};
-        try {
-            run.update(QUERY_UPDATE_USERGROUP, rsh, params);
             return true;
         } catch (SQLException ex_sql) {
             LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
@@ -95,6 +81,21 @@ public class UserGroupDAODbUtilsImpl implements IUserGroupDAO {
         Object[] params = new Object[]{group.getId()};
         try {
             run.execute(QUERY_DELETE_USERGROUP, rsh, params);
+            return true;
+        } catch (SQLException ex_sql) {
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
+            return false;
+        }
+    }
+    
+    @Override
+    public boolean removeUseGroup_ByName(String name) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        ResultSetHandlerImp rsh = new ResultSetHandlerImp();
+        Object[] params = new Object[]{name};
+        try {
+            run.execute(QUERY_DELETE_USERGROUP_BY_NAME, rsh, params);
             return true;
         } catch (SQLException ex_sql) {
             LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
