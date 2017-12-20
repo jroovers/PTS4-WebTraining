@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Interfaces;
+package Persistance.Interfaces;
 
 import Model.Course;
 import java.util.List;

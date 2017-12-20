@@ -7,7 +7,7 @@ package InfoSupportWeb.utility;
 
 import java.util.List;
 import Model.User;
-import Interfaces.IUserDAO;
+import Persistance.Interfaces.IUserDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

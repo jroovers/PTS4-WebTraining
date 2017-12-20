@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -25,7 +24,6 @@ import org.junit.Ignore;
  *
  * @author Jorian
  */
-@Ignore
 public class LessonServiceTest {
     
     private Course c1;
@@ -36,6 +34,7 @@ public class LessonServiceTest {
     
     private User u1;
     private User u2;
+    private User u3;
     
     private Calendar startTime;
     private Calendar endTime;
@@ -55,7 +54,7 @@ public class LessonServiceTest {
         l1 = new Lesson(c1);
         l2 = new Lesson(c1);
         u1 = new User("Frank", "franken", "001234", "Frankster@TheG.com", 2);
-        u2 = new User("Bert", "bertus", "004321", "BertusThebertustest@banana.com", 1);
+        u2 = new User(1L, "Frank", "franken", "Frankster", "004321", "Frankster@TheG.com", 2);
         
         lessonService = new LessonService();
         location = "eindhoven";
@@ -119,10 +118,10 @@ public class LessonServiceTest {
      * Test of addLesson method, of class LessonService.
      */
     @Test
-    @Ignore
     public void testAddLesson_Lesson() throws Exception {
         Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "addLesson: ");   
         Lesson expResult = l1;
+        l1.setTeacher(u2);
         Lesson result = lessonService.addLesson(l1);
         assertNotNull(result.getId());
         assertEquals(expResult.getLessonString(), result.getLessonString());

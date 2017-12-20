@@ -5,7 +5,7 @@
  */
 package InfoSupportWeb.utility;
 
-import Interfaces.ICourseDAO;
+import Persistance.Interfaces.ICourseDAO;
 import Model.Course;
 import java.sql.SQLException;
 import java.util.ArrayList;
