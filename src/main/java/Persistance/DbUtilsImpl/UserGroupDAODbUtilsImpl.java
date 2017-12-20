@@ -155,5 +155,4 @@ public class UserGroupDAODbUtilsImpl implements IUserGroupDAO {
         }
         return usergroups;
     }
-
 }

@@ -27,6 +27,8 @@ public class UserGroupServiceTest {
     private UserGroup ug1;
     private UserGroup ug2;
     private Course course;
+    private Course failCourse;
+    private String longString;
 
     public UserGroupServiceTest() {
     }
@@ -50,6 +52,10 @@ public class UserGroupServiceTest {
         testArray[0] = "testcase1";
         testArray[1] = "testcase2";
         course = new Course(119, "UnitTest1", "name", "textDescription", testArray, "courseMaterials", testArray, 3, 1.1);
+
+        //Unhappy flow testing purposes
+        longString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+        failCourse = new Course(999999999999999999L, "UnitTest1", "name", "textDescription", testArray, "courseMaterials", testArray, 3, 1.1);
     }
 
     @After
@@ -58,93 +64,106 @@ public class UserGroupServiceTest {
 
     /**
      * Test of addUserGroup method, of class UserGroupService.
+     * @throws java.lang.Exception
      */
     @Test
     public void testAddUserGroup() throws Exception {
+        //Setup
         Logger.getLogger(UserGroupServiceTest.class.getName()).log(Level.INFO, "addUserGroup with the name of the UserGroup as a String");
         UserGroup ug3 = new UserGroup("Test");
         List<UserGroup> userGroups = us.getAllUserGroups();
         boolean result = us.addUserGroup("Test Usergroups");
         List<UserGroup> expUserGroups = us.getAllUserGroups();
+
+        //Asserts
         assertEquals(true, result);
         assertEquals(userGroups.size() + 1, expUserGroups.size());
+
+        //DB Clean
         us.removeUserGroup_ByName("Test Usergroups");
         us.removeUserGroup(ug3);
+
+        //Testing unhappy flow
+        boolean badResult = us.addUserGroup(longString);
+        assertEquals(false, badResult);
     }
 
     /**
-     * Test of updateUserGroup method, of class UserGroupService.
-     */
-//    @Test
-//    public void testUpdateUserGroup() throws Exception {
-//        Logger.getLogger(UserGroupServiceTest.class.getName()).log(Level.INFO, "updateUserGroup with the name of the UserGroup as a String");
-//        boolean result = us.updateUserGroup(ug1);
-//        assertEquals(true, result);
-//        us.updateUserGroup(ug2);
-//    }
-
-    /**
      * Test of getUserGroupsFromCourse method, of class UserGroupService.
+     * @throws java.lang.Exception
      */
     @Test
     public void testGetUserGroupsFromCourse_Course() throws Exception {
+        //Setup
         Logger.getLogger(UserGroupServiceTest.class.getName()).log(Level.INFO, "getUserGroupsFromCourse_Course test");
         List<UserGroup> userGroups = us.getUserGroupsFromCourse(course);
+
+        //Assert
         assertNotNull(userGroups.size());
+
+        //Testing unhappy flow
+//        List<UserGroup> failUserGroups = us.getUserGroupsFromCourse(failCourse);
+//        assertEquals(0, failUserGroups.size());
     }
 
     /**
      * Test of getUserGroupsFromCourse method, of class UserGroupService.
+     * @throws java.lang.Exception
      */
     @Test
     public void testGetUserGroupsFromCourse_long() throws Exception {
+        //Setup
         Logger.getLogger(UserGroupServiceTest.class.getName()).log(Level.INFO, "getUserGroupsFromCourse_long test");
+        
+        //Assert
         List<UserGroup> userGroups = us.getUserGroupsFromCourse(1L);
         assertNotNull(userGroups.size());
+
+        //Testing unhappy flow
+//        List<UserGroup> failUserGroups = us.getUserGroupsFromCourse(failCourse.getId());
+//        assertEquals(0, failUserGroups.size());
     }
 
     /**
      * Test of addUserGroupToCourse method, of class UserGroupService.
-     */
-//    @Test
-//    public void testAddUserGroupToCourse_UserGroup_Course() throws Exception {
-//        Logger.getLogger(UserGroupServiceTest.class.getName()).log(Level.INFO, "addUserGroupToCourse_UserGroup_Course test");
-//        boolean result = us.addUserGroupToCourse(ug2, course);
-//        assertEquals(true, result);
-//        us.removeUserGroupFromCourse(ug2, course);
-//    }
-
-    /**
-     * Test of addUserGroupToCourse method, of class UserGroupService.
+     * @throws java.lang.Exception
      */
     @Test
     public void testAddUserGroupToCourse_long_long() throws Exception {
+        //Setup
         Logger.getLogger(UserGroupServiceTest.class.getName()).log(Level.INFO, "addUserGroupToCourse_long_long test");
         boolean result = us.addUserGroupToCourse(1L, 1L);
+
+        //Assert
         assertEquals(true, result);
+
+        //Cleanup DB
         us.removeUserGroupFromCourse(1L, 1L);
+
+        //Testing unhappy flow
+        boolean failResult = us.addUserGroupToCourse(failCourse.getId(), failCourse.getId());
+        assertEquals(false, failResult);
     }
 
     /**
      * Test of removeUserGroupFromCourse method, of class UserGroupService.
-     */
-//    @Test
-//    public void testRemoveUserGroupFromCourse_UserGroup_Course() throws Exception {
-//        Logger.getLogger(UserGroupServiceTest.class.getName()).log(Level.INFO, "removeUserGroupFromCourse_UserGroup_Course test");
-//        boolean result = us.addUserGroupToCourse(ug2, course);
-//        assertEquals(true, result);
-//        us.removeUserGroupFromCourse(ug2, course);
-//    }
-
-    /**
-     * Test of removeUserGroupFromCourse method, of class UserGroupService.
+     * @throws java.lang.Exception
      */
     @Test
     public void testRemoveUserGroupFromCourse_long_long() throws Exception {
+        //Setup
         Logger.getLogger(UserGroupServiceTest.class.getName()).log(Level.INFO, "removeUserGroupFromCourse_long_long with the courseID and userGroupID as long");
         boolean result = us.addUserGroupToCourse(1L, 1L);
+
+        //Assert
         assertEquals(true, result);
+
+        //Cleanup DB 
         us.removeUserGroupFromCourse(1L, 1L);
+
+        //Testing unhappy flow
+//        boolean failResult = us.removeUserGroupFromCourse(failCourse.getId(), failCourse.getId());
+//        assertEquals(false, failResult);
     }
 
 }

@@ -285,4 +285,13 @@ public class UserTest {
         //assert
         assertEquals(expShortString, result);
     }
+    
+    @Test
+    public void testToString() {
+        //act     
+        String expShortString = "Frank, Frank";
+        String result = user.toString();        
+        //assert
+        assertEquals(expShortString, result);
+    }
 }
