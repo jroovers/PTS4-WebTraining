@@ -158,7 +158,7 @@ public class UserGroupServiceTest {
         //Assert
         assertEquals(true, result);
 
-        //Cleanup DB
+        //Cleanup DB 
         us.removeUserGroupFromCourse(1L, 1L);
 
         //Testing unhappy flow
