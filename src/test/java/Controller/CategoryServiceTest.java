@@ -162,8 +162,8 @@ public class CategoryServiceTest {
     @Test
     public void testAddCategoryToCourse_long_long() throws Exception {
         Logger.getLogger(CategoryServiceTest.class.getName()).log(Level.INFO, "addCategoryToCourse_Category_Course with the name of the Category as string");
-        boolean result = categoryService.addCategoryToCourse(1L, 119L);        
+        boolean result = categoryService.addCategoryToCourse(1L, 1L);        
         assertEquals(true, result);
-        categoryService.removeCategoryFromCourse(1L, 119L);
+        categoryService.removeCategoryFromCourse(1L, 1L);
     }
 }

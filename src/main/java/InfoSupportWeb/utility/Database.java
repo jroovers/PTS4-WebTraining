@@ -42,11 +42,11 @@ public class Database {
             ds.setUrl(prop.getProperty("url"));
             ds.setUsername(prop.getProperty("username"));
             ds.setPassword(prop.getProperty("password"));
+
         } catch (IOException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 
     public static Database getInstance() {
         if (db == null) {
