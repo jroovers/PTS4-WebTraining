@@ -42,6 +42,16 @@ html {
     word-spacing: 10px;
 }
 
+.menu-socialmedia a :hover
+{
+    color: #ec008c;
+}
+
+.quick-links a
+{
+    font-size: 14px;
+}
+
 .quick-links .btn
 {
     border-color: #fff;
@@ -49,6 +59,13 @@ html {
     background-color: transparent;
     font-weight: bold;
     color: #fff;
+    font-size: 14px;
+}
+
+.menu-overig :hover
+{
+    text-decoration: none;
+    color: #ec008c !important;
 }
 
 .menu-overig li a
@@ -59,6 +76,11 @@ html {
     vertical-align: middle;
 }
 
+.menu-overig
+{
+    padding: 0;
+}
+
 .menu-overig li
 {
     font-style: normal !important;
@@ -66,10 +88,10 @@ html {
     line-height: 30px;
     margin-left: 0;
 }
-.quick-links .btn :hover
+.quick-links :hover
 {
-    border-color: red;
-    background-color: red;
+    background-color: #ec008c;
+    border-color: #ec008c;
 }
 
 .menu-socialmedia:hover
@@ -89,6 +111,7 @@ html {
   height: 250px !important;
   line-height: 60px; /* Vertically center the text there */
   background-color: #0079ca !important;
+  margin-bottom: 0;
 }
 
 .footer-image{
@@ -119,8 +142,8 @@ address
 }
 
 .footer > .footer-container {
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 10%;
+  padding-left: 10%;
 }
 
 code {

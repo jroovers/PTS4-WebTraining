@@ -14,10 +14,10 @@
             </div>
 
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <div class="navbar-right" id="position-items-right">
+                <div class="ml-md-auto" id="position-items-right">
                     <ul class="navbar-nav mr-auto "> 
                         <li class="nav-item dropdown">
-                            <h:link styleClass="nav-link dropdown-toggle " a:data-toggle="dropdown" a:aria-haspopup="true" a:aria-expanded="false">CURSUSSEN</h:link>
+                            <h:link styleClass="nav-link dropdown-toggle" a:data-toggle="dropdown" a:aria-haspopup="true" a:aria-expanded="false">CURSUSSEN</h:link>
 
                             <div class="dropdown-menu" aria-labelledby="dropdown01">
                                 <h:link styleClass="dropdown-item" outcome="/external/offertraining" value="Aanmaken"/>
@@ -40,13 +40,13 @@
                         <li class="nav-item">
                             <h:link styleClass="nav-link" rendered="#{sessionBean.admin}" outcome="/appmanagement/manageaccounts" value="Accountbeheer"/>
                         </li> 
-                        <li class="nav-item">
+                        <li class="nav-item nav-log">
                             <h:link styleClass="nav-link" rendered="#{!sessionBean.loggedIn}" outcome="/external/authorization">
-                                <span class="glyphicon glyphicon-log-in"></span> INLOGGEN</h:link>
+                                <span class="fa fa-sign-in"></span> INLOGGEN</h:link>
                         </li>
                         <li class="nav-item">
                             <h:commandLink styleClass="nav-link" rendered="#{sessionBean.loggedIn}" action="#{authorizationBean.quickLogout()}">
-                                <span class="glyphicon glyphicon-log-out"></span> UITLOGGEN </h:commandLink>
+                                <span class="fa fa-sign-out fa-2x"></span> UITLOGGEN </h:commandLink>
                         </li>  
 
                     </ul>
