@@ -25,7 +25,7 @@ public class CategoryServiceTest {
 
     CategoryService categoryService = new CategoryService();
     private Category c1;
-    private Category c2;
+    private Category c2; 
     private Course course;
 
     public CategoryServiceTest() {
