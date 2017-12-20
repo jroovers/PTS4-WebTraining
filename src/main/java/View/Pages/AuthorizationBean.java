@@ -119,7 +119,7 @@ public class AuthorizationBean {
             if (user.getPassword().equals(password)) {
                 session.setUser(user);
                 session.setLoggedIn(true);
-                for (Long level : user.getAccesLevels()) {
+                for (Long level : user.getAccessLevels()) {
                     if (level == 1L) {
                         session.setEmployee(true);
                     }

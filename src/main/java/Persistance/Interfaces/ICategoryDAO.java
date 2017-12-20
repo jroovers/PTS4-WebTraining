@@ -23,14 +23,6 @@ public interface ICategoryDAO {
     public boolean addCategory(String name);
 
     /**
-     * updates a existing category
-     *
-     * @param category category with id AND name set
-     * @return true if succesful
-     */
-    public boolean updateCategory(Category category);
-
-    /**
      * Returns a list with all categories
      *
      * @return list with categories, empty list if error or no found
@@ -70,4 +62,12 @@ public interface ICategoryDAO {
      * @return List of categories (empty if no categories)
      */
     public List<Category> getCategoriesByCourse(long course_id);
+    
+    /**
+     * Removes a category from the DB by checking the name
+     * 
+     * @param name, is the name of the category
+     * @return succesfull
+     */
+    public boolean removeCategory_byName(String name);
 }

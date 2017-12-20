@@ -20,12 +20,6 @@ public class User {
     private String email;
     private Set<Long> accessLevels = new HashSet<>();
 
-    //dit is echt heel lelijk maarja moet wel zo xo
-    private boolean hasAccess1;
-    private boolean hasAccess2;
-    private boolean hasAccess3;
-    private boolean hasAccess4;
-
     /**
      * Constructor for pulling users from database
      *
@@ -122,7 +116,6 @@ public class User {
      * @param username
      * @param phoneNr
      * @param email
-     * @param accesLevel
      */
     public User(Long userID, String name, String surname, String username, String phoneNr, String email) {
         this.userID = userID;
@@ -133,70 +126,14 @@ public class User {
         this.email = email;
     }
 
-    public boolean getHasAccess1() {
-        return hasAccess1;
-    }
-
-    public void setHasAccess1(boolean hasAccess1) {
-        this.hasAccess1 = hasAccess1;
-        setAccesLevel(1, hasAccess1);
-    }
-
-    public boolean getHasAccess2() {
-        return hasAccess2;
-    }
-
-    public void setHasAccess2(boolean hasAccess2) {
-        this.hasAccess2 = hasAccess2;
-        setAccesLevel(2, hasAccess2);
-    }
-
-    public boolean getHasAccess3() {
-        return hasAccess3;
-    }
-
-    public void setHasAccess3(boolean hasAccess3) {
-        this.hasAccess3 = hasAccess3;
-        setAccesLevel(3, hasAccess3);
-    }
-
-    public boolean getHasAccess4() {
-        return hasAccess4;
-    }
-
-    public void setHasAccess4(boolean hasAccess4) {
-        this.hasAccess4 = hasAccess4;
-        setAccesLevel(4, hasAccess4);
-    }
-
-    private void setAccesLevel(long i, boolean hasAccess) {
-        if (hasAccess) {
-            accessLevels.add(i);
-        } else {
-            accessLevels.remove(i);
-        }
-    }
-
-    public Set<Long> getAccesLevels() {
+    public Set<Long> getAccessLevels() {
         return accessLevels;
     }
 
-    public void setAccesLevels(Set<Long> accessLevels) {
+    public void setAccessLevels(Set<Long> accessLevels) {
         this.accessLevels = accessLevels;
-        if (this.accessLevels.contains((long) 1)) {
-            hasAccess1 = true;
-        }
-        if (this.accessLevels.contains((long) 2)) {
-            hasAccess2 = true;
-        }
-        if (this.accessLevels.contains((long) 3)) {
-            hasAccess3 = true;
-        }
-        if (this.accessLevels.contains((long) 4)) {
-            hasAccess4 = true;
-        }
     }
-
+    
     public void addAccessLevel(long accessLevel) {
         this.accessLevels.add(accessLevel);
     }
@@ -257,18 +194,13 @@ public class User {
         this.email = email;
     }
 
-    public String add() {
-        Logger.getLogger(User.class.getName()).log(Level.INFO, username + " " + username);
-
-        if (!"1".equals(username)) {
-            return "failurePage";
-        } else {
-            return "test";
-        }
-    }
-
     public String getShortString() {
         return this.name + " " + this.surname + " - " + this.email;
+    }
+
+    @Override
+    public String toString() {
+        return surname + ", " + name;
     }
 
 }

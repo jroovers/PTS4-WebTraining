@@ -19,25 +19,27 @@ import org.junit.Ignore;
  *
  * @author Mijic
  */
-@Ignore
 public class UserServiceTest {
-    
+
     private User user1;
+    private User user2;
     private UserService userService;
-    
+
     @Before
     public void setUp() {
-        user1 = new User("Bert", "Vissers", "Bert123", "Bertjeee112", "0612345678", "Bertje123@gmail.com");
-        userService = new UserService();      
+        user1 = new User(1L,"Bert", "Vissers", "Bert123", "Bertjeee112", "0612345678", "Bertje123@gmail.com");
+        user2 = new User(2L, "Bert", "Vissers", "Bertster", "bertisthebest", "004321", "Bert@hotmail.com");
+
+        userService = new UserService();
     }
-    
+
     /**
      * Test of addUser method, of class UserService.
      */
     @Test
     public void testAddUser() throws Exception {
-        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "addUser - Test: ");   
-        
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "addUser - Test: ");
+
         boolean result = userService.addUser(user1);
         assertEquals(result, true);
         User user = userService.getUser("Bert123");
@@ -49,8 +51,8 @@ public class UserServiceTest {
      */
     @Test
     public void testGetUsers() throws Exception {
-        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "getUsers - Test: "); 
-        
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "getUsers - Test: ");
+
         List<User> users = userService.getUsers();
         assertTrue(!users.isEmpty());
     }
@@ -60,11 +62,11 @@ public class UserServiceTest {
      */
     @Test
     public void testGetUser() throws Exception {
-        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "getUser - Test: "); 
-        
-        User user = userService.getUser("Bertster");        
-        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, user.getName()); 
-        assertEquals("bertus", user.getSurname());
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "getUser - Test: ");
+
+        User user = userService.getUser("Bertster");
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, user.getName());
+        assertEquals("Vissers", user.getSurname());
     }
 
     /**
@@ -72,8 +74,8 @@ public class UserServiceTest {
      */
     @Test
     public void testRemoveUser() throws Exception {
-        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "removeUser - Test: "); 
-        
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "removeUser - Test: ");
+
         List<User> beforeUsers = userService.getUsers();
         boolean result = userService.addUser(user1);
         List<User> users = userService.getUsers();
@@ -83,27 +85,49 @@ public class UserServiceTest {
         List<User> afterUsers = userService.getUsers();
         assertEquals(afterUsers.size(), beforeUsers.size());
     }
-    
-        /**
+
+    /**
      * Test of getTeachers method, of class UserService.
      */
     @Test
-    public void testGetTeachers() throws Exception{
-        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "getTeachers - Test: "); 
-        
+    public void testGetTeachers() throws Exception {
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "getTeachers - Test: ");
+
         List<User> users = userService.getTeachers();
         assertTrue(!users.isEmpty());
     }
-    
+
     /**
      * Test of getAccountTypes method, of class UserService.
      */
     @Test
-    public void testGetAccountTypes() throws Exception{
-        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "getUsers - Test: "); 
-        
+    public void testGetAccountTypes() throws Exception {
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "getUsers - Test: ");
+
         Map<String, String> accountTypes = userService.getAccountTypes();
         assertTrue(!accountTypes.isEmpty());
     }
-    
+
+    /**
+     * Test of editUser method, of class UserService.
+     */
+    @Test
+    public void testEditUser() throws Exception {
+        Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "editUser: ");
+        boolean expResult = true;
+        boolean result = userService.editUser(user2);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of editAccountType method, of class UserService.
+     */
+    @Test
+    public void testEditAcocuntType() throws Exception {
+        Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "editAccountType: ");
+        boolean expResult = true;
+        boolean result = userService.editAccountType(user2);
+        assertEquals(expResult, result);
+    }
+
 }

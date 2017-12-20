@@ -8,7 +8,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.CellEditEvent;
-import org.primefaces.event.RowEditEvent;
 import Controller.UserService;
 import Model.User;
 import java.util.ArrayList;
@@ -42,7 +41,7 @@ public class ManageAccountBean implements Serializable {
         for (User u : users) {
             List<Boolean> accessLevels = new ArrayList<>();
             for (long i = 1; i <= accessLevelAmount; i++) {
-                accessLevels.add(u.getAccesLevels().contains(i));
+                accessLevels.add(u.getAccessLevels().contains(i));
             }
             permissions.put(u, accessLevels);
         }
@@ -98,7 +97,7 @@ public class ManageAccountBean implements Serializable {
 
     public void onCheckBoxEdit(User user) {
         //us.editAccountType(user);
-        user.setAccesLevels(new HashSet<>());
+        user.setAccessLevels(new HashSet<>());
 
         //convert the boolean list back to the user accesslevel list
         for (long i = 0; i < accessLevelAmount; i++) {

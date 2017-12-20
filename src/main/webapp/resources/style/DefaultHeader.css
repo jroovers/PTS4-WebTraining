@@ -9,17 +9,6 @@ and open the template in the editor.
 */
 
 
-.DefaultHeader
-{
-    font-family: "proxima-nova","Helvetica Neue",Helvetica,Arial,sans-serif;
-    text-transform: uppercase;
-    font-size: 12px !important;
-    background-color: #363636 !important;
-    position: fixed;
-    z-index: 1030;
-    width: 100%;
-}
-
  .affix 
 {
     top: 20px;
@@ -56,12 +45,17 @@ a
 {
     color: #FFFFFF  !important;
     font-weight: 700;
-    font-size: 12px !important;
+    font-size: 13px !important;
+    text-transform: uppercase;
 }
+
+
 
  .navbar-custom
  {
-   min-height: 0 !important;
+     height: 15%;
+    background-color: #363636;
+    min-height: 0 !important;
  }
 
 .navbar-brand 

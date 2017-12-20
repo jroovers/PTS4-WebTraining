@@ -2,7 +2,7 @@ package InfoSupportWeb.utility;
 
 import java.util.List;
 import Model.User;
-import Interfaces.IUserDAO;
+import Persistance.Interfaces.IUserDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,10 +22,10 @@ public class UserDAOUtils implements IUserDAO {
 
     static final String QUERY_GET_USER = "SELECT * FROM User where Username = ?";
     static final String QUERY_GET_USERS = "SELECT * FROM User";
-    static final String QUERY_GET_USERS_WITH_PERMISSION_ID = "SELECT Distinct User.* FROM User, User_UserType, UserType WHERE User.ID_User = User_UserType.ID_User AND User_UserType.ID_UserType = ?";
-    static final String QUERY_INSERT_USER = "INSERT INTO User(`Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`,`ID_UserType`) VALUES(?,?,?,?,?,?,?)";
+    static final String QUERY_GET_USERS_WITH_PERMISSION_ID = "SELECT distinct u.* FROM User u , User_UserType ut WHERE u.ID_User = ut.ID_User AND ut.ID_UserType = ?";
+    static final String QUERY_INSERT_USER = "INSERT INTO User(`Name`, `Surname`, `Username`, `Password`,`PhoneNr`,`Email`) VALUES(?,?,?,?,?,?)";
     static final String QUERY_REMOVE_USER = "DELETE FROM User WHERE ID_User = ?";
-    static final String QUERY_UPDATE_USER = "UPDATE User SET Name = ?, Surname = ?, Username = ?, PhoneNr = ?, Email = ?, ID_UserType = ? WHERE ID_User = ?;";
+    static final String QUERY_UPDATE_USER = "UPDATE User SET Name = ?, Surname = ?, Username = ?, PhoneNr = ?, Email = ? WHERE ID_User = ?;";
     static final String QUERY_GET_ALL_USERTYPES = "SELECT Name, ID_UserType FROM UserType";
     static final String QUERY_GET_USER_USERTYPES = "SELECT ut.ID_UserType FROM User_UserType ut, User u WHERE u.ID_User = ut.ID_User AND u.ID_User = ?";
     static final String QUERY_EDIT_ACCES_LEVEL = "UPDATE User_UserType SET ID_UserType = ? WHERE ID_User = ? AND ID_UserType = ?";
@@ -55,7 +55,7 @@ public class UserDAOUtils implements IUserDAO {
                         o[5] == null ? null : o[5].toString(), // phoneNr
                         o[6] == null ? null : o[6].toString() // email
                 );
-                u.setAccesLevels(getUserTypesByUserID(u.getUserID()));
+                u.setAccessLevels(getUserTypesByUserID(u.getUserID()));
                 users.add(u);
             }
         } catch (SQLException ex_sql) {
@@ -83,7 +83,7 @@ public class UserDAOUtils implements IUserDAO {
                         o[5] == null ? null : o[5].toString(), // phoneNr
                         o[6] == null ? null : o[6].toString() // email
                 );
-                user.setAccesLevels(getUserTypesByUserID(user.getUserID()));
+                user.setAccessLevels(getUserTypesByUserID(user.getUserID()));
             }
         } catch (SQLException ex_sql) {
             LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
@@ -209,7 +209,7 @@ public class UserDAOUtils implements IUserDAO {
         }
 
         //add new userpermissions
-        for (long level : user.getAccesLevels()) {
+        for (long level : user.getAccessLevels()) {
             run = new QueryRunner(Database.getInstance().getDataSource());
             rsh = new ResultSetHandlerImp();
             params = new Object[]{user.getUserID(),level};

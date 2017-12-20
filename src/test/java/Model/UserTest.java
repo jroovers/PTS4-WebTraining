@@ -5,6 +5,10 @@
  */
 package Model;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,6 +23,7 @@ import static org.junit.Assert.*;
 public class UserTest {
 
     private User user;
+    private User user2;
 
     @Before
     public void CreateTestUser() {
@@ -61,7 +66,7 @@ public class UserTest {
         //arange
         long expLVL = 2;
         //act
-        boolean result = user.getAccesLevels().contains(expLVL);
+        boolean result = user.getAccessLevels().contains(expLVL);
         //assert
         assertEquals(true, result);
     }
@@ -75,9 +80,29 @@ public class UserTest {
         long newLVL = 1;
         //act
         user.addAccessLevel(newLVL);
-        boolean result = user.getAccesLevels().contains(newLVL);
+        boolean result = user.getAccessLevels().contains(newLVL);
         //assert
         assertEquals(true, result);
+    }
+    
+        /**
+     * Test of getAccesLVLs method, of class User.
+     */
+    @Test
+    public void testGetAccesLVLs() {
+        //arange
+        Long expLVL1 = 1L;
+        Long expLVL2 = 2L;
+        Set<Long> newAccesLVLs = new HashSet<>();
+        newAccesLVLs.add(expLVL1);
+        newAccesLVLs.add(expLVL2);
+        user.setAccessLevels(newAccesLVLs);
+        
+        //act
+        Set<Long> result = user.getAccessLevels();
+        
+        //assert
+        assertEquals(2, result.size());
     }
 
     /**
@@ -247,5 +272,17 @@ public class UserTest {
         String result = user.getEmail();
         //assert
         assertEquals(newEmail, result);
+    }
+    
+    /**
+     * Test of getShortString method, of class User.
+     */
+    @Test
+    public void testGetShortString(){              
+        //act     
+        String expShortString = "Frank franken - Frankster@TheG.com";
+        String result = user.getShortString();        
+        //assert
+        assertEquals(expShortString, result);
     }
 }

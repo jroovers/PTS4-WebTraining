@@ -23,14 +23,6 @@ public interface IUserGroupDAO {
     public boolean addUserGroup(String name);
 
     /**
-     * updates a existing usergroup
-     *
-     * @param group group with id AND name set
-     * @return true if success
-     */
-    public boolean updateUserGroup(UserGroup group);
-
-    /**
      * Returns a list with all usergroups
      *
      * @return list with usergroups, empty list if error or no found
@@ -45,6 +37,14 @@ public interface IUserGroupDAO {
      */
     public boolean removeUseGroup(UserGroup group);
 
+    /**
+     * Removes the group based on the given name from the database.
+     * 
+     * @param name, name of the UserGroup
+     * @return true if succes
+     */
+    public boolean removeUseGroup_ByName(String name);
+    
     /**
      * Assigns the given usergroup too the selected course
      *
