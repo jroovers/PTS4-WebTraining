@@ -13,6 +13,8 @@ import Persistance.Interfaces.IUserGroupDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
 
@@ -31,6 +33,8 @@ public class UserGroupDAODbUtilsImpl implements IUserGroupDAO {
     static final String QUERY_DELETE_COURSEUSERGROUP = "DELETE FROM Course_UserGroup WHERE ID_Course = ? AND ID_UserGroup = ?";
     static final String QUERY_SELECT_USERGROUPSBYCOURSE = "SELECT usg.* FROM UserGroup usg, Course_UserGroup cu WHERE usg.ID_UserGroup = cu.ID_UserGroup AND cu.ID_Course = ? ORDER BY usg.Name";
 
+    //Error handling
+    private final static Logger LOGGER = Logger.getLogger(UserGroupDAODbUtilsImpl.class.getName());
     private static final String SQLERROR = "SQL Exception code ";
     
     @Override
@@ -42,8 +46,8 @@ public class UserGroupDAODbUtilsImpl implements IUserGroupDAO {
             run.insert(QUERY_INSERT_USERGROUP, rsh, params);
             return true;
         } catch (SQLException ex_sql) {
-            System.out.println(SQLERROR + ex_sql.getErrorCode());
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
             return false;
         }
     }
@@ -57,8 +61,8 @@ public class UserGroupDAODbUtilsImpl implements IUserGroupDAO {
             run.update(QUERY_UPDATE_USERGROUP, rsh, params);
             return true;
         } catch (SQLException ex_sql) {
-            System.out.println(SQLERROR + ex_sql.getErrorCode());
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
             return false;
         }
     }
@@ -78,8 +82,8 @@ public class UserGroupDAODbUtilsImpl implements IUserGroupDAO {
                 categories.add(entry);
             }
         } catch (SQLException ex_sql) {
-            System.out.println(SQLERROR + ex_sql.getErrorCode());
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
         }
         return categories;
     }
@@ -93,8 +97,8 @@ public class UserGroupDAODbUtilsImpl implements IUserGroupDAO {
             run.execute(QUERY_DELETE_USERGROUP, rsh, params);
             return true;
         } catch (SQLException ex_sql) {
-            System.out.println(SQLERROR + ex_sql.getErrorCode());
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
             return false;
         }
     }
@@ -108,8 +112,8 @@ public class UserGroupDAODbUtilsImpl implements IUserGroupDAO {
             run.insert(QUERY_INSERT_COURSEUSERGROUP, rsh, params);
             return true;
         } catch (SQLException ex_sql) {
-            System.out.println(SQLERROR + ex_sql.getErrorCode());
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
             return false;
         }
     }
@@ -123,8 +127,8 @@ public class UserGroupDAODbUtilsImpl implements IUserGroupDAO {
             run.execute(QUERY_DELETE_COURSEUSERGROUP, rsh, params);
             return true;
         } catch (SQLException ex_sql) {
-            System.out.println(SQLERROR + ex_sql.getErrorCode());
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
             return false;
         }
     }
@@ -145,8 +149,8 @@ public class UserGroupDAODbUtilsImpl implements IUserGroupDAO {
                 usergroups.add(entry);
             }
         } catch (SQLException ex_sql) {
-            System.out.println(SQLERROR + ex_sql.getErrorCode());
-            System.out.println(ex_sql.getMessage());
+            LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
         }
         return usergroups;
     }

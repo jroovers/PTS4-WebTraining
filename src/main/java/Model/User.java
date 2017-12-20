@@ -2,6 +2,8 @@ package Model;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,6 +20,7 @@ public class User {
     private String email;
     private Set<Long> accessLevels = new HashSet<>();
 
+    //dit is echt heel lelijk maarja moet wel zo xo
     private boolean hasAccess1;
     private boolean hasAccess2;
     private boolean hasAccess3;
@@ -255,7 +258,7 @@ public class User {
     }
 
     public String add() {
-        System.out.println(username + " " + username);
+        Logger.getLogger(User.class.getName()).log(Level.INFO, username + " " + username);
 
         if (!"1".equals(username)) {
             return "failurePage";

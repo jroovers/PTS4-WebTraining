@@ -11,7 +11,9 @@ import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 import Controller.UserService;
 import Model.User;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import javax.inject.Inject;
 import org.primefaces.component.datatable.DataTable;
@@ -20,39 +22,38 @@ import org.primefaces.component.datatable.DataTable;
 @ViewScoped
 public class ManageAccountBean implements Serializable {
 
-    private transient List<User> users;
-    private Map<String, String> accountTypes;
-
+    /**
+     * Map of the users and a list of their permissions, in boolean format. 
+     * e.g. admin has true,true,true,true
+     */
+    private final transient Map<User, List<Boolean>> permissions = new HashMap<>();
+    private transient List<User> users = new ArrayList<>();
     @Inject
     UserService us;
+
+    //amount of different accesslevels in the database.
+    private final long accessLevelAmount = 4;
 
     @PostConstruct
     public void init() {
         users = us.getUsers();
-        accountTypes = new LinkedHashMap<>();
+
+        //convert the user accesslevels to the boolean format, so we can bind it to checkboxes
+        for (User u : users) {
+            List<Boolean> accessLevels = new ArrayList<>();
+            for (long i = 1; i <= accessLevelAmount; i++) {
+                accessLevels.add(u.getAccesLevels().contains(i));
+            }
+            permissions.put(u, accessLevels);
+        }
+    }
+
+    public Map<User, List<Boolean>> getPermissions() {
+        return permissions;
     }
 
     public List<User> getUsers() {
         return users;
-    }
-
-    public Map<String, String> getAccountTypes() {
-        accountTypes = us.getAccountTypes();
-        return accountTypes;
-    }
-
-    public void setAccountTypes(Map<String, String> accountTypes) {
-        this.accountTypes = accountTypes;
-    }
-
-    public void onRowEdit(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("User Editted", Long.toString(((User) event.getObject()).getUserID()));
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-
-    public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Edit Cancelled", Long.toString(((User) event.getObject()).getUserID()));
-        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public void onCellEdit(CellEditEvent event) {
@@ -89,16 +90,22 @@ public class ManageAccountBean implements Serializable {
             default:
                 break;
         }
-
         if (newValue != null && !newValue.equals(oldValue)) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Gebruiker aangepast", "Oud: " + oldValue + ", Nieuw:" + newValue);
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }
-    
-    public void onCheckBoxEdit(User user){
-        System.out.println("checkbox");
+
+    public void onCheckBoxEdit(User user) {
+        //us.editAccountType(user);
+        user.setAccesLevels(new HashSet<>());
+
+        //convert the boolean list back to the user accesslevel list
+        for (long i = 0; i < accessLevelAmount; i++) {
+            if (permissions.get(user).get((int) i)) { //if the users permissionlist [3] = true, add permission 4 to the accesslevel list.
+                user.addAccessLevel(i + 1); //accesslevels start at 1, the booleanlist starts at 0
+            }
+        }
         us.editAccountType(user);
     }
-
 }

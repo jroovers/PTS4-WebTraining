@@ -12,6 +12,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -85,7 +87,7 @@ public class LessonServiceTest {
      */
     @Test
     public void testGetLessons() throws Exception {
-        System.out.println("getLessons");
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "getLessons: ");   
         List<Lesson> result = lessonService.getLessons();
         assertTrue(!result.isEmpty());
     }
@@ -95,7 +97,7 @@ public class LessonServiceTest {
      */
     @Test
     public void testEditLesson() throws Exception {
-        System.out.println("editLesson");
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "editLesson: ");   
         boolean expResult = true;
         boolean result = lessonService.editLesson(l1);
         assertEquals(expResult, result);
@@ -106,7 +108,7 @@ public class LessonServiceTest {
      */
     @Test
     public void testDeleteLesson() throws Exception {
-        System.out.println("deleteLesson");
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "deleteLesson: ");   
         boolean expResult = true;
         l1.setId(1);
         boolean result = lessonService.deleteLesson(l1.getId());
@@ -119,7 +121,7 @@ public class LessonServiceTest {
     @Test
     @Ignore
     public void testAddLesson_Lesson() throws Exception {
-        System.out.println("addLesson");
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "addLesson: ");   
         Lesson expResult = l1;
         Lesson result = lessonService.addLesson(l1);
         assertNotNull(result.getId());
@@ -133,14 +135,14 @@ public class LessonServiceTest {
      */
     @Test
     public void testGetLessonsFromCourse() throws Exception {
-        System.out.println("getLessonsFromCourse");
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "getLessonFromCourse: ");   
         List<Lesson> result = lessonService.getLessonsFromCourse(c1.getId());
         assertTrue(!result.isEmpty());
     }
     
     @Test
     public void testGetLessonsAndRegistrationsByTeacher() throws Exception {
-        System.out.println("getLessonsAndRegistrationsByTeacher");
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "getLessonsAndRegistrationsByTeacher: ");   
         u1.setUserID(1);
 
         List<Lesson> result = lessonService.GetLessonsAndRegistrationsByTeacher(u1.getUserID());
@@ -149,14 +151,14 @@ public class LessonServiceTest {
     
     @Test
     public void testGetLessonsAndRegisterationByEmail() throws Exception {
-        System.out.println("getLessonsAndRegistrationBijEmail");
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "getLessonsAndRegisterationByEmail: ");   
         List<Lesson> result = lessonService.GetLessonsAndRegistrationsByEmail(u1.getEmail());
         assertTrue(!result.isEmpty());
     }
     
     @Test
     public void testSingUpUser(){
-        System.out.println("signUpUser");
+        Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "signUpUser: ");   
         long result = lessonService.signUpUser(l1.getId(), u1.getUserID());
         assertNotEquals(null, result);
     }

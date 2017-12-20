@@ -2,6 +2,8 @@ package Controller;
 
 import Model.Course;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,7 +45,7 @@ public class CourseServiceTest {
      */
 //    //@Test
 //    public void testAddCourse_String_String() throws Exception {
-//        System.out.println("addCourse with code and name");
+//        Logger.getLogger(SignupBean.class.getName()).log(Level.INFO, "addCourse with code and name");   
 //        
 //        Course expResult = c2;
 //        Course result = courseService.addCourse(c1.getCode(), c1.getName());
@@ -63,7 +65,7 @@ public class CourseServiceTest {
      */
     @Test
     public void testAddCourse_Course() throws Exception {
-        System.out.println("addCourse");
+        Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "addCourse");          
         Course expResult = c2;
         Course result = courseService.addCourse(c1);
         assertEquals(expResult.getCode(), result.getCode());
@@ -83,7 +85,7 @@ public class CourseServiceTest {
      */
     @Test
     public void testGetAllCourses() throws Exception {
-        System.out.println("getAllCourses");
+        Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "getAllCourses");   
         List<Course> result = courseService.getAllCourses();
         assertTrue(!result.isEmpty());
     }
@@ -93,7 +95,7 @@ public class CourseServiceTest {
      */
     @Test
     public void testEditCourse() throws Exception {
-        System.out.println("editCourse");
+        Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "editCourse");   
         boolean expResult = true;
         boolean result = courseService.editCourse(c1);
         assertEquals(expResult, result);
@@ -104,7 +106,7 @@ public class CourseServiceTest {
      */
     @Test
     public void testRemoveCourse() throws Exception {
-        System.out.println("removeCourse");
+        Logger.getLogger(CourseServiceTest.class.getName()).log(Level.INFO, "removeCourse");   
         boolean expResult = true;
         Course c3 = courseService.addCourse(c1);
         boolean result = courseService.removeCourse(c3.getId());

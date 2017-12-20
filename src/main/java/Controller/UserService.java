@@ -96,6 +96,7 @@ public class UserService {
     /**
      * Edits the AccountType of an user
      * 
+     * @param user
      * @param user_id
      * @param acces_level
      * @param old_acces_level

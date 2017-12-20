@@ -13,6 +13,8 @@ import Model.Course;
 import Model.UserGroup;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
@@ -215,34 +217,42 @@ public class CoursesBean implements Serializable {
                 try {
                     c.setCode(code);
                 } catch (NullPointerException ex) {
+                    Logger.getLogger(AuthorizationBean.class.getName()).log(Level.INFO, ex.getMessage(), ex);
                 }
                 try {
                     c.setName(name);
                 } catch (NullPointerException ex) {
+                    Logger.getLogger(AuthorizationBean.class.getName()).log(Level.INFO, ex.getMessage(), ex);
                 }
                 try {
                     c.setDescription(description);
                 } catch (NullPointerException ex) {
+                    Logger.getLogger(AuthorizationBean.class.getName()).log(Level.INFO, ex.getMessage(), ex);
                 }
                 try {
                     c.setPriorKnowledge(splitText(requiredKnowledge));
                 } catch (NullPointerException ex) {
+                    Logger.getLogger(AuthorizationBean.class.getName()).log(Level.INFO, ex.getMessage(), ex);
                 }
                 try {
                     c.setCourseMaterials(cursusMaterial);
                 } catch (NullPointerException ex) {
+                    Logger.getLogger(AuthorizationBean.class.getName()).log(Level.INFO, ex.getMessage(), ex);
                 }
                 try {
                     c.setDurationInDays(Integer.parseInt(timeInDays));
                 } catch (NullPointerException ex) {
+                    Logger.getLogger(AuthorizationBean.class.getName()).log(Level.INFO, ex.getMessage(), ex);
                 }
                 try {
                     c.setCost(Double.parseDouble(cost));
                 } catch (NullPointerException ex) {
+                    Logger.getLogger(AuthorizationBean.class.getName()).log(Level.INFO, ex.getMessage(), ex);
                 }
                 try {
                     c.setKeyWords(splitText(keywords));
                 } catch (NullPointerException ex) {
+                    Logger.getLogger(AuthorizationBean.class.getName()).log(Level.INFO, ex.getMessage(), ex);
                 }
                 exist = true;
                 courseService.editCourse(c);
@@ -277,14 +287,14 @@ public class CoursesBean implements Serializable {
                     return false;
                 }
 
-                Course course = new Course(this.code, this.name);
-                course.setCost(nCost);
-                course.setCourseMaterials(cursusMaterial);
-                course.setDescription(description);
-                course.setDurationInDays(nTimeIndDays);
-                course.setPriorKnowledge(nRequiredKnowledge);
-                course.setKeyWords(nKeywords);
-                this.course = courseService.addCourse(course);
+                Course newCourse = new Course(this.code, this.name);
+                newCourse.setCost(nCost);
+                newCourse.setCourseMaterials(cursusMaterial);
+                newCourse.setDescription(description);
+                newCourse.setDurationInDays(nTimeIndDays);
+                newCourse.setPriorKnowledge(nRequiredKnowledge);
+                newCourse.setKeyWords(nKeywords);
+                this.course = courseService.addCourse(newCourse);
 
                 return true;
             } else {

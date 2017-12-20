@@ -153,18 +153,18 @@ CREATE TABLE IF NOT EXISTS `Lesson` (
 -- Dumping data for table db_test_infosupport.Lesson: ~159 rows (approximately)
 /*!40000 ALTER TABLE `Lesson` DISABLE KEYS */;
 INSERT INTO `Lesson` (`ID_Lesson`, `StartTime`, `EndTime`, `Location`, `ID_Course`,`Teacher_ID_User`) VALUES
-	(1, '2017-09-20', '2017-09-20', 'Venray', 1),
-	(2, '2017-10-02', '2017-10-03', 'utrecht', 1),
-	(3, '2017-10-09', '2017-10-10', 'utrecht', 1),
-	(4, '2017-10-17', '2017-10-18', 'utrecht', 2),
-	(5, '2017-09-27', '2017-09-28', 'Utrecht', 2),
-	(6, '2018-01-23', '2018-01-24', 'Veenendaal', 3),
-	(7, '2018-01-23', '2018-01-24', 'Veenendaal', 3),
-	(8, '2018-01-23', '2018-01-24', 'Veenendaal', 4),
-	(9, '2018-01-23', '2018-01-24', 'Veenendaal', 5),
-	(10, '2018-01-23', '2018-01-24', 'Veenendaal', 6),
-	(11, '2018-01-23', '2018-01-24', 'Veenendaal', 7),
-	(12, '2017-10-25', '2017-10-25', 'eindhoven', 8);
+	(1, '2017-09-20', '2017-09-20', 'Venray', 1,1),
+	(2, '2017-10-02', '2017-10-03', 'utrecht', 1,5),
+	(3, '2017-10-09', '2017-10-10', 'utrecht', 1,1),
+	(4, '2017-10-17', '2017-10-18', 'utrecht', 2,5),
+	(5, '2017-09-27', '2017-09-28', 'Utrecht', 2,1),
+	(6, '2018-01-23', '2018-01-24', 'Veenendaal', 3,5),
+	(7, '2018-01-23', '2018-01-24', 'Veenendaal', 3,1),
+	(8, '2018-01-23', '2018-01-24', 'Veenendaal', 4,5),
+	(9, '2018-01-23', '2018-01-24', 'Veenendaal', 5,1),
+	(10, '2018-01-23', '2018-01-24', 'Veenendaal', 6,5),
+	(11, '2018-01-23', '2018-01-24', 'Veenendaal', 7,1),
+	(12, '2017-10-25', '2017-10-25', 'eindhoven', 8,5);
 /*!40000 ALTER TABLE `Lesson` ENABLE KEYS */;
 
 -- Dumping structure for table db_test_infosupport.Lesson_Registration
