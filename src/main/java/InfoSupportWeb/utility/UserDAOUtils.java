@@ -127,10 +127,12 @@ public class UserDAOUtils implements IUserDAO {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         Object[] params = new Object[]{user.getName(), user.getSurname(), user.getUsername(), user.getPhoneNr(), user.getEmail(), user.getUserID()};
         try {
-            run.update(QUERY_UPDATE_USER, params);
-            return true;
-        } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, "Failed to edit lesson in DB - errorCode: " + ex.getErrorCode(), ex);
+            int inserts = run.update(QUERY_UPDATE_USER, params);
+            if(inserts == 0)
+                throw new Exception("No rows edited");
+            return true;            
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "Failed to edit lesson in DB - errorCode: " + ex.getMessage(), ex);
             return false;
         }
     }
