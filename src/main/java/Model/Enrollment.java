@@ -34,6 +34,22 @@ public class Enrollment {
     }
 
     /**
+     * Database representation of enrollment
+     *
+     * @param id
+     * @param lesson_id
+     * @param student_id
+     * @param signupTime
+     * @param status
+     * @param manager_id
+     * @param approvalTime
+     * @param comment
+     */
+    public Enrollment(long id, long lesson_id, long student_id, Calendar signupTime, int status, long manager_id, Calendar approvalTime, String comment) {
+        this.id = id;
+    }
+
+    /**
      * Approves this enrollment
      *
      * @param manager manager that accepts this enrollment
