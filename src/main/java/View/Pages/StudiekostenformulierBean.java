@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 import javax.faces.bean.ManagedBean;
@@ -48,6 +49,8 @@ public class StudiekostenformulierBean {
     public String category; // Categorie
     public String deprecaitionPeriod; // Afschrijvingsperiode
     public String manager; // Manager
+    
+    private List<String> functies;
 
     
     private String newFileName;
@@ -56,6 +59,7 @@ public class StudiekostenformulierBean {
     private final int fontSize;
     
     public StudiekostenformulierBean() {
+        functies = new ArrayList<>();
         newFileName = "Studiekostenformulier2";
         font = PDType1Font.HELVETICA;
         fontSize = 10;
