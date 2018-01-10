@@ -18,7 +18,6 @@ html {
 .footer-body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
-  padding-top: 2%;
   vertical-align: middle;
 }
 
@@ -98,8 +97,10 @@ html {
 {
     color: red;
 }
+
 .footer {
-  position: absolute;
+  position: relative;
+  display: inline-block;
   font-family: "proxima-nova","Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 16px;
   font-weight: 100;
@@ -136,12 +137,14 @@ address
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
 
-#content .container, #content .container-fluid {
+#content .container, #content .container-fluid 
+{
   padding: 0px 15px 0;
   background-color: #dfebf5;
 }
 
 .footer > .footer-container {
+  padding-top: 20px;
   padding-right: 10%;
   padding-left: 10%;
 }

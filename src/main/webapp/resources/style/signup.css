@@ -10,15 +10,21 @@ and open the template in the editor.
 
 /* table
 -------------------------------------------------- */
+.content
+{
+    width:100%;
+    margin:30px;
+}
+/*
 .container{
     
-}
+}*/
 
 .col-4{
-    float:left;
     width:40%;
+  display: inline-block;
 }
 .col-8{
-    float:left;
     width:40%;
+  display: inline-block;
 }

@@ -7,16 +7,17 @@ and open the template in the editor.
     Created on : 22-nov-2017, 15:48:03
     Author     : Jowelle
 */
-
 body
 {
     background-color: #dfebf5;
     margin-top: 80px;
-    margin-bottom: 250px;
+    margin-bottom: 0;
 }
+
 
 #content
 {
+    display: inline-block;
     font-family: "proxima-nova","Helvetica Neue",Helvetica,Arial,sans-serif !important;
     padding-top: 1% !important;
     padding-bottom: 4% !important;
@@ -29,23 +30,26 @@ body
     padding-bottom: 21% !important;
 }
 
+
 h1, h2, h3
 {
     font-weight: bold;
+    color: #0078c9 !important;
+}
+
+th
+{
+    color: #666666;
 }
 
 li
 {
     
 }
-.col-5
+.col-5 .col-6 .col-4 .col-8
 {
     background-color: #ffffff;
-}
-
-.col-6
-{
-    background-color: #ffffff;
+    display: inline-block;
 }
 
 .mt-3
@@ -76,4 +80,9 @@ li
 .move-listbox
 {
     position: absolute;
+}
+
+.defaultContent
+{
+    background-color: #dfebf5;
 }
