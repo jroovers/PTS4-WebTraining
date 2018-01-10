@@ -30,7 +30,6 @@ public class User {
      * @param password
      * @param phoneNr
      * @param email
-     * @param accesLevel
      */
     public User(long userID, String name, String surname, String username, String password, String phoneNr, String email) {
         this.userID = userID;
@@ -51,7 +50,6 @@ public class User {
      * @param password
      * @param phoneNr
      * @param email
-     * @param accesLevel
      */
     public User(String name, String surname, String username, String password, String phoneNr, String email) {
         this.name = name;
@@ -98,7 +96,6 @@ public class User {
      *
      * @param username
      * @param phoneNr
-     * @param accesLevel
      * @param email
      */
     public User(String username, String phoneNr, String email) {
