@@ -18,18 +18,54 @@
     <ui:define name="title">Inschrijvingsoverzicht</ui:define>
     <!-- Content -->
     <ui:define name="content">
+        <h:outputStylesheet library="style" name="signup.css" />
         <div class="container">
+            <div class="col-4">
+                <h2>Training</h2>
+                <hr/>
+                <h:form id = "userForm">
+                    <div>
+                        <p:outputLabel for="dt_courseselect" value="Kies een training voor een overzicht"/>
+                        <p:dataTable id="dt_courseselect"
+                                     var="course" 
+                                     value="#{trainingOverviewBean.courses}" 
+                                     filteredValue="#{trainingOverviewBean.filteredCourses}"
+                                     selectionMode="single" 
+                                     selection="#{trainingOverviewBean.selectedCourse}" 
+                                     rowKey="#{course.id}"
+                                     widgetVar="courseTable"
+                                     scrollable="true"
+                                     scrollHeight="200">
+                            <p:ajax event="rowSelect" update = "approval_table"/>
+                            <f:facet name="header">
+                                <p:outputPanel>
+                                    <h:outputText value="Zoeken: " />
+                                    <p:inputText id="globalFilter" onkeyup="PF('courseTable').filter()" style="width:200px" placeholder="Enter keyword"/>
+                                </p:outputPanel>
+                            </f:facet>
+
+                            <p:column filterBy="#{course.code}" filterStyle="display:none" filterMatchMode="contains">
+                                <h:outputText value="#{course.code}" />
+                            </p:column>
+
+                            <p:column filterBy="#{course.name}" filterStyle="display:none" filterMatchMode="contains">
+                                <h:outputText value="#{course.name}" />
+                            </p:column>
+                        </p:dataTable>
+                        <br/>
+                    </div>
+                </h:form>
+            </div>
             <div class="mt-3">
                 <h1>Inschrijvingsbeheer</h1>
                 <p>Op deze pagina staat een overzicht van alle inschrijvingen.</p>
                 <div id="courses" class="row">
                     <div class="col-12">
-                        <h:form>
+                        <h:form id = "approval_table">
                             <p:growl id="growl" showDetail="false" sticky="false" globalOnly="true"/>
                             <p:commandButton id="accept_request" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa  fa-check " value="Akkoord" action="#{approvalBean.onAcceptEnrollment()}"/>
                             <p:commandButton id="reject_request" widgetVar="edit_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-ban" value="Weigeren" update="growl" action="#{approvalBean.onRejectEnrollment()}"/>
                             <p:commandButton id="delete_request" widgetVar="delete_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-trash-o" value="Verwijderen" type="button" onclick="PF('deleteRequestConfirmation').show();" />
-
 
                             <p:dataTable id="dt_enrollment"
                                          var="enrollment" 
