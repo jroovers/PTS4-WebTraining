@@ -289,7 +289,7 @@ public class UserTest {
     @Test
     public void testToString() {
         //act     
-        String expShortString = "Frank, Frank";
+        String expShortString = "franken, Frank";
         String result = user.toString();        
         //assert
         assertEquals(expShortString, result);
