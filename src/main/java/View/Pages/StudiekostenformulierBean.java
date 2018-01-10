@@ -32,23 +32,23 @@ public class StudiekostenformulierBean {
     
    
     
-    public String nameEmployer; // Naam werknemer  
-    public Date dateService; // Datum in dienst 
-    public String function; // Functie
-    public String studyToFollow; // Te volgen studie
-    public Date startDate; // Startdatum
-    public Date endDate; // Einddatum
-    public String courseDays; // Cursusdagen
-    public String description; // Beschrijving
-    public String studyCostsToBeReimbursed; // Te vergoeden studiekosten
-    public String examinationFees; // Examengelden
-    public String transportationCosts; // Vervoerskosten
-    public String accommodationCosts; // Verblijfskosten
-    public String otherCosts; // Overige kosten
-    public String totalCosts; // Totaal excl. BTW
-    public String category; // Categorie
-    public String deprecaitionPeriod; // Afschrijvingsperiode
-    public String manager; // Manager
+    private String nameEmployer; // Naam werknemer  
+    private Date dateService; // Datum in dienst 
+    private String function; // Functie
+    private String studyToFollow; // Te volgen studie
+    private Date startDate; // Startdatum
+    private Date endDate; // Einddatum
+    private String courseDays; // Cursusdagen
+    private String description; // Beschrijving
+    private String studyCostsToBeReimbursed; // Te vergoeden studiekosten
+    private String examinationFees; // Examengelden
+    private String transportationCosts; // Vervoerskosten
+    private String accommodationCosts; // Verblijfskosten
+    private String otherCosts; // Overige kosten
+    private String totalCosts; // Totaal excl. BTW
+    private String category; // Categorie
+    private String deprecationPeriod; // Afschrijvingsperiode
+    private String manager; // Manager
     
     private List<String> functies;
 
@@ -93,7 +93,7 @@ public class StudiekostenformulierBean {
         addSmallText(0, totalCosts, 380, 215); // Totaal excl. BTW
         
         addSmallText(1, category, 77, 723); // Categorie
-        addSmallText(1, deprecaitionPeriod, 380, 631); // Afschrijvingsperiode
+        addSmallText(1, deprecationPeriod, 380, 631); // Afschrijvingsperiode
         addSmallText(1, manager, 380, 567); // Manager
     }
 
@@ -286,12 +286,12 @@ public class StudiekostenformulierBean {
         this.category = category;
     }
 
-    public String getDeprecaitionPeriod() {
-        return deprecaitionPeriod;
+    public String getDeprecationPeriod() {
+        return deprecationPeriod;
     }
 
-    public void setDeprecaitionPeriod(String deprecaitionPeriod) {
-        this.deprecaitionPeriod = deprecaitionPeriod;
+    public void setDeprecationPeriod(String deprecaitionPeriod) {
+        this.deprecationPeriod = deprecaitionPeriod;
     }
 
     public String getManager() {
