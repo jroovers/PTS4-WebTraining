@@ -100,5 +100,14 @@ public class ApprovalBean {
     public void setSelectedCourse(Course selectedCourse) {
         this.selectedCourse = selectedCourse;
     }
-
+    
+    public void acceptEnrollment() {
+        //TODO: DAO laag aanroepen om Enrollment te accepteren
+        
+    }
+    
+    public void declineEnrollment() {
+        //TODO: DAO laag aanroepen om Enrollment te weigeren
+        
+    }
 }

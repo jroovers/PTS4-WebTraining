@@ -104,6 +104,8 @@
                                 <!-- -->
                                 <p:column headerText="Accordatie" filterBy="#{enrollment.status}" filterStyle="display:none" filterMatchMode="contains">
                                     <h:outputText value="#{enrollment.status}" />
+                                    <p:commandButton id="acceptBtn" value="Accepteren" style="float:right; margin-top: 10px; margin-bottom: 20px;"/>
+                                    <p:commandButton id="declineBtn" value="Weigeren" style="float:right; margin-top: 10px; margin-bottom: 20px;"/>
                                 </p:column>
                             </p:dataTable>
 
