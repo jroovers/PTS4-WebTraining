@@ -37,10 +37,14 @@ public class LessonDAOUtils implements ILessonDAO {
     static final String QUERY_SIGNUP_USER_TO_LESSON = "INSERT INTO Lesson_Registration(ID_Lesson, ID_User) VALUES (?,?);";
     static final String QUERY_SIGNUP_TEACHER_TO_LESSON = "INSERT INTO Lesson_Teacher(ID_Lesson,ID_User) VALUES (?,?);";
 
+    static final String QUERY_ENROLL_USER_TO_LESSON = "INSERT INTO Enrollment(ID_Lesson, ID_Student, SignupTime) VALUES (?,?, NOW());";
+    static final String QUERY_GET_LESSONS_BY_ENROLLED_EMAIL = "SELECT DISTINCT(u.ID_User), l.*, c.*, e.ID_Lesson from User u, Course c, Enrollment e, Lesson l WHERE u.ID_User = e.ID_Student AND e.ID_Lesson = l.ID_Lesson and c.ID_Course = l.ID_Course AND u.Email = ?";
+    static final String QUERY_GET_ENROLLED_USERS_BY_LESSON = "SELECT U.Name, U.Surname, U.Email, U.PhoneNr from User U, Enrollment E WHERE E.ID_Student = U.ID_User AND E.ID_Lesson = ?;";
+
     //Error handling
     private static final String SQLERROR = "SQL Exception code ";
     private final static Logger LOGGER = Logger.getLogger(LessonDAOUtils.class.getName());
-    
+
     @Override
     public List<Lesson> getLessons() {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
@@ -76,7 +80,7 @@ public class LessonDAOUtils implements ILessonDAO {
             }
         } catch (SQLException ex_sql) {
             LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
-            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);            
+            LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
         }
         return lessons;
     }
@@ -85,13 +89,13 @@ public class LessonDAOUtils implements ILessonDAO {
     public Lesson addLesson(Lesson lesson) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
-        Object[] params = new Object[]{lesson.getStartTime().getTime(), lesson.getEndTime().getTime(), lesson.getLocation(), lesson.getCourse().getId(),lesson.getTeacher().getUserID()};
+        Object[] params = new Object[]{lesson.getStartTime().getTime(), lesson.getEndTime().getTime(), lesson.getLocation(), lesson.getCourse().getId(), lesson.getTeacher().getUserID()};
         try {
             Object[] result = run.insert(QUERY_INSERT_LESSON, rsh, params);
             long id = Long.parseLong(result[0].toString());
 
             lesson.setId(id);
-            
+
             LOGGER.log(Level.INFO, "SQL Succes, output: ", id);
             return lesson;
         } catch (SQLException ex) {
@@ -208,7 +212,7 @@ public class LessonDAOUtils implements ILessonDAO {
         }
         return lessons;
     }
-    
+
     @Override
     public List<Lesson> getLessonsByUserEmail(String email) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
@@ -216,7 +220,7 @@ public class LessonDAOUtils implements ILessonDAO {
         List<Lesson> lessons = new ArrayList<>();
         Object[] params = new Object[]{email};
         try {
-            List<Object[]> result = run.query(QUERY_GET_LESSONS_BY_EMAIL, alh, params);
+            List<Object[]> result = run.query(QUERY_GET_LESSONS_BY_ENROLLED_EMAIL, alh, params);
             for (Object[] o : result) {
 
                 Calendar beginTime = new GregorianCalendar();
@@ -257,7 +261,7 @@ public class LessonDAOUtils implements ILessonDAO {
         List<User> users = new ArrayList<>();
         Object[] params = new Object[]{lesson_id};
         try {
-            List<Object[]> result = run.query(QUERY_GET_USERS_BY_LESSON, alh, params);
+            List<Object[]> result = run.query(QUERY_GET_ENROLLED_USERS_BY_LESSON, alh, params);
             for (Object[] o : result) {
 
                 String name = o[0].toString();
@@ -284,7 +288,7 @@ public class LessonDAOUtils implements ILessonDAO {
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
         Object[] params = new Object[]{lesson_ID, user_ID};
         try {
-            run.insert(QUERY_SIGNUP_USER_TO_LESSON, rsh, params);
+            run.insert(QUERY_ENROLL_USER_TO_LESSON, rsh, params);
 
             LOGGER.log(Level.INFO, "SQL Succes");
             return 1;

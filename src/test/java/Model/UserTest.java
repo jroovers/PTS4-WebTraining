@@ -38,10 +38,10 @@ public class UserTest {
     public void testGetUserID() {
         //arange
         long expID = 1;
-        
+
         //act
         long result = user.getUserID();
-        
+
         //assert
         assertEquals(expID, result);
     }
@@ -53,11 +53,11 @@ public class UserTest {
     public void testSetUserID() {
         //arange
         long newID = 2;
-        
+
         //act
         user.setUserID(newID);
         long result = user.getUserID();
-        
+
         //assert
         assertEquals(newID, result);
     }
@@ -69,10 +69,10 @@ public class UserTest {
     public void testGetAccesLVL() {
         //arange
         long expLVL = 2;
-        
+
         //act
         boolean result = user.getAccessLevels().contains(expLVL);
-        
+
         //assert
         assertEquals(true, result);
     }
@@ -84,11 +84,11 @@ public class UserTest {
     public void testSetAccesLVL() {
         //arange
         long newLVL = 1;
-        
+
         //act
         user.addAccessLevel(newLVL);
         boolean result = user.getAccessLevels().contains(newLVL);
-        
+
         //assert
         assertEquals(true, result);
     }
@@ -120,10 +120,10 @@ public class UserTest {
     public void testGetName() {
         //arange
         String expName = "Frank";
-        
+
         //act
         String result = user.getName();
-        
+
         //assert
         assertEquals(expName, result);
     }
@@ -135,11 +135,11 @@ public class UserTest {
     public void testSetName() {
         //arange
         String newName = "Henk";
-        
+
         //act
         user.setName(newName);
         String result = user.getName();
-        
+
         //assert
         assertEquals(newName, result);
     }
@@ -151,11 +151,11 @@ public class UserTest {
     public void testGetSurname() {
         //arange
         String expSurname = "franken";
-        
+
         //act
         user.setSurname(expSurname);
         String result = user.getSurname();
-        
+
         //assert
         assertEquals(expSurname, result);
     }
@@ -167,11 +167,11 @@ public class UserTest {
     public void testSetSurname() {
         //arange
         String newSurname = "Henken";
-        
+
         //act
         user.setSurname(newSurname);
         String result = user.getSurname();
-        
+
         //assert
         assertEquals(newSurname, result);
     }
@@ -183,10 +183,10 @@ public class UserTest {
     public void testGetUserName() {
         //arrange
         String expResult = "Frankster";
-        
+
         //act
         String result = user.getUsername();
-        
+
         //assert
         assertEquals(expResult, result);
     }
@@ -199,7 +199,7 @@ public class UserTest {
         //arrange
         String location;
         String expLocation = "InfoSupportStaff2";
-        
+
         //act
         user.setUsername(expLocation);
         location = user.getUsername();
@@ -215,10 +215,10 @@ public class UserTest {
     public void testPassword() {
         //arrange
         String expResult = "frankisthebest";
-        
+
         //act
         String result = user.getPassword();
-        
+
         //assert
         assertEquals(expResult, result);
     }
@@ -247,10 +247,10 @@ public class UserTest {
     public void testGetPhoneNR() {
         //arrange
         String expPhoneNR = "001234";
-        
+
         //act        
         String result = user.getPhoneNr();
-        
+
         //assert
         assertEquals(expPhoneNR, result);
     }
@@ -262,11 +262,11 @@ public class UserTest {
     public void testSetPhoneNR() {
         //arrange
         String newPhoneNr = "123400";
-        
+
         //act
         user.setPhoneNr(newPhoneNr);
         String result = user.getPhoneNr();
-        
+
         //assert
         assertEquals(newPhoneNr, result);
     }
@@ -278,10 +278,10 @@ public class UserTest {
     public void testGetEmail() {
         //arrange
         String expEmail = "Frankster@TheG.com";
-        
+
         //act
         String result = user.getEmail();
-        
+
         //assert
         assertEquals(expEmail, result);
     }
@@ -293,11 +293,11 @@ public class UserTest {
     public void testSetEmail() {
         //arrange
         String newEmail = "Frankster@TheG.com";
-        
+
         //act
         user.setEmail(newEmail);
         String result = user.getEmail();
-        
+
         //assert
         assertEquals(newEmail, result);
     }
@@ -310,7 +310,7 @@ public class UserTest {
         //act     
         String expShortString = "Frank franken - Frankster@TheG.com";
         String result = user.getShortString();
-        
+
         //assert
         assertEquals(expShortString, result);
     }
@@ -320,7 +320,7 @@ public class UserTest {
         //act     
         String expShortString = "franken, Frank";
         String result = user.toString();
-        
+
         //assert
         assertEquals(expShortString, result);
     }
