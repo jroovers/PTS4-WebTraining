@@ -41,6 +41,9 @@
                             <h:link styleClass="nav-link" rendered="#{sessionBean.admin}" outcome="/appmanagement/manageaccounts" value="Accountbeheer"/>
                         </li> 
                         <li class="nav-item">
+                            <h:link styleClass="nav-link" outcome="/appmanagement/studiekostenformulier" value="Studiekostenformulier"/>
+                        </li> 
+                        <li class="nav-item">
                             <h:link styleClass="nav-link" rendered="#{!sessionBean.loggedIn}" outcome="/external/authorization">
                                 <span class="glyphicon glyphicon-log-in"></span> INLOGGEN</h:link>
                         </li>
