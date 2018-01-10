@@ -35,7 +35,11 @@ public class StudiekostenformulierBean {
     }
     
     
-    
+    /**
+     * Creates a PDF with dummie information. This method can be used to get the
+     * X and Y of some specific textboxes.
+     * @throws IOException 
+     */
     public void DummieCreate() throws IOException {
 
         // Gegevens van de werknemer
@@ -86,5 +90,9 @@ public class StudiekostenformulierBean {
             document.save(newFileName);
             document.close();
         }
+    }
+    
+    public void addBigText(int pageIndex, String text, int xPos, int yPos) throws IOException {
+        //TODO: big text blocks.
     }
 }
