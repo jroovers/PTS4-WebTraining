@@ -86,7 +86,7 @@ public class LessonDAOUtils implements ILessonDAO {
     public Lesson addLesson(Lesson lesson) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
-        Object[] params = new Object[]{lesson.getStartTime().getTime(), lesson.getEndTime().getTime(), lesson.getLocation(), lesson.getCourse().getId(), lesson.getTeacher().getUserID()};
+        Object[] params = new Object[]{lesson.getStartTime().getTime(), lesson.getEndTime().getTime(), lesson.getLocation(), lesson.getCourse().getId(), lesson.getTeacher().getId()};
         try {
             Object[] result = run.insert(QUERY_INSERT_LESSON, rsh, params);
             long id = Long.parseLong(result[0].toString());

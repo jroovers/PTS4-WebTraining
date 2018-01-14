@@ -55,7 +55,7 @@ public class UserServiceTest {
         
         //Cleanup DB
         User user = userService.getUser("Bert123");
-        userService.removeUser(user.getUserID());
+        userService.removeUser(user.getId());
         
         //Unhappy flow testing
         boolean failResult = userService.addUser(failUser);
@@ -100,7 +100,7 @@ public class UserServiceTest {
         boolean result = userService.addUser(user1);
         List<User> users = userService.getUsers();
         User user = userService.getUser("Bert123");
-        userService.removeUser(user.getUserID());
+        userService.removeUser(user.getId());
         List<User> afterUsers = userService.getUsers();
         
         //Asserts

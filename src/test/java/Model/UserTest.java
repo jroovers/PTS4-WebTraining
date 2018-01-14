@@ -40,7 +40,7 @@ public class UserTest {
         long expID = 1;
 
         //act
-        long result = user.getUserID();
+        long result = user.getId();
 
         //assert
         assertEquals(expID, result);
@@ -55,8 +55,8 @@ public class UserTest {
         long newID = 2;
 
         //act
-        user.setUserID(newID);
-        long result = user.getUserID();
+        user.setId(newID);
+        long result = user.getId();
 
         //assert
         assertEquals(newID, result);

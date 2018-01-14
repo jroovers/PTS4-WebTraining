@@ -40,7 +40,7 @@ public class EnrollmentDAOUtilsImpl implements IEnrollmentDAO {
     public Enrollment addEnrollment(Enrollment e) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
-        Object[] params = new Object[]{e.getLesson().getId(), e.getStudent().getUserID()};
+        Object[] params = new Object[]{e.getLesson().getId(), e.getStudent().getId()};
         try {
             Object[] result = run.insert(QUERY_ENROLL_USER_TO_LESSON, rsh, params);
             long id = Long.parseLong(result[0].toString());

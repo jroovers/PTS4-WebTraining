@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  */
 public class User {
 
-    private long userID;
+    private long Id;
     private String name;
     private String surname;
     private String username;
@@ -19,6 +19,12 @@ public class User {
     private String phoneNr;
     private String email;
     private Set<Long> accessLevels = new HashSet<>();
+
+    /**
+     * Default constructor
+     */
+    public User() {
+    }
 
     /**
      * Constructor for pulling users from database
@@ -32,7 +38,7 @@ public class User {
      * @param email
      */
     public User(long userID, String name, String surname, String username, String password, String phoneNr, String email) {
-        this.userID = userID;
+        this.Id = userID;
         this.name = name;
         this.surname = surname;
         this.username = username;
@@ -84,7 +90,7 @@ public class User {
      * @param email
      */
     public User(long id, String name, String surname, String phoneNr, String email) {
-        this.userID = id;
+        this.Id = id;
         this.name = name;
         this.surname = surname;
         this.phoneNr = phoneNr;
@@ -115,7 +121,7 @@ public class User {
      * @param email
      */
     public User(Long userID, String name, String surname, String username, String phoneNr, String email) {
-        this.userID = userID;
+        this.Id = userID;
         this.name = name;
         this.surname = surname;
         this.username = username;
@@ -130,17 +136,17 @@ public class User {
     public void setAccessLevels(Set<Long> accessLevels) {
         this.accessLevels = accessLevels;
     }
-    
+
     public void addAccessLevel(long accessLevel) {
         this.accessLevels.add(accessLevel);
     }
 
-    public long getUserID() {
-        return userID;
+    public long getId() {
+        return Id;
     }
 
-    public void setUserID(long userID) {
-        this.userID = userID;
+    public void setId(long Id) {
+        this.Id = Id;
     }
 
     public String getUsername() {
