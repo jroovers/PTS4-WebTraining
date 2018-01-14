@@ -10,7 +10,7 @@ import java.util.Objects;
  */
 public class Enrollment {
 
-    private static final String illegalStatusMessage = "Status while instantiating new Enrollment class was not 0, 1 or 2";
+    private static final String ILLEGALSTATUSMESSAGE_STRING = "Status while instantiating new Enrollment class was not 0, 1 or 2";
 
     private long id;
     private Lesson lesson;
@@ -24,6 +24,13 @@ public class Enrollment {
     private String comment;
 
     /**
+     * Default constructor
+     */
+    public Enrollment() {
+
+    }
+
+    /**
      * Creates a new enrollment object with status 'awaiting approval'
      *
      * @param l lesson student enrolled to
@@ -32,46 +39,8 @@ public class Enrollment {
     public Enrollment(Lesson l, User s) {
         this.lesson = l;
         this.student = s;
-        this.signupTime = new GregorianCalendar();
         this.accepted = false;
         this.rejected = false;
-    }
-
-    /**
-     * Database representation of enrollment. Constructor takes all non-null
-     * fields.
-     *
-     * @param id
-     * @param lesson_id
-     * @param student_id
-     * @param signupTime
-     * @param status
-     */
-    public Enrollment(long id, long lesson_id, long student_id, Calendar signupTime, int status) {
-        this.id = id;
-        Lesson l = new Lesson();
-        l.setId(lesson_id);
-        this.lesson = l;
-        User s = new User();
-        s.setId(student_id);
-        this.student = s;
-
-        switch (status) {
-            case 0:
-                this.accepted = false;
-                this.rejected = false;
-                break;
-            case 1:
-                this.accepted = true;
-                this.rejected = false;
-                break;
-            case 2:
-                this.accepted = false;
-                this.rejected = true;
-                break;
-            default:
-                throw new IllegalArgumentException(illegalStatusMessage);
-        }
     }
 
     /**
@@ -107,6 +76,25 @@ public class Enrollment {
             return "afgewezen";
         } else {
             return "in afwachting";
+        }
+    }
+
+    public void setStatus(int status) {
+        switch (status) {
+            case 0:
+                this.accepted = false;
+                this.rejected = false;
+                break;
+            case 1:
+                this.accepted = true;
+                this.rejected = false;
+                break;
+            case 2:
+                this.accepted = false;
+                this.rejected = true;
+                break;
+            default:
+                throw new IllegalArgumentException(ILLEGALSTATUSMESSAGE_STRING);
         }
     }
 

@@ -86,20 +86,20 @@
                                 </f:facet>
                                 <p:column headerText="Inschrijfdatum" filterBy="#{enrollment.signupTime}" filterStyle="display:none" filterMatchMode="contains">
                                     <h:outputFormat value="{0, date, yyyy-MM-dd}">
-                                        <f:param value="#{lesson.signupTime.time}" />
+                                        <f:param value="#{enrollment.signupTime.time}" />
                                     </h:outputFormat>
                                 </p:column>
                                 <!-- -->
-                                <p:column headerText="Medewerker" filterBy="#{enrollment.student.toString}" filterStyle="display:none" filterMatchMode="contains">
-                                    <h:outputText value="#{enrollment.student.toString}" />
+                                <p:column headerText="Medewerker" filterBy="#{enrollment.student.fullName}" filterStyle="display:none" filterMatchMode="contains">
+                                    <h:outputText value="#{enrollment.student.fullName}" />
                                 </p:column>
                                 <!-- -->
-                                <p:column headerText="Training" filterBy="#{lesson.course.name}" filterStyle="display:none" filterMatchMode="contains">
-                                    <h:outputText value="#{lesson.course.name}" />
+                                <p:column headerText="Training" filterBy="#{enrollment.lesson.course.name}" filterStyle="display:none" filterMatchMode="contains">
+                                    <h:outputText value="#{enrollment.lesson.course.name}" />
                                 </p:column>
                                 <!-- -->
-                                <p:column headerText="Manager" filterBy="#{enrollment.manager.name}" filterStyle="display:none" filterMatchMode="contains">
-                                    <h:outputText value="#{enrollment.manager.name}" />
+                                <p:column headerText="Manager" filterBy="#{enrollment.manager.fullName}" filterStyle="display:none" filterMatchMode="contains">
+                                    <h:outputText value="#{enrollment.manager.fullName}" />
                                 </p:column>
                                 <!-- -->
                                 <p:column headerText="Accordatie" filterBy="#{enrollment.status}" filterStyle="display:none" filterMatchMode="contains">

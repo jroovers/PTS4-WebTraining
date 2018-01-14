@@ -34,9 +34,10 @@ public interface IEnrollmentDAO {
      * Gets all enrollments on a certain course. This means all the enrollments
      * into all lessons of that course.
      *
+     * @param id course id to filter by
      * @return list of all enrollsments with a lesson of given course
      */
-    public List<Enrollment> getAllEnrollmentsByCourseID();
+    public List<Enrollment> getAllEnrollmentsByCourseID(long id);
 
     /**
      * Gets all the enrollments in the database with the given status.

@@ -2,8 +2,6 @@ package Model;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -199,6 +197,10 @@ public class User {
 
     public String getShortString() {
         return this.name + " " + this.surname + " - " + this.email;
+    }
+    
+    public String getFullName(){
+        return surname + ", " + name;
     }
 
     @Override

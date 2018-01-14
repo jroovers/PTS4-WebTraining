@@ -1,10 +1,12 @@
 package View.Pages;
 
+import Controller.EnrollmentService;
 import Model.Course;
 import Model.Enrollment;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 
 /**
  *
@@ -13,6 +15,9 @@ import javax.enterprise.context.RequestScoped;
 @Named(value = "approvalBean")
 @RequestScoped
 public class ApprovalBean {
+
+    @Inject
+    private EnrollmentService enrollmentService;
 
     private Enrollment selectedEnrollment;
     private List<Enrollment> allEnrollments;
@@ -62,6 +67,7 @@ public class ApprovalBean {
     }
 
     public List<Enrollment> getAllEnrollments() {
+        allEnrollments = enrollmentService.getAllEnrollments();
         return allEnrollments;
     }
 
@@ -100,14 +106,14 @@ public class ApprovalBean {
     public void setSelectedCourse(Course selectedCourse) {
         this.selectedCourse = selectedCourse;
     }
-    
+
     public void acceptEnrollment() {
         //TODO: DAO laag aanroepen om Enrollment te accepteren
-        
+
     }
-    
+
     public void declineEnrollment() {
         //TODO: DAO laag aanroepen om Enrollment te weigeren
-        
+
     }
 }
