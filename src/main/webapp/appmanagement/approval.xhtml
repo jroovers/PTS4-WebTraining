@@ -104,18 +104,16 @@
                                 <!-- -->
                                 <p:column headerText="Accordatie" filterBy="#{enrollment.status}" filterStyle="display:none" filterMatchMode="contains">
                                     <h:outputText value="#{enrollment.status}" />
-                                    <p:commandButton id="acceptBtn" value="Accepteren" style="float:right; margin-top: 10px; margin-bottom: 20px;"/>
-                                    <p:commandButton id="declineBtn" value="Weigeren" style="float:right; margin-top: 10px; margin-bottom: 20px;"/>
                                 </p:column>
                             </p:dataTable>
 
 
                             <p:dialog header="Waarschuwing" widgetVar="deleteRequestConfirmation" modal="true" minHeight="200" minWidth="200" closeOnEscape="true">
-                                <h:outputText value="Weet je zeker dat je deze inschrijving wilt verwijderen?" />
-                                <h:outputText value="Normaal gesproken wordt een inschrijving alleen geaccepteerd of geweigerd!"/>
+                                <h:outputText value="Weet je zeker dat je deze inschrijving wilt verwijderen? " />
+                                <h:outputText value="Normaal gesproken wordt een inschrijving alleen geaccepteerd of geweigerd! "/>
                                 <hr/>
                                 <p:commandButton id="confirmdelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Verwijderen" icon="fa fa-trash-o" action="#{approvalBean.onDeleteEnrollment()}"/>
-                                <p:commandButton id="canceldelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nee toch niet" type="button" onclick="PF('deleteCourseConfirmation').hide();" icon="fa fa-times" />
+                                <p:commandButton id="canceldelete" styleClass="mb-2 mr-sm-2 mb-sm-0" value="Nee toch niet" type="button" onclick="PF('deleteRequestConfirmation').hide();" icon="fa fa-times" />
                             </p:dialog>
                         </h:form>
                     </div>
