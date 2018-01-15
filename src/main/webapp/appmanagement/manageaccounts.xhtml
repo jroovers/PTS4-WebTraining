@@ -23,7 +23,7 @@
 
                 <p:dataTable id="userDataTable" var="user" value="#{manageAccountBean.users}" 
                              editable="true" editMode="cell" 
-                             widgetVar="cellUsers" rowKey="#{user.userID}" scrollable="true" scrollHeight="300">
+                             widgetVar="cellUsers" rowKey="#{user.id}" scrollable="true" scrollHeight="300">
                     <p:ajax event="rowSelect"/>                 
                     <f:facet name="header">
                         Aanpassen door te klikken
@@ -31,7 +31,7 @@
                     <p:ajax event="cellEdit" listener="#{manageAccountBean.onCellEdit}" update=":form:msgs" />
                     <p:column headerText="ID" style="width:50px">
                         <p:column>
-                            <h:outputText value="#{user.userID}" />
+                            <h:outputText value="#{user.id}" />
                         </p:column>
                     </p:column>
 

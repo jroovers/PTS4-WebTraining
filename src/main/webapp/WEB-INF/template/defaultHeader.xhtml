@@ -40,7 +40,10 @@
                         <li class="nav-item">
                             <h:link styleClass="nav-link" rendered="#{sessionBean.admin}" outcome="/appmanagement/manageaccounts" value="Accountbeheer"/>
                         </li> 
-                        <li class="nav-item nav-log">
+                        <li class="nav-item">
+                            <h:link styleClass="nav-link" outcome="/appmanagement/studiekostenformulier" value="Studiekostenformulier"/>
+                        </li> 
+                        <li class="nav-item">
                             <h:link styleClass="nav-link" rendered="#{!sessionBean.loggedIn}" outcome="/external/authorization">
                                 <span class="fa fa-sign-in"></span> INLOGGEN</h:link>
                         </li>

@@ -54,7 +54,7 @@ public class LessonServiceTest {
         l2 = new Lesson(c1);
         u1 = new User("Frank", "franken", "001234", "Frankster@TheG.com");
         u2 = new User("Bert", "bertus", "004321", "BertusThebertustest@banana.com");
-        u2.setUserID(1);
+        u2.setId(1);
 
         lessonService = new LessonService();
         location = "eindhoven";
@@ -140,9 +140,9 @@ public class LessonServiceTest {
     @Test
     public void testGetLessonsAndRegistrationsByTeacher() throws Exception {
         Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "getLessonsAndRegistrationsByTeacher: ");
-        u1.setUserID(1);
+        u1.setId(1);
 
-        List<Lesson> result = lessonService.GetLessonsAndRegistrationsByTeacher(u1.getUserID());
+        List<Lesson> result = lessonService.GetLessonsAndRegistrationsByTeacher(u1.getId());
         assertTrue(!result.isEmpty());
     }
 
@@ -156,7 +156,7 @@ public class LessonServiceTest {
     @Test
     public void testSingUpUser() {
         Logger.getLogger(LessonServiceTest.class.getName()).log(Level.INFO, "signUpUser: ");
-        long result = lessonService.signUpUser(l1.getId(), u1.getUserID());
+        long result = lessonService.signUpUser(l1.getId(), u1.getId());
         assertNotEquals(null, result);
     }
 

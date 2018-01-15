@@ -100,10 +100,6 @@ public class UserGroupServiceTest {
 
         //Assert
         assertNotNull(userGroups.size());
-
-        //Testing unhappy flow
-//        List<UserGroup> failUserGroups = us.getUserGroupsFromCourse(failCourse);
-//        assertEquals(0, failUserGroups.size());
     }
 
     /**
@@ -118,10 +114,6 @@ public class UserGroupServiceTest {
         //Assert
         List<UserGroup> userGroups = us.getUserGroupsFromCourse(1L);
         assertNotNull(userGroups.size());
-
-        //Testing unhappy flow
-//        List<UserGroup> failUserGroups = us.getUserGroupsFromCourse(failCourse.getId());
-//        assertEquals(0, failUserGroups.size());
     }
 
     /**
@@ -160,10 +152,6 @@ public class UserGroupServiceTest {
 
         //Cleanup DB 
         us.removeUserGroupFromCourse(1L, 1L);
-
-        //Testing unhappy flow
-//        boolean failResult = us.removeUserGroupFromCourse(failCourse.getId(), failCourse.getId());
-//        assertEquals(false, failResult);
     }
 
 }
