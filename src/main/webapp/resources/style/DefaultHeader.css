@@ -36,9 +36,22 @@ and open the template in the editor.
     background-color: #363636 !important;
 }
 
+
 .nav-item
 {
     margin: 0 0 0 10px !important;
+    right: 0;
+}
+
+.nav-log
+{
+    width: 150px;    
+}
+
+.fa-sign-in
+{
+    width: 16px;
+    height: 16px;
 }
 
 a
@@ -49,11 +62,9 @@ a
     text-transform: uppercase;
 }
 
-
-
  .navbar-custom
  {
-     height: 15%;
+    height: 80px;
     background-color: #363636;
     min-height: 0 !important;
  }
@@ -68,15 +79,6 @@ a
     background-size: contain;
 }
 
-.navbar-left
-{
-    padding-left: 8%;
-}
-.navbar-right
-{
-    padding-right: 13%;
-}
-
 .navbar-link
 {
     color: #FFFFFF;
@@ -85,7 +87,15 @@ a
 .navbar
 {
     margin-bottom: 10px !important;
+    padding-right: 8% !important;
+    padding-left: 8% !important;
 }
+
+.fixed-top
+{
+    z-index: 1000 !important;
+}
+
 
 
 
