@@ -83,7 +83,12 @@ public class ApprovalBean implements Serializable {
      * @return
      */
     public String onDeleteEnrollment() {
-        return null;
+        deleteEnrollment();
+        this.courseEnrollments = enrollmentService.getAllEnrollmentsByCourseID(selectedCourse.getId());
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Verwijderd", ""));
+        return REDIRECT_FULL;
     }
 
     public Enrollment getSelectedEnrollment() {
@@ -152,10 +157,13 @@ public class ApprovalBean implements Serializable {
     }
 
     public void declineEnrollment() {
-        //TODO: DAO laag aanroepen om Enrollment te weigeren
         if (session.getUser() != null) {
             User manager = session.getUser();
             enrollmentService.rejectEnrollment(selectedEnrollment, manager, "");
         }
+    }
+
+    public void deleteEnrollment() {
+        enrollmentService.deleteEnrollment(selectedEnrollment);
     }
 }
