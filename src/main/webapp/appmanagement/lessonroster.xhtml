@@ -13,7 +13,7 @@
     <!-- Content -->
     <ui:define name="content">
         <h:outputStylesheet library="style" name="personalRoster.css" />
-        <div class="container">
+        <div class="container bordershadow">
             <div class="col-8">
            <h3 style="margin-left: 20px;" >Rooster</h3>
             <div class="calendar">
@@ -21,7 +21,7 @@
                     <p:growl id="messages" showDetail="true" />
                     <div class="iets" style = "margin-bottom: 15px">
                     <label for="email">Email address :</label>
-                    <p:inputText id="email" value="#{lessonRosterBean.email}" style="width: 30%" a:placeholder="Bijv. John@gmail.com" required="true" requiredMessage="Email moet eerst ingevuld worden"></p:inputText><br/>
+                    <p:inputText id="email" value="#{lessonRosterBean.email}"  a:placeholder="Bijv. John@gmail.com" required="true" requiredMessage="Email moet eerst ingevuld worden"></p:inputText><br/>
                     <p:commandButton value="Zoek Rooster" action="#{lessonRosterBean.onButtonClick()}" update="schedule"/>
                     </div>
                     <h:panelGrid columnClasses="value">

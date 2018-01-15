@@ -30,9 +30,15 @@ body
     padding-bottom: 21% !important;
 }
 
+.rooster-width
+{
+    width: 60%;   
+}
 
 h1, h2, h3
 {
+    padding-top: 20px;
+    padding-bottom: 20px;
     font-weight: bold;
     color: #0078c9 !important;
 }
@@ -85,4 +91,23 @@ li
 .defaultContent
 {
     background-color: #dfebf5;
+}
+
+.bordershadow
+{
+    box-shadow: 2px 2px 4px #ccc;
+}
+
+.aanmelding-padding
+{
+    padding-bottom: 10px;
+}
+
+.list-box
+{
+    margin-top: 10%;
+    padding: 20px 20px 20px 20px;
+    box-shadow: 2px 2px 4px #ccc;
+    height: 100%;
+    background-color: #ffffff;
 }
