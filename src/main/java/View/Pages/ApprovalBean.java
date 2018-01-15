@@ -1,9 +1,13 @@
 package View.Pages;
 
+import Controller.CourseService;
 import Controller.EnrollmentService;
 import Model.Course;
 import Model.Enrollment;
+import Model.User;
+import View.Session.SessionBean;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -17,7 +21,11 @@ import javax.inject.Inject;
 public class ApprovalBean {
 
     @Inject
+    private CourseService courseService;
+    @Inject
     private EnrollmentService enrollmentService;
+    @Inject
+    private SessionBean session;
 
     private Enrollment selectedEnrollment;
     private List<Enrollment> allEnrollments;
@@ -25,11 +33,14 @@ public class ApprovalBean {
     private Course selectedCourse;
     private List<Course> courses;
     private List<Course> filteredCourses;
+    private List<Enrollment> courseEnrollments;
 
     /**
      * Creates a new instance of ApprovalBean
      */
-    public ApprovalBean() {
+    @PostConstruct
+    public void init() {
+        courses = courseService.getAllCourses();
     }
 
     /**
@@ -38,7 +49,8 @@ public class ApprovalBean {
      * @return
      */
     public String onAcceptEnrollment() {
-        return null;
+        acceptEnrollment();
+        return "approval";
     }
 
     /**
@@ -47,7 +59,8 @@ public class ApprovalBean {
      * @return
      */
     public String onRejectEnrollment() {
-        return null;
+        declineEnrollment();
+        return "approval";
     }
 
     /**
@@ -105,15 +118,29 @@ public class ApprovalBean {
 
     public void setSelectedCourse(Course selectedCourse) {
         this.selectedCourse = selectedCourse;
+        setCourseEnrollments(enrollmentService.getAllEnrollmentsByCourseID(selectedCourse.getId()));
+    }
+
+    public List<Enrollment> getCourseEnrollments() {
+        return courseEnrollments;
+    }
+
+    public void setCourseEnrollments(List<Enrollment> courseEnrollments) {
+        this.courseEnrollments = courseEnrollments;
     }
 
     public void acceptEnrollment() {
-        //TODO: DAO laag aanroepen om Enrollment te accepteren
-
+        if (session.getUser() != null) {
+            User manager = session.getUser();
+            enrollmentService.approveEnrollment(selectedEnrollment, manager);
+        }
     }
 
     public void declineEnrollment() {
         //TODO: DAO laag aanroepen om Enrollment te weigeren
-
+        if (session.getUser() != null) {
+            User manager = session.getUser();
+            enrollmentService.rejectEnrollment(selectedEnrollment, manager, "");
+        }
     }
 }
