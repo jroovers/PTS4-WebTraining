@@ -16,6 +16,196 @@
     <ui:define name="content">
         <div class="container">
             Hallo dit is een studiekostenformulier.
+            <h:form>
+                <p:panelGrid>
+                    <p:row>
+                        <p:column style="width:20%">Naam Werknemer</p:column>
+                        <p:column style="width:50%"><p:inputText id="naamWerknemer" value="#{studiekostenformulier.nameEmployee}" ></p:inputText></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>Datum In Dienst</p:column>
+                        <p:column><p:calendar id="datumInDienst" value="#{studiekostenformulier.dateService}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>Functie</p:column>
+                        <p:column>
+                            <p:selectOneMenu id="functie" value="#{studiekostenformulier.function}" style="width:125px">
+                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                <f:selectItems value="#{studiekostenformulier.functions}" />
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>Te volgen studie</p:column>
+                        <p:column><p:inputText id="teVolgenStudie" value="#{studiekostenformulier.studyToFollow}"></p:inputText></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            Instelling / Instituut
+                        </p:column>                        
+                        <p:column>
+                            <p:outputPanel id="instituutPanel" style="margin-bottom:10px">
+                                <p:selectOneRadio id="instituutRadio" value="#{studiekostenformulier.institute}" layout="custom">
+                                    <f:selectItem itemLabel="Anders" itemValue="Anders" />
+                                    <f:selectItem itemLabel="InfoSupport" itemValue="InfoSupport" />
+                                </p:selectOneRadio>
+                                <p>
+                                    <p:radioButton id="radioBtnInfoSupport" for="instituutRadio" itemIndex="1" />
+                                    <h:outputLabel for="radioBtnInfoSupport" value="InfoSupport" />
+                                </p>
+                                <p>
+                                    <p:radioButton id="radioBtnAnders" for="instituutRadio" itemIndex="0" />
+                                    <h:outputLabel for="radioBtnAnders" value="Anders" />
+                                    <p:inputText id="instituut" value="#{studiekostenformulier.institute}" ></p:inputText>
+                                </p>
+                            </p:outputPanel>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>Start Datum</p:column>
+                        <p:column>
+                            <p:calendar id="startDatum" value="#{studiekostenformulier.startDate}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>Eind Datum</p:column>
+                        <p:column>
+                            <p:calendar id="eindDatum" value="#{studiekostenformulier.endDate}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>Cursusdagen</p:column>
+                        <p:column><p:inputText id="cursusDagen" value="#{studiekostenformulier.courseDays}" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>Geef hier in het kort aan waarom je deze cursus wilt volgen</p:column>
+                        <p:column><p:inputTextarea rows="6" cols="33" value="#{studiekostenformulier.description}"/></p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>Te vergoeden studiekosten
+                            <p:inputNumber id="vergoedenStudiekosten1" placeholder="0,0€" value="#{studiekostenformulier.studyCostsToBeReimbursed1}"></p:inputNumber> * 80 %
+                        </p:column>
+                        <p:column>
+                            <p:inputNumber id="vergoedenStudiekosten2" placeholder="0,0€" value="#{studiekostenformulier.studyCostsToBeReimbursed2}"></p:inputNumber>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            Examengelden
+                        </p:column>
+                        <p:column>
+                            <p:inputNumber id="examengelden" placeholder="0,0€" value="#{studiekostenformulier.examinationFees}"></p:inputNumber>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            Vervoerskosten
+                        </p:column>
+                        <p:column>
+                            <p:inputNumber id="vervoerKosten" placeholder="0,0€" value="#{studiekostenformulier.transportationCosts}"></p:inputNumber>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            Verblijfskosten
+                        </p:column>
+                        <p:column>
+                            <p:inputNumber id="verblijfsKosten" placeholder="0,0€" value="#{studiekostenformulier.accommodationCosts}"></p:inputNumber>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            Overige Kosten
+                        </p:column>
+                        <p:column>
+                            <p:inputNumber id="overigeKosten" placeholder="0,0€" value="#{studiekostenformulier.otherCosts}"></p:inputNumber>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            Totaal excl btw
+                        </p:column>
+                        <p:column>
+                            <p:inputNumber id="totaalExclBtw" placeholder="0,0€" value="#{studiekostenformulier.totalCosts}"></p:inputNumber>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            Categorie
+                        </p:column>
+                        <p:column>
+                            <p:outputPanel id="categoriePanel">
+                                <p:selectOneRadio id="radioCategorie" value="#{studiekostenformulier.category}" layout="custom">
+                                    <f:selectItem itemLabel="Categorie 1" itemValue="Categorie 1" />
+                                    <f:selectItem itemLabel="Categorie 2" itemValue="Categorie 2" />
+                                </p:selectOneRadio>
+                                <p>
+
+                                    <p:radioButton id="radioBtnCategorie1" for="radioCategorie" itemIndex="0" />
+                                    <h:outputLabel for="radioBtnCategorie1" value="Categorie 1" style="font-weight:bold"/> <br />
+                                    Cursussen en studies die je volgt om achterstanden in kennis- c.q. vaardigheden in te lopen, met als doel goed ingezet
+                                    te kunnen worden (bij de klant). Jouw opleidingsplan is de basis hiervoor. Deze categorie geldt ook als je een achterstand hebt vanwege
+                                    langdurig niet bij blijven of niet volgen van studies.
+                                </p>
+                                <p>
+                                    <p:radioButton id="radioBtnCategorie2" for="radioCategorie" itemIndex="1" />
+                                    <h:outputLabel for="radioBtnCategorie2" value="Categorie 2" style="font-weight:bold" /> <br />
+                                    Alle overige cursussen en studies.
+                                    De studie investering voor studie 2 -categorie schrijven we in 12 maanden af.
+                                </p>
+
+                                <p>
+                                    <p:radioButton id="radioBtnCategorie3" for="radioCategorie" itemIndex="2" />
+                                    <h:outputLabel for="radioBtnCategorie3" value="Categorie 3" style="font-weight:bold" /> <br />
+                                    MBA's en andere zeer kostbare (>€8.000,-) studies.
+                                    De studie investering voor studie 3-categorie worden apart bezien (maatwerk).
+                                </p>
+                            </p:outputPanel>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            Afschrijvingsperiode
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="afschrijvingsperiode" value="#{studiekostenformulier.deprecationPeriod}" style="width:125px">
+                                <f:selectItem itemLabel="12" itemValue="12" />
+                                <f:selectItem itemLabel="18" itemValue="18" />
+                                <f:selectItem itemLabel="24" itemValue="24" />
+                                <f:selectItem itemLabel="36" itemValue="36" />
+                                <f:selectItem itemLabel="48" itemValue="48" />
+                            </p:selectOneMenu>
+                            maanden
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            Selecteer je manager
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="selecteerManager" value="#{studiekostenformulier.manager}" style="width:125px">
+                                <f:selectItem itemLabel="" itemValue="" />
+                                <f:selectItems value="#{studiekostenformulier.managers}" />
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:commandButton value="Download" ajax="false" action="#{studiekostenformulier.Create()}" icon="ui-icon-arrowthick-1-s">
+                                <p:fileDownload value="#{studiekostenformulier.file}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </h:form>
         </div>
     </ui:define>
 </ui:composition>
