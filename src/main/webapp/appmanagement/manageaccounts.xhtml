@@ -7,7 +7,7 @@
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="metadata">
         <f:metadata>
-            <!--<f:event type="preRenderView" listener="#{authorizationBean.checkIfAdmin}"/>-->
+            <f:event type="preRenderView" listener="#{authorizationBean.checkIfAdmin}"/>
         </f:metadata>
     </ui:define>
     <!-- Tabblad naam -->
@@ -70,7 +70,7 @@
                         </p:cellEditor>
                     </p:column>
 
-                    <p:column style="width:150px" >
+                    <p:column style="width:160px" >
                         <f:facet name="header">
                             <h:outputText value="Access"/>
                             <h:outputLink id="track" value="#">
