@@ -13,7 +13,6 @@ import Model.Enrollment;
 import Model.Lesson;
 import Model.User;
 import Persistance.Interfaces.IEnrollmentDAO;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -36,14 +35,14 @@ public class EnrollmentDAOUtilsImpl implements IEnrollmentDAO {
      * use the new fields.
      */
     static final String QUERY_LONGSELECT = "SELECt e.*, u1.name, u1.Surname, u2.name, u2.surname, c.Name FROM Enrollment e LEFT JOIN User u1 ON e.ID_Student = u1.ID_User LEFT JOIN User u2 ON e.ID_Manager = u2.ID_User JOIN Lesson l ON e.ID_Lesson = l.ID_Lesson JOIN Course c ON l.ID_Course = c.ID_Course";
-    static final String QUERY_GET_ENROLLMENT_BY_COURSE_ID = QUERY_LONGSELECT + " AND ID_Course = ?";
+    static final String QUERY_GET_ENROLLMENT_BY_COURSE_ID = QUERY_LONGSELECT + " AND c.ID_Course = ?";
     static final String QUERY_GET_ALL_ENROLLMENTS = QUERY_LONGSELECT;
     static final String QUERY_GET_ALL_ENROLLMENTS_BY_STATUS = QUERY_LONGSELECT + " AND e.Status = ?";
 
     static final String QUERY_ENROLL_USER_TO_LESSON = "INSERT INTO Enrollment(ID_Lesson, ID_Student, SignupTime) VALUES (?,?, NOW());";
     static final String QUERY_DELETE_ENROLLMENT = "DELETE FROM Enrollment WHERE ID_Enrollment = ?";
     static final String QUERY_APPROVE_ENROLLMENT = "UPDATE Enrollment SET Status = 1, ID_Manager = ? WHERE ID_Enrollment = ?";
-    static final String QUERY_RJECT_ENROLLMENT = "UPDATE Enrollment SET Status = 2, ID_Manager = ?, COMMENT = ? WHERE ID_Enrollment = ?";
+    static final String QUERY_REJECT_ENROLLMENT = "UPDATE Enrollment SET Status = 2, ID_Manager = ?, COMMENT = ? WHERE ID_Enrollment = ?";
     private static final String SQLERROR = "SQL Exception code ";
     private final static Logger LOGGER = Logger.getLogger(LessonDAOUtils.class.getName());
 
@@ -201,7 +200,7 @@ public class EnrollmentDAOUtilsImpl implements IEnrollmentDAO {
         Object[] params = new Object[]{manager.getId(), comment, e.getId()};
         boolean result = false;
         try {
-            int updatedRows = run.update(QUERY_RJECT_ENROLLMENT, params);
+            int updatedRows = run.update(QUERY_REJECT_ENROLLMENT, params);
             if (updatedRows == 1) {
                 result = true;
             }

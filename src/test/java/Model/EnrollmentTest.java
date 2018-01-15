@@ -6,13 +6,10 @@
 package Model;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -190,27 +187,8 @@ public class EnrollmentTest {
      * Test of hashCode method, of class Enrollment.
      */
     @Test
-    public void testHashCode() {
-        Logger.getLogger(EnrollmentTest.class.getName()).log(Level.INFO, "testGetComment and testSetComment");
-        //Enrollment e3 = new Enrollment(null, null);
-        //Enrollment e4 = new Enrollment(null, null);
-        //assertTrue(e3.equals(e4) && e4.equals(e3));
-        //assertTrue(e3.hashCode() == e4.hashCode());
+    public void testHashCodeAndEquals() {
+        Logger.getLogger(EnrollmentTest.class.getName()).log(Level.INFO, "testHashcode and testEquals");
         EqualsVerifier.forClass(Enrollment.class).usingGetClass().suppress(Warning.NONFINAL_FIELDS).verify();
     }
-
-//    /**
-//     * Test of equals method, of class Enrollment.
-//     */
-//    @Test
-//    public void testEquals() {
-//        System.out.println("equals");
-//        Object obj = null;
-//        Enrollment instance = null;
-//        boolean expResult = false;
-//        boolean result = instance.equals(obj);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
 }

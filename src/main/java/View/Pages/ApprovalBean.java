@@ -1,11 +1,18 @@
 package View.Pages;
 
+import Controller.CourseService;
 import Controller.EnrollmentService;
 import Model.Course;
 import Model.Enrollment;
+import Model.User;
+import View.Session.SessionBean;
+import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 /**
@@ -13,11 +20,16 @@ import javax.inject.Inject;
  * @author Jeroen Roovers
  */
 @Named(value = "approvalBean")
-@RequestScoped
-public class ApprovalBean {
+//Scoping this to session is like using a hammer to perform surgery, but it works.
+@SessionScoped
+public class ApprovalBean implements Serializable {
 
     @Inject
+    private CourseService courseService;
+    @Inject
     private EnrollmentService enrollmentService;
+    @Inject
+    private SessionBean session;
 
     private Enrollment selectedEnrollment;
     private List<Enrollment> allEnrollments;
@@ -25,11 +37,17 @@ public class ApprovalBean {
     private Course selectedCourse;
     private List<Course> courses;
     private List<Course> filteredCourses;
+    private List<Enrollment> courseEnrollments;
+
+    private final static String REDIRECT_FULL = "approval?faces-redirect=true";
+    private final static String REDIRECT = "approval";
 
     /**
      * Creates a new instance of ApprovalBean
      */
-    public ApprovalBean() {
+    @PostConstruct
+    public void init() {
+        courses = courseService.getAllCourses();
     }
 
     /**
@@ -38,7 +56,12 @@ public class ApprovalBean {
      * @return
      */
     public String onAcceptEnrollment() {
-        return null;
+        acceptEnrollment();
+        this.courseEnrollments = enrollmentService.getAllEnrollmentsByCourseID(selectedCourse.getId());
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Akkoord", ""));
+        return REDIRECT_FULL;
     }
 
     /**
@@ -47,7 +70,12 @@ public class ApprovalBean {
      * @return
      */
     public String onRejectEnrollment() {
-        return null;
+        declineEnrollment();
+        this.courseEnrollments = enrollmentService.getAllEnrollmentsByCourseID(selectedCourse.getId());
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Afgewezen", ""));
+        return REDIRECT_FULL;
     }
 
     /**
@@ -55,7 +83,12 @@ public class ApprovalBean {
      * @return
      */
     public String onDeleteEnrollment() {
-        return null;
+        deleteEnrollment();
+        this.courseEnrollments = enrollmentService.getAllEnrollmentsByCourseID(selectedCourse.getId());
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Verwijderd", ""));
+        return REDIRECT_FULL;
     }
 
     public Enrollment getSelectedEnrollment() {
@@ -105,15 +138,32 @@ public class ApprovalBean {
 
     public void setSelectedCourse(Course selectedCourse) {
         this.selectedCourse = selectedCourse;
+        setCourseEnrollments(enrollmentService.getAllEnrollmentsByCourseID(selectedCourse.getId()));
+    }
+
+    public List<Enrollment> getCourseEnrollments() {
+        return courseEnrollments;
+    }
+
+    public void setCourseEnrollments(List<Enrollment> courseEnrollments) {
+        this.courseEnrollments = courseEnrollments;
     }
 
     public void acceptEnrollment() {
-        //TODO: DAO laag aanroepen om Enrollment te accepteren
-
+        if (session.getUser() != null) {
+            User manager = session.getUser();
+            enrollmentService.approveEnrollment(selectedEnrollment, manager);
+        }
     }
 
     public void declineEnrollment() {
-        //TODO: DAO laag aanroepen om Enrollment te weigeren
+        if (session.getUser() != null) {
+            User manager = session.getUser();
+            enrollmentService.rejectEnrollment(selectedEnrollment, manager, "");
+        }
+    }
 
+    public void deleteEnrollment() {
+        enrollmentService.deleteEnrollment(selectedEnrollment);
     }
 }
