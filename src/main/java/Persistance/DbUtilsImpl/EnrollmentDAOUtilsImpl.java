@@ -13,6 +13,7 @@ import Model.Enrollment;
 import Model.Lesson;
 import Model.User;
 import Persistance.Interfaces.IEnrollmentDAO;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class EnrollmentDAOUtilsImpl implements IEnrollmentDAO {
     static final String QUERY_GET_ENROLLMENT_BY_COURSE_ID = QUERY_LONGSELECT + " AND c.ID_Course = ?";
     static final String QUERY_GET_ALL_ENROLLMENTS = QUERY_LONGSELECT;
     static final String QUERY_GET_ALL_ENROLLMENTS_BY_STATUS = QUERY_LONGSELECT + " AND e.Status = ?";
+    static final String QUERY_GET_ENROLLMENT_BY_USERNAME = "SELECT c.Name, l.StartTime, l.Location, e.Status, e.Comment FROM Enrollment e, User u, Lesson l , Course c  WHERE e.ID_Student = u.ID_User   AND e.ID_Lesson = l.ID_Lesson  AND l.ID_Course = c.ID_Course  AND e.ID_Student = ?";
 
     static final String QUERY_ENROLL_USER_TO_LESSON = "INSERT INTO Enrollment(ID_Lesson, ID_Student, SignupTime) VALUES (?,?, NOW());";
     static final String QUERY_DELETE_ENROLLMENT = "DELETE FROM Enrollment WHERE ID_Enrollment = ?";
@@ -167,6 +169,44 @@ public class EnrollmentDAOUtilsImpl implements IEnrollmentDAO {
         } catch (SQLException ex_sql) {
             LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
             LOGGER.log(Level.SEVERE, ex_sql.getMessage(), ex_sql);
+        }
+        return enrollments;
+    }
+
+    public List<Enrollment> GetEnrollmentsByUser(int userID) {
+        QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
+        ArrayListHandler alh = new ArrayListHandler();
+        List<Enrollment> enrollments = new ArrayList<>();
+        Object[] params = new Object[]{userID};
+        try {
+            List<Object[]> result = run.query(QUERY_GET_ENROLLMENT_BY_USERNAME, alh, params);
+            //List<Object[]> result = run.query(QUERY_GET_ENROLLMENTS, alh);
+
+            for (Object[] o : result) {
+
+                Enrollment enrollment = new Enrollment();
+                Object a = o[3];
+                enrollment.setStatus(Integer.parseInt(a.toString()));
+                Lesson l = new Lesson();
+
+                Calendar beginTime = new GregorianCalendar();
+                beginTime.setTime(o[1] == null ? null : Date.valueOf(o[1].toString()));
+
+                l.setStartTime(beginTime);
+                Course c = new Course();
+                c.setName(o[0].toString());
+                l.setCourse(c);
+                l.setLocation(o[2].toString());
+                enrollment.setLesson(l);
+
+                User u = new User();
+
+                u.setEmail(o[3].toString());
+                enrollment.setComment(o[4] == null ? null : o[4].toString());
+                enrollments.add(enrollment);
+            }
+        } catch (Exception ex_sql) {
+            System.out.println(ex_sql);
         }
         return enrollments;
     }

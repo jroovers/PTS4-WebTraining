@@ -12,15 +12,15 @@
     <!-- Content -->
     <ui:define name="content">
         <h:outputStylesheet library="style" name="signup.css" />
-        
-        <!--<h:outputStylesheet library="style" name="personalRoster.css" />-->
-        <div class="container bordershadow">
+        <div class="container">
+            <h1>Selecteer een training en schrijf je in!</h1>
             <hr/> 
             <div class="col-4">
-                <h2>Nieuwe les plannen</h2>
-                <hr/>
+                <h2>Inschrijven voor Les</h2>
+
                 <h:form id = "userForm">
                     <ui:fragment rendered="#{!sessionBean.loggedIn}">
+                        <hr/>
                         <div>
                             <h3>Vul je gegevens in</h3>
                             <hr/>
@@ -43,9 +43,11 @@
                                 </tr>                                
                             </table> 
                         </div>
+
                     </ui:fragment>
+                    <hr/>
                     <div>
-                        <p:outputLabel for="dt_courseselect" value="Kies een training die je wil plannen"/>
+                        <p:outputLabel for="dt_courseselect" value="Kies een training"/>
                         <p:dataTable id="dt_courseselect"
                                      var="course" 
                                      value="#{signupBean.courses}" 
@@ -55,7 +57,7 @@
                                      rowKey="#{course.id}"
                                      widgetVar="courseTable"
                                      scrollable="true"
-                                     scrollHeight="200">
+                                     scrollHeight="250">
                             <p:ajax event="rowSelect" update = "lesson_table"/>
                             <f:facet name="header">
                                 <p:outputPanel>
@@ -63,10 +65,6 @@
                                     <p:inputText id="globalFilter" onkeyup="PF('courseTable').filter()" style="width:200px" placeholder="Enter keyword"/>
                                 </p:outputPanel>
                             </f:facet>
-
-                            <p:column filterBy="#{course.code}" filterStyle="display:none" filterMatchMode="contains">
-                                <h:outputText value="#{course.code}" />
-                            </p:column>
 
                             <p:column filterBy="#{course.name}" filterStyle="display:none" filterMatchMode="contains">
                                 <h:outputText value="#{course.name}" />
@@ -77,47 +75,81 @@
                 </h:form>
             </div>
             <div class="col-8">
+                <ui:fragment rendered="#{sessionBean.loggedIn}">                
+                    <h2>Huidige inschrijvingen</h2>
+                    <hr/>
+                    <h:form id ="enrollments_table">
+                        <p:dataTable id="dt_enrollments"
+                                     var="enrollment" 
+                                     value="#{signupBean.enrollments}" 
+                                     selectionMode="single" 
+                                     rowKey="#{enrollment.id}"
+                                     scrollable="true"
+                                     scrollHeight="120">
+                            <p:ajax event="rowSelect"/>
+
+
+                            <p:column headerText = "Onderwerp">
+                                <h:outputText value="#{enrollment.lesson.course.name}" />
+                            </p:column>
+                            <p:column headerText="Datum">
+                                <h:outputFormat value="{0, date, yyyy-MM-dd}">
+                                    <f:param value="#{enrollment.lesson.startTime.time}" />
+                                </h:outputFormat>
+                            </p:column>
+                            <p:column headerText = "Locatie">
+                                <h:outputText value="#{enrollment.lesson.location}" />
+                            </p:column>
+
+                            <p:column headerText = "Status">
+                                <h:outputText value="#{enrollment.status}" />
+                            </p:column>  
+                            <p:column headerText = "Opmerking">
+                                <h:outputText value="#{enrollment.comment}" />
+                            </p:column>
+                        </p:dataTable>
+
+                    </h:form>
+                </ui:fragment>
+                <hr/>
                 <h2>Huidige geplande lessen:</h2>
                 <hr/>
                 <h:form id = "lesson_table">
+                    <p:dataTable id="dt_lessons"
+                                 var="lesson" 
+                                 value="#{signupBean.lessons}" 
+                                 filteredValue="#{signupBean.filteredLessons}"
+                                 selectionMode="single" 
+                                 selection="#{signupBean.selectedLesson}" 
+                                 widgetVar="lessonsTable"
+                                 rowKey="#{lesson.id}"
+                                 scrollable="true"
+                                 scrollHeight="100">
+                        <p:ajax event="rowSelect"/>
+
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Zoeken: " />
+                                <p:inputText id="globalFilter" onkeyup="PF('lessonsTable').filter()" style="width:200px" placeholder="Enter keyword"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column headerText="Datum" filterBy="#{lesson.startTime}" filterStyle="display:none" filterMatchMode="contains" width = "110">
+                            <h:outputFormat value="{0, date, yyyy-MM-dd}">
+                                <f:param value="#{lesson.startTime.time}" />
+                            </h:outputFormat>
+                        </p:column>
+
+                        <p:column headerText = "Locatie" filterBy="#{lesson.location}" filterStyle="display:none" filterMatchMode="contains">
+                            <h:outputText value="#{lesson.location}" />
+                        </p:column>
+
+                        <p:column headerText = "Onderwerp" filterBy="#{lesson.course.name}" filterStyle="display:none" filterMatchMode="contains">
+                            <h:outputText value="#{lesson.course.name}" />
+                        </p:column>
+                    </p:dataTable>
                     <div class="form-group">
-                        <p:outputLabel for="dt_lessonselect" value="Kies een les die je wil wijzigen"/>
-                        <p:dataTable id="dt_lessonselect"
-                                     var="lesson" 
-                                     value="#{signupBean.lessons}" 
-                                     filteredValue="#{signupBean.filteredLessons}"
-                                     selectionMode="single" 
-                                     selection="#{signupBean.selectedLesson}" 
-                                     widgetVar="lessonsTable"
-                                     rowKey="#{lesson.id}"
-                                     scrollable="true"
-                                     scrollHeight="300">
-                            <p:ajax event="rowSelect"/>
-
-                            <f:facet name="header">
-                                <p:outputPanel>
-                                    <h:outputText value="Zoeken: " />
-                                    <p:inputText id="globalFilter" onkeyup="PF('lessonsTable').filter()" style="width:200px" placeholder="Enter keyword"/>
-                                </p:outputPanel>
-                            </f:facet>
-                            <p:column filterBy="#{lesson.startTime}" filterStyle="display:none" filterMatchMode="contains">
-                                <h:outputFormat value="{0, date, yyyy-MM-dd}">
-                                    <f:param value="#{lesson.startTime.time}" />
-                                </h:outputFormat>
-                            </p:column>
-
-                            <p:column filterBy="#{lesson.location}" filterStyle="display:none" filterMatchMode="contains">
-                                <h:outputText value="#{lesson.location}" />
-                            </p:column>
-
-                            <p:column filterBy="#{lesson.course.name}" filterStyle="display:none" filterMatchMode="contains">
-                                <h:outputText value="#{lesson.course.name}" />
-                            </p:column>
-                        </p:dataTable>
-                        <div class="form-group">
-                            <p:growl id="signup_growl" class=""/>
-                            <p:commandButton value="Inschrijven" update="signup_growl" ajax="false" action="#{signupBean.signUp()}" style="float:right; margin-top: 10px; margin-bottom: 20px;"/>
-                        </div>
+                        <p:growl id="signup_growl" class=""/>
+                        <p:commandButton value="Inschrijven" update="signup_growl" ajax="false" action="#{signupBean.signUp()}" style="float:right; margin-top: 10px; margin-bottom: 20px;"/>
                     </div>
                 </h:form>
             </div>
