@@ -18,6 +18,13 @@ import javax.ejb.Stateless;
 @Stateless
 public class EnrollmentService {
 
+    public List<Enrollment> getEnrollmentsByUser(int userID) {
+        EnrollmentDAOUtilsImpl enrollmentDAO = new EnrollmentDAOUtilsImpl();
+
+        return enrollmentDAO.GetEnrollmentsByUser(userID);
+    }
+
+    
     public List<Enrollment> getAllEnrollments() {
         EnrollmentDAOUtilsImpl enrollmentDAO = new EnrollmentDAOUtilsImpl();
         return enrollmentDAO.getAllEnrollments();        

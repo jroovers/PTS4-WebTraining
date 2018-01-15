@@ -1,9 +1,11 @@
 package View.Pages;
 
 import Controller.CourseService;
+import Controller.EnrollmentService;
 import Controller.LessonService;
 import Controller.UserService;
 import Model.Course;
+import Model.Enrollment;
 import Model.Lesson;
 import Model.User;
 import View.Session.SessionBean;
@@ -33,6 +35,8 @@ public class SignupBean {
     @Inject
     UserService us;
     @Inject
+    EnrollmentService es;
+    @Inject
     private SessionBean session;
 
     private long courseID;
@@ -49,12 +53,17 @@ public class SignupBean {
     private List<Lesson> lessons;
     private List<Lesson> filteredLessons;
 
+    private List<Enrollment> enrollments;
+
     /**
      * Creates a new instance of signupBean
      */
     @PostConstruct
     public void SignupBean() {
         courses = cs.getAllCourses();
+        if (session.getUser() != null) {
+            enrollments = es.getEnrollmentsByUser((int) session.getUser().getId());
+        }
     }
 
     public String getName() {
@@ -168,6 +177,14 @@ public class SignupBean {
 
     public void setFilteredLessons(List<Lesson> filteredLessons) {
         this.filteredLessons = filteredLessons;
+    }
+
+    public List<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(List<Enrollment> enrollments) {
+        this.enrollments = enrollments;
     }
 
     public void signUp() {
