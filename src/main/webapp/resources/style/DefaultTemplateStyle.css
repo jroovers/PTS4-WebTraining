@@ -7,18 +7,17 @@ and open the template in the editor.
     Created on : 22-nov-2017, 15:48:03
     Author     : Jowelle
 */
-
 body
 {
-    
     background-color: #dfebf5;
+    margin-top: 80px;
+    margin-bottom: 0;
 }
-.defaultContent
-{
-    background-color: #dfebf5;
-}
+
+
 #content
 {
+    display: inline-block;
     font-family: "proxima-nova","Helvetica Neue",Helvetica,Arial,sans-serif !important;
     padding-top: 1% !important;
     padding-bottom: 4% !important;
@@ -27,16 +26,36 @@ body
     width: 100% !important;
     text-align: left !important;
     box-sizing: inherit !important;
+    padding-top: 6% !important;
+    padding-bottom: 21% !important;
 }
 
-.col-5
+.rooster-width
 {
-    background-color: #ffffff;
+    width: 60%;   
 }
 
-.col-6
+h1, h2, h3
+{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-weight: bold;
+    color: #0078c9 !important;
+}
+
+th
+{
+    color: #666666;
+}
+
+li
+{
+    
+}
+.col-5 .col-6 .col-4 .col-8
 {
     background-color: #ffffff;
+    display: inline-block;
 }
 
 .mt-3
@@ -67,4 +86,28 @@ body
 .move-listbox
 {
     position: absolute;
+}
+
+.defaultContent
+{
+    background-color: #dfebf5;
+}
+
+.bordershadow
+{
+    box-shadow: 2px 2px 4px #ccc;
+}
+
+.aanmelding-padding
+{
+    padding-bottom: 10px;
+}
+
+.list-box
+{
+    margin-top: 10%;
+    padding: 20px 20px 20px 20px;
+    box-shadow: 2px 2px 4px #ccc;
+    height: 100%;
+    background-color: #ffffff;
 }

@@ -4,13 +4,10 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : 11-okt-2017, 14:27:15
+    Created on : 10-jan-2018, 13:13:48
     Author     : Jowelle
 */
-/*          SCHEDULE TABLE
--------------------------------------------------------------------*/
-
-table 
+table
 {
     width: 100%;
 }
@@ -27,4 +24,9 @@ table th
 {
     font-weight: normal;
     vertical-align: top;
+}
+
+.ui-inputfield
+{
+    width: 100%;
 }

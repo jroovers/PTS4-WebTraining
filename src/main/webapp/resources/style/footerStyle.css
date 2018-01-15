@@ -1,0 +1,157 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 6-sep-2017, 16:27:59
+    Author     : jeroe
+*/
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.footer-body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+  vertical-align: middle;
+}
+
+.col-4
+{
+    float:left;
+}
+.footer-body h3
+{
+    font-weight: bold;
+    color: #ffffff !important;
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+}
+
+.footer strong
+{
+    font-weight: bold;
+}
+
+.menu-socialmedia
+{
+    padding-left: 0;
+    word-spacing: 10px;
+}
+
+.menu-socialmedia a :hover
+{
+    color: #ec008c;
+}
+
+.quick-links a
+{
+    font-size: 14px;
+}
+
+.quick-links .btn
+{
+    border-color: #fff;
+    border-width: 2px;
+    background-color: transparent;
+    font-weight: bold;
+    color: #fff;
+    font-size: 14px;
+}
+
+.menu-overig :hover
+{
+    text-decoration: none;
+    color: #ec008c !important;
+}
+
+.menu-overig li a
+{
+    font-weight: normal;
+    text-transform: capitalize;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+.menu-overig
+{
+    padding: 0;
+}
+
+.menu-overig li
+{
+    font-style: normal !important;
+    list-style-type: none;
+    line-height: 30px;
+    margin-left: 0;
+}
+.quick-links :hover
+{
+    background-color: #ec008c;
+    border-color: #ec008c;
+}
+
+.menu-socialmedia:hover
+{
+    color: red;
+}
+
+.footer {
+  position: relative;
+  display: inline-block;
+  font-family: "proxima-nova","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 100;
+  color: #fff;
+  list-style-type: none;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 250px !important;
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #0079ca !important;
+  margin-bottom: 0;
+}
+
+.footer-image{
+    background: url(../resources/Image/FooterImg.png);
+    background-repeat: no-repeat;
+    background-position-x: 100%;
+    background-position-y: 100%;
+    height: 100%;
+    width: 100%;
+    background-size: 20% 50%;
+}
+
+address
+{
+    margin-bottom: 22px !important;
+    font-style: normal !important;
+    line-height: 1.428571429 !important;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+#content .container, #content .container-fluid 
+{
+  padding: 0px 15px 0;
+  background-color: #dfebf5;
+}
+
+.footer > .footer-container {
+  padding-top: 20px;
+  padding-right: 10%;
+  padding-left: 10%;
+}
+
+code {
+  font-size: 80%;
+}

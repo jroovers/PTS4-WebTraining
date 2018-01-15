@@ -17,8 +17,8 @@
     <!-- Content -->
     <ui:define name="content">
         <h:outputStylesheet library="style" name="personalRoster.css" />
-        <div class="content">
-        <div class="container">
+        <div class="container bordershadow calendar">
+            <div class="col-6">
             <div class="calendar">
                 <h1>Cursussen</h1>
                 <h:form>
@@ -35,8 +35,9 @@
                     </h:panelGrid>
                 </h:form>
             </div>
-
-            <div class="eventData">
+            </div>
+            <div class="eventData data-float">
+                    <h2>Cursus informatie</h2>
                 <h:form id="eventDetails" >
                     <p:panelGrid columns="2" columnClasses="firstColumn, secondColumn">
                         <p:outputLabel for="title" value="Cursus:" />
@@ -58,9 +59,8 @@
                         <p:outputLabel for="description:" value="Beschrijving" />
                         <p:outputLabel id="description" value="#{personalRosterBean.selectedLesson.course.description}"/>
                     </p:panelGrid>
-
                     <br/>
-                    <col-3>
+                        <div class="data-float">
                     <h2>Aanmeldingen</h2>
                     <p:dataTable value = "#{personalRosterBean.selectedLesson.registrations}" 
                                  var ="registration"
@@ -74,10 +74,9 @@
                                 #{registration.email}
                         </p:column>
                     </p:dataTable>
-                    </col-3>
+                        </div>
                 </h:form>    
             </div>
-        </div>
         </div>
     </ui:define>
 </ui:composition>
