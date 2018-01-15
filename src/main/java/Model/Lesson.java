@@ -19,6 +19,12 @@ public class Lesson {
 
     private Collection<User> registrations;
 
+    /**
+     * Default constructor
+     */
+    public Lesson() {
+    }
+
     public Lesson(Course course) {
         this.course = course;
     }
@@ -74,11 +80,11 @@ public class Lesson {
     public Collection<User> getRegistrations() {
         return registrations;
     }
-    
+
     public void setRegistrations(Collection<User> registrations) {
         this.registrations = registrations;
     }
-    
+
     public User getTeacher() {
         return teacher;
     }

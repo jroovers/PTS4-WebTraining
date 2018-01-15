@@ -10,6 +10,8 @@ import java.util.Objects;
  */
 public class Enrollment {
 
+    private static final String ILLEGALSTATUSMESSAGE_STRING = "Status while instantiating new Enrollment class was not 0, 1 or 2";
+
     private long id;
     private Lesson lesson;
     private User student;
@@ -22,6 +24,13 @@ public class Enrollment {
     private String comment;
 
     /**
+     * Default constructor
+     */
+    public Enrollment() {
+
+    }
+
+    /**
      * Creates a new enrollment object with status 'awaiting approval'
      *
      * @param l lesson student enrolled to
@@ -30,7 +39,8 @@ public class Enrollment {
     public Enrollment(Lesson l, User s) {
         this.lesson = l;
         this.student = s;
-        this.signupTime = new GregorianCalendar();
+        this.accepted = false;
+        this.rejected = false;
     }
 
     /**
@@ -66,6 +76,25 @@ public class Enrollment {
             return "afgewezen";
         } else {
             return "in afwachting";
+        }
+    }
+
+    public void setStatus(int status) {
+        switch (status) {
+            case 0:
+                this.accepted = false;
+                this.rejected = false;
+                break;
+            case 1:
+                this.accepted = true;
+                this.rejected = false;
+                break;
+            case 2:
+                this.accepted = false;
+                this.rejected = true;
+                break;
+            default:
+                throw new IllegalArgumentException(ILLEGALSTATUSMESSAGE_STRING);
         }
     }
 

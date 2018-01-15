@@ -43,7 +43,7 @@ public class PersonalRosterBean implements Serializable {
      * Get the lessons from the database and add them to the calendar
      */
     private void RefreshLessons() {
-        long id = session.getUser().getUserID();
+        long id = session.getUser().getId();
         lessonSchedule.clear();
         for (Lesson lesson : lessonService.GetLessonsAndRegistrationsByTeacher(id)) {
             lessonSchedule.addEvent(new DefaultScheduleEvent(lesson.getCourse().getName(), lesson.getStartTime().getTime(), lesson.getEndTime().getTime(), lesson));
