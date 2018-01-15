@@ -174,7 +174,7 @@ public class SignupBean {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             if (session.isLoggedIn()) {
-                ls.signUpUser(selectedLesson.getId(), session.getUser().getUserID());
+                ls.signUpUser(selectedLesson.getId(), session.getUser().getId());
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training opgeslagen", "!"));
             } else {
                 if (!name.isEmpty() && !surname.isEmpty() && !phonenr.isEmpty() && !email.isEmpty()) {

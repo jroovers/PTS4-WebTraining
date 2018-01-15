@@ -55,7 +55,7 @@ public class UserDAOUtils implements IUserDAO {
                         o[5] == null ? null : o[5].toString(), // phoneNr
                         o[6] == null ? null : o[6].toString() // email
                 );
-                u.setAccessLevels(getUserTypesByUserID(u.getUserID()));
+                u.setAccessLevels(getUserTypesByUserID(u.getId()));
                 users.add(u);
             }
         } catch (SQLException ex_sql) {
@@ -83,7 +83,7 @@ public class UserDAOUtils implements IUserDAO {
                         o[5] == null ? null : o[5].toString(), // phoneNr
                         o[6] == null ? null : o[6].toString() // email
                 );
-                user.setAccessLevels(getUserTypesByUserID(user.getUserID()));
+                user.setAccessLevels(getUserTypesByUserID(user.getId()));
             }
         } catch (SQLException ex_sql) {
             LOGGER.log(Level.SEVERE, SQLERROR + ex_sql.getErrorCode(), ex_sql);
@@ -125,7 +125,7 @@ public class UserDAOUtils implements IUserDAO {
     @Override
     public boolean editUser(User user) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
-        Object[] params = new Object[]{user.getName(), user.getSurname(), user.getUsername(), user.getPhoneNr(), user.getEmail(), user.getUserID()};
+        Object[] params = new Object[]{user.getName(), user.getSurname(), user.getUsername(), user.getPhoneNr(), user.getEmail(), user.getId()};
         try {
             int inserts = run.update(QUERY_UPDATE_USER, params);
             if(inserts == 0)
@@ -202,7 +202,7 @@ public class UserDAOUtils implements IUserDAO {
     public boolean editAccountType(User user) {
         QueryRunner run = new QueryRunner(Database.getInstance().getDataSource());
         ResultSetHandlerImp rsh = new ResultSetHandlerImp();
-        Object[] params = new Object[]{user.getUserID()};
+        Object[] params = new Object[]{user.getId()};
         try {
             run.execute(QUERY_DELETE_USER_USERTYPE, rsh, params);
         } catch (SQLException ex) {
@@ -214,7 +214,7 @@ public class UserDAOUtils implements IUserDAO {
         for (long level : user.getAccessLevels()) {
             run = new QueryRunner(Database.getInstance().getDataSource());
             rsh = new ResultSetHandlerImp();
-            params = new Object[]{user.getUserID(),level};
+            params = new Object[]{user.getId(),level};
             try {
                 run.execute(QUERY_ADD_USER_USERTYPE, rsh, params);
             } catch (SQLException ex) {

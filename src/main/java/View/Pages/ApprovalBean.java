@@ -1,9 +1,12 @@
 package View.Pages;
 
+import Controller.EnrollmentService;
+import Model.Course;
 import Model.Enrollment;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 
 /**
  *
@@ -13,9 +16,15 @@ import javax.enterprise.context.RequestScoped;
 @RequestScoped
 public class ApprovalBean {
 
+    @Inject
+    private EnrollmentService enrollmentService;
+
     private Enrollment selectedEnrollment;
     private List<Enrollment> allEnrollments;
     private List<Enrollment> filteredEnrollments;
+    private Course selectedCourse;
+    private List<Course> courses;
+    private List<Course> filteredCourses;
 
     /**
      * Creates a new instance of ApprovalBean
@@ -58,6 +67,7 @@ public class ApprovalBean {
     }
 
     public List<Enrollment> getAllEnrollments() {
+        allEnrollments = enrollmentService.getAllEnrollments();
         return allEnrollments;
     }
 
@@ -73,4 +83,37 @@ public class ApprovalBean {
         this.filteredEnrollments = filteredEnrollments;
     }
 
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    public List<Course> getFilteredCourses() {
+        return filteredCourses;
+    }
+
+    public void setFilteredCourses(List<Course> filteredCourses) {
+        this.filteredCourses = filteredCourses;
+    }
+
+    public Course getSelectedCourse() {
+        return selectedCourse;
+    }
+
+    public void setSelectedCourse(Course selectedCourse) {
+        this.selectedCourse = selectedCourse;
+    }
+
+    public void acceptEnrollment() {
+        //TODO: DAO laag aanroepen om Enrollment te accepteren
+
+    }
+
+    public void declineEnrollment() {
+        //TODO: DAO laag aanroepen om Enrollment te weigeren
+
+    }
 }
