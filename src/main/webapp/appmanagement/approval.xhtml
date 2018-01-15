@@ -63,10 +63,9 @@
                     <div class="col-12">
                         <h:form id = "approval_table">
                             <p:growl id="growl" showDetail="false" sticky="false" globalOnly="true"/>
-                            <p:commandButton id="accept_request" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa  fa-check " value="Akkoord" action="#{approvalBean.onAcceptEnrollment()}"/>
+                            <p:commandButton id="accept_request" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa  fa-check " value="Akkoord" update="growl" action="#{approvalBean.onAcceptEnrollment()}"/>
                             <p:commandButton id="reject_request" widgetVar="edit_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-ban" value="Weigeren" update="growl" action="#{approvalBean.onRejectEnrollment()}"/>
                             <p:commandButton id="delete_request" widgetVar="delete_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-trash-o" value="Verwijderen" type="button" onclick="PF('deleteRequestConfirmation').show();" />
-
                             <p:dataTable id="dt_enrollment"
                                          var="enrollment" 
                                          value="#{approvalBean.courseEnrollments}" 

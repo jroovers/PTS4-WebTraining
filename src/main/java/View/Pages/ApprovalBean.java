@@ -6,10 +6,13 @@ import Model.Course;
 import Model.Enrollment;
 import Model.User;
 import View.Session.SessionBean;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 /**
@@ -17,8 +20,9 @@ import javax.inject.Inject;
  * @author Jeroen Roovers
  */
 @Named(value = "approvalBean")
-@RequestScoped
-public class ApprovalBean {
+//Scoping this to session is like using a hammer to perform surgery, but it works.
+@SessionScoped
+public class ApprovalBean implements Serializable {
 
     @Inject
     private CourseService courseService;
@@ -35,6 +39,9 @@ public class ApprovalBean {
     private List<Course> filteredCourses;
     private List<Enrollment> courseEnrollments;
 
+    private final static String REDIRECT_FULL = "approval?faces-redirect=true";
+    private final static String REDIRECT = "approval";
+
     /**
      * Creates a new instance of ApprovalBean
      */
@@ -50,7 +57,11 @@ public class ApprovalBean {
      */
     public String onAcceptEnrollment() {
         acceptEnrollment();
-        return "approval";
+        this.courseEnrollments = enrollmentService.getAllEnrollmentsByCourseID(selectedCourse.getId());
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Akkoord", ""));
+        return REDIRECT_FULL;
     }
 
     /**
@@ -60,7 +71,11 @@ public class ApprovalBean {
      */
     public String onRejectEnrollment() {
         declineEnrollment();
-        return "approval";
+        this.courseEnrollments = enrollmentService.getAllEnrollmentsByCourseID(selectedCourse.getId());
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Afgewezen", ""));
+        return REDIRECT_FULL;
     }
 
     /**
