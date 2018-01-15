@@ -20,29 +20,29 @@
                             <h:link styleClass="nav-link dropdown-toggle" a:data-toggle="dropdown" a:aria-haspopup="true" a:aria-expanded="false">CURSUSSEN</h:link>
 
                             <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                <h:link styleClass="dropdown-item" outcome="/external/offertraining" value="Aanmaken"/>
+                                <h:link styleClass="dropdown-item" outcome="/external/signup" value="Inschijven"/> 
                                 <h:link styleClass="dropdown-item" outcome="/external/schedule" value="Informatie"/>
-                                <h:link styleClass="dropdown-item" rendered="#{sessionBean.admin}" outcome="/appmanagement/courses" value="Beheren"/>     
+                                <h:link styleClass="dropdown-item" outcome="/external/offertraining" value="Aanmaken"/>
                             </div>
-                        </li>
-                        <li class="nav-item">
-                            <h:link styleClass="nav-link" rendered="#{sessionBean.admin}" outcome="/appmanagement/planner" value="Lesplanner"/>
                         </li>
                         <li class="nav-item">
                             <h:link styleClass="nav-link" rendered="#{sessionBean.teacher}" outcome="/appmanagement/personalroster" value="Docentenrooster"/>
                         </li>
                         <li class="nav-item">
-                            <h:link styleClass="nav-link" outcome="/external/signup" value="INSCHRIJFFORMULIER"/>
-                        </li>
-                        <li class="nav-item">
                             <h:link styleClass="nav-link" outcome="/appmanagement/lessonroster" value="Lesrooster"/>
-                        </li> 
-                        <li class="nav-item">
-                            <h:link styleClass="nav-link" rendered="#{sessionBean.admin}" outcome="/appmanagement/manageaccounts" value="Accountbeheer"/>
                         </li> 
                         <li class="nav-item">
                             <h:link styleClass="nav-link" outcome="/appmanagement/studiekostenformulier" value="Studiekostenformulier"/>
                         </li> 
+                        
+                        <li class="nav-item dropdown">
+                            <h:link styleClass="nav-link dropdown-toggle" rendered="#{sessionBean.admin}" a:data-toggle="dropdown" a:aria-haspopup="true" a:aria-expanded="false">Admin</h:link>
+                            <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                <h:link styleClass="dropdown-item" rendered="#{sessionBean.admin}" outcome="/appmanagement/planner" value="Lesplanner"/> 
+                                <h:link styleClass="dropdown-item" rendered="#{sessionBean.admin}" outcome="/appmanagement/courses" value="Cursusbeheer"/>
+                                <h:link styleClass="dropdown-item" rendered="#{sessionBean.admin}" outcome="/appmanagement/manageaccounts" value="Accountbeheer"/>
+                            </div>
+                        </li>
                         <li class="nav-item">
                             <h:link styleClass="nav-link" rendered="#{!sessionBean.loggedIn}" outcome="/external/authorization">
                                 <span class="fa fa-sign-in"></span> INLOGGEN</h:link>

@@ -40,7 +40,7 @@ registrationTable th, td{
 }
 
 .calendar{
-    width:55%;
+    width:100%;
     margin:20px;
 }
 
@@ -57,5 +57,10 @@ registrationTable th, td{
 .col-4
 {
     display: inline-block;
+}
+
+.data-float
+{
+    float: right !important;
 }
 
