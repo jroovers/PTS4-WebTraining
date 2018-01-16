@@ -96,7 +96,6 @@ public class ManageAccountBean implements Serializable {
     }
 
     public void onCheckBoxEdit(User user) {
-        //us.editAccountType(user);
         user.setAccessLevels(new HashSet<>());
 
         //convert the boolean list back to the user accesslevel list

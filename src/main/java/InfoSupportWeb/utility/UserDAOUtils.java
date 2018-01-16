@@ -117,7 +117,7 @@ public class UserDAOUtils implements IUserDAO {
             run.execute(QUERY_REMOVE_USER, rsh, params);
             return true;
         } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, "Failed to remove user from DB - errorCode: " + ex.getErrorCode(), ex);
+            LOGGER.log(Level.SEVERE, "Failed to delete user from DB - errorCode: " + ex.getErrorCode(), ex);
             return false;
         }
     }
@@ -129,9 +129,9 @@ public class UserDAOUtils implements IUserDAO {
         try {
             int inserts = run.update(QUERY_UPDATE_USER, params);
             if(inserts == 0)
-                throw new Exception("No rows edited");
+                throw new NullPointerException("No rows edited");
             return true;            
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, "Failed to edit lesson in DB - errorCode: " + ex.getMessage(), ex);
             return false;
         }
@@ -206,7 +206,7 @@ public class UserDAOUtils implements IUserDAO {
         try {
             run.execute(QUERY_DELETE_USER_USERTYPE, rsh, params);
         } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, "Failed to remove user from DB - errorCode: " + ex.getErrorCode(), ex);
+            LOGGER.log(Level.SEVERE, "Failed to edit the AccountType in the database - errorCode: " + ex.getErrorCode(), ex);
             return false;
         }
 
@@ -218,7 +218,7 @@ public class UserDAOUtils implements IUserDAO {
             try {
                 run.execute(QUERY_ADD_USER_USERTYPE, rsh, params);
             } catch (SQLException ex) {
-                LOGGER.log(Level.SEVERE, "Failed to remove user from DB - errorCode: " + ex.getErrorCode(), ex);
+                LOGGER.log(Level.SEVERE, "Failed to add new userpermission - errorCode: " + ex.getErrorCode(), ex);
                 return false;
             }
         }
