@@ -129,7 +129,7 @@ public class UserDAOUtils implements IUserDAO {
         try {
             int inserts = run.update(QUERY_UPDATE_USER, params);
             if(inserts == 0)
-                throw new NullPointerException("No rows edited");
+                throw new SQLException("No rows edited");
             return true;            
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, "Failed to edit lesson in DB - errorCode: " + ex.getMessage(), ex);
