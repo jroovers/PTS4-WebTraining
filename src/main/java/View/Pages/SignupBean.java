@@ -22,7 +22,7 @@ import javax.inject.Inject;
 
 /**
  *
- * @author jeroen, antonio
+ * @author jeroen, antonio, ricardo
  */
 @ManagedBean(name = "signupBean")
 @SessionScoped
@@ -61,6 +61,13 @@ public class SignupBean {
     @PostConstruct
     public void init() {
         courses = cs.getAllCourses();
+        refreshEnrollments();
+    }
+
+    /**
+     * gets Enrollments from database
+     */
+    private void refreshEnrollments() {
         if (session.getUser() != null) {
             enrollments = es.getEnrollmentsByUser((int) session.getUser().getId());
         }
@@ -198,12 +205,14 @@ public class SignupBean {
                     User user = new User(name, surname, phonenr, email);
                     user.addAccessLevel(1);
                     us.addUser(user);
+                    ls.signUpUser(selectedCourse.getId(), user.getId());
                     context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Training en data opgeslagen", "!"));
                 }
             }
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Training niet opgeslagen!", "Er is iets fouts gegaan! Probeer het later opnieuw"));
         }
+        refreshEnrollments();
     }
 
     public void valueChanged(ValueChangeEvent e) {
