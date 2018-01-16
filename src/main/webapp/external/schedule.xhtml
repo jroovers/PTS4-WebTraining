@@ -13,43 +13,42 @@
         <div class="container bordershadow">
             <div class="mt-3">
                 <div class="row">
+                    <h1 class="pt-4 px-3">Cursusinformatie</h1>
+                    <p class="lead px-3">
+                        Op deze pagina kan je informatie inzien over de aangeboden cursussen. Kies een cursus uit lijst links, de details van die cursus worden dan getoond.
+                    </p>
                     <div class="col-5"> 
-
-
                         <h:form onsubmit="event.preventDefault()">
                             <div class="form-group">
-                                <h1>Cursussen</h1>
+                                <h2>Cursussen</h2>
                                 <p:growl id="Select_Warning" />
                                 <p:selectOneListbox value="#{scheduleBean.courseID}" filter="true" valueChangeListener="#{scheduleBean.valueChanged}" 
                                                     filterMatchMode="contains" styleClass="form-control" onchange="submit()" required="false">
-                                                    <f:valueChangeListener type="Listener.ScheduleValueListener" />
+                                    <f:valueChangeListener type="Listener.ScheduleValueListener" />
                                     <f:selectItems value="#{scheduleBean.allCourses}" var="y"
                                                    itemLabel="#{y.getShortString()}" itemValue="#{y.id}" />
                                 </p:selectOneListbox>
                             </div>
                         </h:form>
-                        
-
                     </div>
                     <div class="col-6">
-                        <h1>Informatie</h1>
-                       <h:form >
-
+                        <h2>Informatie</h2>
+                        <h:form >
                             <table class="table" >
                                 <tbody>
                                     <tr>
                                         <th>Naam</th>
-                                        
+
                                         <th>#{scheduleBean.selectedCourse.name}</th>
                                     </tr>
                                     <tr>
                                         <th>Locaties</th>
                                         <th><p:selectOneListbox value="#{scheduleBean.locations}" 
-                                                    styleClass="form-control" >
+                                                                styleClass="form-control" >
                                                 <f:selectItems value="#{scheduleBean.locations}" var="y"
                                                                itemLabel="#{locations}" itemValue="#{locations}" /></p:selectOneListbox> </th>
                                     </tr>
-                                        <tr>
+                                    <tr>
                                         <th>Cursus dagen</th>
                                         <th>#{scheduleBean.selectedCourse.durationInDays}</th>
                                     </tr>
@@ -72,14 +71,14 @@
                                     <tr>
                                         <th>
                                             <!-- Disable werkt niet goed. hij roept de action niet aan :( -->
-                                          <!-- <h:button value="Inschrijven" outcome="signup.xhtml" />-->
+                                            <!-- <h:button value="Inschrijven" outcome="signup.xhtml" />-->
                                         </th>
                                     </tr>
                                 </tbody>
                             </table>
-                           
-                            
-                       </h:form>
+
+
+                        </h:form>
                         <h:form id="hiddenForm" onsubmit="event.preventDefault()">
                             <h:inputHidden value="#{scheduleBean.courseID}" id="hiddenLessonID"/>
                         </h:form>

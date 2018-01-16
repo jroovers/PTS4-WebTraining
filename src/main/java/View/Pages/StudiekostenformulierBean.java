@@ -8,24 +8,16 @@ package View.Pages;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -74,8 +66,8 @@ public class StudiekostenformulierBean {
     public StudiekostenformulierBean() throws IOException {
         
         //DEZE AANPASSEN (kreeg de goede url niet te pakken)
-        pathStudiekostenForm1 = "C:\\Users\\kyle_\\Documents\\NetBeansProjects\\InfoSupportWeb\\src\\main\\webapp";
-        pathStudiekostenForm2 = "C:\\Users\\kyle_\\Documents\\NetBeansProjects\\InfoSupportWeb\\src\\main\\webapp";
+        pathStudiekostenForm1 = "C:\\Users\\jeroe\\Documents\\NetBeansProjects\\InfoSupportWeb\\src\\main\\webapp";
+        pathStudiekostenForm2 = "C:\\Users\\jeroe\\Documents\\NetBeansProjects\\InfoSupportWeb\\src\\main\\webapp";
         
         functions = new ArrayList<>();
         managers = new ArrayList<>();
