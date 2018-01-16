@@ -54,7 +54,7 @@ and open the template in the editor.
     height: 16px;
 }
 
-a
+.ml-md-auto ul li a
 {
     color: #FFFFFF  !important;
     font-weight: 700;

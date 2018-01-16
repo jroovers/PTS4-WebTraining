@@ -12,18 +12,22 @@
         </f:metadata>
     </ui:define>
     <!-- Tabblad naam -->
-    <ui:define name="title">Persoonlijk Trainingsrooster</ui:define>
+    <ui:define name="title">Docentenrooster</ui:define>
 
     <!-- Content -->
     <ui:define name="content">
         <h:outputStylesheet library="style" name="personalRoster.css" />
-        <div class="container bordershadow calendar">
-            <div class="col-6">
-            <div class="calendar">
-                <h1>Cursussen</h1>
-                <h:form>
-                    <h:panelGrid columnClasses="value">
-                        <h3 style="margin-top: 0">Rooster</h3>
+        <div class="container bordershadow">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Docentenrooster</h1>
+                    <p class="lead">In dit rooster zijn al je lessen zichtbaar in een interactief rooster. Klik een geplande les aan om extra informatie en inschrijvingen te zien.</p>
+                </div>
+            </div>
+            <div class="row pb-4">
+                <div class="col-6">
+                    <h:form>
+                        <h2>Rooster</h2>
                         <p:schedule id="schedule" 
                                     value="#{personalRosterBean.eventModel}" 
                                     widgetVar="myschedule" 
@@ -32,50 +36,52 @@
                                     draggable="false">
                             <p:ajax event="eventSelect" listener="#{personalRosterBean.onEventSelect}" update="eventDetails"  />
                         </p:schedule>
-                    </h:panelGrid>
-                </h:form>
-            </div>
-            </div>
-            <div class="eventData data-float">
-                    <h2>Cursus informatie</h2>
-                <h:form id="eventDetails" >
-                    <p:panelGrid columns="2" columnClasses="firstColumn, secondColumn">
-                        <p:outputLabel for="title" value="Cursus:" />
-                        <p:outputLabel id="title" value="#{personalRosterBean.selectedLesson.course.name}" />
-
-                        <p:outputLabel value="Begindatum:" />
-                        <h:outputFormat value="{0, date, yyyy-MM-dd}">
-                            <f:param value="#{personalRosterBean.selectedLesson.startTime.time}" />
-                        </h:outputFormat>
-
-                        <p:outputLabel value="Einddatum:" />
-                        <h:outputFormat value="{0, date, yyyy-MM-dd}">
-                            <f:param value="#{personalRosterBean.selectedLesson.endTime.time}" />
-                        </h:outputFormat>
-
-                        <p:outputLabel for="location:" value="Locatie" />
-                        <p:outputLabel id="location" value="#{personalRosterBean.selectedLesson.location}"/>
-
-                        <p:outputLabel for="description:" value="Beschrijving" />
-                        <p:outputLabel id="description" value="#{personalRosterBean.selectedLesson.course.description}"/>
-                    </p:panelGrid>
-                    <br/>
-                        <div class="data-float">
-                    <h2>Aanmeldingen</h2>
-                    <p:dataTable value = "#{personalRosterBean.selectedLesson.registrations}" 
-                                 var ="registration"
-                                 styleClass = "registrationTable">
-                        <p:column width="100">    				
-                            <f:facet name = "header">Name</f:facet>    				
-                                #{registration.name} #{registration.surname}
-                        </p:column>
-                        <p:column width="200">
-                            <f:facet name = "header">Email</f:facet>
-                                #{registration.email}
-                        </p:column>
-                    </p:dataTable>
+                    </h:form>
+                </div>
+                <div class="col-6">
+                    <h2>Les informatie</h2>
+                    <h:form id="eventDetails" >
+                        <div class="form-group row mb-1">
+                            <p:outputLabel for="title" value="Cursus:" styleClass="col-sm-4 col-form-label" />
+                            <p:outputLabel id="title" value="#{personalRosterBean.selectedLesson.course.name}" styleClass="col-sm-8" />
                         </div>
-                </h:form>    
+                        <div class="form-group row mb-1">
+                            <p:outputLabel value="Begindatum:" styleClass="col-sm-4 col-form-label" />
+                            <h:outputFormat value="{0, date, yyyy-MM-dd}" styleClass="col-sm-8" >
+                                <f:param value="#{personalRosterBean.selectedLesson.startTime.time}" />
+                            </h:outputFormat>
+                        </div> 
+                        <div class="form-group row mb-1">
+                            <p:outputLabel value="Einddatum:" styleClass="col-sm-4 col-form-label" />
+                            <h:outputFormat value="{0, date, yyyy-MM-dd}" styleClass="col-sm-8" >
+                                <f:param value="#{personalRosterBean.selectedLesson.endTime.time}" />
+                            </h:outputFormat>
+                        </div> 
+                        <div class="form-group row mb-1">
+                            <p:outputLabel for="location:" value="Locatie" styleClass="col-sm-4 col-form-label" />
+                            <p:outputLabel id="location" value="#{personalRosterBean.selectedLesson.location}" styleClass="col-sm-8" />
+                        </div> 
+                        <div class="form-group row mb-1">
+                            <p:outputLabel for="description:" value="Beschrijving" styleClass="col-sm-4 col-form-label" />
+                            <p:outputLabel id="description" value="#{personalRosterBean.selectedLesson.course.description}" styleClass="col-sm-8" />
+                        </div>
+                        <br/>
+                        <div class="data-float">
+                            <h2>Inschrijvingen op les</h2>
+                            <p:dataTable value = "#{personalRosterBean.selectedLesson.registrations}" 
+                                         var ="registration">
+                                <p:column width="100">    				
+                                    <f:facet name = "header">Name</f:facet>    				
+                                        #{registration.name} #{registration.surname}
+                                </p:column>
+                                <p:column width="200">
+                                    <f:facet name = "header">Email</f:facet>
+                                        #{registration.email}
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </h:form>    
+                </div>
             </div>
         </div>
     </ui:define>

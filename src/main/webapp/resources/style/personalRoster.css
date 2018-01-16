@@ -64,3 +64,11 @@ registrationTable th, td{
     float: right !important;
 }
 
+.fc-center h2{
+    margin: initial;
+    padding: initial;
+    font-weight: initial;
+    font-size: initial;
+    line-height: initial;
+    color: initial !important;
+}

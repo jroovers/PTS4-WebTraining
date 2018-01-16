@@ -80,7 +80,7 @@
                                     <p:inputText id="globalFilter" onkeyup="PF('enrollmentTable').filter()" style="width:200px" placeholder="Enter keyword"/>
                                 </p:outputPanel>
                             </f:facet>
-                            <p:column headerText="Inschrijfdatum" filterBy="#{enrollment.signupTime}" filterStyle="display:none" filterMatchMode="contains">
+                            <p:column headerText="Inschrijfdatum" filterBy="#{enrollment.signupTime}" filterStyle="display:none" filterMatchMode="contains" style="width: 120px;">
                                 <h:outputFormat value="{0, date, yyyy-MM-dd}">
                                     <f:param value="#{enrollment.signupTime.time}" />
                                 </h:outputFormat>
@@ -98,7 +98,7 @@
                                 <h:outputText value="#{enrollment.manager.fullName}" />
                             </p:column>
                             <!-- -->
-                            <p:column headerText="Accordatie" filterBy="#{enrollment.status}" filterStyle="display:none" filterMatchMode="contains">
+                            <p:column headerText="Accordatie" filterBy="#{enrollment.status}" filterStyle="display:none" filterMatchMode="contains" style="width: 120px;">
                                 <h:outputText value="#{enrollment.status}" />
                             </p:column>
                         </p:dataTable>
