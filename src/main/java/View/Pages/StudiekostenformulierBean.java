@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -23,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -34,6 +37,9 @@ import org.primefaces.model.StreamedContent;
 @Named(value = "studiekostenformulier")
 @RequestScoped
 public class StudiekostenformulierBean {
+    
+    private String pathStudiekostenForm1;
+    private String pathStudiekostenForm2;
 
     private String nameEmployee; // Naam werknemer  
     private Date dateService; // Datum in dienst 
@@ -64,16 +70,21 @@ public class StudiekostenformulierBean {
     private PDType1Font font;
     private final int fontSize;
 
-    public StudiekostenformulierBean() {
+    public StudiekostenformulierBean() throws IOException {
+        
+        //DEZE AANPASSEN (kreeg de goede url niet te pakken)
+        pathStudiekostenForm1 = "C:\\Users\\kyle_\\Documents\\NetBeansProjects\\InfoSupportWeb\\src\\main\\webapp";
+        pathStudiekostenForm2 = "C:\\Users\\kyle_\\Documents\\NetBeansProjects\\InfoSupportWeb\\src\\main\\webapp";
+        
         functions = new ArrayList<>();
         managers = new ArrayList<>();
         fillFunctionList();
         fillManagersList();
-        newFileName = "Studiekostenformulier2";
+        newFileName = "Studiekostenformulier2.pdf";
         font = PDType1Font.HELVETICA;
         fontSize = 10;
-        InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/Studiekostenformulier.pdf");
-        file = new DefaultStreamedContent(stream, "image/pdf", "Studiekostenformulier.pdf");
+        InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/Studiekostenformulier2.pdf");
+        file = new DefaultStreamedContent(stream, "image/pdf", "Studiekostenformulier2.pdf");
     }
 
     /**
@@ -84,30 +95,48 @@ public class StudiekostenformulierBean {
      * @throws java.io.IOException
      */
     public void Create() throws IOException {
+        
+        try {
+            PDDocument document = PDDocument.load(new File(pathStudiekostenForm1 + "\\Studiekostenformulier.pdf"));
 
-        // Gegevens van de werknemer
-        addSmallText(0, nameEmployee, 380, 685); // Naam werknemer        
-        addSmallText(0, dateService.toString(), 380, 665); // Datum in dienst      
-        addSmallText(0, function, 380, 645); // Functie
+            PDPage page = document.getPage(0);
+            //PDPage page = new PDPage();
+            document.addPage(page);
+            content = new PDPageContentStream(document, page, true, true);
 
-        // Gegevens van de Studie
-        addSmallText(0, studyToFollow, 380, 575); // Te volgen studie
-        addSmallText(0, startDate.toString(), 380, 555); // Startdatum
-        addSmallText(0, endDate.toString(), 380, 535); // Einddatum
-        addSmallText(0, courseDays, 380, 515); // Cursusdagen
-        addSmallText(0, description, 77, 457); // Beschrijving
+            //Gegevens van de werknemer
+            addSmallText(0, nameEmployee, 380, 685); // Naam werknemer
+            addSmallText(0, dateService.toString(), 380, 665); // Datum in dienst
+            addSmallText(0, function, 380, 645); // Functie
+        
+            // Gegevens van de Studie
+            addSmallText(0, studyToFollow, 380, 575); // Te volgen studie
+            addSmallText(0, institute, 380, 555); // Startdatum
+            addSmallText(0, startDate.toString(), 380, 535); // Startdatum
+            addSmallText(0, endDate.toString(), 380, 515); // Einddatum
+            addSmallText(0, courseDays, 380, 495); // Cursusdagen
+            addSmallText(0, description, 77, 457); // Beschrijving
 
-        addSmallText(0, studyCostsToBeReimbursed2.toString(), 380, 325); // Te vergoeden studiekosten
-        addSmallText(0, examinationFees.toString(), 380, 305); // Examengelden
-        addSmallText(0, transportationCosts.toString(), 380, 285); // Vervoerskosten
-        addSmallText(0, accommodationCosts.toString(), 380, 265); // Verblijfskosten
-        addSmallText(0, otherCosts.toString(), 380, 245); // Overige kosten
-        addSmallText(0, totalCosts.toString(), 380, 215); // Totaal excl. BTW
+            addSmallText(0, studyCostsToBeReimbursed2.toString(), 380, 325); // Te vergoeden studiekosten
+            addSmallText(0, examinationFees.toString(), 380, 305); // Examengelden
+            addSmallText(0, transportationCosts.toString(), 380, 285); // Vervoerskosten
+            addSmallText(0, accommodationCosts.toString(), 380, 265); // Verblijfskosten
+            addSmallText(0, otherCosts.toString(), 380, 245); // Overige kosten
+            addSmallText(0, totalCosts.toString(), 380, 215); // Totaal excl. BTW
 
-        addSmallText(1, category, 77, 723); // Categorie
-        addSmallText(1, deprecationPeriod, 380, 631); // Afschrijvingsperiode
-        addSmallText(1, manager, 380, 567); // Manager
+//            addSmallText(1, category, 77, 723); // Categorie
+//            addSmallText(1, deprecationPeriod, 380, 631); // Afschrijvingsperiode
+//            addSmallText(1, manager, 380, 567); // Manager
 
+            content.close();
+            document.save(pathStudiekostenForm2 + "\\Studiekostenformulier2.pdf");
+            document.close();
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+        
+        
+        
     }
 
     /**
@@ -121,27 +150,17 @@ public class StudiekostenformulierBean {
      */
     public void addSmallText(int pageIndex, String text, int xPos, int yPos) throws IOException {
 
-        File newFile = new File("C:\\studiekostenformulier.pdf");
-        if (!newFile.exists()) {
-            newFile.createNewFile();
-        }
-
-        try (PDDocument document = PDDocument.load(new File(newFile.getPath()))) {
-            PDPage page = document.getPage(pageIndex);
-            content = new PDPageContentStream(document, page, true, true);
-
+        try{
             content.beginText();
-            content.setFont(font, fontSize);
-            content.moveTextPositionByAmount(xPos, yPos);
-            content.drawString(text);
-            content.endText();
-
-            content.close();
-            document.save(newFileName);
-            document.close();
-        } catch (IOException ex) {
-            System.err.println(ex.getMessage());
+        content.setFont(font, fontSize);
+        content.moveTextPositionByAmount(xPos, yPos);
+        content.drawString(text);
+        content.endText();
+        } catch(NullPointerException ex) {
+            
         }
+        
+
     }
 
     public void addBigText(int pageIndex, String text, int xPos, int yPos) throws IOException {
@@ -153,38 +172,9 @@ public class StudiekostenformulierBean {
      *
      * @throws IOException
      */
-    public void downloadPdf() throws IOException {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-
-        HttpServletResponse response = (HttpServletResponse) facesContext.getELContext();
-
-        response.reset();
-        response.setHeader("Content-Type", "application/pdf");
-
-        OutputStream responseOutputStream = response.getOutputStream();
-
-        // Read PDF contents
-        URL url = new URL("Studiekostenformulier2");
-        InputStream pdfInputStream = url.openStream();
-
-        // Read PDF contents and write them to the output
-        byte[] bytesBuffer = new byte[2048];
-        int bytesRead;
-        while ((bytesRead = pdfInputStream.read(bytesBuffer)) > 0) {
-            responseOutputStream.write(bytesBuffer, 0, bytesRead);
-        }
-
-        // Make sure that everything is out
-        responseOutputStream.flush();
-
-        // Close both streams
-        pdfInputStream.close();
-        responseOutputStream.close();
-
-        // JSF doc: 
-        // Signal the JavaServer Faces implementation that the HTTP response for this request has already been generated 
-        // (such as an HTTP redirect), and that the request processing lifecycle should be terminated
-        // as soon as the current phase is c
+    public void DownloadPdf() throws IOException {
+        InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/Studiekostenformulier2.pdf");
+        file = new DefaultStreamedContent(stream, "image/pdf", "Studiekostenformulier2.pdf");
     }
 
     public StreamedContent getFile() {
