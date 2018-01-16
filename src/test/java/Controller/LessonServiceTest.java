@@ -57,7 +57,7 @@ public class LessonServiceTest {
         u2.setId(1);
 
         lessonService = new LessonService();
-        location = "eindhoven";
+        location = "Utrecht";
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         startTime = new GregorianCalendar();
@@ -125,6 +125,7 @@ public class LessonServiceTest {
         assertEquals(expResult.getLessonString(), result.getLessonString());
         assertEquals(expResult.getLocation(), result.getLocation());
         assertEquals(expResult.getStartTime(), result.getStartTime());
+        lessonService.deleteLesson(result.getId());
     }
 
     /**
