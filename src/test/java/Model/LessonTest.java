@@ -91,7 +91,7 @@ public class LessonTest
     public void testLocation()
     {
         //arrange
-        String expResult = "Eindhoven";
+        String expResult = "Utrecht";
 
         //act
         lesson.setLocation(expResult);
@@ -153,9 +153,9 @@ public class LessonTest
 
         //act
         lesson.setStartTime(startTime);
-        lesson.setLocation("Eindhoven");
+        lesson.setLocation("Utrecht");
         lesson.setCourse(course);
-        String expResult = "11-dec-2017 - Eindhoven - appel";
+        String expResult = "11-dec-2017 - Utrecht - appel";
         String result = lesson.getLessonString();
         assertEquals(expResult, result);
     }
