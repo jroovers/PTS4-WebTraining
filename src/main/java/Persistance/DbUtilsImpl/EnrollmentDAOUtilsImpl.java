@@ -47,6 +47,7 @@ public class EnrollmentDAOUtilsImpl implements IEnrollmentDAO {
     static final String QUERY_REJECT_ENROLLMENT = "UPDATE Enrollment SET Status = 2, ID_Manager = ?, COMMENT = ? WHERE ID_Enrollment = ?";
     private static final String SQLERROR = "SQL Exception code ";
     private final static Logger LOGGER = Logger.getLogger(LessonDAOUtils.class.getName());
+    private static final String SQLSUCCES = "SQL Succes";
 
     /**
      * Helper method for reading multiple lines of Enrollment. Only use in
@@ -118,7 +119,7 @@ public class EnrollmentDAOUtilsImpl implements IEnrollmentDAO {
             Object[] result = run.insert(QUERY_ENROLL_USER_TO_LESSON, rsh, params);
             long id = Long.parseLong(result[0].toString());
             e.setId(id);
-            LOGGER.log(Level.INFO, "SQL Succes");
+            LOGGER.log(Level.INFO, SQLSUCCES);
             return e;
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, "Failed to enroll into lesson in DB - errorCode: " + ex.getErrorCode(), ex);
@@ -180,7 +181,6 @@ public class EnrollmentDAOUtilsImpl implements IEnrollmentDAO {
         Object[] params = new Object[]{userID};
         try {
             List<Object[]> result = run.query(QUERY_GET_ENROLLMENT_BY_USERNAME, alh, params);
-            //List<Object[]> result = run.query(QUERY_GET_ENROLLMENTS, alh);
 
             for (Object[] o : result) {
 
@@ -206,7 +206,7 @@ public class EnrollmentDAOUtilsImpl implements IEnrollmentDAO {
                 enrollments.add(enrollment);
             }
         } catch (Exception ex_sql) {
-            System.out.println(ex_sql);
+            LOGGER.log(Level.SEVERE, "Failed to get enrollment from the DB - errorCode: " + ex_sql.getMessage(), ex_sql);
         }
         return enrollments;
     }
@@ -226,7 +226,7 @@ public class EnrollmentDAOUtilsImpl implements IEnrollmentDAO {
             if (updatedRows == 1) {
                 result = true;
             }
-            LOGGER.log(Level.INFO, "SQL Succes");
+            LOGGER.log(Level.INFO, SQLSUCCES);
             return result;
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, "Failed to approve enrollment in DB - errorCode: " + ex.getErrorCode(), ex);
@@ -244,7 +244,7 @@ public class EnrollmentDAOUtilsImpl implements IEnrollmentDAO {
             if (updatedRows == 1) {
                 result = true;
             }
-            LOGGER.log(Level.INFO, "SQL Succes");
+            LOGGER.log(Level.INFO, SQLSUCCES);
             return result;
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, "Failed to reject enrollment in DB - errorCode: " + ex.getErrorCode(), ex);
@@ -262,7 +262,7 @@ public class EnrollmentDAOUtilsImpl implements IEnrollmentDAO {
             if (updatedRows == 1) {
                 result = true;
             }
-            LOGGER.log(Level.INFO, "SQL Succes");
+            LOGGER.log(Level.INFO, SQLSUCCES);
             return result;
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, "Failed to delete enrollment from DB - errorCode: " + ex.getErrorCode(), ex);

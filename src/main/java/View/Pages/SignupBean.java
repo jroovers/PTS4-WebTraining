@@ -59,7 +59,7 @@ public class SignupBean {
      * Creates a new instance of signupBean
      */
     @PostConstruct
-    public void SignupBean() {
+    public void init() {
         courses = cs.getAllCourses();
         if (session.getUser() != null) {
             enrollments = es.getEnrollmentsByUser((int) session.getUser().getId());
