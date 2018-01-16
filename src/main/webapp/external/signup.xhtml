@@ -109,7 +109,9 @@
                         </p:dataTable>
                         <div class="form-group">
                             <p:growl id="signup_growl" class=""/>
-                            <p:commandButton value="Inschrijven" update="signup_growl" ajax="false" action="#{signupBean.signUp()}" styleClass="float-right mt-2"/>
+                            <p:commandButton value="Inschrijven" update="signup_growl" ajax="false" action="#{signupBean.signUp()}" styleClass="float-right mt-2">
+                                <f:ajax execute="@form" render="@form" />
+                            </p:commandButton>
                         </div>
                     </h:form>
                 </div>         
