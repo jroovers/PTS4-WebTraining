@@ -62,6 +62,22 @@ and open the template in the editor.
     text-transform: uppercase;
 }
 
+.menu-socialmedia a
+{
+    color: #FFFFFF  !important;
+    font-weight: 700;
+    font-size: 13px !important;
+    text-transform: uppercase;
+}
+
+.menu-overig a
+{
+    color: #FFFFFF  !important;
+    font-weight: 700;
+    font-size: 13px !important;
+    text-transform: uppercase;
+}
+
  .navbar-custom
  {
     height: 80px;
