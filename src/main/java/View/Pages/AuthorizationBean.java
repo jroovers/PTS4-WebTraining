@@ -81,11 +81,19 @@ public class AuthorizationBean {
     }
 
     /**
-     * Dirty check if user is a Teacher, should be refactored in something more
+     * Dirty check if user is a teacher, should be refactored in something more
      * modular and extensible (what if customer wants to add extra roles??)
      */
     public void checkIfTeacher() {
         permissionCheckHelper((session.isTeacher() || session.isAdmin()));
+    }
+
+    /**
+     * Dirty check if user is an employee, should be refactored in something
+     * more modular and extensible (what if customer wants to add extra roles??)
+     */
+    public void checkIfEmployee() {
+        permissionCheckHelper(session.isEmployee());
     }
 
     /**

@@ -8,8 +8,6 @@ package View.Pages;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,15 +15,11 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -65,26 +59,26 @@ public class StudiekostenformulierBean {
     private List<String> functions;
     private List<String> managers;
 
-    private String newFileName;
     private PDPageContentStream content;
     private PDType1Font font;
     private final int fontSize;
+    private final static String FILENAME = "Studiekostenformulier2.pdf";
+    private final static Logger LOGGER = Logger.getLogger(StudiekostenformulierBean.class.getName());
 
     public StudiekostenformulierBean() throws IOException {
         
         //DEZE AANPASSEN (kreeg de goede url niet te pakken)
-        pathStudiekostenForm1 = "C:\\Users\\kyle_\\Documents\\NetBeansProjects\\InfoSupportWeb\\src\\main\\webapp";
-        pathStudiekostenForm2 = "C:\\Users\\kyle_\\Documents\\NetBeansProjects\\InfoSupportWeb\\src\\main\\webapp";
+        pathStudiekostenForm1 = "C:\\Users\\jeroe\\Documents\\NetBeansProjects\\InfoSupportWeb\\src\\main\\webapp";
+        pathStudiekostenForm2 = "C:\\Users\\jeroe\\Documents\\NetBeansProjects\\InfoSupportWeb\\src\\main\\webapp";
         
         functions = new ArrayList<>();
         managers = new ArrayList<>();
         fillFunctionList();
         fillManagersList();
-        newFileName = "Studiekostenformulier2.pdf";
         font = PDType1Font.HELVETICA;
         fontSize = 10;
         InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/Studiekostenformulier2.pdf");
-        file = new DefaultStreamedContent(stream, "image/pdf", "Studiekostenformulier2.pdf");
+        file = new DefaultStreamedContent(stream, "image/pdf", FILENAME);
     }
 
     /**
@@ -100,29 +94,28 @@ public class StudiekostenformulierBean {
             PDDocument document = PDDocument.load(new File(pathStudiekostenForm1 + "\\Studiekostenformulier.pdf"));
 
             PDPage page = document.getPage(0);
-            //PDPage page = new PDPage();
             document.addPage(page);
             content = new PDPageContentStream(document, page, true, true);
 
             //Gegevens van de werknemer
-            addSmallText(0, nameEmployee, 380, 685); // Naam werknemer
-            addSmallText(0, dateService.toString(), 380, 665); // Datum in dienst
-            addSmallText(0, function, 380, 645); // Functie
+            addSmallText(nameEmployee, 380, 685); // Naam werknemer
+            addSmallText(dateService.toString(), 380, 665); // Datum in dienst
+            addSmallText(function, 380, 645); // Functie
         
             // Gegevens van de Studie
-            addSmallText(0, studyToFollow, 380, 575); // Te volgen studie
-            addSmallText(0, institute, 380, 555); // Startdatum
-            addSmallText(0, startDate.toString(), 380, 535); // Startdatum
-            addSmallText(0, endDate.toString(), 380, 515); // Einddatum
-            addSmallText(0, courseDays, 380, 495); // Cursusdagen
-            addSmallText(0, description, 77, 457); // Beschrijving
+            addSmallText(studyToFollow, 380, 575); // Te volgen studie
+            addSmallText(institute, 380, 555); // Startdatum
+            addSmallText(startDate.toString(), 380, 535); // Startdatum
+            addSmallText(endDate.toString(), 380, 515); // Einddatum
+            addSmallText(courseDays, 380, 495); // Cursusdagen
+            addSmallText(description, 77, 457); // Beschrijving
 
-            addSmallText(0, studyCostsToBeReimbursed2.toString(), 380, 325); // Te vergoeden studiekosten
-            addSmallText(0, examinationFees.toString(), 380, 305); // Examengelden
-            addSmallText(0, transportationCosts.toString(), 380, 285); // Vervoerskosten
-            addSmallText(0, accommodationCosts.toString(), 380, 265); // Verblijfskosten
-            addSmallText(0, otherCosts.toString(), 380, 245); // Overige kosten
-            addSmallText(0, totalCosts.toString(), 380, 215); // Totaal excl. BTW
+            addSmallText(studyCostsToBeReimbursed2.toString(), 380, 325); // Te vergoeden studiekosten
+            addSmallText(examinationFees.toString(), 380, 305); // Examengelden
+            addSmallText(transportationCosts.toString(), 380, 285); // Vervoerskosten
+            addSmallText(accommodationCosts.toString(), 380, 265); // Verblijfskosten
+            addSmallText(otherCosts.toString(), 380, 245); // Overige kosten
+            addSmallText(totalCosts.toString(), 380, 215); // Totaal excl. BTW
 
 //            addSmallText(1, category, 77, 723); // Categorie
 //            addSmallText(1, deprecationPeriod, 380, 631); // Afschrijvingsperiode
@@ -132,7 +125,7 @@ public class StudiekostenformulierBean {
             document.save(pathStudiekostenForm2 + "\\Studiekostenformulier2.pdf");
             document.close();
         } catch (IOException ex) {
-            System.out.println(ex);
+            LOGGER.log(Level.SEVERE, "Can't create file - errorCode: " + ex.getMessage(), ex);
         }
         
         
@@ -148,7 +141,7 @@ public class StudiekostenformulierBean {
      * @param yPos Y position on the PDF file
      * @throws IOException
      */
-    public void addSmallText(int pageIndex, String text, int xPos, int yPos) throws IOException {
+    public void addSmallText(String text, int xPos, int yPos) throws IOException {
 
         try{
             content.beginText();
@@ -157,7 +150,7 @@ public class StudiekostenformulierBean {
         content.drawString(text);
         content.endText();
         } catch(NullPointerException ex) {
-            
+            LOGGER.log(Level.SEVERE, "Failed to execute addSmallText() - errorCode: " + ex.getMessage(), ex);
         }
         
 
@@ -174,7 +167,7 @@ public class StudiekostenformulierBean {
      */
     public void DownloadPdf() throws IOException {
         InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/Studiekostenformulier2.pdf");
-        file = new DefaultStreamedContent(stream, "image/pdf", "Studiekostenformulier2.pdf");
+        file = new DefaultStreamedContent(stream, "image/pdf", FILENAME);
     }
 
     public StreamedContent getFile() {

@@ -12,42 +12,45 @@
     <!-- Content -->
     <ui:define name="content">
         <h:outputStylesheet library="style" name="signup.css" />
-        <div class="container">
-            <h1>Selecteer een training en schrijf je in!</h1>
-            <hr/> 
-            <div class="col-4">
-                <h2>Inschrijven voor Les</h2>
-
-                <h:form id = "userForm">
-                    <ui:fragment rendered="#{!sessionBean.loggedIn}">
-                        <hr/>
-                        <div>
-                            <h3>Vul je gegevens in</h3>
-                            <hr/>
-                            <table>
-                                <tr>
-                                    <th><p>Voornaam</p></th>
-                                    <th><p:inputText id="name" value="#{signupBean.name}" a:placeholder="Bijv. John" required="true" requiredMessage="Naam moet eerst ingevuld worden"></p:inputText></th>                                    
-                                </tr>
-                                <tr>
-                                    <th><p>Achternaam</p></th>
-                                    <th><p:inputText id="surname" value="#{signupBean.surname}" a:placeholder="Bijv. Doe" required="true" requiredMessage="Achternaam moet eerst ingevuld worden"></p:inputText></th>
-                                </tr>
-                                <tr>
-                                    <th><p>Email</p></th>
-                                    <th><p:inputText id="email" value="#{signupBean.email}" a:placeholder="Bijv. JohnDoe@gmail.com" required="true" requiredMessage="Email moet eerst ingevuld worden"></p:inputText></th>
-                                </tr>
-                                <tr>
-                                    <th><p>Telefoon nummer</p></th>
-                                    <th><p:inputText id="phonenr" value="#{signupBean.phonenr}" a:placeholder="Bijv. 0612345678" required="true" requiredMessage="Uw telefoonnummer moet eerst ingevuld worden"></p:inputText></th>
-                                </tr>                                
-                            </table> 
-                        </div>
-
-                    </ui:fragment>
-                    <hr/>
-                    <div>
-                        <p:outputLabel for="dt_courseselect" value="Kies een training"/>
+        <div class="container bordershadow">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Inschrijven voor een cursus</h1>
+                    <p class="lead">Via dit overzicht kan je op een van de geplande lessen van een cursus inschrijven. Kies hiervoor eerst een cursus, en vervolgens een van de geplande lessen. Vergeet niet je inschrijving te bevestigen.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <h:form id = "userForm">
+                        <ui:fragment rendered="#{!sessionBean.loggedIn}">
+                            <h2>Extra gegevens vereist</h2>
+                            <p>Je bent niet ingelogd. Indien je als extern persoon wilt inschrijven, laat dan wat gegevens voor ons achter:</p>
+                            <div class="form-group row">
+                                <p:outputLabel  for="name" styleClass="col-sm-4 col-form-label" value="Voornaam"/>
+                                <div class="col-sm-8">
+                                    <p:inputText id="name" value="#{signupBean.name}" a:placeholder="Bijv. John" required="true" requiredMessage="Naam moet eerst ingevuld worden" styleClass="form-control" />                          
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <p:outputLabel  for="surname" styleClass="col-sm-4 col-form-label" value="Achternaam"/>
+                                <div class="col-sm-8">
+                                    <p:inputText id="surname" value="#{signupBean.surname}" a:placeholder="Bijv. Doe" required="true" requiredMessage="Achternaam moet eerst ingevuld worden" styleClass="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <p:outputLabel  for="email" styleClass="col-sm-4 col-form-label" value="Email"/>
+                                <div class="col-sm-8">
+                                    <p:inputText id="email" value="#{signupBean.email}" a:placeholder="Bijv. JohnDoe@gmail.com" required="true" requiredMessage="Email moet eerst ingevuld worden" styleClass="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <p:outputLabel  for="phonenr" styleClass="col-sm-4 col-form-label" value="Telefoon"/>
+                                <div class="col-sm-8">
+                                    <p:inputText id="phonenr" value="#{signupBean.phonenr}" a:placeholder="Bijv. 0612345678" required="true" requiredMessage="Uw telefoonnummer moet eerst ingevuld worden" styleClass="form-control" />
+                                </div>
+                            </div>
+                        </ui:fragment>
+                        <h2>Beschikbare cursussen</h2>
                         <p:dataTable id="dt_courseselect"
                                      var="course" 
                                      value="#{signupBean.courses}" 
@@ -57,7 +60,7 @@
                                      rowKey="#{course.id}"
                                      widgetVar="courseTable"
                                      scrollable="true"
-                                     scrollHeight="250">
+                                     scrollHeight="300">
                             <p:ajax event="rowSelect" update = "lesson_table"/>
                             <f:facet name="header">
                                 <p:outputPanel>
@@ -65,94 +68,86 @@
                                     <p:inputText id="globalFilter" onkeyup="PF('courseTable').filter()" style="width:200px" placeholder="Enter keyword"/>
                                 </p:outputPanel>
                             </f:facet>
-
                             <p:column filterBy="#{course.name}" filterStyle="display:none" filterMatchMode="contains">
                                 <h:outputText value="#{course.name}" />
                             </p:column>
                         </p:dataTable>
                         <br/>
-                    </div>
-                </h:form>
-            </div>
-            <div class="col-8">
-                <ui:fragment rendered="#{sessionBean.loggedIn}">                
-                    <h2>Huidige inschrijvingen</h2>
-                    <hr/>
-                    <h:form id ="enrollments_table">
-                        <p:dataTable id="dt_enrollments"
-                                     var="enrollment" 
-                                     value="#{signupBean.enrollments}" 
+                    </h:form>
+                </div>
+                <div class="col-8">
+                    <h2>Geplande lessen van cursus:</h2>
+                    <h:form id = "lesson_table">
+                        <p:dataTable id="dt_lessons"
+                                     var="lesson" 
+                                     value="#{signupBean.lessons}" 
+                                     filteredValue="#{signupBean.filteredLessons}"
                                      selectionMode="single" 
-                                     rowKey="#{enrollment.id}"
+                                     selection="#{signupBean.selectedLesson}" 
+                                     widgetVar="lessonsTable"
+                                     rowKey="#{lesson.id}"
                                      scrollable="true"
-                                     scrollHeight="120">
+                                     scrollHeight="300">
                             <p:ajax event="rowSelect"/>
-
-
-                            <p:column headerText = "Onderwerp">
-                                <h:outputText value="#{enrollment.lesson.course.name}" />
-                            </p:column>
-                            <p:column headerText="Datum">
+                            <f:facet name="header">
+                                <p:outputPanel>
+                                    <h:outputText value="Zoeken: " />
+                                    <p:inputText id="globalFilter" onkeyup="PF('lessonsTable').filter()" style="width:200px" placeholder="Enter keyword"/>
+                                </p:outputPanel>
+                            </f:facet>
+                            <p:column headerText="Datum" filterBy="#{lesson.startTime}" filterStyle="display:none" filterMatchMode="contains" width = "110">
                                 <h:outputFormat value="{0, date, yyyy-MM-dd}">
-                                    <f:param value="#{enrollment.lesson.startTime.time}" />
+                                    <f:param value="#{lesson.startTime.time}" />
                                 </h:outputFormat>
                             </p:column>
-                            <p:column headerText = "Locatie">
-                                <h:outputText value="#{enrollment.lesson.location}" />
+                            <p:column headerText = "Locatie" filterBy="#{lesson.location}" filterStyle="display:none" filterMatchMode="contains">
+                                <h:outputText value="#{lesson.location}" />
                             </p:column>
-
-                            <p:column headerText = "Status">
-                                <h:outputText value="#{enrollment.status}" />
-                            </p:column>  
-                            <p:column headerText = "Opmerking">
-                                <h:outputText value="#{enrollment.comment}" />
+                            <p:column headerText = "Onderwerp" filterBy="#{lesson.course.name}" filterStyle="display:none" filterMatchMode="contains">
+                                <h:outputText value="#{lesson.course.name}" />
                             </p:column>
                         </p:dataTable>
-
+                        <div class="form-group">
+                            <p:growl id="signup_growl" class=""/>
+                            <p:commandButton value="Inschrijven" update="signup_growl" ajax="false" action="#{signupBean.signUp()}" styleClass="float-right mt-2">
+                                <f:ajax execute="@form" render="@form" />
+                            </p:commandButton>
+                        </div>
                     </h:form>
-                </ui:fragment>
-                <hr/>
-                <h2>Huidige geplande lessen:</h2>
-                <hr/>
-                <h:form id = "lesson_table">
-                    <p:dataTable id="dt_lessons"
-                                 var="lesson" 
-                                 value="#{signupBean.lessons}" 
-                                 filteredValue="#{signupBean.filteredLessons}"
-                                 selectionMode="single" 
-                                 selection="#{signupBean.selectedLesson}" 
-                                 widgetVar="lessonsTable"
-                                 rowKey="#{lesson.id}"
-                                 scrollable="true"
-                                 scrollHeight="100">
-                        <p:ajax event="rowSelect"/>
-
-                        <f:facet name="header">
-                            <p:outputPanel>
-                                <h:outputText value="Zoeken: " />
-                                <p:inputText id="globalFilter" onkeyup="PF('lessonsTable').filter()" style="width:200px" placeholder="Enter keyword"/>
-                            </p:outputPanel>
-                        </f:facet>
-                        <p:column headerText="Datum" filterBy="#{lesson.startTime}" filterStyle="display:none" filterMatchMode="contains" width = "110">
-                            <h:outputFormat value="{0, date, yyyy-MM-dd}">
-                                <f:param value="#{lesson.startTime.time}" />
-                            </h:outputFormat>
-                        </p:column>
-
-                        <p:column headerText = "Locatie" filterBy="#{lesson.location}" filterStyle="display:none" filterMatchMode="contains">
-                            <h:outputText value="#{lesson.location}" />
-                        </p:column>
-
-                        <p:column headerText = "Onderwerp" filterBy="#{lesson.course.name}" filterStyle="display:none" filterMatchMode="contains">
-                            <h:outputText value="#{lesson.course.name}" />
-                        </p:column>
-                    </p:dataTable>
-                    <div class="form-group">
-                        <p:growl id="signup_growl" class=""/>
-                        <p:commandButton value="Inschrijven" update="signup_growl" ajax="false" action="#{signupBean.signUp()}" style="float:right; margin-top: 10px; margin-bottom: 20px;"/>
-                    </div>
-                </h:form>
+                </div>         
             </div>
+            <ui:fragment rendered="#{sessionBean.loggedIn}">   
+                <div class="row pb-4">
+                    <div class="col-12">
+                        <h2>Huidige inschrijvingen</h2>
+                        <h:form id ="enrollments_table">
+                            <p:dataTable id="dt_enrollments"
+                                         var="enrollment" 
+                                         value="#{signupBean.enrollments}" 
+                                         selectionMode="single" 
+                                         rowKey="#{enrollment.id}"
+                                         scrollable="true"
+                                         scrollHeight="300">
+                                <p:ajax event="rowSelect"/>
+                                <p:column headerText = "Onderwerp">
+                                    <h:outputText value="#{enrollment.lesson.course.name}" />
+                                </p:column>
+                                <p:column headerText="Datum">
+                                    <h:outputFormat value="{0, date, yyyy-MM-dd}">
+                                        <f:param value="#{enrollment.lesson.startTime.time}" />
+                                    </h:outputFormat>
+                                </p:column>
+                                <p:column headerText = "Locatie">
+                                    <h:outputText value="#{enrollment.lesson.location}" />
+                                </p:column>
+                                <p:column headerText = "Status">
+                                    <h:outputText value="#{enrollment.status}" />
+                                </p:column>  
+                            </p:dataTable>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:fragment>
         </div>
     </ui:define>
 </ui:composition>

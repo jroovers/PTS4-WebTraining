@@ -26,15 +26,17 @@
                             </div>
                         </li>
                         <li class="nav-item">
+                            <h:link styleClass="nav-link" rendered="#{sessionBean.manager}" outcome="/appmanagement/approval" value="Accordatie"/>
+                        </li> 
+                        <li class="nav-item">
                             <h:link styleClass="nav-link" rendered="#{sessionBean.teacher}" outcome="/appmanagement/personalroster" value="Docentenrooster"/>
                         </li>
                         <li class="nav-item">
                             <h:link styleClass="nav-link" outcome="/appmanagement/lessonroster" value="Lesrooster"/>
                         </li> 
                         <li class="nav-item">
-                            <h:link styleClass="nav-link" outcome="/appmanagement/studiekostenformulier" value="Studiekostenformulier"/>
-                        </li> 
-                        
+                            <h:link styleClass="nav-link" rendered="#{sessionBean.employee}" outcome="/appmanagement/studiekostenformulier" value="Studiekostenformulier"/>
+                        </li>
                         <li class="nav-item dropdown">
                             <h:link styleClass="nav-link dropdown-toggle" rendered="#{sessionBean.admin}" a:data-toggle="dropdown" a:aria-haspopup="true" a:aria-expanded="false">Admin</h:link>
                             <div class="dropdown-menu" aria-labelledby="dropdown01">

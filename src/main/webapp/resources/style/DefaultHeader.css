@@ -54,7 +54,23 @@ and open the template in the editor.
     height: 16px;
 }
 
-a
+.ml-md-auto ul li a
+{
+    color: #FFFFFF  !important;
+    font-weight: 700;
+    font-size: 13px !important;
+    text-transform: uppercase;
+}
+
+.menu-socialmedia a
+{
+    color: #FFFFFF  !important;
+    font-weight: 700;
+    font-size: 13px !important;
+    text-transform: uppercase;
+}
+
+.menu-overig a
 {
     color: #FFFFFF  !important;
     font-weight: 700;

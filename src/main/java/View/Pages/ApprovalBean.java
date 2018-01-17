@@ -31,16 +31,15 @@ public class ApprovalBean implements Serializable {
     @Inject
     private SessionBean session;
 
-    private Enrollment selectedEnrollment;
-    private List<Enrollment> allEnrollments;
-    private List<Enrollment> filteredEnrollments;
-    private Course selectedCourse;
-    private List<Course> courses;
-    private List<Course> filteredCourses;
-    private List<Enrollment> courseEnrollments;
+    private transient Enrollment selectedEnrollment;
+    private transient List<Enrollment> allEnrollments;
+    private transient List<Enrollment> filteredEnrollments;
+    private transient Course selectedCourse;
+    private transient List<Course> courses;
+    private transient List<Course> filteredCourses;
+    private transient List<Enrollment> courseEnrollments;
 
     private final static String REDIRECT_FULL = "approval?faces-redirect=true";
-    private final static String REDIRECT = "approval";
 
     /**
      * Creates a new instance of ApprovalBean

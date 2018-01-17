@@ -35,9 +35,9 @@
                     <div class="col-12">
                         <h:form>
                             <p:growl id="growl" showDetail="false" sticky="false" globalOnly="true"/>
-                            <p:commandButton id="new_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-plus" value="Nieuwe Training" action="#{coursesBean.onCreateNewItem()}"  />
-                            <p:commandButton id="edit_training" widgetVar="edit_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-pencil" value="Bewerken" update="growl" action="#{coursesBean.onEditItem()}" />
-                            <p:commandButton id="delete_training" widgetVar="delete_training" styleClass="mb-2 mr-sm-2 mb-sm-0" icon="fa fa-trash-o" value="Verwijderen" type="button" onclick="PF('deleteCourseConfirmation').show();" />
+                            <p:commandButton id="new_training" styleClass="mb-2 mr-sm-2" icon="fa fa-plus" value="Nieuwe Training" action="#{coursesBean.onCreateNewItem()}"  />
+                            <p:commandButton id="edit_training" widgetVar="edit_training" styleClass="mb-2 mr-sm-2" icon="fa fa-pencil" value="Bewerken" update="growl" action="#{coursesBean.onEditItem()}" />
+                            <p:commandButton id="delete_training" widgetVar="delete_training" styleClass="mb-2 mr-sm-2" icon="fa fa-trash-o" value="Verwijderen" type="button" onclick="PF('deleteCourseConfirmation').show();" />
                           
                                 <p:selectOneListbox id="select_training" value="#{coursesBean.selectedCode}" styleClass="form-control" filter="true" filterMatchMode="contains">
                                 <f:selectItems value="#{coursesBean.courses}" var="t"  itemValue="#{t.code}" itemLabel="#{t.name}"/>

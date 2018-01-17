@@ -8,6 +8,8 @@ package Model;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 //import nl.jqno.equalsverifier.EqualsVerifier;
 //import nl.jqno.equalsverifier.Warning;
 import org.junit.Before;
@@ -183,12 +185,12 @@ public class EnrollmentTest {
         assertEquals("Test1", e1.getComment());
     }
 
-//    /**
-//     * Test of hashCode method, of class Enrollment.
-//     */
-//    @Test
-//    public void testHashCodeAndEquals() {
-//        Logger.getLogger(EnrollmentTest.class.getName()).log(Level.INFO, "testHashcode and testEquals");
-//        EqualsVerifier.forClass(Enrollment.class).usingGetClass().suppress(Warning.NONFINAL_FIELDS).verify();
-//    }
+    /**
+     * Test of hashCode method, of class Enrollment.
+     */
+    @Test
+    public void testHashCodeAndEquals() {
+        Logger.getLogger(EnrollmentTest.class.getName()).log(Level.INFO, "testHashcode and testEquals");
+        EqualsVerifier.forClass(Enrollment.class).usingGetClass().suppress(Warning.NONFINAL_FIELDS).verify();
+    }
 }
