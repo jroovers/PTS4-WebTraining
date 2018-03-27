@@ -104,3 +104,4 @@ derby.log
 
 .factorypath
 .scannerwork/
+src/main/resources/config.properties
